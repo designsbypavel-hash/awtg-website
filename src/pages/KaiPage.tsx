@@ -145,7 +145,7 @@ function KaiDashboard() {
       <div className="flex items-center justify-between px-5 py-2.5 bg-[#0a1628] border-b border-white/[0.07]">
         <div className="flex items-center gap-2.5">
           <div className="w-6 h-6 bg-[#228DC1] flex items-center justify-center shrink-0">
-            <img src="/logo-icon.svg" alt="Kai" className="w-3.5 h-3.5 object-contain brightness-0 invert"
+            <img src="/kai-logo.svg" alt="Kai" className="w-3.5 h-3.5 object-contain brightness-0 invert"
               onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }} />
           </div>
           <div className="leading-none">
@@ -567,7 +567,7 @@ function IntegrationsSection() {
     { label: 'Freshdesk',  category: 'Support',    logo: '/logos/freshdesk.svg' },
     { label: 'Fin',        category: 'AI Support', logo: '/logos/fin.svg' },
     { label: 'WhatsApp',   category: 'Messaging',  logo: '/logos/whatsapp.svg' },
-    { label: 'Kai',        category: 'AI Agent',   logo: '/logo-icon.svg',       isKai: true },
+    { label: 'Kai',        category: 'AI Agent',   logo: '/kai-logo.svg',        isKai: true },
     { label: 'Slack',      category: 'Messaging',  logo: '/logos/slack.svg' },
     { label: 'Teams',      category: 'Messaging',  logo: '/logos/teams.svg' },
     { label: 'Zoom',       category: 'Video',      logo: '/logos/zoom.svg' },
@@ -641,7 +641,7 @@ function IntegrationsSection() {
                       />
                       <div className="relative w-12 h-12 bg-[#228DC1] flex items-center justify-center shadow-[0_4px_18px_rgba(34,141,193,0.50)]">
                         <img
-                          src="/logo-icon.svg"
+                          src="/kai-logo.svg"
                           alt="Kai"
                           className="w-7 h-7 object-contain brightness-0 invert"
                           onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }}
@@ -787,9 +787,12 @@ export default function KaiPage() {
           style={{ background: 'radial-gradient(circle at 65% 20%, rgba(34,141,193,0.12) 0, transparent 50%), radial-gradient(circle at 10% 80%, rgba(14,106,154,0.06) 0, transparent 40%)' }}
         />
         <div className="relative max-w-7xl mx-auto px-8 lg:px-12">
-          <p className="font-black text-[#228DC1] mb-3" style={{ fontSize: '13px', letterSpacing: '0.28em', textTransform: 'uppercase', opacity: 0.6 }}>
-            Kai · Enterprise AI Agent
-          </p>
+          <div className="flex items-center gap-3 mb-6">
+            <img src="/kai-logo.svg" alt="Kai" className="h-7 w-auto object-contain" />
+            <p className="font-black text-[#228DC1]" style={{ fontSize: '13px', letterSpacing: '0.28em', textTransform: 'uppercase', opacity: 0.6 }}>
+              Kai · Enterprise AI Agent
+            </p>
+          </div>
           <h1 className="font-serif-display text-[#0a1628] leading-[1.02] mb-6 max-w-4xl" style={{ fontSize: 'clamp(44px, 5.8vw, 80px)' }}>
             The enterprise AI agent<br />
             that <span style={{ color: '#228DC1' }}>resolves,</span><br />
@@ -1206,9 +1209,9 @@ export default function KaiPage() {
               </div>
               <div className="px-6 py-4 flex items-center gap-3">
                 <img
-                  src="/logo-icon.svg"
+                  src="/kai-logo.svg"
                   alt="Kai"
-                  className="shrink-0 h-7 w-7 object-contain brightness-0 invert rounded-sm"
+                  className="shrink-0 h-7 w-7 object-contain brightness-0 invert"
                   onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }}
                 />
                 <p className="text-[13px] font-bold text-[#228DC1]">Kai</p>

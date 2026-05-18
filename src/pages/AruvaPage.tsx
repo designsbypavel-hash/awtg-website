@@ -1,7 +1,47 @@
-﻿import { useState, useRef, useEffect } from 'react'
+﻿import { useState, useRef, useEffect, type CSSProperties } from 'react'
 import { Link } from 'react-router-dom'
 import { ArrowRight, BookOpen, Shield, RefreshCw, Sparkles, CheckCircle2 } from 'lucide-react'
 import CTASection from '@/components/CTASection'
+
+// ── Scroll utilities ──────────────────────────────────────────────────────────
+function useInView(threshold = 0.12) {
+  const ref = useRef<HTMLDivElement>(null)
+  const [inView, setInView] = useState(false)
+  useEffect(() => {
+    const el = ref.current
+    if (!el) return
+    const obs = new IntersectionObserver(
+      ([e]) => { if (e.isIntersecting) { setInView(true); obs.disconnect() } },
+      { threshold }
+    )
+    obs.observe(el)
+    return () => obs.disconnect()
+  }, [threshold])
+  return [ref, inView] as const
+}
+
+const reveal = (inView: boolean, delay = 0): CSSProperties => ({
+  opacity: inView ? 1 : 0,
+  transform: inView ? 'translateY(0)' : 'translateY(24px)',
+  transition: `opacity 0.6s cubic-bezier(0.16,1,0.3,1) ${delay}ms, transform 0.6s cubic-bezier(0.16,1,0.3,1) ${delay}ms`,
+})
+
+function ScrollProgress() {
+  const [pct, setPct] = useState(0)
+  useEffect(() => {
+    const fn = () => {
+      const d = document.documentElement
+      setPct(d.scrollTop / (d.scrollHeight - d.clientHeight))
+    }
+    window.addEventListener('scroll', fn, { passive: true })
+    return () => window.removeEventListener('scroll', fn)
+  }, [])
+  return (
+    <div className="fixed top-0 left-0 right-0 z-[60] h-[2px] pointer-events-none">
+      <div style={{ width: `${pct * 100}%`, background: 'linear-gradient(90deg, #228DC1, #0e6a9a)', transition: 'width 80ms linear' }} className="h-full" />
+    </div>
+  )
+}
 
 // ── Four founding principles ──────────────────────────────────────────────────
 const principles = [
@@ -86,36 +126,27 @@ const audiences = [
   {
     label: 'Students',
     headline: 'A personal academic guide, not an answer engine.',
-    desc: 'Guided, source-backed and personalised to build mastery, not deliver shortcuts.',
     points: [
       'Syllabus-aligned tutoring that builds genuine understanding',
       'Source-backed responses with traceable citations',
-      'Learning Curve visibility across topics and confidence',
-      'Smart planner for coursework, revision and workload balance',
-      'Progress tracking that shows strengths and areas to improve',
+      'Progress tracking across topics and confidence',
     ],
   },
   {
     label: 'Educators',
     headline: 'Insight and control without added workload.',
-    desc: 'Stay in full control while Aruva handles alignment, assessment support and feedback intelligence.',
     points: [
       'AI that follows your course design and pedagogical rules',
-      'AI-assisted quiz, rubric and assessment variant creation',
-      'Real-time visibility into student struggles and learning gaps',
-      'Material effectiveness and engagement analytics',
-      'More time for research, mentoring and deeper teaching',
+      'AI-assisted quiz, rubric and assessment creation',
+      'Real-time visibility into student struggles and gaps',
     ],
   },
   {
     label: 'Institutions',
     headline: 'Responsible AI adoption with measurable evidence.',
-    desc: 'A practical route from AI experimentation to governed, measurable academic impact.',
     points: [
       'End-to-end AI governance across academic workflows',
-      'Data residency strategy and institution-controlled deployment',
-      'Cross-course and cross-department learning intelligence',
-      'Accreditation and quality evidence from live learning data',
+      'Data residency and institution-controlled deployment',
       'Modular pilot path: start small, scale with evidence',
     ],
   },
@@ -762,73 +793,67 @@ function PlatformDiagram() {
   )
 }
 
-// ── Pillars accordion ─────────────────────────────────────────────────────────
+// ── Four principles ──────────────────────────────────────────────────────────
+function PrinciplesSection() {
+  const [ref, inView] = useInView(0.08)
+  return (
+    <section className="py-24 bg-[#f8fafc] border-t border-gray-100">
+      <div className="max-w-7xl mx-auto px-8 lg:px-12">
+        <div className="mb-14">
+          <p className="type-label text-[#228DC1] mb-4">Our Principles</p>
+          <h2 className="font-heading text-[#0a1628] mb-3" style={{ fontSize: 'clamp(26px, 3vw, 42px)' }}>
+            Four foundations every decision is built on
+          </h2>
+          <p className="text-[#0a1628]/60 text-base font-normal leading-relaxed max-w-xl">
+            The principles that define how universities actually need AI to work.
+          </p>
+        </div>
+        <div ref={ref} className="grid sm:grid-cols-2 lg:grid-cols-4 gap-px bg-gray-200 border border-gray-200">
+          {principles.map((p, i) => (
+            <div key={p.label} className="group bg-white p-8 hover:bg-[#f8fafc] transition-colors" style={reveal(inView, i * 80)}>
+              <div className="w-10 h-10 flex items-center justify-center mb-6" style={{ backgroundColor: '#228DC112' }}>
+                <p.Icon className="w-5 h-5 text-[#228DC1]" strokeWidth={1.5} />
+              </div>
+              <p className="type-label text-[#228DC1] mb-2">{p.label}</p>
+              <h3 className="text-[#0a1628] font-semibold text-[15px] leading-snug mb-3">{p.title}</h3>
+              <p className="text-[#0a1628]/60 text-sm font-normal leading-relaxed">{p.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+// ── Pillars card grid ─────────────────────────────────────────────────────────
 function PillarsSection() {
-  const [active, setActive] = useState(0)
-  const current = pillars[active]
+  const [ref, inView] = useInView(0.08)
 
   return (
-    <section className="py-28 bg-[#f8fafc]">
+    <section className="py-24 bg-[#f8fafc]">
       <div className="max-w-7xl mx-auto px-8 lg:px-12">
-        <div className="mb-16">
+        <div className="mb-14" style={reveal(true, 0)}>
           <p className="type-label text-[#228DC1] mb-4">Platform</p>
           <h2 className="font-heading text-[#0a1628] mb-4" style={{ fontSize: 'clamp(26px, 3vw, 42px)' }}>
-            Six pillars, one continuous learning loop
+            Six pillars, one learning loop
           </h2>
-          <p className="text-[#0a1628]/60 text-lg font-normal leading-relaxed max-w-2xl">
+          <p className="text-[#0a1628]/60 text-base font-normal leading-relaxed max-w-xl">
             Every capability connects. Smart Syllabus feeds the tutor. The tutor feeds assessment. Assessment feeds analytics.
           </p>
         </div>
 
-        <div className="grid lg:grid-cols-[1fr_1.1fr] gap-16 items-start">
-          <div className="space-y-px">
-            {pillars.map((p, i) => (
-              <button
-                key={p.num}
-                onClick={() => setActive(i)}
-                className={`group w-full text-left flex items-center gap-5 px-6 py-5 border-l-2 transition-all duration-200 ${
-                  active === i
-                    ? 'border-[#228DC1] bg-white shadow-[0_2px_16px_rgba(37,99,235,0.08)]'
-                    : 'border-transparent hover:border-[#228DC1]/30 hover:bg-white'
-                }`}
-              >
-                <span className="shrink-0 font-black tabular-nums text-xs leading-none" style={{ color: active === i ? '#228DC1' : 'rgba(10,22,40,0.2)', letterSpacing: '-0.01em' }}>
-                  {p.num}
-                </span>
-                <div className="flex-1 min-w-0">
-                  <p className={`text-[15px] font-semibold leading-snug transition-colors ${active === i ? 'text-[#0a1628]' : 'text-[#0a1628]/60 group-hover:text-[#0a1628]'}`}>
-                    {p.label}
-                  </p>
-                </div>
-                <span className={`shrink-0 text-[10px] font-semibold uppercase tracking-[0.16em] px-2 py-1 transition-all ${active === i ? 'text-[#228DC1] bg-[#e5f4fa]' : 'text-[#0a1628]/65'}`}>
-                  {p.tag}
-                </span>
-              </button>
-            ))}
-          </div>
-
-          <div className="lg:sticky lg:top-28">
-            <div key={active} className="bg-white border border-gray-100 p-10 shadow-[0_4px_32px_rgba(10,22,40,0.06)]" style={{ animation: 'fadeIn 200ms ease-out' }}>
-              <div className="flex items-start gap-4 mb-6">
-                <span className="font-black tabular-nums text-4xl text-[#228DC1]/15 leading-none" style={{ letterSpacing: '-0.02em' }}>
-                  {current.num}
-                </span>
-                <div>
-                  <p className="type-label text-[#228DC1] mb-1">{current.tag}</p>
-                  <h3 className="text-[#0a1628] font-semibold text-xl leading-snug">{current.label}</h3>
-                </div>
+        <div ref={ref} className="grid sm:grid-cols-2 lg:grid-cols-3 gap-px bg-gray-200 border border-gray-200">
+          {pillars.map((p, i) => (
+            <div key={p.num} className="group bg-white p-8 hover:bg-[#f8fafc] transition-colors" style={reveal(inView, i * 80)}>
+              <div className="flex items-center gap-3 mb-6">
+                <span className="font-black text-[10px] text-[#228DC1]" style={{ letterSpacing: '0.05em' }}>{p.num}</span>
+                <div className="h-px flex-1 bg-gray-100" />
+                <span className="text-[9px] font-semibold uppercase tracking-[0.16em] text-[#0a1628]/35">{p.tag}</span>
               </div>
-              <p className="text-[#0a1628]/70 text-[15px] font-normal leading-relaxed mb-8">{current.desc}</p>
-              <div className="space-y-3">
-                {current.capabilities.map((cap) => (
-                  <div key={cap} className="flex items-start gap-3">
-                    <CheckCircle2 className="w-4 h-4 text-[#228DC1] shrink-0 mt-0.5" />
-                    <p className="text-[#0a1628]/80 text-sm font-normal">{cap}</p>
-                  </div>
-                ))}
-              </div>
+              <h3 className="text-[#0a1628] font-semibold text-[15px] leading-snug mb-2">{p.label}</h3>
+              <p className="text-[#0a1628]/60 text-sm font-normal leading-relaxed">{p.desc}</p>
             </div>
-          </div>
+          ))}
         </div>
       </div>
     </section>
@@ -837,11 +862,10 @@ function PillarsSection() {
 
 // ── Who it's for ──────────────────────────────────────────────────────────────
 function AudienceSection() {
-  const [active, setActive] = useState(0)
-  const current = audiences[active]
+  const [ref, inView] = useInView(0.08)
 
   return (
-    <section className="py-28 bg-white">
+    <section className="py-24 bg-white">
       <div className="max-w-7xl mx-auto px-8 lg:px-12">
         <div className="mb-14">
           <p className="type-label text-[#228DC1] mb-4">Who It's For</p>
@@ -850,35 +874,24 @@ function AudienceSection() {
           </h2>
         </div>
 
-        <div className="flex gap-0 border-b border-gray-100 mb-12">
+        <div ref={ref} className="grid sm:grid-cols-3 gap-px bg-gray-200 border border-gray-200">
           {audiences.map((a, i) => (
-            <button
-              key={a.label}
-              onClick={() => setActive(i)}
-              className={`relative px-8 py-4 text-[13px] font-semibold transition-colors duration-200 ${active === i ? 'text-[#228DC1]' : 'text-[#0a1628]/60 hover:text-[#0a1628]'}`}
-            >
-              {a.label}
-              {active === i && <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#228DC1]" />}
-            </button>
-          ))}
-        </div>
-
-        <div key={active} className="grid lg:grid-cols-2 gap-16 items-start" style={{ animation: 'fadeIn 200ms ease-out' }}>
-          <div>
-            <h3 className="text-[#0a1628] font-semibold text-xl leading-snug mb-4">{current.headline}</h3>
-            <p className="text-[#0a1628]/65 text-[17px] font-normal leading-relaxed mb-8">{current.desc}</p>
-            <Link to="/contact" className="inline-flex items-center gap-2 text-[13px] font-semibold text-[#228DC1] hover:gap-3 transition-all">
-              Request a demo <ArrowRight className="w-4 h-4" />
-            </Link>
-          </div>
-          <div className="space-y-3">
-            {current.points.map((point) => (
-              <div key={point} className="flex items-start gap-3 p-4 bg-[#f8fafc] border-l-2 border-[#228DC1]">
-                <CheckCircle2 className="w-4 h-4 text-[#228DC1] shrink-0 mt-0.5" />
-                <p className="text-[#0a1628] text-[14px] font-normal leading-relaxed">{point}</p>
+            <div key={a.label} className="bg-white p-8 hover:bg-[#f8fafc] transition-colors" style={reveal(inView, i * 100)}>
+              <p className="type-label text-[#228DC1] mb-4">{a.label}</p>
+              <h3 className="text-[#0a1628] font-semibold text-[16px] leading-snug mb-6">{a.headline}</h3>
+              <div className="space-y-3">
+                {a.points.map((point) => (
+                  <div key={point} className="flex items-start gap-2.5">
+                    <CheckCircle2 className="w-4 h-4 text-[#228DC1] shrink-0 mt-0.5" />
+                    <p className="text-[#0a1628]/70 text-[13px] font-normal leading-relaxed">{point}</p>
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
+              <Link to="/contact" className="inline-flex items-center gap-1.5 mt-6 text-[12px] font-semibold text-[#228DC1] hover:gap-2.5 transition-all">
+                Learn more <ArrowRight className="w-3.5 h-3.5" />
+              </Link>
+            </div>
+          ))}
         </div>
       </div>
     </section>
@@ -889,6 +902,7 @@ function AudienceSection() {
 export default function AruvaPage() {
   return (
     <>
+      <ScrollProgress />
       {/* ── Hero ── */}
       <section className="relative overflow-hidden bg-[#f8fafc] pt-32 pb-20">
         <div
@@ -1008,11 +1022,8 @@ export default function AruvaPage() {
                       <h3 className="font-semibold text-[#0a1628] mb-4" style={{ fontSize: 'clamp(20px, 2.2vw, 28px)' }}>
                         {step.label}
                       </h3>
-                      <p className="text-[#0a1628]/65 text-[16px] font-normal leading-relaxed mb-4">
+                      <p className="text-[#0a1628]/65 text-[16px] font-normal leading-relaxed">
                         {step.desc}
-                      </p>
-                      <p className="text-[#0a1628]/60 text-sm font-normal italic">
-                        {step.detail}
                       </p>
                     </div>
 
@@ -1030,32 +1041,7 @@ export default function AruvaPage() {
       </section>
 
       {/* ── Four principles ── */}
-      <section className="py-24 bg-[#f8fafc] border-t border-gray-100">
-        <div className="max-w-7xl mx-auto px-8 lg:px-12">
-          <div className="mb-14">
-            <p className="type-label text-[#228DC1] mb-4">Our Principles</p>
-            <h2 className="font-heading text-[#0a1628] mb-4" style={{ fontSize: 'clamp(26px, 3vw, 42px)' }}>
-              Four foundations every decision is built on
-            </h2>
-            <p className="text-[#0a1628]/65 text-lg font-normal leading-relaxed max-w-2xl">
-              Aruva was designed from the ground up around four principles that define how universities actually need AI to work.
-            </p>
-          </div>
-
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-px bg-gray-200 border border-gray-200">
-            {principles.map((p) => (
-              <div key={p.label} className="group bg-white p-8 hover:bg-[#f7f8fa] transition-colors">
-                <div className="w-10 h-10 flex items-center justify-center mb-6" style={{ backgroundColor: '#228DC112' }}>
-                  <p.Icon className="w-5 h-5 text-[#228DC1]" strokeWidth={1.5} />
-                </div>
-                <p className="text-[10px] font-semibold uppercase tracking-[0.2em] mb-2 text-[#228DC1]">{p.label}</p>
-                <h3 className="text-[#0a1628] font-semibold text-[15px] leading-snug mb-3">{p.title}</h3>
-                <p className="text-[#0a1628]/65 text-sm font-normal leading-relaxed">{p.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      <PrinciplesSection />
 
       {/* ── Platform pillars ── */}
       <PillarsSection />
@@ -1069,38 +1055,24 @@ export default function AruvaPage() {
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <div>
               <p className="type-label text-[#228DC1] mb-4">Governance and Trust</p>
-              <h2 className="font-heading text-[#0a1628] mb-6" style={{ fontSize: 'clamp(24px, 2.5vw, 36px)' }}>
-                Designed for institutions that need AI they can govern
+              <h2 className="font-heading text-[#0a1628] mb-5" style={{ fontSize: 'clamp(24px, 2.5vw, 36px)' }}>
+                AI that institutions can govern.
               </h2>
-              <p className="text-[#0a1628]/65 text-[17px] font-normal leading-relaxed mb-8">
-                Built for the real requirements of higher education: data residency, audit trails, role-based access and full control over how AI behaves across every course.
+              <p className="text-[#0a1628]/65 text-base font-normal leading-relaxed">
+                Built for the real requirements of higher education: data residency, audit trails, role-based access and full control over how AI behaves.
               </p>
-              <div className="space-y-3">
-                {[
-                  'Supports cloud, hybrid or on-premises deployment',
-                  'Role-based access with institution-level policy controls',
-                  'Full audit trail: every AI interaction traceable and attributable',
-                  'Source provenance and citation transparency on all AI outputs',
-                  'Designed to support GDPR, FERPA and UK data governance requirements',
-                ].map((point) => (
-                  <div key={point} className="flex items-start gap-3">
-                    <CheckCircle2 className="w-4 h-4 text-[#228DC1] shrink-0 mt-0.5" />
-                    <p className="text-[#0a1628]/75 text-sm font-normal">{point}</p>
-                  </div>
-                ))}
-              </div>
             </div>
 
             <div className="grid grid-cols-2 gap-px bg-gray-200 border border-gray-200">
               {[
-                { label: 'Data Residency', desc: 'Cloud, hybrid or on-prem options based on institutional requirements.' },
-                { label: 'Audit Trail', desc: 'Immutable logs of every interaction with full source attribution.' },
-                { label: 'Access Control', desc: 'Role-based permissions across students, educators and administrators.' },
-                { label: 'Academic Integrity', desc: 'Socratic-mode AI that guides thinking rather than bypassing it.' },
+                { label: 'Data Residency', desc: 'Cloud, hybrid or on-prem.' },
+                { label: 'Audit Trail', desc: 'Every interaction traceable.' },
+                { label: 'Access Control', desc: 'Role-based, institution-wide.' },
+                { label: 'Academic Integrity', desc: 'Socratic AI, no shortcuts.' },
               ].map((item) => (
                 <div key={item.label} className="bg-white p-6">
-                  <p className="text-[#0a1628] font-semibold text-[14px] mb-2">{item.label}</p>
-                  <p className="text-[#0a1628]/60 text-xs font-normal leading-relaxed">{item.desc}</p>
+                  <p className="text-[#0a1628] font-semibold text-[14px] mb-1.5">{item.label}</p>
+                  <p className="text-[#0a1628]/55 text-[13px] font-normal leading-relaxed">{item.desc}</p>
                 </div>
               ))}
             </div>

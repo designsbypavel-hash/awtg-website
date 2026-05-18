@@ -834,60 +834,56 @@ export default function KaiPage() {
       </section>
 
       {/* ── Logo marquee ── */}
-      <div className="bg-white border-y border-gray-100 py-8 overflow-hidden">
-        <p className="text-center text-[10px] font-semibold uppercase tracking-[0.26em] text-[#0a1628]/30 mb-7">
-          Trusted by teams using
-        </p>
-        {/* Fade masks */}
-        <div className="relative">
-          <div className="absolute left-0 top-0 bottom-0 w-24 z-10 pointer-events-none"
-            style={{ background: 'linear-gradient(to right, white, transparent)' }} />
-          <div className="absolute right-0 top-0 bottom-0 w-24 z-10 pointer-events-none"
-            style={{ background: 'linear-gradient(to left, white, transparent)' }} />
-
-          <div className="flex animate-[marquee_40s_linear_infinite] whitespace-nowrap w-max items-center">
-            {[
-              { src: '/logos/hubspot.svg',    alt: 'HubSpot',    h: 'h-6'  },
-              { src: '/logos/salesforce.svg', alt: 'Salesforce', h: 'h-7'  },
-              { src: '/logos/microsoft.svg',  alt: 'Microsoft',  h: 'h-6'  },
-              { src: '/logos/slack.svg',      alt: 'Slack',      h: 'h-6'  },
-              { src: '/logos/google.svg',     alt: 'Google',     h: 'h-6'  },
-              { src: '/logos/openai.svg',     alt: 'OpenAI',     h: 'h-5'  },
-              { src: '/logos/zendesk.svg',    alt: 'Zendesk',    h: 'h-6'  },
-              { src: '/logos/jira.svg',       alt: 'Jira',       h: 'h-6'  },
-              { src: '/logos/intercom.svg',   alt: 'Intercom',   h: 'h-6'  },
-              { src: '/logos/amazon.svg',     alt: 'Amazon',     h: 'h-6'  },
-              { src: '/logos/zoom.svg',       alt: 'Zoom',       h: 'h-6'  },
-              { src: '/logos/anthropic.svg',  alt: 'Anthropic',  h: 'h-5'  },
-              { src: '/logos/twilio.svg',     alt: 'Twilio',     h: 'h-6'  },
-              { src: '/logos/teams.svg',      alt: 'Teams',      h: 'h-6'  },
-              // duplicate set for seamless loop
-              { src: '/logos/hubspot.svg',    alt: 'HubSpot',    h: 'h-6'  },
-              { src: '/logos/salesforce.svg', alt: 'Salesforce', h: 'h-7'  },
-              { src: '/logos/microsoft.svg',  alt: 'Microsoft',  h: 'h-6'  },
-              { src: '/logos/slack.svg',      alt: 'Slack',      h: 'h-6'  },
-              { src: '/logos/google.svg',     alt: 'Google',     h: 'h-6'  },
-              { src: '/logos/openai.svg',     alt: 'OpenAI',     h: 'h-5'  },
-              { src: '/logos/zendesk.svg',    alt: 'Zendesk',    h: 'h-6'  },
-              { src: '/logos/jira.svg',       alt: 'Jira',       h: 'h-6'  },
-              { src: '/logos/intercom.svg',   alt: 'Intercom',   h: 'h-6'  },
-              { src: '/logos/amazon.svg',     alt: 'Amazon',     h: 'h-6'  },
-              { src: '/logos/zoom.svg',       alt: 'Zoom',       h: 'h-6'  },
-              { src: '/logos/anthropic.svg',  alt: 'Anthropic',  h: 'h-5'  },
-              { src: '/logos/twilio.svg',     alt: 'Twilio',     h: 'h-6'  },
-              { src: '/logos/teams.svg',      alt: 'Teams',      h: 'h-6'  },
-            ].map((logo, i) => (
-              <div key={i} className="inline-flex items-center justify-center px-10">
-                <img
-                  src={logo.src}
-                  alt={logo.alt}
-                  className={`${logo.h} w-auto object-contain opacity-30 grayscale hover:opacity-60 hover:grayscale-0 transition-all duration-300`}
-                />
+      {(() => {
+        const logos = [
+          { src: '/logos/hubspot.svg',    name: 'HubSpot',    fw: '700' },
+          { src: '/logos/salesforce.svg', name: 'Salesforce', fw: '400' },
+          { src: '/logos/microsoft.svg',  name: 'Microsoft',  fw: '600' },
+          { src: '/logos/slack.svg',      name: 'Slack',      fw: '700' },
+          { src: '/logos/google.svg',     name: 'Google',     fw: '400' },
+          { src: '/logos/openai.svg',     name: 'OpenAI',     fw: '500' },
+          { src: '/logos/zendesk.svg',    name: 'Zendesk',    fw: '600' },
+          { src: '/logos/jira.svg',       name: 'Jira',       fw: '700' },
+          { src: '/logos/intercom.svg',   name: 'Intercom',   fw: '500' },
+          { src: '/logos/amazon.svg',     name: 'Amazon',     fw: '400' },
+          { src: '/logos/zoom.svg',       name: 'Zoom',       fw: '700' },
+          { src: '/logos/anthropic.svg',  name: 'Anthropic',  fw: '400' },
+          { src: '/logos/twilio.svg',     name: 'Twilio',     fw: '600' },
+          { src: '/logos/teams.svg',      name: 'Teams',      fw: '600' },
+        ]
+        const all = [...logos, ...logos]
+        return (
+          <div className="bg-white border-y border-gray-100 py-8 overflow-hidden">
+            <p className="text-center text-[10px] font-semibold uppercase tracking-[0.26em] text-[#0a1628]/30 mb-7">
+              Trusted by teams using
+            </p>
+            <div className="relative">
+              <div className="absolute left-0 top-0 bottom-0 w-28 z-10 pointer-events-none"
+                style={{ background: 'linear-gradient(to right, white, transparent)' }} />
+              <div className="absolute right-0 top-0 bottom-0 w-28 z-10 pointer-events-none"
+                style={{ background: 'linear-gradient(to left, white, transparent)' }} />
+              <div className="flex animate-[marquee_45s_linear_infinite] whitespace-nowrap w-max items-center">
+                {all.map((logo, i) => (
+                  <div key={i} className="inline-flex items-center gap-2.5 px-9 opacity-40 hover:opacity-80 transition-opacity duration-300 group">
+                    <img
+                      src={logo.src}
+                      alt={logo.name}
+                      className="h-5 w-5 object-contain grayscale"
+                      style={{ color: '#0a1628' }}
+                    />
+                    <span
+                      className="text-[#0a1628] text-[15px] leading-none select-none"
+                      style={{ fontWeight: logo.fw, fontFamily: 'system-ui, -apple-system, sans-serif', letterSpacing: '-0.01em' }}
+                    >
+                      {logo.name}
+                    </span>
+                  </div>
+                ))}
               </div>
-            ))}
+            </div>
           </div>
-        </div>
-      </div>
+        )
+      })()}
 
       {/* ── Client logo strip ── */}
       <section className="bg-[#fafafa] border-t border-gray-100 border-b border-gray-100 py-10">

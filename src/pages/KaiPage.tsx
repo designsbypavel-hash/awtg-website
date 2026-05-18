@@ -629,29 +629,29 @@ function IntegrationsSection() {
                   style={{
                     ...reveal(inView, d * 75),
                     ...(item.isKai ? {
-                      background: '#0a1628',
-                      border: '1.5px solid rgba(34,141,193,0.55)',
-                      boxShadow: '0 0 0 6px rgba(34,141,193,0.07), 0 0 40px rgba(34,141,193,0.22), 0 0 80px rgba(34,141,193,0.10), 0 8px 30px rgba(34,141,193,0.14)',
+                      background: 'linear-gradient(145deg, #1a0d2e 0%, #2d1248 100%)',
+                      border: '1.5px solid rgba(144,62,142,0.55)',
+                      boxShadow: '0 0 0 6px rgba(144,62,142,0.07), 0 0 40px rgba(144,62,142,0.28), 0 0 80px rgba(144,62,142,0.12), 0 8px 30px rgba(144,62,142,0.20)',
                     } : {}),
                   }}
                 >
                   {item.isKai && (
                     <div className="absolute inset-0 pointer-events-none"
-                      style={{ background: 'radial-gradient(ellipse at center, rgba(34,141,193,0.18) 0%, transparent 72%)' }} />
+                      style={{ background: 'radial-gradient(ellipse at center, rgba(144,62,142,0.20) 0%, transparent 72%)' }} />
                   )}
 
                   {item.isKai ? (
                     <>
                       <div className="relative flex items-center justify-center">
-                        <div className="absolute w-10 h-10 border-2 border-[#228DC1]/50"
+                        <div className="absolute w-12 h-12 rounded-full border border-[#903E8E]/40"
                           style={{ animation: 'hubRing 2.6s ease-out infinite' }} />
-                        <div className="relative w-10 h-10 bg-[#228DC1] flex items-center justify-center shadow-[0_4px_18px_rgba(34,141,193,0.50)]">
-                          <img src="/kai-logo.svg" alt="Kai" className="w-6 h-6 object-contain brightness-0 invert"
+                        <div className="relative w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center backdrop-blur-sm border border-white/10">
+                          <img src="/kai-logo-mark.svg" alt="Kai" className="w-7 h-7 object-contain"
                             onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }} />
                         </div>
                       </div>
                       <p className="relative text-white font-bold text-[10px] uppercase tracking-[0.22em]">Kai</p>
-                      <span className="relative text-[8px] font-semibold text-[#228DC1] bg-[#228DC1]/15 border border-[#228DC1]/30 px-1.5 py-0.5">
+                      <span className="relative text-[8px] font-semibold text-[#903E8E] bg-[#903E8E]/15 border border-[#903E8E]/35 px-1.5 py-0.5 rounded-sm">
                         AI Agent · MCP
                       </span>
                     </>

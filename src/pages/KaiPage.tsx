@@ -1,6 +1,6 @@
 ﻿import { useState, useRef, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { ArrowRight, CheckCircle2, Zap, Shield, BarChart2, Settings2, Check, X, Code2 } from 'lucide-react'
+import { ArrowRight, CheckCircle2, Zap, Shield, BarChart2, Settings2, Check, Code2 } from 'lucide-react'
 import CTASection from '@/components/CTASection'
 
 // ── Demo messages ─────────────────────────────────────────────────────────────
@@ -837,7 +837,7 @@ export default function KaiPage() {
                 desc: 'Track containment, CSAT and escalations live.',
               },
             ].map((step) => (
-              <div key={step.num} className="bg-white border border-gray-200 p-8 shadow-[0_1px_8px_rgba(10,22,40,0.03)]">
+              <div key={step.num} className="bg-white border border-gray-200 p-8 shadow-[0_1px_8px_rgba(10,22,40,0.03)] hover:shadow-[0_16px_40px_rgba(10,22,40,0.07)] hover:-translate-y-0.5 transition-all">
                 <div className="flex items-center gap-3 mb-6">
                   <span className="font-black text-[10px] text-[#228DC1]" style={{ letterSpacing: '0.05em' }}>{step.num}</span>
                   <div className="h-px flex-1 bg-gray-100" />
@@ -845,8 +845,8 @@ export default function KaiPage() {
                 <div className="w-10 h-10 flex items-center justify-center mb-5" style={{ backgroundColor: '#228DC112' }}>
                   <step.Icon className="w-5 h-5 text-[#228DC1]" strokeWidth={1.5} />
                 </div>
-                <h3 className="text-[#0a1628] font-semibold text-[15px] leading-snug mb-3">{step.label}</h3>
-                <p className="text-[#0a1628]/65 text-sm font-normal leading-relaxed">{step.desc}</p>
+                <h3 className="text-[#0a1628] font-semibold text-[15px] leading-snug mb-2">{step.label}</h3>
+                <p className="text-[#0a1628]/60 text-sm font-normal leading-relaxed">{step.desc}</p>
               </div>
             ))}
           </div>
@@ -876,22 +876,22 @@ export default function KaiPage() {
               },
             ].map((cap) => (
               <div key={cap.label} className="bg-white border border-gray-200 p-8 shadow-[0_1px_8px_rgba(10,22,40,0.03)] hover:shadow-[0_16px_40px_rgba(10,22,40,0.07)] hover:-translate-y-0.5 transition-all">
-                <div className="w-10 h-10 flex items-center justify-center mb-6" style={{ backgroundColor: '#228DC112' }}>
+                <div className="w-10 h-10 flex items-center justify-center mb-5" style={{ backgroundColor: '#228DC112' }}>
                   <cap.Icon className="w-5 h-5 text-[#228DC1]" strokeWidth={1.5} />
                 </div>
-                <h3 className="font-heading text-[#0a1628] mb-3" style={{ fontSize: 'clamp(17px, 1.8vw, 21px)' }}>{cap.label}</h3>
-                <p className="text-[#0a1628]/65 text-sm font-normal leading-relaxed">{cap.desc}</p>
+                <h3 className="text-[#0a1628] font-semibold text-[15px] leading-snug mb-2">{cap.label}</h3>
+                <p className="text-[#0a1628]/60 text-sm font-normal leading-relaxed">{cap.desc}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ── Why Kai vs alternatives ── */}
+      {/* ── What Kai Delivers ── */}
       <section className="py-24 bg-[#f8fafc] border-t border-gray-100">
         <div className="max-w-7xl mx-auto px-8 lg:px-12">
           <div className="max-w-2xl mb-14">
-            <p className="type-label text-[#228DC1] mb-4">How Kai is Different</p>
+            <p className="type-label text-[#228DC1] mb-4">What Kai Delivers</p>
             <h2 className="font-heading text-[#0a1628] mb-4" style={{ fontSize: 'clamp(30px, 3.2vw, 46px)', lineHeight: 1.08 }}>
               AI that fits your business.<br />Not the other way around.
             </h2>
@@ -900,89 +900,42 @@ export default function KaiPage() {
             </p>
           </div>
 
-          {/* Comparison table */}
+          {/* Kai capabilities table */}
           <div className="border border-gray-200 overflow-hidden shadow-[0_1px_8px_rgba(10,22,40,0.03)]">
-            {/* Header */}
-            <div className="grid grid-cols-4 bg-[#0a1628]">
+            <div className="grid grid-cols-[1fr_1fr] bg-[#0a1628]">
               <div className="px-6 py-4 border-r border-white/10">
                 <p className="text-white/40 text-[11px] font-semibold uppercase tracking-[0.18em]">Capability</p>
               </div>
-              {[
-                { name: 'Fin / Intercom', logo: '/logos/fin.svg', isKai: false },
-                { name: 'Agentforce', logo: '/logos/agentforce.svg', isKai: false },
-                { name: 'Kai', logo: '/logo-icon.svg', isKai: true },
-              ].map((col, i) => (
-                <div key={col.name} className={`px-6 py-4 flex items-center gap-3 ${i < 2 ? 'border-r border-white/10' : ''}`}>
-                  <img
-                    src={col.logo}
-                    alt={col.name}
-                    className="shrink-0 h-7 w-7 object-contain rounded-sm"
-                    onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }}
-                  />
-                  <p className={`text-[13px] font-bold ${col.isKai ? 'text-[#228DC1]' : 'text-white/60'}`}>{col.name}</p>
-                </div>
-              ))}
+              <div className="px-6 py-4 flex items-center gap-3">
+                <img
+                  src="/logo-icon.svg"
+                  alt="Kai"
+                  className="shrink-0 h-7 w-7 object-contain brightness-0 invert rounded-sm"
+                  onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }}
+                />
+                <p className="text-[13px] font-bold text-[#228DC1]">Kai</p>
+              </div>
             </div>
-            {/* Rows */}
             {[
-              {
-                label: 'Best fit',
-                fin: 'Teams already using Intercom',
-                sf: 'Salesforce-native orgs',
-                kai: 'Mixed systems, regulated teams',
-              },
-              {
-                label: 'Ecosystem',
-                fin: 'Intercom-centred',
-                sf: 'Salesforce native',
-                kai: 'Vendor-flexible, integration-led',
-              },
-              {
-                label: 'Custom governance',
-                fin: 'Platform controls',
-                sf: 'Salesforce guardrails',
-                kai: 'Consent, escalation, audit',
-              },
-              {
-                label: 'Delivery model',
-                fin: 'SaaS self-serve',
-                sf: 'Salesforce implementation',
-                kai: 'Product + delivery support',
-              },
-              {
-                label: 'Regulated sectors',
-                fin: false,
-                sf: false,
-                kai: true,
-              },
-              {
-                label: 'On-prem / hybrid deploy',
-                fin: false,
-                sf: false,
-                kai: true,
-              },
-              {
-                label: 'ISO 42001 AI certification',
-                fin: false,
-                sf: false,
-                kai: true,
-              },
+              { label: 'Best fit',                  kai: 'Mixed systems, regulated teams' },
+              { label: 'Ecosystem',                 kai: 'Vendor-flexible, integration-led' },
+              { label: 'Custom governance',         kai: 'Consent, escalation, audit' },
+              { label: 'Delivery model',            kai: 'Product + delivery support' },
+              { label: 'Regulated sectors',         kai: true },
+              { label: 'On-prem / hybrid deploy',   kai: true },
+              { label: 'ISO 42001 AI certification', kai: true },
             ].map((row, rowIdx) => (
-              <div key={row.label} className={`grid grid-cols-4 border-t border-gray-100 ${rowIdx % 2 === 0 ? 'bg-white' : 'bg-[#fafafa]'}`}>
+              <div key={row.label} className={`grid grid-cols-[1fr_1fr] border-t border-gray-100 ${rowIdx % 2 === 0 ? 'bg-white' : 'bg-[#fafafa]'}`}>
                 <div className="px-6 py-4 border-r border-gray-100">
                   <p className="text-[#0a1628] text-[13px] font-semibold">{row.label}</p>
                 </div>
-                {[row.fin, row.sf, row.kai].map((val, i) => (
-                  <div key={i} className={`px-6 py-4 ${i < 2 ? 'border-r border-gray-100' : ''} ${i === 2 ? 'bg-[#e5f4fa]/30' : ''}`}>
-                    {typeof val === 'boolean' ? (
-                      val
-                        ? <Check className="w-4 h-4 text-[#228DC1]" />
-                        : <X className="w-4 h-4 text-[#0a1628]/20" />
-                    ) : (
-                      <p className={`text-[12px] font-normal leading-snug ${i === 2 ? 'text-[#0a1628] font-medium' : 'text-[#0a1628]/60'}`}>{val}</p>
-                    )}
-                  </div>
-                ))}
+                <div className="px-6 py-4 bg-[#e5f4fa]/30">
+                  {typeof row.kai === 'boolean' ? (
+                    <Check className="w-4 h-4 text-[#228DC1]" />
+                  ) : (
+                    <p className="text-[12px] font-medium text-[#0a1628]">{row.kai}</p>
+                  )}
+                </div>
               </div>
             ))}
           </div>

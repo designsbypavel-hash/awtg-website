@@ -782,66 +782,57 @@ export default function KaiPage() {
       <ScrollProgress />
       {/* ── Hero ── */}
       <section className="relative overflow-hidden bg-white pt-32 pb-0">
-        {/* Subtle dot grid */}
-        <div className="absolute inset-0 pointer-events-none" style={{
-          backgroundImage: 'radial-gradient(circle, rgba(34,141,193,0.12) 1px, transparent 1px)',
-          backgroundSize: '32px 32px',
-          maskImage: 'linear-gradient(to bottom, transparent 0%, black 20%, black 70%, transparent 100%)',
-          WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, black 20%, black 70%, transparent 100%)',
-        }} />
-        {/* Colour wash */}
-        <div className="absolute inset-0 pointer-events-none" style={{
-          background: 'radial-gradient(ellipse 70% 50% at 70% 30%, rgba(34,141,193,0.07) 0%, transparent 70%)',
-        }} />
 
-        <div className="relative max-w-7xl mx-auto px-8 lg:px-12">
-          <div className="grid lg:grid-cols-[5fr_7fr] gap-12 lg:gap-16 items-end">
+        <div className="relative max-w-5xl mx-auto px-8 lg:px-12 text-center">
 
-            {/* Left: copy */}
-            <div className="pb-24">
-              <div className="flex items-center gap-3 mb-6">
-                <img src="/kai-logo.svg" alt="Kai" className="h-7 w-auto object-contain" />
-                <p className="font-black text-[#228DC1]" style={{ fontSize: '13px', letterSpacing: '0.28em', textTransform: 'uppercase', opacity: 0.6 }}>
-                  Kai · Enterprise AI Agent
-                </p>
-              </div>
-              <h1 className="font-serif-display text-[#0a1628] leading-[1.02] mb-6" style={{ fontSize: 'clamp(40px, 4.8vw, 68px)' }}>
-                The enterprise AI agent<br />
-                that <span style={{ color: '#228DC1' }}>resolves,</span><br />
-                not just responds.
-              </h1>
-              <p className="text-[#0a1628]/60 text-lg font-normal leading-relaxed mb-10">
-                Kai connects to your systems, follows your rules and helps teams resolve work faster.
-              </p>
-              <div className="flex flex-wrap gap-4">
-                <Link to="/contact" className="inline-flex items-center gap-2 px-7 py-3.5 bg-[#228DC1] text-white text-[13px] font-semibold hover:bg-[#1a6e99] transition-colors">
-                  Request a Demo
-                </Link>
-                <Link to="/contact" className="px-7 py-3.5 border border-gray-200 text-[#0a1628]/70 text-[13px] font-medium hover:border-[#228DC1]/50 hover:text-[#228DC1] transition-all">
-                  Talk to an expert
-                </Link>
-              </div>
-            </div>
-
-            {/* Right: mockup — floats from bottom, clipped at bottom edge */}
-            <div className="relative hidden lg:block self-end">
-              {/* Glow */}
-              <div className="absolute -inset-10 pointer-events-none" style={{
-                background: 'radial-gradient(ellipse 80% 60% at 55% 60%, rgba(34,141,193,0.12) 0%, transparent 70%)',
-              }} />
-              <div
-                className="relative overflow-hidden shadow-[0_20px_80px_rgba(10,22,40,0.12),0_4px_20px_rgba(34,141,193,0.08)] border border-gray-200/60"
-                style={{ borderRadius: '12px 12px 0 0' }}
-              >
-                <img
-                  src="/kai-mockup.svg"
-                  alt="Kai platform interface"
-                  className="w-full block"
-                />
-              </div>
-            </div>
-
+          {/* Label */}
+          <div className="flex items-center justify-center gap-3 mb-6">
+            <img src="/kai-logo.svg" alt="Kai" className="h-7 w-auto object-contain" />
+            <p className="font-black text-[#228DC1]" style={{ fontSize: '13px', letterSpacing: '0.28em', textTransform: 'uppercase', opacity: 0.6 }}>
+              Kai · Enterprise AI Agent
+            </p>
           </div>
+
+          {/* Headline */}
+          <h1 className="font-serif-display text-[#0a1628] leading-[1.02] mb-6" style={{ fontSize: 'clamp(44px, 5.8vw, 80px)' }}>
+            The enterprise AI agent<br />
+            that <span style={{ color: '#228DC1' }}>resolves,</span><br />
+            not just responds.
+          </h1>
+
+          {/* Subtext */}
+          <p className="text-[#0a1628]/60 text-lg font-normal leading-relaxed max-w-2xl mx-auto mb-10">
+            Kai connects to your systems, follows your rules and helps teams resolve work faster.
+          </p>
+
+          {/* CTAs */}
+          <div className="flex flex-wrap justify-center gap-4 mb-16">
+            <Link to="/contact" className="inline-flex items-center gap-2 px-7 py-3.5 bg-[#228DC1] text-white text-[13px] font-semibold hover:bg-[#1a6e99] transition-colors">
+              Request a Demo
+            </Link>
+            <Link to="/contact" className="px-7 py-3.5 border border-gray-200 text-[#0a1628]/70 text-[13px] font-medium hover:border-[#228DC1]/50 hover:text-[#228DC1] transition-all">
+              Talk to an expert
+            </Link>
+          </div>
+
+          {/* Mockup — floats up from bottom edge */}
+          <div className="relative mx-auto" style={{ maxWidth: '1000px' }}>
+            {/* Glow behind */}
+            <div className="absolute -inset-8 pointer-events-none" style={{
+              background: 'radial-gradient(ellipse 80% 50% at 50% 60%, rgba(34,141,193,0.10) 0%, transparent 70%)',
+            }} />
+            <div
+              className="relative overflow-hidden shadow-[0_24px_80px_rgba(10,22,40,0.13),0_4px_24px_rgba(34,141,193,0.08)] border border-gray-200/70"
+              style={{ borderRadius: '12px 12px 0 0' }}
+            >
+              <img
+                src="/kai-mockup.svg"
+                alt="Kai platform interface"
+                className="w-full block"
+              />
+            </div>
+          </div>
+
         </div>
       </section>
 

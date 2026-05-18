@@ -313,10 +313,10 @@ function IntegrationsSection() {
         <div className="text-center mb-14">
           <p className="text-[#228DC1] mb-4" style={{ fontSize: '11px', fontWeight: 700, letterSpacing: '0.28em', textTransform: 'uppercase', opacity: 0.75 }}>Integrations</p>
           <h2 className="font-heading text-[#0a1628] mb-4" style={{ fontSize: 'clamp(30px,3.2vw,46px)', lineHeight: 1.08 }}>
-            Works with your stack —<br />MCP-ready on day one.
+            Works with your stack.<br />MCP-ready on day one.
           </h2>
           <p className="text-[#0a1628]/60 text-base leading-relaxed max-w-lg mx-auto">
-            Kai sits at the centre of your ecosystem — connected to every CRM, support platform, messaging channel and protocol without ripping anything out.
+            Kai sits at the centre of your ecosystem, connected to every CRM, support platform, messaging channel and protocol without ripping anything out.
           </p>
         </div>
 

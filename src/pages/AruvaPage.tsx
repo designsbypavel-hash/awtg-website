@@ -579,6 +579,17 @@ function PlatformDiagram() {
     },
   ]
 
+  const SectionLabel = ({ children }: { children: string }) => (
+    <div className="w-12 shrink-0 bg-[#0a1628] flex items-center justify-center">
+      <span
+        className="text-white/85 text-[9px] font-bold uppercase tracking-[0.22em] whitespace-nowrap"
+        style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}
+      >
+        {children}
+      </span>
+    </div>
+  )
+
   return (
     <section className="py-24 bg-[#fdf9f4] border-t border-[#ede5da]">
       <div className="max-w-7xl mx-auto px-8 lg:px-12">
@@ -589,7 +600,7 @@ function PlatformDiagram() {
           <h2 className="font-heading text-[#0a1628] mb-4" style={{ fontSize: 'clamp(26px, 3vw, 42px)' }}>
             How Aruva is built
           </h2>
-          <p className="text-[#0a1628]/70 text-lg font-normal leading-relaxed max-w-2xl">
+          <p className="text-[#0a1628]/65 text-lg font-normal leading-relaxed max-w-2xl">
             Three connected layers: the interfaces educators and students use, the core intelligence platform, and the integrations that connect Aruva to your existing systems.
           </p>
         </div>
@@ -597,70 +608,73 @@ function PlatformDiagram() {
         <div className="space-y-0">
 
           {/* ── Row 1: User Interface ── */}
-          <div className="flex items-stretch rounded-2xl overflow-hidden border border-[#e2d9cf] shadow-sm">
-            <div className="w-11 shrink-0 bg-[#228DC1] flex items-center justify-center">
-              <span className="text-white text-[9px] font-bold uppercase tracking-[0.2em] whitespace-nowrap"
-                style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}>
-                User Interface
-              </span>
-            </div>
-            <div className="flex-1 bg-white p-6">
+          <div className="flex items-stretch rounded-2xl overflow-hidden border border-[#e2d9cf] shadow-[0_4px_20px_rgba(10,22,40,0.06)]">
+            <SectionLabel>User Interface</SectionLabel>
+            <div className="flex-1 bg-white p-5">
               <div className="grid grid-cols-5 gap-3">
                 {uiCards.map((card) => (
-                  <div key={card.label} className="bg-[#fdf9f4] border border-[#ede5da] rounded-xl p-4 hover:bg-white hover:shadow-md hover:-translate-y-0.5 transition-all duration-200">
-                    <div className="w-10 h-10 rounded-xl flex items-center justify-center mb-3" style={{ backgroundColor: `${card.color}18` }}>
+                  <div
+                    key={card.label}
+                    className="group relative bg-[#fdf9f4] border border-[#ede5da] rounded-xl p-4 hover:bg-white hover:border-transparent hover:-translate-y-1 transition-all duration-200 cursor-default"
+                    style={{ boxShadow: 'none' }}
+                    onMouseEnter={e => { (e.currentTarget as HTMLDivElement).style.boxShadow = `0 8px 24px ${card.color}22, 0 2px 8px rgba(10,22,40,0.06)` }}
+                    onMouseLeave={e => { (e.currentTarget as HTMLDivElement).style.boxShadow = 'none' }}
+                  >
+                    <div
+                      className="w-10 h-10 rounded-xl flex items-center justify-center mb-3 transition-all duration-200"
+                      style={{ backgroundColor: `${card.color}20` }}
+                    >
                       <span style={{ color: card.color }}>{card.icon}</span>
                     </div>
                     <p className="text-[#0a1628] text-[13px] font-semibold leading-snug mb-1">{card.label}</p>
-                    <p className="text-[#0a1628]/65 text-[12px] font-normal leading-relaxed">{card.desc}</p>
+                    <p className="text-[#0a1628]/55 text-[11px] font-normal leading-relaxed">{card.desc}</p>
                   </div>
                 ))}
               </div>
             </div>
           </div>
 
-          {/* ── Connector 1 ── */}
-          <div className="flex ml-11">
-            <div className="flex-1 flex justify-center">
-              <div className="flex flex-col items-center">
-                <div className="w-px h-5 bg-[#c8bdb0]" />
-                <div className="border border-[#d8cfc6] bg-[#fdf9f4] rounded-full px-4 py-1">
-                  <span className="text-[10px] font-semibold uppercase tracking-[0.15em] text-[#0a1628]/65">Aruva Platform API</span>
-                </div>
-                <div className="w-px h-5 bg-[#c8bdb0]" />
+          {/* ── Connector 1: horizontal bracket + API label ── */}
+          <div className="ml-12 px-10 flex flex-col items-center">
+            <div className="w-px h-4 bg-[#c8bdb0]" />
+            <div className="w-full flex items-center">
+              <div className="flex-1 h-px bg-[#d8cfc6]" />
+              <div className="flex items-center gap-2.5 border border-[#d8cfc6] bg-white rounded-full px-5 py-1.5 shadow-[0_1px_4px_rgba(10,22,40,0.06)]">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#228DC1]" />
+                <span className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#0a1628]/55">Aruva Platform API</span>
+                <span className="w-1.5 h-1.5 rounded-full bg-[#228DC1]" />
               </div>
+              <div className="flex-1 h-px bg-[#d8cfc6]" />
             </div>
+            <div className="w-px h-4 bg-[#c8bdb0]" />
           </div>
 
           {/* ── Row 2: Services ── */}
-          <div className="flex items-stretch rounded-2xl overflow-hidden border border-[#e2d9cf] shadow-sm">
-            <div className="w-11 shrink-0 bg-[#228DC1] flex items-center justify-center">
-              <span className="text-white text-[9px] font-bold uppercase tracking-[0.2em] whitespace-nowrap"
-                style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}>
-                Services
-              </span>
-            </div>
-            <div className="flex-1 bg-white p-7">
-              <div className="grid lg:grid-cols-[180px_1fr] gap-8 items-center">
+          <div className="flex items-stretch rounded-2xl overflow-hidden border border-[#e2d9cf] shadow-[0_4px_20px_rgba(10,22,40,0.06)]">
+            <SectionLabel>Services</SectionLabel>
+            <div className="flex-1 bg-white p-6 lg:p-7">
+              <div className="grid lg:grid-cols-[172px_1fr] gap-8 items-center">
+
                 {/* Brand wordmark */}
-                <div className="border-r border-[#ede5da] pr-8">
-                  <p className="font-black text-[#0a1628] leading-[1.15]" style={{ fontSize: 'clamp(18px, 2vw, 28px)', letterSpacing: '-0.025em' }}>
+                <div className="lg:border-r border-[#ede5da] lg:pr-8">
+                  <p className="font-black text-[#0a1628] leading-[1.1]" style={{ fontSize: 'clamp(18px,2vw,26px)', letterSpacing: '-0.03em' }}>
                     Aruva<br />Intelligent<br />Education<br />Platform
                   </p>
                 </div>
-                {/* Three blocks — LearnWise style: coloured pill + items row */}
+
+                {/* Three coloured service blocks */}
                 <div className="space-y-2.5">
                   {coreBlocks.map((block) => (
-                    <div key={block.label} className="flex items-stretch rounded-xl overflow-hidden border border-[#ede5da]">
-                      {/* Coloured label pill */}
-                      <div className="w-48 shrink-0 flex flex-col justify-center px-5 py-3.5 rounded-l-xl" style={{ backgroundColor: block.color }}>
-                        <p className="text-white font-semibold text-[13px] leading-snug">{block.label}</p>
-                        <p className="text-[#0a1628]/80 text-[10px] font-normal mt-0.5">{block.sublabel}</p>
+                    <div key={block.label} className="flex items-stretch rounded-xl overflow-hidden border border-[#ede5da] shadow-[0_1px_6px_rgba(10,22,40,0.04)] hover:shadow-[0_4px_16px_rgba(10,22,40,0.08)] transition-shadow">
+                      <div className="w-44 shrink-0 flex flex-col justify-center px-5 py-4" style={{ backgroundColor: block.color }}>
+                        <p className="text-white font-bold text-[13px] leading-snug">{block.label}</p>
+                        <p className="text-white/60 text-[10px] font-medium mt-0.5">{block.sublabel}</p>
                       </div>
-                      {/* Items row */}
-                      <div className="flex-1 bg-white flex items-center divide-x divide-[#ede5da]">
+                      <div className="flex-1 bg-[#fdfcfb] flex items-center divide-x divide-[#ede5da]">
                         {block.items.map((item) => (
-                          <div key={item} className="flex-1 px-4 py-3 text-[12px] text-[#0a1628] font-medium text-center leading-snug">{item}</div>
+                          <div key={item} className="flex-1 px-4 py-3.5 text-[11px] text-[#0a1628]/70 font-medium text-center leading-snug hover:bg-white hover:text-[#0a1628] transition-colors cursor-default">
+                            {item}
+                          </div>
                         ))}
                       </div>
                     </div>
@@ -670,68 +684,68 @@ function PlatformDiagram() {
             </div>
           </div>
 
-          {/* ── Connector 2 ── */}
-          <div className="flex ml-11">
-            <div className="flex-1 flex">
-              <div className="flex-1 flex flex-col items-center">
-                <div className="w-px h-5 bg-[#c8bdb0]" />
-                <div className="border border-[#d8cfc6] bg-[#fdf9f4] rounded-full px-4 py-1">
-                  <span className="text-[10px] font-semibold uppercase tracking-[0.15em] text-[#0a1628]/65">Sync &amp; Deploy</span>
+          {/* ── Connector 2: two labelled branches ── */}
+          <div className="ml-12 flex">
+            {[['Sync & Deploy', '1/3'], ['Read & Write', '2/3']].map(([label, pos]) => (
+              <div key={label} className="flex-1 flex flex-col items-center">
+                <div className="w-px h-4 bg-[#c8bdb0]" />
+                <div className="border border-[#d8cfc6] bg-white rounded-full px-5 py-1.5 shadow-[0_1px_4px_rgba(10,22,40,0.05)]">
+                  <span className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#0a1628]/50">
+                    {label}
+                  </span>
                 </div>
-                <div className="w-px h-5 bg-[#c8bdb0]" />
+                <div className="w-px h-4 bg-[#c8bdb0]" />
               </div>
-              <div className="flex-1 flex flex-col items-center">
-                <div className="w-px h-5 bg-[#c8bdb0]" />
-                <div className="border border-[#d8cfc6] bg-[#fdf9f4] rounded-full px-4 py-1">
-                  <span className="text-[10px] font-semibold uppercase tracking-[0.15em] text-[#0a1628]/65">Read &amp; Write</span>
-                </div>
-                <div className="w-px h-5 bg-[#c8bdb0]" />
-              </div>
-            </div>
+            ))}
           </div>
 
           {/* ── Row 3: Integration ── */}
-          <div className="flex items-stretch rounded-2xl overflow-hidden border border-[#e2d9cf] shadow-sm">
-            <div className="w-11 shrink-0 bg-[#228DC1] flex items-center justify-center">
-              <span className="text-white text-[9px] font-bold uppercase tracking-[0.2em] whitespace-nowrap"
-                style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}>
-                Integration
-              </span>
-            </div>
-            <div className="flex-1 bg-white p-7">
+          <div className="flex items-stretch rounded-2xl overflow-hidden border border-[#e2d9cf] shadow-[0_4px_20px_rgba(10,22,40,0.06)]">
+            <SectionLabel>Integration</SectionLabel>
+            <div className="flex-1 bg-white p-6 lg:p-7">
               <div className="grid sm:grid-cols-2 gap-5">
 
                 {/* VLE / LMS */}
                 <div className="bg-[#fdf9f4] border border-[#ede5da] rounded-xl p-5">
-                  <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-[#0a1628]/60 mb-4">VLE / LMS</p>
+                  <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#0a1628]/40 mb-4">VLE / LMS</p>
                   <div className="flex flex-wrap gap-2 mb-5">
-                    {['Canvas', 'Moodle', 'Blackboard', 'Brightspace', 'Moodle Workplace'].map((lms) => (
-                      <span key={lms} className="bg-white border border-[#e2d9cf] rounded-lg px-3 py-1.5 text-[13px] font-semibold text-[#0a1628] shadow-sm">
-                        {lms}
+                    {[
+                      { name: 'Canvas',           color: '#E66000' },
+                      { name: 'Moodle',           color: '#F98012' },
+                      { name: 'Blackboard',       color: '#2E3191' },
+                      { name: 'Brightspace',      color: '#0067B1' },
+                      { name: 'Moodle Workplace', color: '#F98012' },
+                    ].map((lms) => (
+                      <span
+                        key={lms.name}
+                        className="bg-white border border-[#e2d9cf] rounded-lg px-3 py-1.5 text-[12px] font-semibold text-[#0a1628] shadow-sm hover:-translate-y-0.5 hover:shadow-md transition-all duration-150 cursor-default"
+                        style={{ borderLeftWidth: '3px', borderLeftColor: lms.color }}
+                      >
+                        {lms.name}
                       </span>
                     ))}
                   </div>
-                  <div className="border-t border-[#ede5da] pt-3 flex flex-wrap gap-x-4 gap-y-1">
+                  <div className="border-t border-[#ede5da] pt-3 flex flex-wrap gap-x-4 gap-y-1.5">
                     {['Student Portal', 'SSO / SAML / OIDC', 'Library Systems'].map((s) => (
-                      <span key={s} className="text-[11px] text-[#0a1628]/65 font-medium">{s}</span>
+                      <span key={s} className="text-[10px] text-[#0a1628]/50 font-semibold uppercase tracking-[0.12em]">{s}</span>
                     ))}
                   </div>
                 </div>
 
                 {/* Institutional Data Sources */}
                 <div className="bg-[#fdf9f4] border border-[#ede5da] rounded-xl p-5">
-                  <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-[#0a1628]/60 mb-4">Institutional Data Sources</p>
-                  <div className="space-y-0 divide-y divide-[#ede5da]">
+                  <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#0a1628]/40 mb-4">Institutional Data Sources</p>
+                  <div className="divide-y divide-[#ede5da]">
                     {[
-                      { label: 'Publisher Content', desc: 'Licensed textbooks, journals and course materials' },
-                      { label: 'Student Information System', desc: 'Enrolment, programme and cohort data' },
-                      { label: 'Assessment Records', desc: 'Grades, rubrics and historical performance' },
+                      { label: 'Publisher Content',         desc: 'Licensed textbooks, journals and course materials', color: '#228DC1' },
+                      { label: 'Student Information System', desc: 'Enrolment, programme and cohort data',              color: '#7c3aed' },
+                      { label: 'Assessment Records',        desc: 'Grades, rubrics and historical performance',         color: '#059669' },
                     ].map((item) => (
-                      <div key={item.label} className="flex gap-3 items-start py-3">
-                        <div className="w-1.5 h-1.5 rounded-full bg-[#228DC1] shrink-0 mt-1.5" />
+                      <div key={item.label} className="flex gap-3 items-start py-3 group">
+                        <div className="w-2 h-2 rounded-full shrink-0 mt-1.5 transition-transform group-hover:scale-125" style={{ backgroundColor: item.color }} />
                         <div>
                           <p className="text-[13px] font-semibold text-[#0a1628] leading-snug">{item.label}</p>
-                          <p className="text-[12px] text-[#0a1628]/60 font-normal mt-0.5">{item.desc}</p>
+                          <p className="text-[11px] text-[#0a1628]/55 font-normal mt-0.5">{item.desc}</p>
                         </div>
                       </div>
                     ))}

@@ -1,6 +1,6 @@
 ﻿import { useState, useRef, useEffect, type CSSProperties } from 'react'
 import { Link } from 'react-router-dom'
-import { ArrowRight, CheckCircle2, Zap, Shield, BarChart2, Settings2, Check, MessageCircleCheck, TrendingUp, Sparkles, SlidersHorizontal, BookOpen, Plug2 } from 'lucide-react'
+import { ArrowRight, CheckCircle2, Zap, Shield, BarChart2, Settings2, Check, X, MessageCircleCheck, TrendingUp, Sparkles, SlidersHorizontal, BookOpen, Plug2 } from 'lucide-react'
 import CTASection from '@/components/CTASection'
 
 // ── Scroll utilities ──────────────────────────────────────────────────────────
@@ -1267,38 +1267,83 @@ export default function KaiPage() {
 
           {/* Kai capabilities table */}
           <div className="border border-gray-200 overflow-hidden shadow-[0_1px_8px_rgba(10,22,40,0.03)]">
-            <div className="grid grid-cols-[1fr_1fr] bg-[#0a1628]">
+            {/* Header row */}
+            <div className="grid grid-cols-[1.2fr_1fr_1fr] bg-[#0a1628]">
               <div className="px-6 py-4 border-r border-white/10">
                 <p className="text-white/40 text-[11px] font-semibold uppercase tracking-[0.18em]">Capability</p>
               </div>
-              <div className="px-6 py-4 flex items-center gap-3">
+              <div className="px-6 py-4 border-r border-white/10 flex items-center gap-3">
                 <img
                   src="/kai-logo.svg"
                   alt="Kai"
-                  className="shrink-0 h-7 w-7 object-contain brightness-0 invert"
+                  className="shrink-0 h-6 w-6 object-contain brightness-0 invert"
                   onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }}
                 />
                 <p className="text-[13px] font-bold text-[#228DC1]">Kai</p>
               </div>
+              <div className="px-6 py-4 flex items-center">
+                <p className="text-[13px] font-semibold text-white/40">Typical AI Agent</p>
+              </div>
             </div>
+
+            {/* Data rows */}
             {[
-              { label: 'Best fit',                  kai: 'Mixed systems, regulated teams' },
-              { label: 'Ecosystem',                 kai: 'Vendor-flexible, integration-led' },
-              { label: 'Custom governance',         kai: 'Consent, escalation, audit' },
-              { label: 'Delivery model',            kai: 'Product + delivery support' },
-              { label: 'Regulated sectors',         kai: true },
-              { label: 'On-prem / hybrid deploy',   kai: true },
-              { label: 'ISO 42001 AI certification', kai: true },
+              {
+                label: 'Best fit',
+                kai: 'Mixed systems, regulated teams',
+                competitor: 'Single-platform teams',
+              },
+              {
+                label: 'Ecosystem',
+                kai: 'Vendor-flexible, integration-led',
+                competitor: 'Vendor-locked, single stack',
+              },
+              {
+                label: 'Custom governance',
+                kai: 'Consent, escalation, audit',
+                competitor: 'Limited or paid add-on',
+              },
+              {
+                label: 'Delivery model',
+                kai: 'Product + delivery support',
+                competitor: 'SaaS only',
+              },
+              {
+                label: 'Regulated sectors',
+                kai: true,
+                competitor: false,
+              },
+              {
+                label: 'On-prem / hybrid deploy',
+                kai: true,
+                competitor: false,
+              },
+              {
+                label: 'ISO 42001 AI certification',
+                kai: true,
+                competitor: false,
+              },
             ].map((row, rowIdx) => (
-              <div key={row.label} className={`grid grid-cols-[1fr_1fr] border-t border-gray-100 ${rowIdx % 2 === 0 ? 'bg-white' : 'bg-[#fafafa]'}`}>
+              <div key={row.label} className={`grid grid-cols-[1.2fr_1fr_1fr] border-t border-gray-100 ${rowIdx % 2 === 0 ? 'bg-white' : 'bg-[#fafafa]'}`}>
                 <div className="px-6 py-4 border-r border-gray-100">
                   <p className="text-[#0a1628] text-[13px] font-semibold">{row.label}</p>
                 </div>
-                <div className="px-6 py-4 bg-[#e5f4fa]/30">
+                {/* Kai cell — highlighted */}
+                <div className="px-6 py-4 border-r border-gray-100 bg-[#e5f4fa]/40">
                   {typeof row.kai === 'boolean' ? (
                     <Check className="w-4 h-4 text-[#228DC1]" />
                   ) : (
                     <p className="text-[12px] font-medium text-[#0a1628]">{row.kai}</p>
+                  )}
+                </div>
+                {/* Competitor cell */}
+                <div className="px-6 py-4">
+                  {typeof row.competitor === 'boolean' ? (
+                    row.competitor
+                      ? <Check className="w-4 h-4 text-[#228DC1]" />
+                      : <X className="w-4 h-4 text-gray-300" />
+                  ) : (
+                    <p className="text-[12px] font-normal text-[#0a1628]/50">{row.competitor}</p>
                   )}
                 </div>
               </div>

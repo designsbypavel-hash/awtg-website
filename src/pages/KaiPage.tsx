@@ -835,54 +835,43 @@ export default function KaiPage() {
 
       {/* ── Single combined logo strip ── */}
       {(() => {
-        const items = [
-          { type: 'img',  src: '/logos/clients/ocean-infinity.svg',    name: 'Ocean Infinity',    fw: '400', w: 'w-28' },
-          { type: 'text', src: '/logos/hubspot.svg',                   name: 'HubSpot',           fw: '700', w: ''     },
-          { type: 'img',  src: '/logos/clients/kaiser-permanente.svg', name: 'Kaiser Permanente', fw: '400', w: 'w-32' },
-          { type: 'text', src: '/logos/salesforce.svg',                name: 'Salesforce',        fw: '400', w: ''     },
-          { type: 'img',  src: '/logos/clients/cambridgeshire.svg',    name: 'Cambridgeshire CC', fw: '400', w: 'w-32' },
-          { type: 'text', src: '/logos/microsoft.svg',                 name: 'Microsoft',         fw: '600', w: ''     },
-          { type: 'img',  src: '/logos/clients/fard-solicitors.svg',   name: 'Fard Solicitors',   fw: '400', w: 'w-28' },
-          { type: 'text', src: '/logos/slack.svg',                     name: 'Slack',             fw: '700', w: ''     },
-          { type: 'text', src: '/logos/google.svg',                    name: 'Google',            fw: '400', w: ''     },
-          { type: 'text', src: '/logos/openai.svg',                    name: 'OpenAI',            fw: '500', w: ''     },
-          { type: 'text', src: '/logos/zendesk.svg',                   name: 'Zendesk',           fw: '600', w: ''     },
-          { type: 'text', src: '/logos/jira.svg',                      name: 'Jira',              fw: '700', w: ''     },
-          { type: 'text', src: '/logos/intercom.svg',                  name: 'Intercom',          fw: '500', w: ''     },
-          { type: 'text', src: '/logos/anthropic.svg',                 name: 'Anthropic',         fw: '400', w: ''     },
+        // Text-only wordmarks — font weight + style give each brand its character
+        const items: { name: string; fw: string; fs?: string; ff?: string }[] = [
+          { name: 'Kaiser Permanente',           fw: '500', ff: 'Georgia, serif'                              },
+          { name: 'Cambridgeshire County Council',fw: '400', ff: 'system-ui, sans-serif'                      },
+          { name: 'Ocean Infinity',              fw: '300', ff: 'system-ui, sans-serif', fs: 'italic'         },
+          { name: 'British Council',             fw: '700', ff: 'system-ui, sans-serif'                       },
+          { name: 'Borderlands 5GIR',            fw: '800', ff: 'system-ui, sans-serif'                       },
+          { name: 'Retail Hub',                  fw: '400', ff: 'Georgia, serif'                              },
+          { name: 'Fard Solicitors',             fw: '600', ff: 'system-ui, sans-serif'                       },
         ]
         const all = [...items, ...items]
         return (
-          <div className="bg-white border-y border-gray-100 py-9 overflow-hidden">
-            <p className="text-center text-[10px] font-semibold uppercase tracking-[0.26em] text-[#0a1628]/30 mb-8">
+          <div className="bg-white border-y border-gray-100 py-10 overflow-hidden">
+            <p className="text-center text-[10px] font-semibold uppercase tracking-[0.26em] text-[#0a1628]/30 mb-9">
               Trusted by leading organisations
             </p>
             <div className="relative">
-              <div className="absolute left-0 top-0 bottom-0 w-32 z-10 pointer-events-none"
+              <div className="absolute left-0 top-0 bottom-0 w-36 z-10 pointer-events-none"
                 style={{ background: 'linear-gradient(to right, white, transparent)' }} />
-              <div className="absolute right-0 top-0 bottom-0 w-32 z-10 pointer-events-none"
+              <div className="absolute right-0 top-0 bottom-0 w-36 z-10 pointer-events-none"
                 style={{ background: 'linear-gradient(to left, white, transparent)' }} />
-              <div className="flex animate-[marquee_55s_linear_infinite] whitespace-nowrap w-max items-center">
+              <div className="flex animate-[marquee_50s_linear_infinite] whitespace-nowrap w-max items-center">
                 {all.map((item, i) => (
-                  <div key={i} className="inline-flex items-center px-10 opacity-45 hover:opacity-90 transition-opacity duration-300">
-                    {item.type === 'img' ? (
-                      <img
-                        src={item.src}
-                        alt={item.name}
-                        className={`${item.w} h-7 object-contain grayscale`}
-                      />
-                    ) : (
-                      <div className="inline-flex items-center gap-2">
-                        <img src={item.src} alt={item.name} className="h-4 w-4 object-contain grayscale" />
-                        <span
-                          className="text-[#0a1628] text-[15px] leading-none select-none"
-                          style={{ fontWeight: item.fw, fontFamily: 'system-ui, -apple-system, sans-serif', letterSpacing: '-0.01em' }}
-                        >
-                          {item.name}
-                        </span>
-                      </div>
-                    )}
-                  </div>
+                  <span
+                    key={i}
+                    className="inline-block px-12 text-[#0a1628]/50 hover:text-[#0a1628]/80 transition-colors duration-300 select-none"
+                    style={{
+                      fontSize: '22px',
+                      fontWeight: item.fw,
+                      fontFamily: item.ff,
+                      fontStyle: item.fs ?? 'normal',
+                      letterSpacing: '-0.02em',
+                      lineHeight: 1,
+                    }}
+                  >
+                    {item.name}
+                  </span>
                 ))}
               </div>
             </div>

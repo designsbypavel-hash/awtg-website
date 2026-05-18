@@ -850,17 +850,17 @@ export default function KaiPage() {
         </div>
       </section>
 
-      {/* ── British Council case study ── */}
+      {/* ── Live in production ── */}
       <section className="bg-[#f8fafc] border-b border-gray-100">
         <div className="max-w-7xl mx-auto px-8 lg:px-12 py-20">
-          <div className="grid lg:grid-cols-[0.9fr_1.1fr] gap-14 lg:gap-20 items-center">
+          <div className="grid lg:grid-cols-[0.9fr_1.1fr] gap-14 lg:gap-20 items-center mb-14">
             <div className="max-w-xl">
               <p className="type-label text-[#228DC1] mb-5">Live in Production</p>
               <h2 className="font-heading text-[#0a1628] mb-5" style={{ fontSize: 'clamp(30px, 3.4vw, 50px)', lineHeight: 1.06 }}>
-                British Council English Online is live at scale.
+                Our AI agent is live at enterprise scale.
               </h2>
               <p className="text-[#0a1628]/64 text-[16px] font-normal leading-relaxed mb-8">
-                Live integrations across HubSpot, WhatsApp, Jira and email. Built for real learner support at production scale.
+                Live integrations across HubSpot, WhatsApp, Jira and email. Built for real support at production scale.
               </p>
               <Link to="/insights/case-studies" className="inline-flex items-center gap-2 text-[13px] font-semibold text-[#228DC1] hover:gap-3 transition-all">
                 Read the case study <ArrowRight className="w-4 h-4" />
@@ -877,7 +877,7 @@ export default function KaiPage() {
                       250k+
                     </p>
                     <p className="text-white/75 text-[14px] font-medium leading-relaxed">
-                      learners supported each month through British Council English Online.
+                      learners supported each month across enterprise deployments.
                     </p>
                   </div>
                   <div className="p-8">
@@ -904,23 +904,19 @@ export default function KaiPage() {
               </div>
             </div>
           </div>
-        </div>
-      </section>
 
-      {/* ── Security & compliance ── */}
-      <SecurityComplianceSection />
-
-      {/* ── Real metrics ── */}
-      <section className="bg-white border-t border-gray-100 py-12">
-        <div className="max-w-7xl mx-auto px-8 lg:px-12">
+          {/* Metrics row — same section */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-            <StatCard num={250} suffix="k+" label="Users / month" note="British Council English Online" delay={0} />
+            <StatCard num={250} suffix="k+" label="Users / month" note="Across enterprise deployments" delay={0} />
             <StatCard prefix="+" num={22.5} suffix="%" label="Containment uplift" note="Measured in production" delay={100} />
             <StatCard prefix="+" num={17} suffix="%" label="CSAT uplift" note="Learner satisfaction" delay={200} />
             <StatCard num={45} suffix="s" label="Avg handle time" note="AI-resolved queries" delay={300} />
           </div>
         </div>
       </section>
+
+      {/* ── Security & compliance ── */}
+      <SecurityComplianceSection />
 
       {/* ── Performance Graph ── */}
       <section className="py-24 bg-white border-t border-gray-100">

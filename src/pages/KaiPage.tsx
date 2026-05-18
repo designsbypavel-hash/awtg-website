@@ -781,13 +781,13 @@ export default function KaiPage() {
     <>
       <ScrollProgress />
       {/* ── Hero ── */}
-      <section className="relative overflow-hidden bg-white pt-32 pb-0">
+      <section className="relative overflow-hidden bg-white pt-32 pb-20">
 
         <div className="relative max-w-7xl mx-auto px-8 lg:px-12">
-          <div className="grid lg:grid-cols-[5fr_7fr] gap-12 lg:gap-16 items-end">
+          <div className="grid lg:grid-cols-[5fr_7fr] gap-12 lg:gap-16 items-center">
 
             {/* Left: copy */}
-            <div className="pb-24">
+            <div>
               <div className="flex items-center gap-3 mb-6">
                 <img src="/kai-logo.svg" alt="Kai" className="h-7 w-auto object-contain" />
                 <p className="font-black text-[#228DC1]" style={{ fontSize: '13px', letterSpacing: '0.28em', textTransform: 'uppercase', opacity: 0.6 }}>
@@ -812,14 +812,14 @@ export default function KaiPage() {
               </div>
             </div>
 
-            {/* Right: mockup — rises from bottom edge */}
-            <div className="relative hidden lg:block self-end">
+            {/* Right: mockup */}
+            <div className="relative hidden lg:block">
               <div className="absolute -inset-10 pointer-events-none" style={{
-                background: 'radial-gradient(ellipse 80% 60% at 55% 60%, rgba(34,141,193,0.10) 0%, transparent 70%)',
+                background: 'radial-gradient(ellipse 80% 60% at 55% 50%, rgba(34,141,193,0.10) 0%, transparent 70%)',
               }} />
               <div
                 className="relative overflow-hidden shadow-[0_20px_80px_rgba(10,22,40,0.12),0_4px_20px_rgba(34,141,193,0.08)] border border-gray-200/60"
-                style={{ borderRadius: '12px 12px 0 0' }}
+                style={{ borderRadius: '12px' }}
               >
                 <img
                   src="/kai-mockup.svg"

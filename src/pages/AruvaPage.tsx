@@ -9,28 +9,28 @@ const principles = [
     Icon: BookOpen,
     label: 'Education',
     title: 'Pedagogy at the Core',
-    desc: 'Every interaction is grounded in course design, learning outcomes and educator intent. Aruva teaches through the structure the professor has built, not around it.',
+    desc: 'Every response is grounded in course design, learning outcomes and educator intent.',
     color: '#228DC1',
   },
   {
     Icon: Shield,
     label: 'Governance',
     title: 'Institution in Control',
-    desc: 'Role-based access, audit trails, data residency strategy and policy-led controls give institutions full oversight of how AI operates across the academic lifecycle.',
+    desc: 'Role-based access, audit trails and data residency give institutions full oversight of every AI interaction.',
     color: '#059669',
   },
   {
     Icon: RefreshCw,
     label: 'Feedback Loop',
     title: 'Continuous Learning Intelligence',
-    desc: 'Student interactions, assessment signals, planner activity and educator responses feed back into a live model of learning. Teaching improves while learning is happening.',
+    desc: 'Student interactions and assessment signals feed back into a live model of learning.',
     color: '#7c3aed',
   },
   {
     Icon: Sparkles,
     label: 'Personalisation',
     title: 'Adaptive to Every Student',
-    desc: 'Learning Curve AI builds individual performance profiles across mastery, confidence, pace and workload. Every student receives support calibrated to where they actually are.',
+    desc: 'Learning Curve AI builds performance profiles across mastery, confidence, pace and workload.',
     color: '#d97706',
   },
 ]
@@ -41,42 +41,42 @@ const pillars = [
     num: '01',
     label: 'Smart Syllabus',
     tag: 'Course Intelligence',
-    desc: 'Turns course outcomes, resources, policies and assessments into the intelligence layer that guides every tutoring interaction, formative assessment and analytics signal. The syllabus becomes the foundation every AI response is built on.',
+    desc: 'Turns course outcomes, resources and assessments into the intelligence layer that guides every tutoring and assessment interaction.',
     capabilities: ['Learning outcome and objective mapping', 'Policy, rubric and assessment encoding', 'Resource and approved content alignment', 'AI behaviour rules per week and topic'],
   },
   {
     num: '02',
     label: 'Professor-Guided Tutor',
     tag: 'Adaptive Teaching',
-    desc: 'Educators define tone, depth, rules, approved content and learning flow. Students receive Socratic guidance that builds genuine understanding. The AI never gives away the answer. It leads the student to it.',
+    desc: 'Educators define tone, depth and rules. Students receive Socratic guidance that builds genuine understanding, not shortcuts.',
     capabilities: ['Educator-defined AI behaviour and limits', 'Socratic questioning and hint stages', 'Source-backed responses with citations', 'Course-aware, not generic question answering'],
   },
   {
     num: '03',
     label: 'Formative Assessment',
     tag: 'Assessment Intelligence',
-    desc: 'Supports quizzes, rubrics, assessment variants and early learning-gap detection before final outcomes are fixed. Educators can identify where students are struggling during the term, not after grades are submitted.',
+    desc: 'Supports quizzes, rubrics and early gap detection so educators can intervene during the term, not after grades are submitted.',
     capabilities: ['AI-assisted quiz and rubric generation', 'Assessment variant creation', 'Early gap and misconception detection', 'Rubric-aware feedback and grading support'],
   },
   {
     num: '04',
     label: 'Learning Curve AI',
     tag: 'Performance Profiling',
-    desc: 'Builds individual student profiles across mastery, confidence, pace, workload and risk signals over the course lifecycle. Adapts support as each student progresses and flags at-risk learners early.',
+    desc: 'Builds individual student profiles across mastery, confidence, pace and workload, adapting support as each student progresses.',
     capabilities: ['Mastery and confidence tracking per topic', 'Workload, pace and sentiment signals', 'At-risk student identification and alerts', 'Adaptive study planning and scheduling'],
   },
   {
     num: '05',
     label: 'Educator Analytics',
     tag: 'Teaching Insight',
-    desc: 'Gives educators real-time visibility into engagement, topic difficulty, material effectiveness and intervention opportunities. Departments and institutions track learning signals across cohorts.',
+    desc: 'Real-time visibility into engagement, topic difficulty and intervention opportunities across cohorts.',
     capabilities: ['Course-level learning dashboards', 'Topic difficulty and material effectiveness insight', 'Student engagement and participation signals', 'Cross-cohort and department analytics'],
   },
   {
     num: '06',
     label: 'Governance Layer',
     tag: 'Institutional Control',
-    desc: 'Supports role-based access, audit trails, data residency strategy, attribution and policy-led controls. Designed for institutions that need AI to be powerful, accountable and under their control.',
+    desc: 'Role-based access, audit trails and data residency controls keep AI accountable and under institutional control.',
     capabilities: ['Role-based access and policy enforcement', 'Full audit trail with source attribution', 'Data residency: cloud, hybrid or on-prem', 'SSO, LMS and institutional system integration'],
   },
 ]
@@ -86,7 +86,7 @@ const audiences = [
   {
     label: 'Students',
     headline: 'A personal academic guide, not an answer engine.',
-    desc: 'Aruva gives students a guided, source-backed and personalised way to learn. Interactions build mastery rather than deliver shortcuts.',
+    desc: 'Guided, source-backed and personalised to build mastery, not deliver shortcuts.',
     points: [
       'Syllabus-aligned tutoring that builds genuine understanding',
       'Source-backed responses with traceable citations',
@@ -98,7 +98,7 @@ const audiences = [
   {
     label: 'Educators',
     headline: 'Insight and control without added workload.',
-    desc: 'Educators stay in full control while Aruva handles alignment, assessment support, feedback intelligence and routine administrative tasks.',
+    desc: 'Stay in full control while Aruva handles alignment, assessment support and feedback intelligence.',
     points: [
       'AI that follows your course design and pedagogical rules',
       'AI-assisted quiz, rubric and assessment variant creation',
@@ -110,7 +110,7 @@ const audiences = [
   {
     label: 'Institutions',
     headline: 'Responsible AI adoption with measurable evidence.',
-    desc: 'Aruva gives institutions a practical route from AI experimentation to governed, measurable academic impact.',
+    desc: 'A practical route from AI experimentation to governed, measurable academic impact.',
     points: [
       'End-to-end AI governance across academic workflows',
       'Data residency strategy and institution-controlled deployment',
@@ -329,28 +329,28 @@ const howItWorksSteps = [
   {
     num: '01',
     label: 'Connect your course',
-    desc: 'Upload your syllabus, connect your LMS and set the rules for how AI should behave. Every outcome, reading, rubric and assessment becomes part of the intelligence layer Aruva operates from.',
+    desc: 'Upload your syllabus, connect your LMS and set the rules. Every outcome, rubric and assessment becomes part of the intelligence layer.',
     detail: 'Works with Canvas, Moodle, Blackboard and Brightspace. No rip-and-replace required.',
     visual: 'syllabus',
   },
   {
     num: '02',
     label: 'AI aligns to your intent',
-    desc: 'Aruva compiles your course structure into a policy graph, defining how the AI tutors, what content it can use, what hint stages to apply and how to assess alignment to your learning outcomes.',
+    desc: 'Aruva compiles your course structure into a policy graph: how the AI tutors, what content it uses and what hint stages to apply.',
     detail: 'Every AI response is course-aware. Nothing operates outside the bounds you set.',
     visual: 'align',
   },
   {
     num: '03',
     label: 'Students learn, guided not shortcut',
-    desc: 'Students interact with a tutor that leads through Socratic questioning, provides source-backed answers and tracks progress. Every question is a learning signal, not just a transaction.',
+    desc: 'Students interact with a tutor that leads through Socratic questioning and source-backed answers. Every question is a learning signal.',
     detail: 'Live with real students. Used in production at British Council English Online.',
     visual: 'tutor',
   },
   {
     num: '04',
     label: 'Educators see everything, act early',
-    desc: 'Real-time dashboards show engagement, topic difficulty, assessment alignment and at-risk signals. Faculty can intervene while learning is happening, not after the term ends.',
+    desc: 'Real-time dashboards show engagement, topic difficulty and at-risk signals. Faculty intervene while learning is happening.',
     detail: 'Institutional analytics roll up to department and programme level.',
     visual: 'analytics',
   },
@@ -776,7 +776,7 @@ function PillarsSection() {
             Six pillars, one continuous learning loop
           </h2>
           <p className="text-[#0a1628]/60 text-lg font-normal leading-relaxed max-w-2xl">
-            Every capability in Aruva is connected. Smart Syllabus feeds the tutor. The tutor feeds assessment. Assessment feeds analytics. Analytics feeds teaching improvement.
+            Every capability connects. Smart Syllabus feeds the tutor. The tutor feeds assessment. Assessment feeds analytics.
           </p>
         </div>
 
@@ -933,7 +933,7 @@ export default function AruvaPage() {
           ].map((item, i) => (
             <span key={i} className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#0a1628]/65 flex items-center gap-10">
               {item}
-              <span className="w-1 h-1 rounded-full bg-white/12" />
+              <span className="w-1 h-1 rounded-full bg-[#0a1628]/25" />
             </span>
           ))}
         </div>
@@ -949,7 +949,7 @@ export default function AruvaPage() {
               Guided learning, not shortcuts
             </h2>
             <p className="text-[#0a1628]/65 text-[17px] font-normal leading-relaxed">
-              The professor configured Socratic mode in the Smart Syllabus. The AI follows that intent exactly, building the student's understanding rather than bypassing it. Every exchange creates a measurable learning signal.
+              The professor configured Socratic mode in the Smart Syllabus. The AI follows that intent exactly — every exchange builds genuine understanding and creates a measurable learning signal.
             </p>
           </div>
 
@@ -984,7 +984,7 @@ export default function AruvaPage() {
               From syllabus to intelligent tutor in hours
             </h2>
             <p className="text-[#0a1628]/65 text-lg font-normal leading-relaxed max-w-2xl">
-              Aruva transforms your existing course structure into a governed AI teaching layer. No rip-and-replace. No new workflows. Just intelligent alignment with what you already teach.
+              Aruva transforms your existing course structure into a governed AI teaching layer. No rip-and-replace, no new workflows.
             </p>
           </div>
 
@@ -1073,7 +1073,7 @@ export default function AruvaPage() {
                 Designed for institutions that need AI they can govern
               </h2>
               <p className="text-[#0a1628]/65 text-[17px] font-normal leading-relaxed mb-8">
-                Aruva is built for the real requirements of higher education: data residency strategy, audit trails, role-based access, academic integrity and the ability to control how AI behaves across every course and department.
+                Built for the real requirements of higher education: data residency, audit trails, role-based access and full control over how AI behaves across every course.
               </p>
               <div className="space-y-3">
                 {[

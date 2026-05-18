@@ -906,11 +906,12 @@ export default function KaiPage() {
           </div>
 
           {/* Metrics row — same section */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-5 gap-4">
             <StatCard num={250} suffix="k+" label="Users / month" note="Across enterprise deployments" delay={0} />
             <StatCard prefix="+" num={22.5} suffix="%" label="Containment uplift" note="Measured in production" delay={100} />
             <StatCard prefix="+" num={17} suffix="%" label="CSAT uplift" note="Learner satisfaction" delay={200} />
             <StatCard num={45} suffix="s" label="Avg handle time" note="AI-resolved queries" delay={300} />
+            <StatCard num={150} suffix="+" label="Countries reached" note="Global enterprise reach" delay={400} />
           </div>
         </div>
       </section>

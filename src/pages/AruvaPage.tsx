@@ -686,7 +686,7 @@ function PlatformDiagram() {
 
           {/* ── Connector 2: two labelled branches ── */}
           <div className="ml-12 flex">
-            {[['Sync & Deploy', '1/3'], ['Read & Write', '2/3']].map(([label, pos]) => (
+            {['Sync & Deploy', 'Read & Write'].map((label) => (
               <div key={label} className="flex-1 flex flex-col items-center">
                 <div className="w-px h-4 bg-[#c8bdb0]" />
                 <div className="border border-[#d8cfc6] bg-white rounded-full px-5 py-1.5 shadow-[0_1px_4px_rgba(10,22,40,0.05)]">

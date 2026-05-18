@@ -560,21 +560,21 @@ function IntegrationsSection() {
   // 5 × 3 grid = 15 slots; Kai sits at index 7 (row 1, col 2 — dead centre)
   type Item = { label: string; category: string; logo: string | null; isKai?: true; isMcp?: true }
   const items: Item[] = [
-    { label: 'HubSpot',    category: 'CRM',        logo: '/logos/hubspot.svg' },
-    { label: 'Salesforce', category: 'CRM',        logo: '/logos/salesforce.svg' },
-    { label: 'Zendesk',    category: 'Support',    logo: '/logos/zendesk.svg' },
-    { label: 'Intercom',   category: 'Support',    logo: '/logos/intercom.svg' },
-    { label: 'Freshdesk',  category: 'Support',    logo: '/logos/freshdesk.svg' },
-    { label: 'Fin',        category: 'AI Support', logo: '/logos/fin.svg' },
-    { label: 'WhatsApp',   category: 'Messaging',  logo: '/logos/whatsapp.svg' },
-    { label: 'Kai',        category: 'AI Agent',   logo: '/kai-logo.svg',        isKai: true },
-    { label: 'Slack',      category: 'Messaging',  logo: '/logos/slack.svg' },
-    { label: 'Teams',      category: 'Messaging',  logo: '/logos/teams.svg' },
-    { label: 'Zoom',       category: 'Video',      logo: '/logos/zoom.svg' },
-    { label: 'Gmail',      category: 'Email',      logo: '/logos/gmail.svg' },
-    { label: 'Outlook',    category: 'Email',      logo: '/logos/outlook.svg' },
-    { label: 'Jira',       category: 'Ticketing',  logo: '/logos/jira.svg' },
-    { label: 'MCP',        category: 'Protocol',   logo: null,                   isMcp: true },
+    { label: 'HubSpot',     category: 'CRM',        logo: '/logos/hubspot.svg' },
+    { label: 'Salesforce',  category: 'CRM',        logo: '/logos/salesforce.svg' },
+    { label: 'Zendesk',     category: 'Support',    logo: '/logos/zendesk.svg' },
+    { label: 'Agentforce',  category: 'AI CRM',     logo: '/logos/agentforce.svg' },
+    { label: 'Freshdesk',   category: 'Support',    logo: '/logos/freshdesk.svg' },
+    { label: 'Fin',         category: 'AI Support', logo: '/logos/fin.svg' },
+    { label: 'WhatsApp',    category: 'Messaging',  logo: '/logos/whatsapp.svg' },
+    { label: 'Kai',         category: 'AI Agent',   logo: '/kai-logo.svg',        isKai: true },
+    { label: 'Slack',       category: 'Messaging',  logo: '/logos/slack.svg' },
+    { label: 'Teams',       category: 'Messaging',  logo: '/logos/teams.svg' },
+    { label: 'Zoom',        category: 'Video',      logo: '/logos/zoom.svg' },
+    { label: 'Gmail',       category: 'Email',      logo: '/logos/gmail.svg' },
+    { label: 'Outlook',     category: 'Email',      logo: '/logos/outlook.svg' },
+    { label: 'Jira',        category: 'Ticketing',  logo: '/logos/jira.svg' },
+    { label: 'MCP',         category: 'Protocol',   logo: null,                   isMcp: true },
   ]
 
   // Manhattan distance from center card (row 1, col 2 in a 5-col grid)
@@ -582,120 +582,106 @@ function IntegrationsSection() {
 
   return (
     <section className="py-24 bg-white border-t border-gray-100">
-      <div className="max-w-5xl mx-auto px-8 lg:px-12">
+      <div className="max-w-7xl mx-auto px-8 lg:px-12">
+        <div className="grid lg:grid-cols-[2fr_3fr] gap-16 items-center">
 
-        {/* Header */}
-        <div className="text-center mb-14">
-          <p className="text-[#228DC1] mb-4" style={{ fontSize: '11px', fontWeight: 700, letterSpacing: '0.28em', textTransform: 'uppercase', opacity: 0.75 }}>Integrations</p>
-          <h2 className="font-heading text-[#0a1628] mb-4" style={{ fontSize: 'clamp(30px,3.2vw,46px)', lineHeight: 1.08 }}>
-            Works with your stack.<br />MCP-ready on day one.
-          </h2>
-          <p className="text-[#0a1628]/60 text-base leading-relaxed max-w-lg mx-auto">
-            Kai sits at the centre of your ecosystem, connected to every CRM, support platform, messaging channel and protocol without ripping anything out.
-          </p>
-        </div>
-
-        {/* 5 × 3 hub grid */}
-        <div ref={ref} className="grid grid-cols-3 sm:grid-cols-5 gap-2 sm:gap-3">
-          {items.map((item, i) => {
-            const d = dist(i)
-            const isCorner   = d === 3
-            const isAdjacent = d === 1
-
-            return (
-              <div
-                key={item.label}
-                className={`relative flex flex-col items-center justify-center gap-2.5 p-4 sm:p-5 min-h-[108px] sm:min-h-[128px] transition-all duration-300 select-none ${
-                  item.isKai
-                    ? 'z-10'
-                    : isAdjacent
-                      ? 'bg-[#f9fcff] border border-[#228DC1]/18 hover:border-[#228DC1]/40 hover:shadow-sm cursor-default'
-                      : isCorner
-                        ? 'bg-white border border-gray-100 opacity-50 cursor-default'
-                        : 'bg-white border border-gray-100 hover:border-gray-200 hover:shadow-sm cursor-default'
-                }`}
-                style={{
-                  ...reveal(inView, d * 75),
-                  ...(item.isKai ? {
-                    background: '#0a1628',
-                    border: '1.5px solid rgba(34,141,193,0.55)',
-                    boxShadow: '0 0 0 6px rgba(34,141,193,0.07), 0 0 40px rgba(34,141,193,0.22), 0 0 80px rgba(34,141,193,0.10), 0 8px 30px rgba(34,141,193,0.14)',
-                  } : {}),
-                }}
-              >
-                {/* Kai: inner radial glow backdrop */}
-                {item.isKai && (
-                  <div
-                    className="absolute inset-0 pointer-events-none"
-                    style={{ background: 'radial-gradient(ellipse at center, rgba(34,141,193,0.18) 0%, transparent 72%)' }}
-                  />
-                )}
-
-                {item.isKai ? (
-                  <>
-                    {/* Pulsing ring */}
-                    <div className="relative flex items-center justify-center">
-                      <div
-                        className="absolute w-12 h-12 border-2 border-[#228DC1]/50"
-                        style={{ animation: 'hubRing 2.6s ease-out infinite' }}
-                      />
-                      <div className="relative w-12 h-12 bg-[#228DC1] flex items-center justify-center shadow-[0_4px_18px_rgba(34,141,193,0.50)]">
-                        <img
-                          src="/kai-logo.svg"
-                          alt="Kai"
-                          className="w-7 h-7 object-contain brightness-0 invert"
-                          onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }}
-                        />
-                      </div>
-                    </div>
-                    <p className="relative text-white font-bold text-[11px] uppercase tracking-[0.22em]">Kai</p>
-                    <span className="relative text-[9px] font-semibold text-[#228DC1] bg-[#228DC1]/15 border border-[#228DC1]/30 px-2 py-0.5">
-                      AI Agent · MCP
-                    </span>
-                  </>
-                ) : item.isMcp ? (
-                  <>
-                    <div className="w-9 h-9 flex items-center justify-center bg-[#e5f4fa] border border-[#228DC1]/25">
-                      <span className="text-[#228DC1] text-[10px] font-black tracking-tight">MCP</span>
-                    </div>
-                    <div className="text-center">
-                      <p className="text-[#0a1628]/65 text-[11px] font-semibold">MCP</p>
-                      <p className="text-[#0a1628]/35 text-[10px] leading-tight mt-0.5">Protocol</p>
-                    </div>
-                  </>
-                ) : (
-                  <>
-                    <img
-                      src={item.logo ?? undefined}
-                      alt={item.label}
-                      className="w-8 h-8 sm:w-9 sm:h-9 object-contain"
-                      onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }}
-                    />
-                    <div className="text-center">
-                      <p className="text-[#0a1628]/70 text-[11px] font-semibold leading-tight">{item.label}</p>
-                      <p className="text-[#0a1628]/35 text-[10px] leading-tight mt-0.5">{item.category}</p>
-                    </div>
-                  </>
-                )}
-              </div>
-            )
-          })}
-        </div>
-
-        {/* Bottom stats */}
-        <div className="mt-5 grid sm:grid-cols-3 gap-3">
-          {[
-            { label: 'Native integrations', value: '14+ platforms' },
-            { label: 'Custom systems',      value: 'API + webhooks' },
-            { label: 'Tool access',         value: 'MCP supported' },
-          ].map((item) => (
-            <div key={item.label} className="bg-[#f8fafc] border border-gray-200 px-5 py-4">
-              <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-[#0a1628]/35 mb-1">{item.label}</p>
-              <p className="text-[#0a1628] text-[13px] font-semibold">{item.value}</p>
+          {/* Left: copy */}
+          <div>
+            <p className="text-[#228DC1] mb-4" style={{ fontSize: '11px', fontWeight: 700, letterSpacing: '0.28em', textTransform: 'uppercase', opacity: 0.75 }}>Integrations</p>
+            <h2 className="font-heading text-[#0a1628] mb-5" style={{ fontSize: 'clamp(28px, 3vw, 44px)', lineHeight: 1.08 }}>
+              Works with your stack.<br />MCP-ready on day one.
+            </h2>
+            <p className="text-[#0a1628]/60 text-base leading-relaxed mb-8">
+              Kai sits at the centre of your ecosystem, connected to every CRM, support platform, messaging channel and protocol without ripping anything out.
+            </p>
+            <div className="flex flex-col gap-3">
+              {[
+                { label: 'Custom systems',  value: 'API + webhooks' },
+                { label: 'Tool access',     value: 'MCP supported'  },
+              ].map((item) => (
+                <div key={item.label} className="flex items-center gap-3">
+                  <div className="w-1.5 h-1.5 bg-[#228DC1] rounded-full shrink-0" />
+                  <span className="text-[#0a1628]/60 text-[13px]">{item.label} — <span className="font-semibold text-[#0a1628]">{item.value}</span></span>
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
+          </div>
 
+          {/* Right: 5 × 3 hub grid */}
+          <div ref={ref} className="grid grid-cols-5 gap-2">
+            {items.map((item, i) => {
+              const d = dist(i)
+              const isCorner   = d === 3
+              const isAdjacent = d === 1
+
+              return (
+                <div
+                  key={item.label}
+                  className={`relative flex flex-col items-center justify-center gap-2 p-3 min-h-[100px] transition-all duration-300 select-none ${
+                    item.isKai
+                      ? 'z-10'
+                      : isAdjacent
+                        ? 'bg-[#f9fcff] border border-[#228DC1]/18 hover:border-[#228DC1]/40 hover:shadow-sm cursor-default'
+                        : isCorner
+                          ? 'bg-white border border-gray-100 opacity-50 cursor-default'
+                          : 'bg-white border border-gray-100 hover:border-gray-200 hover:shadow-sm cursor-default'
+                  }`}
+                  style={{
+                    ...reveal(inView, d * 75),
+                    ...(item.isKai ? {
+                      background: '#0a1628',
+                      border: '1.5px solid rgba(34,141,193,0.55)',
+                      boxShadow: '0 0 0 6px rgba(34,141,193,0.07), 0 0 40px rgba(34,141,193,0.22), 0 0 80px rgba(34,141,193,0.10), 0 8px 30px rgba(34,141,193,0.14)',
+                    } : {}),
+                  }}
+                >
+                  {item.isKai && (
+                    <div className="absolute inset-0 pointer-events-none"
+                      style={{ background: 'radial-gradient(ellipse at center, rgba(34,141,193,0.18) 0%, transparent 72%)' }} />
+                  )}
+
+                  {item.isKai ? (
+                    <>
+                      <div className="relative flex items-center justify-center">
+                        <div className="absolute w-10 h-10 border-2 border-[#228DC1]/50"
+                          style={{ animation: 'hubRing 2.6s ease-out infinite' }} />
+                        <div className="relative w-10 h-10 bg-[#228DC1] flex items-center justify-center shadow-[0_4px_18px_rgba(34,141,193,0.50)]">
+                          <img src="/kai-logo.svg" alt="Kai" className="w-6 h-6 object-contain brightness-0 invert"
+                            onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }} />
+                        </div>
+                      </div>
+                      <p className="relative text-white font-bold text-[10px] uppercase tracking-[0.22em]">Kai</p>
+                      <span className="relative text-[8px] font-semibold text-[#228DC1] bg-[#228DC1]/15 border border-[#228DC1]/30 px-1.5 py-0.5">
+                        AI Agent · MCP
+                      </span>
+                    </>
+                  ) : item.isMcp ? (
+                    <>
+                      <div className="w-8 h-8 flex items-center justify-center bg-[#e5f4fa] border border-[#228DC1]/25">
+                        <span className="text-[#228DC1] text-[9px] font-black tracking-tight">MCP</span>
+                      </div>
+                      <div className="text-center">
+                        <p className="text-[#0a1628]/65 text-[10px] font-semibold">MCP</p>
+                        <p className="text-[#0a1628]/35 text-[9px] leading-tight mt-0.5">Protocol</p>
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      <img src={item.logo ?? undefined} alt={item.label}
+                        className="w-7 h-7 object-contain"
+                        onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }} />
+                      <div className="text-center">
+                        <p className="text-[#0a1628]/70 text-[10px] font-semibold leading-tight">{item.label}</p>
+                        <p className="text-[#0a1628]/35 text-[9px] leading-tight mt-0.5">{item.category}</p>
+                      </div>
+                    </>
+                  )}
+                </div>
+              )
+            })}
+          </div>
+
+        </div>
       </div>
     </section>
   )
@@ -944,6 +930,9 @@ export default function KaiPage() {
           </div>
         </div>
       </section>
+
+      {/* ── Integrations ── */}
+      <IntegrationsSection />
 
       {/* ── Security & compliance ── */}
       <SecurityComplianceSection />
@@ -1276,8 +1265,6 @@ export default function KaiPage() {
         </div>
       </section>
 
-      {/* ── Integrations ── */}
-      <IntegrationsSection />
 
       {/* ── Pilot CTA ── */}
       <section className="py-16 bg-[#f8fafc] border-t border-gray-100">

@@ -629,29 +629,26 @@ function IntegrationsSection() {
                   style={{
                     ...reveal(inView, d * 75),
                     ...(item.isKai ? {
-                      background: 'linear-gradient(145deg, #1a0d2e 0%, #2d1248 100%)',
-                      border: '1.5px solid rgba(144,62,142,0.55)',
-                      boxShadow: '0 0 0 6px rgba(144,62,142,0.07), 0 0 40px rgba(144,62,142,0.28), 0 0 80px rgba(144,62,142,0.12), 0 8px 30px rgba(144,62,142,0.20)',
+                      background: '#ffffff',
+                      border: '1.5px solid rgba(144,62,142,0.25)',
+                      boxShadow: '0 0 0 4px rgba(144,62,142,0.05), 0 0 32px rgba(144,62,142,0.15), 0 4px 20px rgba(144,62,142,0.10)',
                     } : {}),
                   }}
                 >
                   {item.isKai && (
                     <div className="absolute inset-0 pointer-events-none"
-                      style={{ background: 'radial-gradient(ellipse at center, rgba(144,62,142,0.20) 0%, transparent 72%)' }} />
+                      style={{ background: 'radial-gradient(ellipse at 50% 30%, rgba(144,62,142,0.06) 0%, transparent 70%)' }} />
                   )}
 
                   {item.isKai ? (
                     <>
-                      <div className="relative flex items-center justify-center">
-                        <div className="absolute w-12 h-12 rounded-full border border-[#903E8E]/40"
-                          style={{ animation: 'hubRing 2.6s ease-out infinite' }} />
-                        <div className="relative w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center backdrop-blur-sm border border-white/10">
-                          <img src="/kai-logo-mark.svg" alt="Kai" className="w-7 h-7 object-contain"
-                            onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }} />
-                        </div>
-                      </div>
-                      <p className="relative text-white font-bold text-[10px] uppercase tracking-[0.22em]">Kai</p>
-                      <span className="relative text-[8px] font-semibold text-[#903E8E] bg-[#903E8E]/15 border border-[#903E8E]/35 px-1.5 py-0.5 rounded-sm">
+                      <img
+                        src="/kai-logo-horiz.svg"
+                        alt="Kai"
+                        className="relative w-24 object-contain"
+                        onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }}
+                      />
+                      <span className="relative text-[8px] font-semibold text-[#903E8E] bg-[#903E8E]/10 border border-[#903E8E]/30 px-1.5 py-0.5 rounded-sm">
                         AI Agent · MCP
                       </span>
                     </>

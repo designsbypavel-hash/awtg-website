@@ -924,28 +924,28 @@ export default function KaiPage() {
         <div className="max-w-7xl mx-auto px-8 lg:px-12">
           <div className="grid lg:grid-cols-[1fr_1.6fr] gap-16 items-center">
 
-            {/* Left: copy + stat list */}
+            {/* Left: heading + qualitative outcomes */}
             <div>
               <p className="type-label text-[#228DC1] mb-4">Measured Outcomes</p>
               <h2 className="font-heading text-[#0a1628] mb-5" style={{ fontSize: 'clamp(30px, 3.2vw, 46px)', lineHeight: 1.08 }}>
                 Performance you can measure.
               </h2>
-              <p className="text-[#0a1628]/60 text-base font-normal leading-relaxed mb-10">
+              <p className="text-[#0a1628]/60 text-base font-normal leading-relaxed mb-12">
                 Track containment, CSAT and handle time from day one.
               </p>
-              <div className="space-y-0 border-t border-gray-100">
+              <div className="space-y-8">
                 {[
-                  { stat: '+22.5%', label: 'Containment uplift', desc: 'More queries handled at first touch' },
-                  { stat: '+17%',   label: 'CSAT improvement',   desc: 'Higher learner satisfaction' },
-                  { stat: '45s',    label: 'Avg handle time',     desc: 'Measured in production' },
-                ].map(item => (
-                  <div key={item.label} className="flex items-start gap-5 py-5 border-b border-gray-100">
-                    <p className="font-black text-[#228DC1] shrink-0 w-[72px] leading-none mt-0.5" style={{ fontSize: 'clamp(20px, 1.8vw, 26px)', letterSpacing: '-0.02em' }}>
-                      {item.stat}
-                    </p>
+                  { Icon: Zap,      label: 'Resolve at first touch',   desc: 'Kai handles routine queries end-to-end, keeping agents free for complex work.' },
+                  { Icon: BarChart2, label: 'Track what matters',       desc: 'Containment, CSAT and escalation rates visible from the moment Kai goes live.' },
+                  { Icon: Shield,   label: 'Governed before go-live',  desc: 'Rules, audit trails and escalation paths are configured, not bolted on later.' },
+                ].map(({ Icon, label, desc }) => (
+                  <div key={label} className="flex items-start gap-4">
+                    <div className="w-9 h-9 flex items-center justify-center shrink-0 mt-0.5" style={{ backgroundColor: '#228DC112' }}>
+                      <Icon className="w-4 h-4 text-[#228DC1]" strokeWidth={1.6} />
+                    </div>
                     <div>
-                      <p className="text-[#0a1628] font-semibold text-[14px] mb-0.5">{item.label}</p>
-                      <p className="text-[#0a1628]/60 text-[12px] font-normal leading-snug">{item.desc}</p>
+                      <p className="text-[#0a1628] font-semibold text-[14px] mb-1">{label}</p>
+                      <p className="text-[#0a1628]/55 text-[13px] font-normal leading-relaxed">{desc}</p>
                     </div>
                   </div>
                 ))}

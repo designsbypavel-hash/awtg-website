@@ -1124,48 +1124,97 @@ export default function KaiPage() {
       </section>
 
       {/* ── How Kai Works ── */}
-      <section className="py-24 bg-[#f8fafc] border-t border-gray-100">
-        <div className="max-w-7xl mx-auto px-8 lg:px-12">
-          <div className="mb-16">
-            <p className="type-label text-[#228DC1] mb-4">How It Works</p>
-            <h2 className="font-heading text-[#0a1628] mb-3" style={{ fontSize: 'clamp(30px, 3.2vw, 46px)', lineHeight: 1.08 }}>
-              Live in 5 minutes.
+      <section className="relative overflow-hidden" style={{ background: 'linear-gradient(135deg, #0a1628 0%, #0d2240 40%, #0a3352 70%, #0a1628 100%)' }}>
+        {/* Ambient glow blobs */}
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute top-[-20%] left-[10%] w-[600px] h-[600px] rounded-full" style={{ background: 'radial-gradient(circle, rgba(34,141,193,0.18) 0%, transparent 70%)' }} />
+          <div className="absolute bottom-[-10%] right-[5%] w-[500px] h-[500px] rounded-full" style={{ background: 'radial-gradient(circle, rgba(34,141,193,0.12) 0%, transparent 70%)' }} />
+        </div>
+
+        {/* Dot grid texture */}
+        <div className="absolute inset-0 pointer-events-none opacity-20" style={{
+          backgroundImage: 'radial-gradient(circle, rgba(255,255,255,0.3) 1px, transparent 1px)',
+          backgroundSize: '36px 36px',
+        }} />
+
+        <div className="relative max-w-7xl mx-auto px-8 lg:px-12 py-28">
+
+          {/* Heading */}
+          <div className="text-center mb-16">
+            <p className="text-[#228DC1] mb-4 font-bold uppercase tracking-[0.28em]" style={{ fontSize: '11px' }}>How It Works</p>
+            <h2 className="font-heading text-white mb-4" style={{ fontSize: 'clamp(32px, 4vw, 56px)', lineHeight: 1.06 }}>
+              How Kai drives efficiency
             </h2>
-            <p className="text-[#0a1628]/60 text-base font-normal leading-relaxed max-w-xl">
-              Connect your stack and start handling real workflows in minutes.
+            <p className="text-white/50 text-base max-w-lg mx-auto leading-relaxed">
+              Three steps from setup to live AI resolution — no rip-and-replace required.
             </p>
           </div>
-          <div ref={stepsRef} className="grid sm:grid-cols-3 gap-px bg-gray-200 border border-gray-200">
+
+          {/* Cards */}
+          <div ref={stepsRef} className="grid sm:grid-cols-3 gap-4">
             {[
               {
-                num: '01', Icon: Settings2,
-                label: 'Connect your systems',
-                desc: 'CRM, helpdesk, messaging, email, API and MCP.',
+                num: '01',
+                pill: 'PARAMETERS',
+                label: 'Define Parameters',
+                desc: 'Set your tone, escalation rules, identity checks and policy boundaries. Kai operates exactly within the limits you configure.',
+                Icon: Settings2,
               },
               {
-                num: '02', Icon: Shield,
-                label: 'Configure your rules',
-                desc: 'Set access, tone, escalation and approval rules.',
+                num: '02',
+                pill: 'KNOWLEDGE',
+                label: 'Build Knowledge Base',
+                desc: 'Upload documents, connect FAQs and link live data sources. Kai draws from your knowledge — not generic web data.',
+                Icon: Shield,
               },
               {
-                num: '03', Icon: BarChart2,
-                label: 'Measure real outcomes',
-                desc: 'Track containment, CSAT and escalations live.',
+                num: '03',
+                pill: 'SYSTEMS',
+                label: 'Connect Systems',
+                desc: 'Link your CRM, helpdesk, messaging channels and APIs in minutes. Kai takes action in your live systems — not just chat.',
+                Icon: BarChart2,
               },
             ].map((step, i) => (
-              <div key={step.num} className="group bg-white p-8 hover:bg-[#f8fafc] transition-colors" style={reveal(stepsInView, i * 120)}>
-                <div className="flex items-center gap-3 mb-6">
-                  <span className="font-black text-[10px] text-[#228DC1]" style={{ letterSpacing: '0.05em' }}>{step.num}</span>
-                  <div className="h-px flex-1 bg-gray-100" />
+              <div
+                key={step.num}
+                className="relative group rounded-2xl p-8 cursor-default transition-all duration-300 hover:-translate-y-1"
+                style={{
+                  ...reveal(stepsInView, i * 130),
+                  background: 'rgba(255,255,255,0.06)',
+                  border: '1px solid rgba(255,255,255,0.12)',
+                  backdropFilter: 'blur(16px)',
+                  WebkitBackdropFilter: 'blur(16px)',
+                  boxShadow: '0 4px 32px rgba(0,0,0,0.2)',
+                }}
+              >
+                {/* Hover glow */}
+                <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" style={{
+                  background: 'linear-gradient(135deg, rgba(34,141,193,0.10) 0%, transparent 60%)',
+                }} />
+
+                {/* Pill */}
+                <span className="inline-block text-[10px] font-bold tracking-[0.22em] text-[#228DC1] bg-[#228DC1]/15 border border-[#228DC1]/30 px-3 py-1 rounded-full mb-6">
+                  {step.pill}
+                </span>
+
+                {/* Step number */}
+                <div className="flex items-center gap-2 mb-4">
+                  <span className="text-white/20 font-black" style={{ fontSize: '48px', lineHeight: 1, letterSpacing: '-0.04em' }}>{step.num}</span>
                 </div>
-                <div className="w-10 h-10 flex items-center justify-center mb-5" style={{ backgroundColor: '#228DC112' }}>
-                  <step.Icon className="w-5 h-5 text-[#228DC1]" strokeWidth={1.5} />
+
+                <h3 className="text-white font-bold text-[20px] leading-snug mb-3">{step.label}</h3>
+                <p className="text-white/55 text-[14px] font-normal leading-relaxed">{step.desc}</p>
+
+                {/* Icon bottom-right */}
+                <div className="mt-6 flex justify-end">
+                  <div className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: 'rgba(34,141,193,0.15)', border: '1px solid rgba(34,141,193,0.25)' }}>
+                    <step.Icon className="w-4 h-4 text-[#228DC1]" strokeWidth={1.5} />
+                  </div>
                 </div>
-                <h3 className="text-[#0a1628] font-semibold text-[15px] leading-snug mb-2">{step.label}</h3>
-                <p className="text-[#0a1628]/60 text-sm font-normal leading-relaxed">{step.desc}</p>
               </div>
             ))}
           </div>
+
         </div>
       </section>
 

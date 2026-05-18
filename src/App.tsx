@@ -78,6 +78,7 @@ export default function App() {
 
         {/* Products */}
         <Route path="kai" element={<KaiPage />} />
+        <Route path="aruva" element={<AruvaPage />} />
         <Route path="products/aruva" element={<AruvaPage />} />
         <Route path="products/kai" element={<KaiPage />} />
         <Route path="products/icmap" element={<IcmapPage />} />

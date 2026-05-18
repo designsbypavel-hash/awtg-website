@@ -833,50 +833,55 @@ export default function KaiPage() {
         </div>
       </section>
 
-      {/* ── Logo marquee ── */}
+      {/* ── Single combined logo strip ── */}
       {(() => {
-        const logos = [
-          { src: '/logos/hubspot.svg',    name: 'HubSpot',    fw: '700' },
-          { src: '/logos/salesforce.svg', name: 'Salesforce', fw: '400' },
-          { src: '/logos/microsoft.svg',  name: 'Microsoft',  fw: '600' },
-          { src: '/logos/slack.svg',      name: 'Slack',      fw: '700' },
-          { src: '/logos/google.svg',     name: 'Google',     fw: '400' },
-          { src: '/logos/openai.svg',     name: 'OpenAI',     fw: '500' },
-          { src: '/logos/zendesk.svg',    name: 'Zendesk',    fw: '600' },
-          { src: '/logos/jira.svg',       name: 'Jira',       fw: '700' },
-          { src: '/logos/intercom.svg',   name: 'Intercom',   fw: '500' },
-          { src: '/logos/amazon.svg',     name: 'Amazon',     fw: '400' },
-          { src: '/logos/zoom.svg',       name: 'Zoom',       fw: '700' },
-          { src: '/logos/anthropic.svg',  name: 'Anthropic',  fw: '400' },
-          { src: '/logos/twilio.svg',     name: 'Twilio',     fw: '600' },
-          { src: '/logos/teams.svg',      name: 'Teams',      fw: '600' },
+        const items = [
+          { type: 'img',  src: '/logos/clients/ocean-infinity.svg',    name: 'Ocean Infinity',    fw: '400', w: 'w-28' },
+          { type: 'text', src: '/logos/hubspot.svg',                   name: 'HubSpot',           fw: '700', w: ''     },
+          { type: 'img',  src: '/logos/clients/kaiser-permanente.svg', name: 'Kaiser Permanente', fw: '400', w: 'w-32' },
+          { type: 'text', src: '/logos/salesforce.svg',                name: 'Salesforce',        fw: '400', w: ''     },
+          { type: 'img',  src: '/logos/clients/cambridgeshire.svg',    name: 'Cambridgeshire CC', fw: '400', w: 'w-32' },
+          { type: 'text', src: '/logos/microsoft.svg',                 name: 'Microsoft',         fw: '600', w: ''     },
+          { type: 'img',  src: '/logos/clients/fard-solicitors.svg',   name: 'Fard Solicitors',   fw: '400', w: 'w-28' },
+          { type: 'text', src: '/logos/slack.svg',                     name: 'Slack',             fw: '700', w: ''     },
+          { type: 'text', src: '/logos/google.svg',                    name: 'Google',            fw: '400', w: ''     },
+          { type: 'text', src: '/logos/openai.svg',                    name: 'OpenAI',            fw: '500', w: ''     },
+          { type: 'text', src: '/logos/zendesk.svg',                   name: 'Zendesk',           fw: '600', w: ''     },
+          { type: 'text', src: '/logos/jira.svg',                      name: 'Jira',              fw: '700', w: ''     },
+          { type: 'text', src: '/logos/intercom.svg',                  name: 'Intercom',          fw: '500', w: ''     },
+          { type: 'text', src: '/logos/anthropic.svg',                 name: 'Anthropic',         fw: '400', w: ''     },
         ]
-        const all = [...logos, ...logos]
+        const all = [...items, ...items]
         return (
-          <div className="bg-white border-y border-gray-100 py-8 overflow-hidden">
-            <p className="text-center text-[10px] font-semibold uppercase tracking-[0.26em] text-[#0a1628]/30 mb-7">
-              Trusted by teams using
+          <div className="bg-white border-y border-gray-100 py-9 overflow-hidden">
+            <p className="text-center text-[10px] font-semibold uppercase tracking-[0.26em] text-[#0a1628]/30 mb-8">
+              Trusted by leading organisations
             </p>
             <div className="relative">
-              <div className="absolute left-0 top-0 bottom-0 w-28 z-10 pointer-events-none"
+              <div className="absolute left-0 top-0 bottom-0 w-32 z-10 pointer-events-none"
                 style={{ background: 'linear-gradient(to right, white, transparent)' }} />
-              <div className="absolute right-0 top-0 bottom-0 w-28 z-10 pointer-events-none"
+              <div className="absolute right-0 top-0 bottom-0 w-32 z-10 pointer-events-none"
                 style={{ background: 'linear-gradient(to left, white, transparent)' }} />
-              <div className="flex animate-[marquee_45s_linear_infinite] whitespace-nowrap w-max items-center">
-                {all.map((logo, i) => (
-                  <div key={i} className="inline-flex items-center gap-2.5 px-9 opacity-40 hover:opacity-80 transition-opacity duration-300 group">
-                    <img
-                      src={logo.src}
-                      alt={logo.name}
-                      className="h-5 w-5 object-contain grayscale"
-                      style={{ color: '#0a1628' }}
-                    />
-                    <span
-                      className="text-[#0a1628] text-[15px] leading-none select-none"
-                      style={{ fontWeight: logo.fw, fontFamily: 'system-ui, -apple-system, sans-serif', letterSpacing: '-0.01em' }}
-                    >
-                      {logo.name}
-                    </span>
+              <div className="flex animate-[marquee_55s_linear_infinite] whitespace-nowrap w-max items-center">
+                {all.map((item, i) => (
+                  <div key={i} className="inline-flex items-center px-10 opacity-45 hover:opacity-90 transition-opacity duration-300">
+                    {item.type === 'img' ? (
+                      <img
+                        src={item.src}
+                        alt={item.name}
+                        className={`${item.w} h-7 object-contain grayscale`}
+                      />
+                    ) : (
+                      <div className="inline-flex items-center gap-2">
+                        <img src={item.src} alt={item.name} className="h-4 w-4 object-contain grayscale" />
+                        <span
+                          className="text-[#0a1628] text-[15px] leading-none select-none"
+                          style={{ fontWeight: item.fw, fontFamily: 'system-ui, -apple-system, sans-serif', letterSpacing: '-0.01em' }}
+                        >
+                          {item.name}
+                        </span>
+                      </div>
+                    )}
                   </div>
                 ))}
               </div>
@@ -884,30 +889,6 @@ export default function KaiPage() {
           </div>
         )
       })()}
-
-      {/* ── Client logo strip ── */}
-      <section className="bg-[#fafafa] border-t border-gray-100 border-b border-gray-100 py-10">
-        <div className="max-w-7xl mx-auto px-8 lg:px-12">
-          <p className="text-[10px] font-semibold uppercase tracking-[0.26em] text-[#0a1628]/30 text-center mb-8">
-            Trusted by leading organisations
-          </p>
-          <div className="flex flex-wrap items-center justify-center gap-12 lg:gap-20">
-            {[
-              { src: '/logos/clients/ocean-infinity.svg',    alt: 'Ocean Infinity',               w: 'w-36' },
-              { src: '/logos/clients/fard-solicitors.svg',   alt: 'Fard Solicitors',              w: 'w-36' },
-              { src: '/logos/clients/kaiser-permanente.svg', alt: 'Kaiser Permanente',            w: 'w-40' },
-              { src: '/logos/clients/cambridgeshire.svg',    alt: 'Cambridgeshire County Council', w: 'w-44' },
-            ].map((logo) => (
-              <img
-                key={logo.alt}
-                src={logo.src}
-                alt={logo.alt}
-                className={`${logo.w} h-10 object-contain opacity-75 hover:opacity-100 transition-opacity duration-300`}
-              />
-            ))}
-          </div>
-        </div>
-      </section>
 
       {/* ── Live in production ── */}
       <section className="bg-[#f8fafc] border-b border-gray-100">

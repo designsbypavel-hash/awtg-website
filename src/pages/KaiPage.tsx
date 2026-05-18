@@ -833,20 +833,59 @@ export default function KaiPage() {
         </div>
       </section>
 
-      {/* ── Marquee ── */}
-      <div className="bg-white border-y border-gray-100 py-4 overflow-hidden">
-        <div className="flex animate-[marquee_35s_linear_infinite] whitespace-nowrap w-max">
-          {[
-            'Enterprise Teams', 'Contact Centre AI', 'Customer Operations', 'Regulated Industries',
-            'ISO 42001 Certified', 'Financial Services', 'Higher Education', 'Public Sector',
-            'Healthcare', 'Mixed-Stack Teams', 'Governance-Led AI', 'Telco & Utilities',
-            'Enterprise Teams', 'Contact Centre AI', 'Customer Operations', 'Regulated Industries',
-          ].map((item, i) => (
-            <span key={i} className="inline-flex items-center text-[10px] font-semibold uppercase tracking-[0.2em] text-[#0a1628]/55 px-8">
-              {item}
-              <span className="ml-8 w-1 h-1 rounded-full bg-[#228DC1]/40 inline-block" />
-            </span>
-          ))}
+      {/* ── Logo marquee ── */}
+      <div className="bg-white border-y border-gray-100 py-8 overflow-hidden">
+        <p className="text-center text-[10px] font-semibold uppercase tracking-[0.26em] text-[#0a1628]/30 mb-7">
+          Trusted by teams using
+        </p>
+        {/* Fade masks */}
+        <div className="relative">
+          <div className="absolute left-0 top-0 bottom-0 w-24 z-10 pointer-events-none"
+            style={{ background: 'linear-gradient(to right, white, transparent)' }} />
+          <div className="absolute right-0 top-0 bottom-0 w-24 z-10 pointer-events-none"
+            style={{ background: 'linear-gradient(to left, white, transparent)' }} />
+
+          <div className="flex animate-[marquee_40s_linear_infinite] whitespace-nowrap w-max items-center">
+            {[
+              { src: '/logos/hubspot.svg',    alt: 'HubSpot',    h: 'h-6'  },
+              { src: '/logos/salesforce.svg', alt: 'Salesforce', h: 'h-7'  },
+              { src: '/logos/microsoft.svg',  alt: 'Microsoft',  h: 'h-6'  },
+              { src: '/logos/slack.svg',      alt: 'Slack',      h: 'h-6'  },
+              { src: '/logos/google.svg',     alt: 'Google',     h: 'h-6'  },
+              { src: '/logos/openai.svg',     alt: 'OpenAI',     h: 'h-5'  },
+              { src: '/logos/zendesk.svg',    alt: 'Zendesk',    h: 'h-6'  },
+              { src: '/logos/jira.svg',       alt: 'Jira',       h: 'h-6'  },
+              { src: '/logos/intercom.svg',   alt: 'Intercom',   h: 'h-6'  },
+              { src: '/logos/amazon.svg',     alt: 'Amazon',     h: 'h-6'  },
+              { src: '/logos/zoom.svg',       alt: 'Zoom',       h: 'h-6'  },
+              { src: '/logos/anthropic.svg',  alt: 'Anthropic',  h: 'h-5'  },
+              { src: '/logos/twilio.svg',     alt: 'Twilio',     h: 'h-6'  },
+              { src: '/logos/teams.svg',      alt: 'Teams',      h: 'h-6'  },
+              // duplicate set for seamless loop
+              { src: '/logos/hubspot.svg',    alt: 'HubSpot',    h: 'h-6'  },
+              { src: '/logos/salesforce.svg', alt: 'Salesforce', h: 'h-7'  },
+              { src: '/logos/microsoft.svg',  alt: 'Microsoft',  h: 'h-6'  },
+              { src: '/logos/slack.svg',      alt: 'Slack',      h: 'h-6'  },
+              { src: '/logos/google.svg',     alt: 'Google',     h: 'h-6'  },
+              { src: '/logos/openai.svg',     alt: 'OpenAI',     h: 'h-5'  },
+              { src: '/logos/zendesk.svg',    alt: 'Zendesk',    h: 'h-6'  },
+              { src: '/logos/jira.svg',       alt: 'Jira',       h: 'h-6'  },
+              { src: '/logos/intercom.svg',   alt: 'Intercom',   h: 'h-6'  },
+              { src: '/logos/amazon.svg',     alt: 'Amazon',     h: 'h-6'  },
+              { src: '/logos/zoom.svg',       alt: 'Zoom',       h: 'h-6'  },
+              { src: '/logos/anthropic.svg',  alt: 'Anthropic',  h: 'h-5'  },
+              { src: '/logos/twilio.svg',     alt: 'Twilio',     h: 'h-6'  },
+              { src: '/logos/teams.svg',      alt: 'Teams',      h: 'h-6'  },
+            ].map((logo, i) => (
+              <div key={i} className="inline-flex items-center justify-center px-10">
+                <img
+                  src={logo.src}
+                  alt={logo.alt}
+                  className={`${logo.h} w-auto object-contain opacity-30 grayscale hover:opacity-60 hover:grayscale-0 transition-all duration-300`}
+                />
+              </div>
+            ))}
+          </div>
         </div>
       </div>
 

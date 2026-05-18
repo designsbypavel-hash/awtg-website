@@ -953,7 +953,7 @@ export default function KaiPage() {
               </p>
               <div className="space-y-8">
                 {[
-                  { Icon: Zap,      label: 'Resolve at first touch',   desc: 'Kai handles routine queries end-to-end, keeping agents free for complex work.' },
+                  { Icon: Zap,      label: 'Resolve at first touch',   desc: 'Kai handles routine queries from start to finish, keeping agents free for complex work.' },
                   { Icon: BarChart2, label: 'Track what matters',       desc: 'Containment, CSAT and escalation rates visible from the moment Kai goes live.' },
                   { Icon: Shield,   label: 'Governed before go-live',  desc: 'Rules, audit trails and escalation paths are configured, not bolted on later.' },
                 ].map(({ Icon, label, desc }) => (
@@ -1146,7 +1146,7 @@ export default function KaiPage() {
               How Kai drives efficiency
             </h2>
             <p className="text-white/50 text-base max-w-lg mx-auto leading-relaxed">
-              Three steps from setup to live AI resolution — no rip-and-replace required.
+              Three steps from setup to live AI resolution. No rip and replace required.
             </p>
           </div>
 
@@ -1164,14 +1164,14 @@ export default function KaiPage() {
                 num: '02',
                 pill: 'KNOWLEDGE',
                 label: 'Build Knowledge Base',
-                desc: 'Upload documents, connect FAQs and link live data sources. Kai draws from your knowledge — not generic web data.',
+                desc: 'Upload documents, connect FAQs and link live data sources. Kai draws from your knowledge, not generic web data.',
                 Icon: Shield,
               },
               {
                 num: '03',
                 pill: 'SYSTEMS',
                 label: 'Connect Systems',
-                desc: 'Link your CRM, helpdesk, messaging channels and APIs in minutes. Kai takes action in your live systems — not just chat.',
+                desc: 'Link your CRM, helpdesk, messaging channels and APIs in minutes. Kai takes action in your live systems, not just chat.',
                 Icon: BarChart2,
               },
             ].map((step, i) => (

@@ -617,7 +617,7 @@ function IntegrationsSection() {
                 style={{
                   ...reveal(inView, d * 75),
                   ...(item.isKai ? {
-                    background: 'white',
+                    background: '#0a1628',
                     border: '1.5px solid rgba(34,141,193,0.55)',
                     boxShadow: '0 0 0 6px rgba(34,141,193,0.07), 0 0 40px rgba(34,141,193,0.22), 0 0 80px rgba(34,141,193,0.10), 0 8px 30px rgba(34,141,193,0.14)',
                   } : {}),
@@ -627,7 +627,7 @@ function IntegrationsSection() {
                 {item.isKai && (
                   <div
                     className="absolute inset-0 pointer-events-none"
-                    style={{ background: 'radial-gradient(ellipse at center, rgba(34,141,193,0.09) 0%, transparent 72%)' }}
+                    style={{ background: 'radial-gradient(ellipse at center, rgba(34,141,193,0.18) 0%, transparent 72%)' }}
                   />
                 )}
 
@@ -648,8 +648,8 @@ function IntegrationsSection() {
                         />
                       </div>
                     </div>
-                    <p className="relative text-[#0a1628] font-bold text-[11px] uppercase tracking-[0.22em]">Kai</p>
-                    <span className="relative text-[9px] font-semibold text-[#228DC1] bg-[#e5f4fa] border border-[#228DC1]/20 px-2 py-0.5">
+                    <p className="relative text-white font-bold text-[11px] uppercase tracking-[0.22em]">Kai</p>
+                    <span className="relative text-[9px] font-semibold text-[#228DC1] bg-[#228DC1]/15 border border-[#228DC1]/30 px-2 py-0.5">
                       AI Agent · MCP
                     </span>
                   </>

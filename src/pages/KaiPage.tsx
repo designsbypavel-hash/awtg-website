@@ -1,6 +1,6 @@
 ﻿import { useState, useRef, useEffect, type CSSProperties } from 'react'
 import { Link } from 'react-router-dom'
-import { ArrowRight, CheckCircle2, Zap, Shield, BarChart2, Settings2, Check } from 'lucide-react'
+import { ArrowRight, CheckCircle2, Zap, Shield, BarChart2, Settings2, Check, MessageCircleCheck, TrendingUp, Sparkles, SlidersHorizontal, BookOpen, Plug2 } from 'lucide-react'
 import CTASection from '@/components/CTASection'
 
 // ── Scroll utilities ──────────────────────────────────────────────────────────
@@ -1158,21 +1158,21 @@ export default function KaiPage() {
                 pill: 'PARAMETERS',
                 label: 'Define Parameters',
                 desc: 'Set your tone, escalation rules, identity checks and policy boundaries. Kai operates exactly within the limits you configure.',
-                Icon: Settings2,
+                Icon: SlidersHorizontal,
               },
               {
                 num: '02',
                 pill: 'KNOWLEDGE',
                 label: 'Build Knowledge Base',
                 desc: 'Upload documents, connect FAQs and link live data sources. Kai draws from your knowledge, not generic web data.',
-                Icon: Shield,
+                Icon: BookOpen,
               },
               {
                 num: '03',
                 pill: 'SYSTEMS',
                 label: 'Connect Systems',
                 desc: 'Link your CRM, helpdesk, messaging channels and APIs in minutes. Kai takes action in your live systems, not just chat.',
-                Icon: BarChart2,
+                Icon: Plug2,
               },
             ].map((step, i) => (
               <div
@@ -1225,17 +1225,17 @@ export default function KaiPage() {
           <div ref={capsRef} className="grid lg:grid-cols-3 gap-px bg-gray-200 border border-gray-200">
             {[
               {
-                Icon: Zap,
+                Icon: MessageCircleCheck,
                 label: 'Resolve customer issues.',
                 desc: 'Kai handles queries from first message to closed ticket, without waiting for a human.',
               },
               {
-                Icon: BarChart2,
+                Icon: TrendingUp,
                 label: 'Identify leads.',
                 desc: 'Spot buying signals in every conversation and route high-intent contacts to your sales team instantly.',
               },
               {
-                Icon: Shield,
+                Icon: Sparkles,
                 label: 'Coming soon.',
                 desc: 'More capabilities are on the way. Check back shortly.',
               },

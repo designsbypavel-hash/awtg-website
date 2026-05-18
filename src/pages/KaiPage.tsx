@@ -1,6 +1,6 @@
 ﻿import { useState, useRef, useEffect, type CSSProperties } from 'react'
 import { Link } from 'react-router-dom'
-import { ArrowRight, CheckCircle2, Zap, Shield, BarChart2, Settings2, Check, Code2 } from 'lucide-react'
+import { ArrowRight, CheckCircle2, Zap, Shield, BarChart2, Settings2, Check } from 'lucide-react'
 import CTASection from '@/components/CTASection'
 
 // ── Scroll utilities ──────────────────────────────────────────────────────────
@@ -278,201 +278,137 @@ function KaiDemo() {
   )
 }
 
-// ── Integrations (animated) ───────────────────────────────────────────────────
-const INTEGRATIONS = [
-  { label: 'HubSpot',    category: 'CRM',        logo: '/logos/hubspot.svg',    color: '#FF7A59' },
-  { label: 'Salesforce', category: 'CRM',        logo: '/logos/salesforce.svg', color: '#00A1E0' },
-  { label: 'Zendesk',    category: 'Support',    logo: '/logos/zendesk.svg',    color: '#03363D' },
-  { label: 'Intercom',   category: 'Support',    logo: '/logos/intercom.svg',   color: '#1F8DED' },
-  { label: 'Freshdesk',  category: 'Support',    logo: '/logos/freshdesk.svg',  color: '#25C16F' },
-  { label: 'Fin',        category: 'AI Support', logo: '/logos/fin.svg',        color: '#111827' },
-  { label: 'Agentforce', category: 'AI Agent',   logo: '/logos/agentforce.svg', color: '#00A1E0' },
-  { label: 'WhatsApp',   category: 'Messaging',  logo: '/logos/whatsapp.svg',   color: '#25D366' },
-  { label: 'Slack',      category: 'Messaging',  logo: '/logos/slack.svg',      color: '#4A154B' },
-  { label: 'Teams',      category: 'Messaging',  logo: '/logos/teams.svg',      color: '#6264A7' },
-  { label: 'Zoom',       category: 'Video',      logo: '/logos/zoom.svg',       color: '#2D8CFF' },
-  { label: 'Gmail',      category: 'Email',      logo: '/logos/gmail.svg',      color: '#EA4335' },
-  { label: 'Outlook',    category: 'Email',      logo: '/logos/outlook.svg',    color: '#0078D4' },
-  { label: 'Jira',       category: 'Ticketing',  logo: '/logos/jira.svg',       color: '#0052CC' },
-  { label: 'MCP',        category: 'Protocol',   logo: null,                    color: '#228DC1' },
-]
-
-// 4x4 grid: actual integration logos + Kai + MCP
-const GRID_ITEMS = [
-  INTEGRATIONS[0],  // HubSpot
-  INTEGRATIONS[1],  // Salesforce
-  INTEGRATIONS[2],  // Zendesk
-  INTEGRATIONS[3],  // Intercom
-  INTEGRATIONS[4],  // Freshdesk
-  { label: 'Kai', category: 'AI Agent', logo: '/logo-icon.svg' as string | null, color: '#228DC1', isKai: true },
-  INTEGRATIONS[5],  // Fin
-  INTEGRATIONS[6],  // Agentforce
-  INTEGRATIONS[7],  // WhatsApp
-  INTEGRATIONS[8],  // Slack
-  INTEGRATIONS[9],  // Teams
-  INTEGRATIONS[10], // Zoom
-  INTEGRATIONS[11], // Gmail
-  INTEGRATIONS[12], // Outlook
-  INTEGRATIONS[13], // Jira
-  INTEGRATIONS[14], // MCP
-]
-
+// ── Integrations — Kai as hub ─────────────────────────────────────────────────
 function IntegrationsSection() {
-  const [tilt, setTilt]          = useState({ x: 0, y: 0 })
-  const [hovCard, setHovCard]    = useState<string | null>(null)
+  const [ref, inView] = useInView()
 
-  const onGridMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    const r = e.currentTarget.getBoundingClientRect()
-    setTilt({
-      x: ((e.clientY - r.top  - r.height / 2) / (r.height / 2)) * -4,
-      y: ((e.clientX - r.left - r.width  / 2) / (r.width  / 2)) *  4,
-    })
-  }
+  const left = [
+    { label: 'HubSpot',    category: 'CRM',        logo: '/logos/hubspot.svg' },
+    { label: 'Salesforce', category: 'CRM',        logo: '/logos/salesforce.svg' },
+    { label: 'Zendesk',    category: 'Support',    logo: '/logos/zendesk.svg' },
+    { label: 'Intercom',   category: 'Support',    logo: '/logos/intercom.svg' },
+    { label: 'Freshdesk',  category: 'Support',    logo: '/logos/freshdesk.svg' },
+    { label: 'Fin',        category: 'AI Support', logo: '/logos/fin.svg' },
+  ]
+
+  const right = [
+    { label: 'WhatsApp', category: 'Messaging', logo: '/logos/whatsapp.svg' },
+    { label: 'Slack',    category: 'Messaging', logo: '/logos/slack.svg' },
+    { label: 'Teams',    category: 'Messaging', logo: '/logos/teams.svg' },
+    { label: 'Gmail',    category: 'Email',     logo: '/logos/gmail.svg' },
+    { label: 'Outlook',  category: 'Email',     logo: '/logos/outlook.svg' },
+    { label: 'Jira',     category: 'Ticketing', logo: '/logos/jira.svg' },
+  ]
 
   return (
     <section className="py-24 bg-[#f8fafc] border-t border-gray-100">
-      <div className="max-w-7xl mx-auto px-8 lg:px-12">
-        <div className="grid lg:grid-cols-[4.6fr_7.4fr] gap-14 lg:gap-16 items-center">
+      <div className="max-w-5xl mx-auto px-8 lg:px-12">
 
-          {/* Left: copy */}
-          <div>
-            <p className="text-[11px] font-black uppercase tracking-[0.28em] text-[#228DC1] mb-4" style={{ opacity: 0.75 }}>Integrations</p>
-            <h2 className="font-heading text-[#0a1628] mb-5" style={{ fontSize: 'clamp(30px, 3.2vw, 46px)', lineHeight: 1.08 }}>
-              Works with your existing stack.
-            </h2>
-            <p className="text-[#0a1628]/60 text-base font-normal leading-relaxed mb-8">
-              No rip-and-replace. Kai connects to your live systems on day one.
-              Extend it with APIs, webhooks or MCP.
-            </p>
-            <Link to="/contact" className="inline-flex items-center gap-2 text-[13px] font-semibold text-[#228DC1] hover:gap-3 transition-all mb-10">
-              Discuss your stack <ArrowRight className="w-4 h-4" />
-            </Link>
-            <div className="space-y-5">
-              <div>
-                <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#0a1628]/40 mb-3">Connection paths</p>
-                <div className="flex flex-wrap gap-2">
-                  {['Native apps', 'REST API', 'Webhooks', 'MCP', 'Email', 'Messaging'].map((ch) => (
-                    <span key={ch} className="text-[11px] font-medium text-[#0a1628]/60 bg-white border border-gray-200 px-3 py-1.5 shadow-[0_1px_2px_rgba(10,22,40,0.03)]">{ch}</span>
-                  ))}
+        {/* Section header */}
+        <div className="text-center mb-12">
+          <p className="text-[#228DC1] mb-4" style={{ fontSize: '11px', fontWeight: 700, letterSpacing: '0.28em', textTransform: 'uppercase', opacity: 0.75 }}>Integrations</p>
+          <h2 className="font-heading text-[#0a1628] mb-4" style={{ fontSize: 'clamp(30px,3.2vw,46px)', lineHeight: 1.08 }}>
+            Works with your existing stack.
+          </h2>
+          <p className="text-[#0a1628]/60 text-base leading-relaxed max-w-lg mx-auto">
+            No rip-and-replace. Kai sits at the centre of your ecosystem — connected to every tool, channel and system on day one.
+          </p>
+        </div>
+
+        {/* Hub diagram: [left integrations] ——·[KAI]·—— [right integrations] */}
+        <div ref={ref} className="grid grid-cols-[1fr_100px_1fr] border border-gray-200 shadow-[0_16px_50px_rgba(10,22,40,0.06)]">
+
+          {/* Left column — integrations point → Kai */}
+          <div className="divide-y divide-gray-200">
+            {left.map((item, i) => (
+              <div
+                key={item.label}
+                className="flex items-center gap-3 px-5 py-[18px] bg-white hover:bg-[#f8fafc] transition-colors"
+                style={reveal(inView, i * 70)}
+              >
+                <img
+                  src={item.logo}
+                  alt={item.label}
+                  className="w-7 h-7 object-contain shrink-0"
+                  onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }}
+                />
+                <div className="min-w-0 flex-1">
+                  <p className="text-[#0a1628] text-[13px] font-semibold leading-tight truncate">{item.label}</p>
+                  <p className="text-[#0a1628]/40 text-[10px] leading-tight mt-0.5">{item.category}</p>
+                </div>
+                {/* dashed connector → Kai */}
+                <div className="flex items-center gap-1 shrink-0 ml-1">
+                  <div className="w-8 border-t-2 border-dashed border-[#228DC1]/30" />
+                  <div className="w-2 h-2 rounded-full bg-[#228DC1]" />
                 </div>
               </div>
-              <div className="border-l-2 border-[#228DC1] pl-4">
-                <p className="text-[#0a1628] text-[13px] font-semibold mb-1">MCP-ready connections</p>
-                <p className="text-[#0a1628]/58 text-[13px] font-normal leading-relaxed">
-                  Governed access to tools, files and enterprise systems.
-                </p>
-              </div>
-            </div>
+            ))}
           </div>
 
-          {/* Right: integration logo wall */}
-          <div className="relative">
-            <div className="absolute -inset-6 bg-white/65 border border-white hidden lg:block" />
-            <div className="relative bg-white border border-gray-200 p-4 sm:p-5 shadow-[0_16px_50px_rgba(10,22,40,0.07)]">
-              <div className="flex items-center justify-between gap-5 px-2 pb-5">
-                <div>
-                  <p className="text-[#0a1628] text-[14px] font-semibold">Integration ecosystem</p>
-                  <p className="text-[#0a1628]/50 text-[11px] font-normal">Apps, channels, meetings and protocols</p>
-                </div>
-                <span className="hidden sm:inline-flex text-[10px] font-bold uppercase tracking-[0.18em] text-[#228DC1] bg-[#e5f4fa] px-3 py-1.5">
-                  MCP supported
-                </span>
+          {/* Center — Kai hub card */}
+          <div
+            className="flex flex-col items-center justify-center gap-2 py-6 px-3"
+            style={{ background: '#0a1628', boxShadow: 'inset 0 0 40px rgba(34,141,193,0.10)' }}
+          >
+            <div className="flex-1 w-px" style={{ background: 'linear-gradient(to bottom, transparent, rgba(34,141,193,0.25), transparent)' }} />
+            <div className="flex flex-col items-center gap-2">
+              <div className="w-11 h-11 flex items-center justify-center" style={{ background: 'rgba(255,255,255,0.07)', border: '1px solid rgba(255,255,255,0.12)' }}>
+                <img
+                  src="/logo-icon.svg"
+                  alt="Kai"
+                  className="w-6 h-6 object-contain brightness-0 invert"
+                  onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }}
+                />
               </div>
-
-              <div
-                className="grid grid-cols-2 sm:grid-cols-4 gap-3 select-none"
-                onMouseMove={onGridMove}
-                onMouseLeave={() => {
-                  setTilt({ x: 0, y: 0 })
-                  setHovCard(null)
-                }}
-                style={{
-                  transform: `rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)`,
-                  transformStyle: 'preserve-3d',
-                  transition: 'transform 0.18s linear',
-                }}
-              >
-                {GRID_ITEMS.map((item) => {
-                  const isKai = item.label === 'Kai'
-                  const isMcp = item.label === 'MCP'
-                  const isHov = hovCard === item.label
-                  return (
-                    <div
-                      key={item.label}
-                      className="min-h-[118px] flex flex-col items-center justify-center gap-3 cursor-default"
-                      style={{
-                        background: isKai
-                          ? '#0a1628'
-                          : isMcp
-                            ? 'linear-gradient(135deg, #e5f4fa 0%, #ffffff 100%)'
-                            : '#ffffff',
-                        border: isKai ? 'none' : '1px solid rgba(10,22,40,0.08)',
-                        boxShadow: isHov
-                          ? (isKai ? '0 24px 54px rgba(10,22,40,0.34)' : '0 18px 42px rgba(10,22,40,0.12)')
-                          : '0 1px 8px rgba(10,22,40,0.04)',
-                        transform: isHov ? 'translateZ(22px) translateY(-3px)' : 'translateZ(0)',
-                        transformStyle: 'preserve-3d',
-                        transition: 'transform 0.25s ease, box-shadow 0.25s ease',
-                      }}
-                      onMouseEnter={() => setHovCard(item.label)}
-                      onMouseLeave={() => setHovCard(null)}
-                    >
-                      {isKai ? (
-                        <>
-                          <img
-                            src="/logo-icon.svg"
-                            alt="Kai"
-                            className="w-11 h-11 object-contain brightness-0 invert"
-                            onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }}
-                          />
-                          <div className="text-center">
-                            <p className="text-white/80 font-semibold text-[11px] uppercase tracking-[0.2em]">Kai</p>
-                            <p className="text-white/38 text-[10px] font-medium mt-1">AI Agent</p>
-                          </div>
-                        </>
-                      ) : isMcp ? (
-                        <>
-                          <Code2 className="w-10 h-10 text-[#228DC1]" strokeWidth={1.6} />
-                          <div className="text-center">
-                            <p className="text-[#0a1628] font-semibold text-[12px]">MCP</p>
-                            <p className="text-[#0a1628]/45 text-[10px] font-medium mt-1">Tool protocol</p>
-                          </div>
-                        </>
-                      ) : (
-                        <>
-                          <img
-                            src={item.logo ?? undefined}
-                            alt={item.label}
-                            className="w-12 h-12 object-contain"
-                            onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }}
-                          />
-                          <div className="text-center">
-                            <p className="text-[#0a1628]/70 font-semibold text-[12px] tracking-[-0.01em]">{item.label}</p>
-                            <p className="text-[#0a1628]/35 text-[10px] font-medium mt-1">{item.category}</p>
-                          </div>
-                        </>
-                      )}
-                    </div>
-                  )
-                })}
-              </div>
-
-              <div className="mt-4 grid sm:grid-cols-3 gap-3">
-                {[
-                  { label: 'Native integrations', value: '14+ platforms' },
-                  { label: 'Custom systems', value: 'API + webhooks' },
-                  { label: 'Tool access', value: 'MCP supported' },
-                ].map((item) => (
-                  <div key={item.label} className="bg-[#f8fafc] border border-gray-200 px-5 py-4">
-                    <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-[#0a1628]/35 mb-1">{item.label}</p>
-                    <p className="text-[#0a1628] text-[13px] font-semibold">{item.value}</p>
-                  </div>
-                ))}
-              </div>
+              <p className="text-white/75 text-[10px] font-bold uppercase tracking-[0.22em] text-center">Kai</p>
+              <p className="text-white/35 text-[9px] text-center leading-tight">AI Agent</p>
             </div>
+            <div className="flex-1 w-px" style={{ background: 'linear-gradient(to bottom, transparent, rgba(34,141,193,0.25), transparent)' }} />
+          </div>
+
+          {/* Right column — integrations ← point from Kai */}
+          <div className="divide-y divide-gray-200">
+            {right.map((item, i) => (
+              <div
+                key={item.label}
+                className="flex items-center gap-3 px-5 py-[18px] bg-white hover:bg-[#f8fafc] transition-colors"
+                style={reveal(inView, i * 70)}
+              >
+                {/* dashed connector Kai → */}
+                <div className="flex items-center gap-1 shrink-0 mr-1">
+                  <div className="w-2 h-2 rounded-full bg-[#228DC1]" />
+                  <div className="w-8 border-t-2 border-dashed border-[#228DC1]/30" />
+                </div>
+                <img
+                  src={item.logo}
+                  alt={item.label}
+                  className="w-7 h-7 object-contain shrink-0"
+                  onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }}
+                />
+                <div className="min-w-0 flex-1">
+                  <p className="text-[#0a1628] text-[13px] font-semibold leading-tight truncate">{item.label}</p>
+                  <p className="text-[#0a1628]/40 text-[10px] leading-tight mt-0.5">{item.category}</p>
+                </div>
+              </div>
+            ))}
           </div>
 
         </div>
+
+        {/* Bottom stats */}
+        <div className="mt-4 grid sm:grid-cols-3 gap-3">
+          {[
+            { label: 'Native integrations', value: '14+ platforms' },
+            { label: 'Custom systems',      value: 'API + webhooks' },
+            { label: 'Tool access',         value: 'MCP supported' },
+          ].map((item) => (
+            <div key={item.label} className="bg-white border border-gray-200 px-5 py-4">
+              <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-[#0a1628]/35 mb-1">{item.label}</p>
+              <p className="text-[#0a1628] text-[13px] font-semibold">{item.value}</p>
+            </div>
+          ))}
+        </div>
+
       </div>
     </section>
   )

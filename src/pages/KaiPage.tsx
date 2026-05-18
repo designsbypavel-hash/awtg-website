@@ -584,17 +584,17 @@ export default function KaiPage() {
       </section>
 
       {/* ── Marquee ── */}
-      <div className="bg-[#f8fafc] border-y border-gray-100 py-3.5 overflow-hidden">
-        <div className="flex gap-10 animate-[marquee_35s_linear_infinite] whitespace-nowrap w-max">
+      <div className="bg-white border-y border-gray-100 py-4 overflow-hidden">
+        <div className="flex animate-[marquee_35s_linear_infinite] whitespace-nowrap w-max">
           {[
             'Enterprise Teams', 'Contact Centre AI', 'Customer Operations', 'Regulated Industries',
             'ISO 42001 Certified', 'Financial Services', 'Higher Education', 'Public Sector',
             'Healthcare', 'Mixed-Stack Teams', 'Governance-Led AI', 'Telco & Utilities',
             'Enterprise Teams', 'Contact Centre AI', 'Customer Operations', 'Regulated Industries',
           ].map((item, i) => (
-            <span key={i} className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#0a1628]/65 flex items-center gap-10">
+            <span key={i} className="inline-flex items-center text-[10px] font-semibold uppercase tracking-[0.2em] text-[#0a1628]/55 px-8">
               {item}
-              <span className="w-1 h-1 rounded-full bg-[#0a1628]/12" />
+              <span className="ml-8 w-1 h-1 rounded-full bg-[#228DC1]/40 inline-block" />
             </span>
           ))}
         </div>

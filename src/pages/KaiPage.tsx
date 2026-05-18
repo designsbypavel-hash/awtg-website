@@ -1226,18 +1226,18 @@ export default function KaiPage() {
             {[
               {
                 Icon: Zap,
-                label: 'Resolves routine queries faster.',
-                desc: 'Routine work moves quickly. Exceptions stay with your team.',
+                label: 'Resolve customer issues.',
+                desc: 'Kai handles queries from first message to closed ticket, without waiting for a human.',
               },
               {
-                Icon: Settings2,
-                label: 'Hands off with full context.',
-                desc: 'Full history, sentiment and suggested next action.',
+                Icon: BarChart2,
+                label: 'Identify leads.',
+                desc: 'Spot buying signals in every conversation and route high-intent contacts to your sales team instantly.',
               },
               {
                 Icon: Shield,
-                label: 'Governed by your rules.',
-                desc: 'Roles, MFA, audit trails and configurable AI behaviour.',
+                label: 'Coming soon.',
+                desc: 'More capabilities are on the way. Check back shortly.',
               },
             ].map((cap, i) => (
               <div key={cap.label} className="group bg-white p-8 hover:bg-[#f8fafc] transition-colors" style={reveal(capsInView, i * 120)}>

@@ -1,0 +1,29 @@
+<svg viewBox="0 0 690 100" xmlns="http://www.w3.org/2000/svg">
+  <!-- Radiating rays from bottom-centre of mark -->
+  <g stroke="#0099C8" stroke-width="4.5" stroke-linecap="round">
+    <line x1="65" y1="96" x2="5"  y2="51"/>
+    <line x1="65" y1="96" x2="14" y2="39"/>
+    <line x1="65" y1="96" x2="26" y2="29"/>
+    <line x1="65" y1="96" x2="40" y2="22"/>
+    <line x1="65" y1="96" x2="55" y2="17"/>
+    <line x1="65" y1="96" x2="65" y2="15"/>
+    <line x1="65" y1="96" x2="75" y2="17"/>
+    <line x1="65" y1="96" x2="90" y2="22"/>
+    <line x1="65" y1="96" x2="104" y2="29"/>
+    <line x1="65" y1="96" x2="116" y2="39"/>
+    <line x1="65" y1="96" x2="125" y2="51"/>
+  </g>
+  <!-- Left person -->
+  <circle cx="18" cy="26" r="7.5" fill="#0099C8"/>
+  <path d="M 5,52 A 14,17 0 0 1 31,52 Z" fill="#0099C8"/>
+  <!-- Centre person (larger) -->
+  <circle cx="65" cy="19" r="9.5" fill="#0099C8"/>
+  <path d="M 49,48 A 17,20 0 0 1 81,48 Z" fill="#0099C8"/>
+  <!-- Right person -->
+  <circle cx="112" cy="26" r="7.5" fill="#0099C8"/>
+  <path d="M 99,52 A 14,17 0 0 1 125,52 Z" fill="#0099C8"/>
+  <!-- KAISER PERMANENTE® -->
+  <text x="148" y="67"
+        font-family="'Helvetica Neue',Helvetica,Arial,sans-serif"
+        font-size="35" font-weight="700" fill="#0099C8" letter-spacing="2">KAISER PERMANENTE<tspan font-size="20" baseline-shift="super">®</tspan></text>
+</svg>

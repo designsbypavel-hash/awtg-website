@@ -1,0 +1,10 @@
+<svg viewBox="0 0 580 115" xmlns="http://www.w3.org/2000/svg">
+  <!-- Blue zigzag rendered first (behind) — peaks fill gold valleys -->
+  <polygon points="0,105 0,58 28,95 56,35 84,95 112,35 140,95 168,35 168,105" fill="#4BADD4"/>
+  <!-- Gold mountains rendered on top — 3 peaks -->
+  <polygon points="0,62 28,5 56,60 84,5 112,60 140,5 168,58 168,62" fill="#8C6B18"/>
+  <!-- Cambridgeshire -->
+  <text x="192" y="50" font-family="'Trebuchet MS','Arial Rounded MT Bold',Arial,sans-serif" font-size="30" fill="#8C6B18">Cambridgeshire</text>
+  <!-- County Council -->
+  <text x="192" y="92" font-family="'Trebuchet MS','Arial Rounded MT Bold',Arial,sans-serif" font-size="30" fill="#8C6B18">County Council</text>
+</svg>

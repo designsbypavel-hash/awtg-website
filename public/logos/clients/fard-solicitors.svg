@@ -1,0 +1,19 @@
+<svg viewBox="0 0 420 130" xmlns="http://www.w3.org/2000/svg">
+  <!-- Outer navy swash: sweeps from bottom-right, up-left, curls back to top-right -->
+  <path d="M 78,118
+           C 50,104 12,82 8,52
+           C 4,24 26,6 52,14
+           C 70,20 80,40 68,54
+           C 60,64 44,62 42,50"
+        fill="none" stroke="#1c2951" stroke-width="13" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Inner maroon swash: tighter parallel arc -->
+  <path d="M 88,122
+           C 64,106 34,86 30,58
+           C 26,34 46,18 66,26
+           C 80,32 88,50 78,60"
+        fill="none" stroke="#6b1020" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- FARD SOLICITORS wordmark -->
+  <text x="110" y="88"
+        font-family="'Helvetica Neue',Helvetica,Arial,sans-serif"
+        font-size="32" font-weight="700" fill="#1c2951" letter-spacing="2">FARD SOLICITORS</text>
+</svg>

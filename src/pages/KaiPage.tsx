@@ -383,42 +383,73 @@ export default function KaiPage() {
   return (
     <>
       {/* ── Hero ── */}
-      <section className="relative overflow-hidden bg-white pt-32 pb-24">
+      <section className="relative overflow-hidden bg-white pt-32 pb-0">
+        {/* Subtle background grid */}
+        <div className="absolute inset-0 pointer-events-none" style={{
+          backgroundImage: 'linear-gradient(rgba(34,141,193,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(34,141,193,0.04) 1px, transparent 1px)',
+          backgroundSize: '48px 48px',
+        }} />
 
         <div className="relative max-w-7xl mx-auto px-8 lg:px-12">
-          <p className="font-black text-[#228DC1] mb-4" style={{ fontSize: '13px', letterSpacing: '0.28em', textTransform: 'uppercase', opacity: 0.6 }}>
-            Kai · Enterprise AI Agent
-          </p>
-          <h1 className="font-serif-display text-[#0a1628] leading-[1.02] mb-6 max-w-4xl" style={{ fontSize: 'clamp(44px, 5.8vw, 80px)' }}>
-            The enterprise AI agent<br />
-            that <span style={{ color: '#228DC1' }}>resolves,</span> not just responds.
-          </h1>
-          <p className="text-[#0a1628]/60 text-lg font-normal leading-relaxed max-w-2xl mb-10">
-            Kai handles customer service and operational workflows at scale. Connected to your systems, governed by your rules, measured by outcomes, not activity.
-          </p>
-          <div className="flex flex-wrap gap-4">
-            <Link to="/contact" className="px-7 py-3.5 bg-[#228DC1] text-white text-[13px] font-semibold hover:bg-[#1a6e99] transition-colors">
-              Request a Demo
-            </Link>
-            <Link to="/contact" className="px-7 py-3.5 border border-gray-200 text-[#0a1628]/70 text-[13px] font-medium hover:border-[#228DC1]/50 hover:text-[#228DC1] transition-all">
-              Talk to an expert
-            </Link>
-          </div>
+          <div className="grid lg:grid-cols-[5fr_7fr] gap-12 lg:gap-16 items-end">
 
-          <div className="mt-14 pt-10 border-t border-gray-100 flex flex-wrap items-center gap-6">
-            <p className="text-[#0a1628]/60 text-[10px] font-semibold uppercase tracking-[0.2em]">Live in production with</p>
-            <div className="border border-gray-100 bg-[#0a1628]/4 px-4 py-2.5 flex items-center gap-2.5">
-              <img
-                src="/logos/britishcouncil.svg"
-                alt="British Council"
-                className="h-5 w-5 object-contain rounded-sm"
-                onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }}
-              />
-              <span className="text-[#0a1628]/60 text-[12px] font-semibold">British Council English Online</span>
+            {/* Left: copy */}
+            <div className="pb-24">
+              <p className="font-black text-[#228DC1] mb-4" style={{ fontSize: '13px', letterSpacing: '0.28em', textTransform: 'uppercase', opacity: 0.6 }}>
+                Kai · Enterprise AI Agent
+              </p>
+              <h1 className="font-serif-display text-[#0a1628] leading-[1.02] mb-6" style={{ fontSize: 'clamp(40px, 4.8vw, 68px)' }}>
+                The enterprise AI agent<br />
+                that <span style={{ color: '#228DC1' }}>resolves,</span><br />not just responds.
+              </h1>
+              <p className="text-[#0a1628]/60 text-lg font-normal leading-relaxed mb-10">
+                Kai handles customer service and operational workflows at scale. Connected to your systems, governed by your rules, measured by outcomes, not activity.
+              </p>
+              <div className="flex flex-wrap gap-4">
+                <Link to="/contact" className="px-7 py-3.5 bg-[#228DC1] text-white text-[13px] font-semibold hover:bg-[#1a6e99] transition-colors">
+                  Request a Demo
+                </Link>
+                <Link to="/contact" className="px-7 py-3.5 border border-gray-200 text-[#0a1628]/70 text-[13px] font-medium hover:border-[#228DC1]/50 hover:text-[#228DC1] transition-all">
+                  Talk to an expert
+                </Link>
+              </div>
+
+              <div className="mt-12 pt-8 border-t border-gray-100 flex flex-wrap items-center gap-4">
+                <p className="text-[#0a1628]/60 text-[10px] font-semibold uppercase tracking-[0.2em]">Live in production with</p>
+                <div className="border border-gray-100 bg-[#0a1628]/4 px-4 py-2.5 flex items-center gap-2.5">
+                  <img
+                    src="/logos/britishcouncil.svg"
+                    alt="British Council"
+                    className="h-5 w-5 object-contain rounded-sm"
+                    onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }}
+                  />
+                  <span className="text-[#0a1628]/60 text-[12px] font-semibold">British Council English Online</span>
+                </div>
+                <div className="border border-gray-100 bg-[#0a1628]/4 px-4 py-2.5">
+                  <span className="text-[#0a1628]/60 text-[12px] font-semibold">250,000 users / month</span>
+                </div>
+              </div>
             </div>
-            <div className="border border-gray-100 bg-[#0a1628]/4 px-4 py-2.5">
-              <span className="text-[#0a1628]/60 text-[12px] font-semibold">250,000 users / month</span>
+
+            {/* Right: mockup — floats up, clipped at bottom edge */}
+            <div className="relative hidden lg:block">
+              {/* Glow behind mockup */}
+              <div className="absolute -inset-8 rounded-3xl pointer-events-none" style={{
+                background: 'radial-gradient(ellipse 80% 60% at 60% 50%, rgba(34,141,193,0.10) 0%, transparent 70%)',
+              }} />
+              <div
+                className="relative overflow-hidden shadow-[0_20px_80px_rgba(10,22,40,0.12),0_4px_20px_rgba(34,141,193,0.08)] border border-gray-100/80"
+                style={{ borderRadius: '12px 12px 0 0', transform: 'translateY(0)' }}
+              >
+                <img
+                  src="/kai-mockup.svg"
+                  alt="Kai platform interface"
+                  className="w-full block"
+                  style={{ display: 'block' }}
+                />
+              </div>
             </div>
+
           </div>
         </div>
       </section>

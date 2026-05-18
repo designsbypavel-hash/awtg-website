@@ -1,7 +1,47 @@
-﻿import { useState, useRef, useEffect } from 'react'
+﻿import { useState, useRef, useEffect, type CSSProperties } from 'react'
 import { Link } from 'react-router-dom'
 import { ArrowRight, BookOpen, Shield, RefreshCw, Sparkles, CheckCircle2 } from 'lucide-react'
 import CTASection from '@/components/CTASection'
+
+// ── Scroll utilities ──────────────────────────────────────────────────────────
+function useInView(threshold = 0.12) {
+  const ref = useRef<HTMLDivElement>(null)
+  const [inView, setInView] = useState(false)
+  useEffect(() => {
+    const el = ref.current
+    if (!el) return
+    const obs = new IntersectionObserver(
+      ([e]) => { if (e.isIntersecting) { setInView(true); obs.disconnect() } },
+      { threshold }
+    )
+    obs.observe(el)
+    return () => obs.disconnect()
+  }, [threshold])
+  return [ref, inView] as const
+}
+
+const reveal = (inView: boolean, delay = 0): CSSProperties => ({
+  opacity: inView ? 1 : 0,
+  transform: inView ? 'translateY(0)' : 'translateY(24px)',
+  transition: `opacity 0.6s cubic-bezier(0.16,1,0.3,1) ${delay}ms, transform 0.6s cubic-bezier(0.16,1,0.3,1) ${delay}ms`,
+})
+
+function ScrollProgress() {
+  const [pct, setPct] = useState(0)
+  useEffect(() => {
+    const fn = () => {
+      const d = document.documentElement
+      setPct(d.scrollTop / (d.scrollHeight - d.clientHeight))
+    }
+    window.addEventListener('scroll', fn, { passive: true })
+    return () => window.removeEventListener('scroll', fn)
+  }, [])
+  return (
+    <div className="fixed top-0 left-0 right-0 z-[60] h-[2px] pointer-events-none">
+      <div style={{ width: `${pct * 100}%`, background: 'linear-gradient(90deg, #228DC1, #0e6a9a)', transition: 'width 80ms linear' }} className="h-full" />
+    </div>
+  )
+}
 
 // ── Four founding principles ──────────────────────────────────────────────────
 const principles = [
@@ -9,28 +49,28 @@ const principles = [
     Icon: BookOpen,
     label: 'Education',
     title: 'Pedagogy at the Core',
-    desc: 'Every interaction is grounded in course design, learning outcomes and educator intent. Aruva teaches through the structure the professor has built, not around it.',
+    desc: 'Every response is grounded in course design, learning outcomes and educator intent.',
     color: '#228DC1',
   },
   {
     Icon: Shield,
     label: 'Governance',
     title: 'Institution in Control',
-    desc: 'Role-based access, audit trails, data residency strategy and policy-led controls give institutions full oversight of how AI operates across the academic lifecycle.',
+    desc: 'Role-based access, audit trails and data residency give institutions full oversight of every AI interaction.',
     color: '#059669',
   },
   {
     Icon: RefreshCw,
     label: 'Feedback Loop',
     title: 'Continuous Learning Intelligence',
-    desc: 'Student interactions, assessment signals, planner activity and educator responses feed back into a live model of learning. Teaching improves while learning is happening.',
+    desc: 'Student interactions and assessment signals feed back into a live model of learning.',
     color: '#7c3aed',
   },
   {
     Icon: Sparkles,
     label: 'Personalisation',
     title: 'Adaptive to Every Student',
-    desc: 'Learning Curve AI builds individual performance profiles across mastery, confidence, pace and workload. Every student receives support calibrated to where they actually are.',
+    desc: 'Learning Curve AI builds performance profiles across mastery, confidence, pace and workload.',
     color: '#d97706',
   },
 ]
@@ -41,42 +81,42 @@ const pillars = [
     num: '01',
     label: 'Smart Syllabus',
     tag: 'Course Intelligence',
-    desc: 'Turns course outcomes, resources, policies and assessments into the intelligence layer that guides every tutoring interaction, formative assessment and analytics signal. The syllabus becomes the foundation every AI response is built on.',
+    desc: 'Turns course outcomes, resources and assessments into the intelligence layer that guides every tutoring and assessment interaction.',
     capabilities: ['Learning outcome and objective mapping', 'Policy, rubric and assessment encoding', 'Resource and approved content alignment', 'AI behaviour rules per week and topic'],
   },
   {
     num: '02',
     label: 'Professor-Guided Tutor',
     tag: 'Adaptive Teaching',
-    desc: 'Educators define tone, depth, rules, approved content and learning flow. Students receive Socratic guidance that builds genuine understanding. The AI never gives away the answer. It leads the student to it.',
+    desc: 'Educators define tone, depth and rules. Students receive Socratic guidance that builds genuine understanding, not shortcuts.',
     capabilities: ['Educator-defined AI behaviour and limits', 'Socratic questioning and hint stages', 'Source-backed responses with citations', 'Course-aware, not generic question answering'],
   },
   {
     num: '03',
     label: 'Formative Assessment',
     tag: 'Assessment Intelligence',
-    desc: 'Supports quizzes, rubrics, assessment variants and early learning-gap detection before final outcomes are fixed. Educators can identify where students are struggling during the term, not after grades are submitted.',
+    desc: 'Supports quizzes, rubrics and early gap detection so educators can intervene during the term, not after grades are submitted.',
     capabilities: ['AI-assisted quiz and rubric generation', 'Assessment variant creation', 'Early gap and misconception detection', 'Rubric-aware feedback and grading support'],
   },
   {
     num: '04',
     label: 'Learning Curve AI',
     tag: 'Performance Profiling',
-    desc: 'Builds individual student profiles across mastery, confidence, pace, workload and risk signals over the course lifecycle. Adapts support as each student progresses and flags at-risk learners early.',
+    desc: 'Builds individual student profiles across mastery, confidence, pace and workload, adapting support as each student progresses.',
     capabilities: ['Mastery and confidence tracking per topic', 'Workload, pace and sentiment signals', 'At-risk student identification and alerts', 'Adaptive study planning and scheduling'],
   },
   {
     num: '05',
     label: 'Educator Analytics',
     tag: 'Teaching Insight',
-    desc: 'Gives educators real-time visibility into engagement, topic difficulty, material effectiveness and intervention opportunities. Departments and institutions track learning signals across cohorts.',
+    desc: 'Real-time visibility into engagement, topic difficulty and intervention opportunities across cohorts.',
     capabilities: ['Course-level learning dashboards', 'Topic difficulty and material effectiveness insight', 'Student engagement and participation signals', 'Cross-cohort and department analytics'],
   },
   {
     num: '06',
     label: 'Governance Layer',
     tag: 'Institutional Control',
-    desc: 'Supports role-based access, audit trails, data residency strategy, attribution and policy-led controls. Designed for institutions that need AI to be powerful, accountable and under their control.',
+    desc: 'Role-based access, audit trails and data residency controls keep AI accountable and under institutional control.',
     capabilities: ['Role-based access and policy enforcement', 'Full audit trail with source attribution', 'Data residency: cloud, hybrid or on-prem', 'SSO, LMS and institutional system integration'],
   },
 ]
@@ -86,36 +126,27 @@ const audiences = [
   {
     label: 'Students',
     headline: 'A personal academic guide, not an answer engine.',
-    desc: 'Aruva gives students a guided, source-backed and personalised way to learn. Interactions build mastery rather than deliver shortcuts.',
     points: [
       'Syllabus-aligned tutoring that builds genuine understanding',
       'Source-backed responses with traceable citations',
-      'Learning Curve visibility across topics and confidence',
-      'Smart planner for coursework, revision and workload balance',
-      'Progress tracking that shows strengths and areas to improve',
+      'Progress tracking across topics and confidence',
     ],
   },
   {
     label: 'Educators',
     headline: 'Insight and control without added workload.',
-    desc: 'Educators stay in full control while Aruva handles alignment, assessment support, feedback intelligence and routine administrative tasks.',
     points: [
       'AI that follows your course design and pedagogical rules',
-      'AI-assisted quiz, rubric and assessment variant creation',
-      'Real-time visibility into student struggles and learning gaps',
-      'Material effectiveness and engagement analytics',
-      'More time for research, mentoring and deeper teaching',
+      'AI-assisted quiz, rubric and assessment creation',
+      'Real-time visibility into student struggles and gaps',
     ],
   },
   {
     label: 'Institutions',
     headline: 'Responsible AI adoption with measurable evidence.',
-    desc: 'Aruva gives institutions a practical route from AI experimentation to governed, measurable academic impact.',
     points: [
       'End-to-end AI governance across academic workflows',
-      'Data residency strategy and institution-controlled deployment',
-      'Cross-course and cross-department learning intelligence',
-      'Accreditation and quality evidence from live learning data',
+      'Data residency and institution-controlled deployment',
       'Modular pilot path: start small, scale with evidence',
     ],
   },
@@ -329,28 +360,28 @@ const howItWorksSteps = [
   {
     num: '01',
     label: 'Connect your course',
-    desc: 'Upload your syllabus, connect your LMS and set the rules for how AI should behave. Every outcome, reading, rubric and assessment becomes part of the intelligence layer Aruva operates from.',
+    desc: 'Upload your syllabus, connect your LMS and set the rules. Every outcome, rubric and assessment becomes part of the intelligence layer.',
     detail: 'Works with Canvas, Moodle, Blackboard and Brightspace. No rip-and-replace required.',
     visual: 'syllabus',
   },
   {
     num: '02',
     label: 'AI aligns to your intent',
-    desc: 'Aruva compiles your course structure into a policy graph, defining how the AI tutors, what content it can use, what hint stages to apply and how to assess alignment to your learning outcomes.',
+    desc: 'Aruva compiles your course structure into a policy graph: how the AI tutors, what content it uses and what hint stages to apply.',
     detail: 'Every AI response is course-aware. Nothing operates outside the bounds you set.',
     visual: 'align',
   },
   {
     num: '03',
     label: 'Students learn, guided not shortcut',
-    desc: 'Students interact with a tutor that leads through Socratic questioning, provides source-backed answers and tracks progress. Every question is a learning signal, not just a transaction.',
+    desc: 'Students interact with a tutor that leads through Socratic questioning and source-backed answers. Every question is a learning signal.',
     detail: 'Live with real students. Used in production at British Council English Online.',
     visual: 'tutor',
   },
   {
     num: '04',
     label: 'Educators see everything, act early',
-    desc: 'Real-time dashboards show engagement, topic difficulty, assessment alignment and at-risk signals. Faculty can intervene while learning is happening, not after the term ends.',
+    desc: 'Real-time dashboards show engagement, topic difficulty and at-risk signals. Faculty intervene while learning is happening.',
     detail: 'Institutional analytics roll up to department and programme level.',
     visual: 'analytics',
   },
@@ -579,6 +610,17 @@ function PlatformDiagram() {
     },
   ]
 
+  const SectionLabel = ({ children }: { children: string }) => (
+    <div className="w-12 shrink-0 bg-[#0a1628] flex items-center justify-center">
+      <span
+        className="text-white/85 text-[9px] font-bold uppercase tracking-[0.22em] whitespace-nowrap"
+        style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}
+      >
+        {children}
+      </span>
+    </div>
+  )
+
   return (
     <section className="py-24 bg-[#fdf9f4] border-t border-[#ede5da]">
       <div className="max-w-7xl mx-auto px-8 lg:px-12">
@@ -589,7 +631,7 @@ function PlatformDiagram() {
           <h2 className="font-heading text-[#0a1628] mb-4" style={{ fontSize: 'clamp(26px, 3vw, 42px)' }}>
             How Aruva is built
           </h2>
-          <p className="text-[#0a1628]/70 text-lg font-normal leading-relaxed max-w-2xl">
+          <p className="text-[#0a1628]/65 text-lg font-normal leading-relaxed max-w-2xl">
             Three connected layers: the interfaces educators and students use, the core intelligence platform, and the integrations that connect Aruva to your existing systems.
           </p>
         </div>
@@ -597,70 +639,73 @@ function PlatformDiagram() {
         <div className="space-y-0">
 
           {/* ── Row 1: User Interface ── */}
-          <div className="flex items-stretch rounded-2xl overflow-hidden border border-[#e2d9cf] shadow-sm">
-            <div className="w-11 shrink-0 bg-[#228DC1] flex items-center justify-center">
-              <span className="text-white text-[9px] font-bold uppercase tracking-[0.2em] whitespace-nowrap"
-                style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}>
-                User Interface
-              </span>
-            </div>
-            <div className="flex-1 bg-white p-6">
+          <div className="flex items-stretch rounded-2xl overflow-hidden border border-[#e2d9cf] shadow-[0_4px_20px_rgba(10,22,40,0.06)]">
+            <SectionLabel>User Interface</SectionLabel>
+            <div className="flex-1 bg-white p-5">
               <div className="grid grid-cols-5 gap-3">
                 {uiCards.map((card) => (
-                  <div key={card.label} className="bg-[#fdf9f4] border border-[#ede5da] rounded-xl p-4 hover:bg-white hover:shadow-md hover:-translate-y-0.5 transition-all duration-200">
-                    <div className="w-10 h-10 rounded-xl flex items-center justify-center mb-3" style={{ backgroundColor: `${card.color}18` }}>
+                  <div
+                    key={card.label}
+                    className="group relative bg-[#fdf9f4] border border-[#ede5da] rounded-xl p-4 hover:bg-white hover:border-transparent hover:-translate-y-1 transition-all duration-200 cursor-default"
+                    style={{ boxShadow: 'none' }}
+                    onMouseEnter={e => { (e.currentTarget as HTMLDivElement).style.boxShadow = `0 8px 24px ${card.color}22, 0 2px 8px rgba(10,22,40,0.06)` }}
+                    onMouseLeave={e => { (e.currentTarget as HTMLDivElement).style.boxShadow = 'none' }}
+                  >
+                    <div
+                      className="w-10 h-10 rounded-xl flex items-center justify-center mb-3 transition-all duration-200"
+                      style={{ backgroundColor: `${card.color}20` }}
+                    >
                       <span style={{ color: card.color }}>{card.icon}</span>
                     </div>
                     <p className="text-[#0a1628] text-[13px] font-semibold leading-snug mb-1">{card.label}</p>
-                    <p className="text-[#0a1628]/65 text-[12px] font-normal leading-relaxed">{card.desc}</p>
+                    <p className="text-[#0a1628]/55 text-[11px] font-normal leading-relaxed">{card.desc}</p>
                   </div>
                 ))}
               </div>
             </div>
           </div>
 
-          {/* ── Connector 1 ── */}
-          <div className="flex ml-11">
-            <div className="flex-1 flex justify-center">
-              <div className="flex flex-col items-center">
-                <div className="w-px h-5 bg-[#c8bdb0]" />
-                <div className="border border-[#d8cfc6] bg-[#fdf9f4] rounded-full px-4 py-1">
-                  <span className="text-[10px] font-semibold uppercase tracking-[0.15em] text-[#0a1628]/65">Aruva Platform API</span>
-                </div>
-                <div className="w-px h-5 bg-[#c8bdb0]" />
+          {/* ── Connector 1: horizontal bracket + API label ── */}
+          <div className="ml-12 px-10 flex flex-col items-center">
+            <div className="w-px h-4 bg-[#c8bdb0]" />
+            <div className="w-full flex items-center">
+              <div className="flex-1 h-px bg-[#d8cfc6]" />
+              <div className="flex items-center gap-2.5 border border-[#d8cfc6] bg-white rounded-full px-5 py-1.5 shadow-[0_1px_4px_rgba(10,22,40,0.06)]">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#228DC1]" />
+                <span className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#0a1628]/55">Aruva Platform API</span>
+                <span className="w-1.5 h-1.5 rounded-full bg-[#228DC1]" />
               </div>
+              <div className="flex-1 h-px bg-[#d8cfc6]" />
             </div>
+            <div className="w-px h-4 bg-[#c8bdb0]" />
           </div>
 
           {/* ── Row 2: Services ── */}
-          <div className="flex items-stretch rounded-2xl overflow-hidden border border-[#e2d9cf] shadow-sm">
-            <div className="w-11 shrink-0 bg-[#228DC1] flex items-center justify-center">
-              <span className="text-white text-[9px] font-bold uppercase tracking-[0.2em] whitespace-nowrap"
-                style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}>
-                Services
-              </span>
-            </div>
-            <div className="flex-1 bg-white p-7">
-              <div className="grid lg:grid-cols-[180px_1fr] gap-8 items-center">
+          <div className="flex items-stretch rounded-2xl overflow-hidden border border-[#e2d9cf] shadow-[0_4px_20px_rgba(10,22,40,0.06)]">
+            <SectionLabel>Services</SectionLabel>
+            <div className="flex-1 bg-white p-6 lg:p-7">
+              <div className="grid lg:grid-cols-[172px_1fr] gap-8 items-center">
+
                 {/* Brand wordmark */}
-                <div className="border-r border-[#ede5da] pr-8">
-                  <p className="font-black text-[#0a1628] leading-[1.15]" style={{ fontSize: 'clamp(18px, 2vw, 28px)', letterSpacing: '-0.025em' }}>
+                <div className="lg:border-r border-[#ede5da] lg:pr-8">
+                  <p className="font-black text-[#0a1628] leading-[1.1]" style={{ fontSize: 'clamp(18px,2vw,26px)', letterSpacing: '-0.03em' }}>
                     Aruva<br />Intelligent<br />Education<br />Platform
                   </p>
                 </div>
-                {/* Three blocks — LearnWise style: coloured pill + items row */}
+
+                {/* Three coloured service blocks */}
                 <div className="space-y-2.5">
                   {coreBlocks.map((block) => (
-                    <div key={block.label} className="flex items-stretch rounded-xl overflow-hidden border border-[#ede5da]">
-                      {/* Coloured label pill */}
-                      <div className="w-48 shrink-0 flex flex-col justify-center px-5 py-3.5 rounded-l-xl" style={{ backgroundColor: block.color }}>
-                        <p className="text-white font-semibold text-[13px] leading-snug">{block.label}</p>
-                        <p className="text-[#0a1628]/80 text-[10px] font-normal mt-0.5">{block.sublabel}</p>
+                    <div key={block.label} className="flex items-stretch rounded-xl overflow-hidden border border-[#ede5da] shadow-[0_1px_6px_rgba(10,22,40,0.04)] hover:shadow-[0_4px_16px_rgba(10,22,40,0.08)] transition-shadow">
+                      <div className="w-44 shrink-0 flex flex-col justify-center px-5 py-4" style={{ backgroundColor: block.color }}>
+                        <p className="text-white font-bold text-[13px] leading-snug">{block.label}</p>
+                        <p className="text-white/60 text-[10px] font-medium mt-0.5">{block.sublabel}</p>
                       </div>
-                      {/* Items row */}
-                      <div className="flex-1 bg-white flex items-center divide-x divide-[#ede5da]">
+                      <div className="flex-1 bg-[#fdfcfb] flex items-center divide-x divide-[#ede5da]">
                         {block.items.map((item) => (
-                          <div key={item} className="flex-1 px-4 py-3 text-[12px] text-[#0a1628] font-medium text-center leading-snug">{item}</div>
+                          <div key={item} className="flex-1 px-4 py-3.5 text-[11px] text-[#0a1628]/70 font-medium text-center leading-snug hover:bg-white hover:text-[#0a1628] transition-colors cursor-default">
+                            {item}
+                          </div>
                         ))}
                       </div>
                     </div>
@@ -670,68 +715,68 @@ function PlatformDiagram() {
             </div>
           </div>
 
-          {/* ── Connector 2 ── */}
-          <div className="flex ml-11">
-            <div className="flex-1 flex">
-              <div className="flex-1 flex flex-col items-center">
-                <div className="w-px h-5 bg-[#c8bdb0]" />
-                <div className="border border-[#d8cfc6] bg-[#fdf9f4] rounded-full px-4 py-1">
-                  <span className="text-[10px] font-semibold uppercase tracking-[0.15em] text-[#0a1628]/65">Sync &amp; Deploy</span>
+          {/* ── Connector 2: two labelled branches ── */}
+          <div className="ml-12 flex">
+            {['Sync & Deploy', 'Read & Write'].map((label) => (
+              <div key={label} className="flex-1 flex flex-col items-center">
+                <div className="w-px h-4 bg-[#c8bdb0]" />
+                <div className="border border-[#d8cfc6] bg-white rounded-full px-5 py-1.5 shadow-[0_1px_4px_rgba(10,22,40,0.05)]">
+                  <span className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#0a1628]/50">
+                    {label}
+                  </span>
                 </div>
-                <div className="w-px h-5 bg-[#c8bdb0]" />
+                <div className="w-px h-4 bg-[#c8bdb0]" />
               </div>
-              <div className="flex-1 flex flex-col items-center">
-                <div className="w-px h-5 bg-[#c8bdb0]" />
-                <div className="border border-[#d8cfc6] bg-[#fdf9f4] rounded-full px-4 py-1">
-                  <span className="text-[10px] font-semibold uppercase tracking-[0.15em] text-[#0a1628]/65">Read &amp; Write</span>
-                </div>
-                <div className="w-px h-5 bg-[#c8bdb0]" />
-              </div>
-            </div>
+            ))}
           </div>
 
           {/* ── Row 3: Integration ── */}
-          <div className="flex items-stretch rounded-2xl overflow-hidden border border-[#e2d9cf] shadow-sm">
-            <div className="w-11 shrink-0 bg-[#228DC1] flex items-center justify-center">
-              <span className="text-white text-[9px] font-bold uppercase tracking-[0.2em] whitespace-nowrap"
-                style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}>
-                Integration
-              </span>
-            </div>
-            <div className="flex-1 bg-white p-7">
+          <div className="flex items-stretch rounded-2xl overflow-hidden border border-[#e2d9cf] shadow-[0_4px_20px_rgba(10,22,40,0.06)]">
+            <SectionLabel>Integration</SectionLabel>
+            <div className="flex-1 bg-white p-6 lg:p-7">
               <div className="grid sm:grid-cols-2 gap-5">
 
                 {/* VLE / LMS */}
                 <div className="bg-[#fdf9f4] border border-[#ede5da] rounded-xl p-5">
-                  <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-[#0a1628]/60 mb-4">VLE / LMS</p>
+                  <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#0a1628]/40 mb-4">VLE / LMS</p>
                   <div className="flex flex-wrap gap-2 mb-5">
-                    {['Canvas', 'Moodle', 'Blackboard', 'Brightspace', 'Moodle Workplace'].map((lms) => (
-                      <span key={lms} className="bg-white border border-[#e2d9cf] rounded-lg px-3 py-1.5 text-[13px] font-semibold text-[#0a1628] shadow-sm">
-                        {lms}
+                    {[
+                      { name: 'Canvas',           color: '#E66000' },
+                      { name: 'Moodle',           color: '#F98012' },
+                      { name: 'Blackboard',       color: '#2E3191' },
+                      { name: 'Brightspace',      color: '#0067B1' },
+                      { name: 'Moodle Workplace', color: '#F98012' },
+                    ].map((lms) => (
+                      <span
+                        key={lms.name}
+                        className="bg-white border border-[#e2d9cf] rounded-lg px-3 py-1.5 text-[12px] font-semibold text-[#0a1628] shadow-sm hover:-translate-y-0.5 hover:shadow-md transition-all duration-150 cursor-default"
+                        style={{ borderLeftWidth: '3px', borderLeftColor: lms.color }}
+                      >
+                        {lms.name}
                       </span>
                     ))}
                   </div>
-                  <div className="border-t border-[#ede5da] pt-3 flex flex-wrap gap-x-4 gap-y-1">
+                  <div className="border-t border-[#ede5da] pt-3 flex flex-wrap gap-x-4 gap-y-1.5">
                     {['Student Portal', 'SSO / SAML / OIDC', 'Library Systems'].map((s) => (
-                      <span key={s} className="text-[11px] text-[#0a1628]/65 font-medium">{s}</span>
+                      <span key={s} className="text-[10px] text-[#0a1628]/50 font-semibold uppercase tracking-[0.12em]">{s}</span>
                     ))}
                   </div>
                 </div>
 
                 {/* Institutional Data Sources */}
                 <div className="bg-[#fdf9f4] border border-[#ede5da] rounded-xl p-5">
-                  <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-[#0a1628]/60 mb-4">Institutional Data Sources</p>
-                  <div className="space-y-0 divide-y divide-[#ede5da]">
+                  <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#0a1628]/40 mb-4">Institutional Data Sources</p>
+                  <div className="divide-y divide-[#ede5da]">
                     {[
-                      { label: 'Publisher Content', desc: 'Licensed textbooks, journals and course materials' },
-                      { label: 'Student Information System', desc: 'Enrolment, programme and cohort data' },
-                      { label: 'Assessment Records', desc: 'Grades, rubrics and historical performance' },
+                      { label: 'Publisher Content',         desc: 'Licensed textbooks, journals and course materials', color: '#228DC1' },
+                      { label: 'Student Information System', desc: 'Enrolment, programme and cohort data',              color: '#7c3aed' },
+                      { label: 'Assessment Records',        desc: 'Grades, rubrics and historical performance',         color: '#059669' },
                     ].map((item) => (
-                      <div key={item.label} className="flex gap-3 items-start py-3">
-                        <div className="w-1.5 h-1.5 rounded-full bg-[#228DC1] shrink-0 mt-1.5" />
+                      <div key={item.label} className="flex gap-3 items-start py-3 group">
+                        <div className="w-2 h-2 rounded-full shrink-0 mt-1.5 transition-transform group-hover:scale-125" style={{ backgroundColor: item.color }} />
                         <div>
                           <p className="text-[13px] font-semibold text-[#0a1628] leading-snug">{item.label}</p>
-                          <p className="text-[12px] text-[#0a1628]/60 font-normal mt-0.5">{item.desc}</p>
+                          <p className="text-[11px] text-[#0a1628]/55 font-normal mt-0.5">{item.desc}</p>
                         </div>
                       </div>
                     ))}
@@ -748,73 +793,67 @@ function PlatformDiagram() {
   )
 }
 
-// ── Pillars accordion ─────────────────────────────────────────────────────────
+// ── Four principles ──────────────────────────────────────────────────────────
+function PrinciplesSection() {
+  const [ref, inView] = useInView(0.08)
+  return (
+    <section className="py-24 bg-[#f8fafc] border-t border-gray-100">
+      <div className="max-w-7xl mx-auto px-8 lg:px-12">
+        <div className="mb-14">
+          <p className="type-label text-[#228DC1] mb-4">Our Principles</p>
+          <h2 className="font-heading text-[#0a1628] mb-3" style={{ fontSize: 'clamp(26px, 3vw, 42px)' }}>
+            Four foundations every decision is built on
+          </h2>
+          <p className="text-[#0a1628]/60 text-base font-normal leading-relaxed max-w-xl">
+            The principles that define how universities actually need AI to work.
+          </p>
+        </div>
+        <div ref={ref} className="grid sm:grid-cols-2 lg:grid-cols-4 gap-px bg-gray-200 border border-gray-200">
+          {principles.map((p, i) => (
+            <div key={p.label} className="group bg-white p-8 hover:bg-[#f8fafc] transition-colors" style={reveal(inView, i * 80)}>
+              <div className="w-10 h-10 flex items-center justify-center mb-6" style={{ backgroundColor: '#228DC112' }}>
+                <p.Icon className="w-5 h-5 text-[#228DC1]" strokeWidth={1.5} />
+              </div>
+              <p className="type-label text-[#228DC1] mb-2">{p.label}</p>
+              <h3 className="text-[#0a1628] font-semibold text-[15px] leading-snug mb-3">{p.title}</h3>
+              <p className="text-[#0a1628]/60 text-sm font-normal leading-relaxed">{p.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+// ── Pillars card grid ─────────────────────────────────────────────────────────
 function PillarsSection() {
-  const [active, setActive] = useState(0)
-  const current = pillars[active]
+  const [ref, inView] = useInView(0.08)
 
   return (
-    <section className="py-28 bg-[#f8fafc]">
+    <section className="py-24 bg-[#f8fafc]">
       <div className="max-w-7xl mx-auto px-8 lg:px-12">
-        <div className="mb-16">
+        <div className="mb-14" style={reveal(true, 0)}>
           <p className="type-label text-[#228DC1] mb-4">Platform</p>
           <h2 className="font-heading text-[#0a1628] mb-4" style={{ fontSize: 'clamp(26px, 3vw, 42px)' }}>
-            Six pillars, one continuous learning loop
+            Six pillars, one learning loop
           </h2>
-          <p className="text-[#0a1628]/60 text-lg font-normal leading-relaxed max-w-2xl">
-            Every capability in Aruva is connected. Smart Syllabus feeds the tutor. The tutor feeds assessment. Assessment feeds analytics. Analytics feeds teaching improvement.
+          <p className="text-[#0a1628]/60 text-base font-normal leading-relaxed max-w-xl">
+            Every capability connects. Smart Syllabus feeds the tutor. The tutor feeds assessment. Assessment feeds analytics.
           </p>
         </div>
 
-        <div className="grid lg:grid-cols-[1fr_1.1fr] gap-16 items-start">
-          <div className="space-y-px">
-            {pillars.map((p, i) => (
-              <button
-                key={p.num}
-                onClick={() => setActive(i)}
-                className={`group w-full text-left flex items-center gap-5 px-6 py-5 border-l-2 transition-all duration-200 ${
-                  active === i
-                    ? 'border-[#228DC1] bg-white shadow-[0_2px_16px_rgba(37,99,235,0.08)]'
-                    : 'border-transparent hover:border-[#228DC1]/30 hover:bg-white'
-                }`}
-              >
-                <span className="shrink-0 font-black tabular-nums text-xs leading-none" style={{ color: active === i ? '#228DC1' : 'rgba(10,22,40,0.2)', letterSpacing: '-0.01em' }}>
-                  {p.num}
-                </span>
-                <div className="flex-1 min-w-0">
-                  <p className={`text-[15px] font-semibold leading-snug transition-colors ${active === i ? 'text-[#0a1628]' : 'text-[#0a1628]/60 group-hover:text-[#0a1628]'}`}>
-                    {p.label}
-                  </p>
-                </div>
-                <span className={`shrink-0 text-[10px] font-semibold uppercase tracking-[0.16em] px-2 py-1 transition-all ${active === i ? 'text-[#228DC1] bg-[#e5f4fa]' : 'text-[#0a1628]/65'}`}>
-                  {p.tag}
-                </span>
-              </button>
-            ))}
-          </div>
-
-          <div className="lg:sticky lg:top-28">
-            <div key={active} className="bg-white border border-gray-100 p-10 shadow-[0_4px_32px_rgba(10,22,40,0.06)]" style={{ animation: 'fadeIn 200ms ease-out' }}>
-              <div className="flex items-start gap-4 mb-6">
-                <span className="font-black tabular-nums text-4xl text-[#228DC1]/15 leading-none" style={{ letterSpacing: '-0.02em' }}>
-                  {current.num}
-                </span>
-                <div>
-                  <p className="type-label text-[#228DC1] mb-1">{current.tag}</p>
-                  <h3 className="text-[#0a1628] font-semibold text-xl leading-snug">{current.label}</h3>
-                </div>
+        <div ref={ref} className="grid sm:grid-cols-2 lg:grid-cols-3 gap-px bg-gray-200 border border-gray-200">
+          {pillars.map((p, i) => (
+            <div key={p.num} className="group bg-white p-8 hover:bg-[#f8fafc] transition-colors" style={reveal(inView, i * 80)}>
+              <div className="flex items-center gap-3 mb-6">
+                <span className="font-black text-[10px] text-[#228DC1]" style={{ letterSpacing: '0.05em' }}>{p.num}</span>
+                <div className="h-px flex-1 bg-gray-100" />
+                <span className="text-[9px] font-semibold uppercase tracking-[0.16em] text-[#0a1628]/35">{p.tag}</span>
               </div>
-              <p className="text-[#0a1628]/70 text-[15px] font-normal leading-relaxed mb-8">{current.desc}</p>
-              <div className="space-y-3">
-                {current.capabilities.map((cap) => (
-                  <div key={cap} className="flex items-start gap-3">
-                    <CheckCircle2 className="w-4 h-4 text-[#228DC1] shrink-0 mt-0.5" />
-                    <p className="text-[#0a1628]/80 text-sm font-normal">{cap}</p>
-                  </div>
-                ))}
-              </div>
+              <h3 className="text-[#0a1628] font-semibold text-[15px] leading-snug mb-2">{p.label}</h3>
+              <p className="text-[#0a1628]/60 text-sm font-normal leading-relaxed">{p.desc}</p>
             </div>
-          </div>
+          ))}
         </div>
       </div>
     </section>
@@ -823,11 +862,10 @@ function PillarsSection() {
 
 // ── Who it's for ──────────────────────────────────────────────────────────────
 function AudienceSection() {
-  const [active, setActive] = useState(0)
-  const current = audiences[active]
+  const [ref, inView] = useInView(0.08)
 
   return (
-    <section className="py-28 bg-white">
+    <section className="py-24 bg-white">
       <div className="max-w-7xl mx-auto px-8 lg:px-12">
         <div className="mb-14">
           <p className="type-label text-[#228DC1] mb-4">Who It's For</p>
@@ -836,35 +874,24 @@ function AudienceSection() {
           </h2>
         </div>
 
-        <div className="flex gap-0 border-b border-gray-100 mb-12">
+        <div ref={ref} className="grid sm:grid-cols-3 gap-px bg-gray-200 border border-gray-200">
           {audiences.map((a, i) => (
-            <button
-              key={a.label}
-              onClick={() => setActive(i)}
-              className={`relative px-8 py-4 text-[13px] font-semibold transition-colors duration-200 ${active === i ? 'text-[#228DC1]' : 'text-[#0a1628]/60 hover:text-[#0a1628]'}`}
-            >
-              {a.label}
-              {active === i && <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#228DC1]" />}
-            </button>
-          ))}
-        </div>
-
-        <div key={active} className="grid lg:grid-cols-2 gap-16 items-start" style={{ animation: 'fadeIn 200ms ease-out' }}>
-          <div>
-            <h3 className="text-[#0a1628] font-semibold text-xl leading-snug mb-4">{current.headline}</h3>
-            <p className="text-[#0a1628]/65 text-[17px] font-normal leading-relaxed mb-8">{current.desc}</p>
-            <Link to="/contact" className="inline-flex items-center gap-2 text-[13px] font-semibold text-[#228DC1] hover:gap-3 transition-all">
-              Request a demo <ArrowRight className="w-4 h-4" />
-            </Link>
-          </div>
-          <div className="space-y-3">
-            {current.points.map((point) => (
-              <div key={point} className="flex items-start gap-3 p-4 bg-[#f8fafc] border-l-2 border-[#228DC1]">
-                <CheckCircle2 className="w-4 h-4 text-[#228DC1] shrink-0 mt-0.5" />
-                <p className="text-[#0a1628] text-[14px] font-normal leading-relaxed">{point}</p>
+            <div key={a.label} className="bg-white p-8 hover:bg-[#f8fafc] transition-colors" style={reveal(inView, i * 100)}>
+              <p className="type-label text-[#228DC1] mb-4">{a.label}</p>
+              <h3 className="text-[#0a1628] font-semibold text-[16px] leading-snug mb-6">{a.headline}</h3>
+              <div className="space-y-3">
+                {a.points.map((point) => (
+                  <div key={point} className="flex items-start gap-2.5">
+                    <CheckCircle2 className="w-4 h-4 text-[#228DC1] shrink-0 mt-0.5" />
+                    <p className="text-[#0a1628]/70 text-[13px] font-normal leading-relaxed">{point}</p>
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
+              <Link to="/contact" className="inline-flex items-center gap-1.5 mt-6 text-[12px] font-semibold text-[#228DC1] hover:gap-2.5 transition-all">
+                Learn more <ArrowRight className="w-3.5 h-3.5" />
+              </Link>
+            </div>
+          ))}
         </div>
       </div>
     </section>
@@ -875,6 +902,7 @@ function AudienceSection() {
 export default function AruvaPage() {
   return (
     <>
+      <ScrollProgress />
       {/* ── Hero ── */}
       <section className="relative overflow-hidden bg-[#f8fafc] pt-32 pb-20">
         <div
@@ -919,7 +947,7 @@ export default function AruvaPage() {
           ].map((item, i) => (
             <span key={i} className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#0a1628]/65 flex items-center gap-10">
               {item}
-              <span className="w-1 h-1 rounded-full bg-white/12" />
+              <span className="w-1 h-1 rounded-full bg-[#0a1628]/25" />
             </span>
           ))}
         </div>
@@ -935,7 +963,7 @@ export default function AruvaPage() {
               Guided learning, not shortcuts
             </h2>
             <p className="text-[#0a1628]/65 text-[17px] font-normal leading-relaxed">
-              The professor configured Socratic mode in the Smart Syllabus. The AI follows that intent exactly, building the student's understanding rather than bypassing it. Every exchange creates a measurable learning signal.
+              The professor configured Socratic mode in the Smart Syllabus. The AI follows that intent exactly — every exchange builds genuine understanding and creates a measurable learning signal.
             </p>
           </div>
 
@@ -970,7 +998,7 @@ export default function AruvaPage() {
               From syllabus to intelligent tutor in hours
             </h2>
             <p className="text-[#0a1628]/65 text-lg font-normal leading-relaxed max-w-2xl">
-              Aruva transforms your existing course structure into a governed AI teaching layer. No rip-and-replace. No new workflows. Just intelligent alignment with what you already teach.
+              Aruva transforms your existing course structure into a governed AI teaching layer. No rip-and-replace, no new workflows.
             </p>
           </div>
 
@@ -994,11 +1022,8 @@ export default function AruvaPage() {
                       <h3 className="font-semibold text-[#0a1628] mb-4" style={{ fontSize: 'clamp(20px, 2.2vw, 28px)' }}>
                         {step.label}
                       </h3>
-                      <p className="text-[#0a1628]/65 text-[16px] font-normal leading-relaxed mb-4">
+                      <p className="text-[#0a1628]/65 text-[16px] font-normal leading-relaxed">
                         {step.desc}
-                      </p>
-                      <p className="text-[#0a1628]/60 text-sm font-normal italic">
-                        {step.detail}
                       </p>
                     </div>
 
@@ -1016,32 +1041,7 @@ export default function AruvaPage() {
       </section>
 
       {/* ── Four principles ── */}
-      <section className="py-24 bg-[#f8fafc] border-t border-gray-100">
-        <div className="max-w-7xl mx-auto px-8 lg:px-12">
-          <div className="mb-14">
-            <p className="type-label text-[#228DC1] mb-4">Our Principles</p>
-            <h2 className="font-heading text-[#0a1628] mb-4" style={{ fontSize: 'clamp(26px, 3vw, 42px)' }}>
-              Four foundations every decision is built on
-            </h2>
-            <p className="text-[#0a1628]/65 text-lg font-normal leading-relaxed max-w-2xl">
-              Aruva was designed from the ground up around four principles that define how universities actually need AI to work.
-            </p>
-          </div>
-
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-px bg-gray-200 border border-gray-200">
-            {principles.map((p) => (
-              <div key={p.label} className="group bg-white p-8 hover:bg-[#f7f8fa] transition-colors">
-                <div className="w-10 h-10 flex items-center justify-center mb-6" style={{ backgroundColor: '#228DC112' }}>
-                  <p.Icon className="w-5 h-5 text-[#228DC1]" strokeWidth={1.5} />
-                </div>
-                <p className="text-[10px] font-semibold uppercase tracking-[0.2em] mb-2 text-[#228DC1]">{p.label}</p>
-                <h3 className="text-[#0a1628] font-semibold text-[15px] leading-snug mb-3">{p.title}</h3>
-                <p className="text-[#0a1628]/65 text-sm font-normal leading-relaxed">{p.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      <PrinciplesSection />
 
       {/* ── Platform pillars ── */}
       <PillarsSection />
@@ -1055,38 +1055,24 @@ export default function AruvaPage() {
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <div>
               <p className="type-label text-[#228DC1] mb-4">Governance and Trust</p>
-              <h2 className="font-heading text-[#0a1628] mb-6" style={{ fontSize: 'clamp(24px, 2.5vw, 36px)' }}>
-                Designed for institutions that need AI they can govern
+              <h2 className="font-heading text-[#0a1628] mb-5" style={{ fontSize: 'clamp(24px, 2.5vw, 36px)' }}>
+                AI that institutions can govern.
               </h2>
-              <p className="text-[#0a1628]/65 text-[17px] font-normal leading-relaxed mb-8">
-                Aruva is built for the real requirements of higher education: data residency strategy, audit trails, role-based access, academic integrity and the ability to control how AI behaves across every course and department.
+              <p className="text-[#0a1628]/65 text-base font-normal leading-relaxed">
+                Built for the real requirements of higher education: data residency, audit trails, role-based access and full control over how AI behaves.
               </p>
-              <div className="space-y-3">
-                {[
-                  'Supports cloud, hybrid or on-premises deployment',
-                  'Role-based access with institution-level policy controls',
-                  'Full audit trail: every AI interaction traceable and attributable',
-                  'Source provenance and citation transparency on all AI outputs',
-                  'Designed to support GDPR, FERPA and UK data governance requirements',
-                ].map((point) => (
-                  <div key={point} className="flex items-start gap-3">
-                    <CheckCircle2 className="w-4 h-4 text-[#228DC1] shrink-0 mt-0.5" />
-                    <p className="text-[#0a1628]/75 text-sm font-normal">{point}</p>
-                  </div>
-                ))}
-              </div>
             </div>
 
             <div className="grid grid-cols-2 gap-px bg-gray-200 border border-gray-200">
               {[
-                { label: 'Data Residency', desc: 'Cloud, hybrid or on-prem options based on institutional requirements.' },
-                { label: 'Audit Trail', desc: 'Immutable logs of every interaction with full source attribution.' },
-                { label: 'Access Control', desc: 'Role-based permissions across students, educators and administrators.' },
-                { label: 'Academic Integrity', desc: 'Socratic-mode AI that guides thinking rather than bypassing it.' },
+                { label: 'Data Residency', desc: 'Cloud, hybrid or on-prem.' },
+                { label: 'Audit Trail', desc: 'Every interaction traceable.' },
+                { label: 'Access Control', desc: 'Role-based, institution-wide.' },
+                { label: 'Academic Integrity', desc: 'Socratic AI, no shortcuts.' },
               ].map((item) => (
                 <div key={item.label} className="bg-white p-6">
-                  <p className="text-[#0a1628] font-semibold text-[14px] mb-2">{item.label}</p>
-                  <p className="text-[#0a1628]/60 text-xs font-normal leading-relaxed">{item.desc}</p>
+                  <p className="text-[#0a1628] font-semibold text-[14px] mb-1.5">{item.label}</p>
+                  <p className="text-[#0a1628]/55 text-[13px] font-normal leading-relaxed">{item.desc}</p>
                 </div>
               ))}
             </div>

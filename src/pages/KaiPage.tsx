@@ -479,21 +479,26 @@ export default function KaiPage() {
     <>
       {/* ── Hero ── */}
       <section className="relative overflow-hidden bg-white pt-32 pb-24">
+        {/* dot grid */}
+        <div className="absolute inset-0 pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(34,141,193,0.055) 1px, transparent 0)', backgroundSize: '28px 28px' }} />
+        {/* radial glow */}
+        <div className="absolute top-0 right-0 w-[900px] h-[700px] pointer-events-none" style={{ background: 'radial-gradient(ellipse at 70% 10%, rgba(34,141,193,0.10) 0%, transparent 60%)' }} />
 
         <div className="relative max-w-7xl mx-auto px-8 lg:px-12">
-          <p className="font-black text-[#228DC1] mb-4" style={{ fontSize: '13px', letterSpacing: '0.28em', textTransform: 'uppercase', opacity: 0.6 }}>
-            Kai · Enterprise AI Agent
-          </p>
+          <div className="inline-flex items-center gap-2.5 bg-[#e5f4fa] border border-[#228DC1]/25 px-4 py-2 mb-7">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#228DC1]" />
+            <p className="font-bold text-[#228DC1]" style={{ fontSize: '11px', letterSpacing: '0.24em', textTransform: 'uppercase' }}>Enterprise AI Agent</p>
+          </div>
           <h1 className="font-serif-display text-[#0a1628] leading-[1.02] mb-6 max-w-4xl" style={{ fontSize: 'clamp(44px, 5.8vw, 80px)' }}>
             The enterprise AI agent<br />
-            that <span style={{ color: '#228DC1' }}>resolves,</span> not just responds.
+            that <span style={{ background: 'linear-gradient(135deg, #228DC1 0%, #0e6a9a 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>resolves,</span> not just responds.
           </h1>
           <p className="text-[#0a1628]/60 text-lg font-normal leading-relaxed max-w-2xl mb-10">
             Kai connects to your systems, follows your rules and helps teams resolve work faster.
           </p>
           <div className="flex flex-wrap gap-4">
-            <Link to="/contact" className="px-7 py-3.5 bg-[#228DC1] text-white text-[13px] font-semibold hover:bg-[#1a6e99] transition-colors">
-              Request a Demo
+            <Link to="/contact" className="inline-flex items-center gap-2 px-7 py-3.5 bg-[#228DC1] text-white text-[13px] font-semibold hover:bg-[#1a6e99] transition-all shadow-[0_4px_20px_rgba(34,141,193,0.35)] hover:shadow-[0_6px_28px_rgba(34,141,193,0.45)]">
+              Request a Demo <ArrowRight className="w-4 h-4" />
             </Link>
             <Link to="/contact" className="px-7 py-3.5 border border-gray-200 text-[#0a1628]/70 text-[13px] font-medium hover:border-[#228DC1]/50 hover:text-[#228DC1] transition-all">
               Talk to an expert
@@ -612,8 +617,9 @@ export default function KaiPage() {
               { stat: '+17%', label: 'CSAT uplift', note: 'Learner satisfaction' },
               { stat: '45s', label: 'Avg handle time', note: 'AI-resolved queries' },
             ].map((item) => (
-              <div key={item.label} className="bg-white border border-gray-200 px-8 py-8 shadow-[0_1px_8px_rgba(10,22,40,0.03)]">
-                <p className="font-black text-[#228DC1] leading-none mb-2" style={{ fontSize: 'clamp(24px, 2.8vw, 38px)', letterSpacing: '-0.02em' }}>
+              <div key={item.label} className="relative bg-white border border-gray-200 px-8 py-8 shadow-[0_1px_8px_rgba(10,22,40,0.03)] overflow-hidden">
+                <div className="absolute top-0 left-0 w-[3px] h-full bg-gradient-to-b from-[#228DC1] to-[#0e6a9a]" />
+                <p className="font-black leading-none mb-2" style={{ fontSize: 'clamp(24px, 2.8vw, 38px)', letterSpacing: '-0.02em', background: 'linear-gradient(135deg, #228DC1 0%, #0e6a9a 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>
                   {item.stat}
                 </p>
                 <p className="text-[#0a1628] text-[13px] font-semibold mb-0.5">{item.label}</p>
@@ -837,12 +843,13 @@ export default function KaiPage() {
                 desc: 'Track containment, CSAT and escalations live.',
               },
             ].map((step) => (
-              <div key={step.num} className="bg-white border border-gray-200 p-8 shadow-[0_1px_8px_rgba(10,22,40,0.03)] hover:shadow-[0_16px_40px_rgba(10,22,40,0.07)] hover:-translate-y-0.5 transition-all">
+              <div key={step.num} className="group relative bg-white border border-gray-200 p-8 shadow-[0_1px_8px_rgba(10,22,40,0.03)] hover:shadow-[0_20px_48px_rgba(10,22,40,0.09)] hover:-translate-y-1 transition-all overflow-hidden">
+                <div className="absolute top-0 inset-x-0 h-[2px] bg-gradient-to-r from-[#228DC1] to-[#0e6a9a] transform -translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
                 <div className="flex items-center gap-3 mb-6">
                   <span className="font-black text-[10px] text-[#228DC1]" style={{ letterSpacing: '0.05em' }}>{step.num}</span>
                   <div className="h-px flex-1 bg-gray-100" />
                 </div>
-                <div className="w-10 h-10 flex items-center justify-center mb-5" style={{ backgroundColor: '#228DC112' }}>
+                <div className="w-10 h-10 flex items-center justify-center mb-5 group-hover:bg-[#228DC1]/15 transition-colors" style={{ backgroundColor: '#228DC112' }}>
                   <step.Icon className="w-5 h-5 text-[#228DC1]" strokeWidth={1.5} />
                 </div>
                 <h3 className="text-[#0a1628] font-semibold text-[15px] leading-snug mb-2">{step.label}</h3>
@@ -875,8 +882,9 @@ export default function KaiPage() {
                 desc: 'Roles, MFA, audit trails and configurable AI behaviour.',
               },
             ].map((cap) => (
-              <div key={cap.label} className="bg-white border border-gray-200 p-8 shadow-[0_1px_8px_rgba(10,22,40,0.03)] hover:shadow-[0_16px_40px_rgba(10,22,40,0.07)] hover:-translate-y-0.5 transition-all">
-                <div className="w-10 h-10 flex items-center justify-center mb-5" style={{ backgroundColor: '#228DC112' }}>
+              <div key={cap.label} className="group relative bg-white border border-gray-200 p-8 shadow-[0_1px_8px_rgba(10,22,40,0.03)] hover:shadow-[0_20px_48px_rgba(10,22,40,0.09)] hover:-translate-y-1 transition-all overflow-hidden">
+                <div className="absolute top-0 inset-x-0 h-[2px] bg-gradient-to-r from-[#228DC1] to-[#0e6a9a] transform -translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
+                <div className="w-10 h-10 flex items-center justify-center mb-5 group-hover:bg-[#228DC1]/15 transition-colors" style={{ backgroundColor: '#228DC112' }}>
                   <cap.Icon className="w-5 h-5 text-[#228DC1]" strokeWidth={1.5} />
                 </div>
                 <h3 className="text-[#0a1628] font-semibold text-[15px] leading-snug mb-2">{cap.label}</h3>
@@ -953,17 +961,20 @@ export default function KaiPage() {
       <IntegrationsSection />
 
       {/* ── Pilot CTA ── */}
-      <section className="py-16 bg-[#0a1628]">
-        <div className="max-w-7xl mx-auto px-8 lg:px-12 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-8">
+      <section className="py-20 relative overflow-hidden" style={{ background: 'linear-gradient(135deg, #071020 0%, #0d2244 50%, #071020 100%)' }}>
+        {/* decorative glow */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] pointer-events-none" style={{ background: 'radial-gradient(ellipse, rgba(34,141,193,0.18) 0%, transparent 70%)' }} />
+        <div className="relative max-w-7xl mx-auto px-8 lg:px-12 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-8">
           <div>
-            <p className="text-white font-semibold text-lg mb-1">Start with a focused pilot.</p>
-            <p className="text-white/50 text-sm font-normal">
-              One channel. One workflow. Measure, then scale.
+            <p className="text-[10px] font-bold uppercase tracking-[0.26em] text-[#228DC1]/70 mb-3">Focused pilot</p>
+            <p className="text-white font-semibold text-xl mb-1.5">Start with one channel. One workflow.</p>
+            <p className="text-white/45 text-sm font-normal">
+              Measure real outcomes, then scale to your full operation.
             </p>
           </div>
           <Link
             to="/contact"
-            className="shrink-0 inline-flex items-center gap-2 px-7 py-3.5 bg-[#228DC1] text-white text-[13px] font-semibold hover:bg-[#1a6e99] transition-all"
+            className="shrink-0 inline-flex items-center gap-2 px-8 py-4 bg-[#228DC1] text-white text-[13px] font-semibold hover:bg-[#1a6e99] transition-all shadow-[0_4px_24px_rgba(34,141,193,0.4)] hover:shadow-[0_6px_32px_rgba(34,141,193,0.5)]"
           >
             Request a Demo <ArrowRight className="w-4 h-4" />
           </Link>

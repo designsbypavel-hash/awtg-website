@@ -76,203 +76,478 @@ function StatCard({ prefix = '', num, suffix = '', label, note, delay = 0 }: {
   )
 }
 
-// ── Demo messages ─────────────────────────────────────────────────────────────
-const demoMessages = [
-  { role: 'customer', text: 'Hi, I need to change the email address on my account but the portal isn\'t working.', delay: 500 },
-  { role: 'ai', text: 'I can help with that right now. Let me pull up your account details. Can you confirm the email address currently on file?', delay: 1800 },
-  { role: 'customer', text: 'It\'s james.miller@company.co.uk', delay: 3200 },
-  { role: 'ai', text: 'Found your account. I\'ve updated your email address and sent a confirmation to your new address. Is there anything else I can help you with today?', meta: 'CRM updated · Ticket closed · CSAT triggered', delay: 4800 },
-  { role: 'signal', text: 'Resolved without escalation · Handle time: 38s', delay: 6200 },
-]
+// ── Kai Dashboard mockup ──────────────────────────────────────────────────────
+function KaiDashboard() {
+  const [activeTab,  setActiveTab]  = useState('details')
+  const [activeAsst, setActiveAsst] = useState(0)
+  const [visible,    setVisible]    = useState<number[]>([])
+  const [typing,     setTyping]     = useState(false)
+  const tmrRef = useRef<number[]>([])
 
-function KaiDemo() {
-  const [visible, setVisible] = useState<number[]>([])
-  const [typing, setTyping] = useState(false)
-  const timeoutsRef = useRef<number[]>([])
+  type PlayMsg = { role: 'user' | 'ai' | 'signal'; text: string; meta?: string }
+  const playMsgs: PlayMsg[] = [
+    { role: 'user',   text: 'Hi, my order hasn\'t arrived — it\'s been 5 days.' },
+    { role: 'ai',     text: 'I can see order #48291. It shipped Monday and is with the courier — delivery is due today before 6 pm.', meta: 'Order lookup · CRM synced' },
+    { role: 'user',   text: 'Perfect, thank you!' },
+    { role: 'signal', text: 'Resolved · 22s handle time · CSAT triggered' },
+  ]
+  const delays = [900, 2300, 3900, 5100]
 
-  const runDemo = () => {
+  const runChat = () => {
     setVisible([])
     setTyping(false)
-    timeoutsRef.current.forEach(clearTimeout)
-    timeoutsRef.current = []
-    demoMessages.forEach((msg, i) => {
-      if (msg.role === 'ai' || msg.role === 'signal') {
-        const t1 = window.setTimeout(() => setTyping(true), msg.delay - 700)
-        timeoutsRef.current.push(t1)
+    tmrRef.current.forEach(clearTimeout)
+    tmrRef.current = []
+    playMsgs.forEach((msg, i) => {
+      if (msg.role === 'ai') {
+        const t1 = window.setTimeout(() => setTyping(true), delays[i] - 700)
+        tmrRef.current.push(t1)
       }
       const t = window.setTimeout(() => {
         setTyping(false)
         setVisible(prev => [...prev, i])
-      }, msg.delay)
-      timeoutsRef.current.push(t)
+      }, delays[i])
+      tmrRef.current.push(t)
     })
   }
 
   useEffect(() => {
-    const t = window.setTimeout(runDemo, 600)
-    return () => { clearTimeout(t); timeoutsRef.current.forEach(clearTimeout) }
+    const t = window.setTimeout(runChat, 700)
+    return () => { clearTimeout(t); tmrRef.current.forEach(clearTimeout) }
   }, [])
 
-  const signalVisible = visible.includes(4)
+  const resolved   = visible.includes(3)
+  const tabs       = ['Details', 'Instructions', 'Training', 'Prompts', 'Chat interface', 'Integrations']
+  const assistants = [
+    { name: 'Contact Centre AI', sessions: '12,481', live: true  },
+    { name: 'British Council',   sessions: '8,924',  live: true  },
+  ]
 
   return (
-    <div className="bg-white border border-gray-200 overflow-hidden shadow-[0_16px_50px_rgba(10,22,40,0.07)]">
-      {/* Chrome bar */}
-      <div className="flex items-center gap-1.5 px-4 py-3 bg-[#f3f4f6] border-b border-gray-200">
+    <div className="bg-white border border-gray-200 overflow-hidden shadow-[0_24px_60px_rgba(10,22,40,0.10)]">
+
+      {/* Browser chrome */}
+      <div className="flex items-center gap-1.5 px-4 py-2.5 bg-[#f0f2f5] border-b border-gray-200">
         <span className="w-2.5 h-2.5 rounded-full bg-[#fc5f57]" />
         <span className="w-2.5 h-2.5 rounded-full bg-[#febc2e]" />
         <span className="w-2.5 h-2.5 rounded-full bg-[#28c840]" />
         <div className="flex-1 flex justify-center">
-          <div className="bg-white border border-gray-200 px-3 py-1 text-[11px] text-gray-400 font-normal" style={{ minWidth: '220px', textAlign: 'center' }}>
-            app.kai.awtg.co.uk/agent
+          <div className="bg-white border border-gray-200 px-4 py-1 text-[11px] text-gray-400 font-normal text-center" style={{ minWidth: '240px' }}>
+            app.kai.awtg.co.uk/dashboard
           </div>
         </div>
-        <button onClick={runDemo} className="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#228DC1]/50 hover:text-[#228DC1] transition-colors">
+        <button onClick={runChat} className="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#228DC1]/50 hover:text-[#228DC1] transition-colors">
           Replay
         </button>
       </div>
 
-      {/* 3-panel layout */}
-      <div className="grid grid-cols-[180px_1fr_170px] divide-x divide-gray-100" style={{ minHeight: '400px' }}>
-
-        {/* Left: queue */}
-        <div className="bg-[#f8fafc] p-4">
-          <p className="text-[9px] font-semibold uppercase tracking-[0.18em] text-gray-400 mb-3">Live Queue</p>
-          <div className="space-y-1.5">
-            {[
-              { name: 'James M.', topic: 'Account update', active: true },
-              { name: 'Sarah K.', topic: 'Billing query', active: false },
-              { name: 'Tom R.', topic: 'Technical issue', active: false },
-              { name: 'Priya L.', topic: 'Onboarding', active: false },
-            ].map((item) => (
-              <div key={item.name} className={`px-2.5 py-2 text-[11px] ${item.active ? 'bg-[#228DC1] text-white' : 'text-gray-500 bg-white border border-gray-100'}`}>
-                <p className="font-semibold">{item.name}</p>
-                <p className={`text-[10px] ${item.active ? 'text-white/70' : 'text-gray-400'}`}>{item.topic}</p>
-              </div>
-            ))}
+      {/* App top bar */}
+      <div className="flex items-center justify-between px-5 py-2.5 bg-[#0a1628] border-b border-white/[0.07]">
+        <div className="flex items-center gap-2.5">
+          <div className="w-6 h-6 bg-[#228DC1] flex items-center justify-center shrink-0">
+            <img src="/logo-icon.svg" alt="Kai" className="w-3.5 h-3.5 object-contain brightness-0 invert"
+              onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }} />
           </div>
-          <div className="mt-4 pt-3 border-t border-gray-200">
-            <p className="text-[9px] font-semibold uppercase tracking-[0.18em] text-gray-400 mb-2">Today</p>
-            <div className="space-y-1">
-              <div className="flex justify-between text-[10px]">
-                <span className="text-gray-400">Resolved by AI</span>
-                <span className="text-[#059669] font-bold">{signalVisible ? '74%' : '73%'}</span>
-              </div>
-              <div className="flex justify-between text-[10px]">
-                <span className="text-gray-400">Avg handle time</span>
-                <span className="text-[#0a1628] font-semibold">45s</span>
-              </div>
-            </div>
+          <div className="leading-none">
+            <span className="text-white font-bold text-[13px] tracking-[-0.01em]">Kai</span>
+            <span className="text-white/30 text-[9px] ml-2">powered by AWTG</span>
           </div>
         </div>
-
-        {/* Centre: conversation */}
-        <div className="flex flex-col bg-white">
-          <div className="px-4 py-3 border-b border-gray-100 bg-[#f8fafc] flex items-center justify-between">
-            <div>
-              <p className="text-[11px] font-semibold text-[#0a1628]">James Miller</p>
-              <p className="text-[10px] text-gray-400">English Online · Account query</p>
-            </div>
-            <span className="text-[10px] font-semibold text-[#059669] bg-[#f0fdf4] border border-[#059669]/20 px-2 py-0.5">AI handling</span>
-          </div>
-
-          <div className="flex-1 p-4 space-y-4 overflow-hidden bg-[#fafafa]">
-            {demoMessages.slice(0, 4).map((msg, i) => {
-              if (!visible.includes(i)) return null
-              if (msg.role === 'customer') {
-                return (
-                  <div key={i} className="flex justify-end" style={{ animation: 'fadeIn 250ms ease-out' }}>
-                    <div className="max-w-[78%] bg-[#228DC1] px-3.5 py-2.5">
-                      <p className="text-[12px] text-white font-normal leading-relaxed">{msg.text}</p>
-                    </div>
-                  </div>
-                )
-              }
-              return (
-                <div key={i} className="flex gap-2.5 items-start" style={{ animation: 'fadeIn 250ms ease-out' }}>
-                  <div className="w-6 h-6 bg-[#228DC1] flex items-center justify-center shrink-0">
-                    <span className="text-white text-[9px] font-black">K</span>
-                  </div>
-                  <div className="flex-1">
-                    <div className="bg-white border border-gray-100 px-3.5 py-2.5 shadow-[0_1px_4px_rgba(10,22,40,0.06)]">
-                      <p className="text-[12px] text-[#0a1628] font-normal leading-relaxed">{msg.text}</p>
-                    </div>
-                    {msg.meta && (
-                      <div className="mt-1.5 flex gap-1.5 flex-wrap">
-                        {msg.meta.split(' · ').map((m) => (
-                          <span key={m} className="text-[10px] font-medium text-[#228DC1] bg-[#e5f4fa] border border-[#228DC1]/15 px-2 py-0.5">{m}</span>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                </div>
-              )
-            })}
-
-            {typing && (
-              <div className="flex gap-2.5 items-start" style={{ animation: 'fadeIn 150ms ease-out' }}>
-                <div className="w-6 h-6 bg-[#228DC1] flex items-center justify-center shrink-0">
-                  <span className="text-white text-[9px] font-black">K</span>
-                </div>
-                <div className="bg-white border border-gray-100 px-4 py-3 flex gap-1 items-center">
-                  <span className="w-1.5 h-1.5 rounded-full bg-gray-300" style={{ animation: 'pulse 0.9s ease-in-out infinite' }} />
-                  <span className="w-1.5 h-1.5 rounded-full bg-gray-300" style={{ animation: 'pulse 0.9s ease-in-out 0.18s infinite' }} />
-                  <span className="w-1.5 h-1.5 rounded-full bg-gray-300" style={{ animation: 'pulse 0.9s ease-in-out 0.36s infinite' }} />
-                </div>
-              </div>
-            )}
-
-            {signalVisible && (
-              <div className="px-3 py-2 bg-[#e5f4fa] border border-[#228DC1]/20 flex items-center gap-2" style={{ animation: 'fadeIn 400ms ease-out' }}>
-                <CheckCircle2 className="w-3.5 h-3.5 text-[#228DC1] shrink-0" />
-                <p className="text-[10px] text-[#228DC1] font-semibold">{demoMessages[4].text}</p>
-              </div>
-            )}
-          </div>
-
-          <div className="px-4 py-3 border-t border-gray-100 flex gap-2 items-center">
-            <div className="flex-1 bg-[#f8fafc] border border-gray-100 px-3 py-2 text-[11px] text-gray-300">
-              Message customer...
-            </div>
-            <div className="w-7 h-7 bg-[#228DC1] flex items-center justify-center shrink-0">
-              <ArrowRight className="w-3.5 h-3.5 text-white" />
-            </div>
+        <div className="flex items-center gap-2">
+          <button className="text-[10px] font-semibold text-white/80 border border-white/20 px-3 py-1 hover:bg-white/10 transition-colors">
+            Switch to Kai Agent
+          </button>
+          <div className="w-6 h-6 bg-white/10 flex items-center justify-center">
+            <Settings2 className="w-3 h-3 text-white/45" />
           </div>
         </div>
+      </div>
 
-        {/* Right: metrics */}
-        <div className="bg-[#f8fafc] p-4 flex flex-col gap-4">
-          <p className="text-[9px] font-semibold uppercase tracking-[0.18em] text-gray-400">Resolution</p>
-          <div>
-            <p className="font-black text-[#0a1628] leading-none mb-1" style={{ fontSize: '28px', letterSpacing: '-0.02em' }}>
-              {signalVisible ? '74' : '73'}<span className="text-[18px]">%</span>
-            </p>
-            <p className="text-[10px] text-gray-400 font-medium">AI resolution rate</p>
-            <div className="mt-2 h-1 bg-gray-200 overflow-hidden">
-              <div className="h-full bg-[#059669]" style={{ width: signalVisible ? '74%' : '73%', transition: 'width 0.8s ease-out' }} />
-            </div>
-          </div>
-          <div className="pt-3 border-t border-gray-200 space-y-3">
-            {[
-              { label: 'CSAT uplift', val: '+17%', color: '#228DC1' },
-              { label: 'Containment↑', val: '+22.5%', color: '#7c3aed' },
-              { label: 'Escalations↓', val: '−13%', color: '#059669' },
-            ].map((item) => (
-              <div key={item.label} className="flex justify-between items-center">
-                <span className="text-[10px] text-gray-400 font-medium">{item.label}</span>
-                <span className="text-[11px] font-bold" style={{ color: item.color }}>{item.val}</span>
+      {/* 3-column layout */}
+      <div className="grid grid-cols-[195px_1fr_235px] divide-x divide-gray-100" style={{ minHeight: '460px' }}>
+
+        {/* ── Sidebar ── */}
+        <div className="bg-[#f8fafc] flex flex-col">
+          <div className="flex-1 px-3 pt-5 pb-3 overflow-hidden">
+            <p className="font-bold text-[#0a1628] text-[14px] mb-4 px-1">Dashboard</p>
+
+            {/* Admin Panel nav group */}
+            <div className="mb-3">
+              <div className="flex items-center justify-between px-2 py-1 mb-0.5">
+                <span className="text-[9px] font-bold uppercase tracking-[0.18em] text-[#0a1628]/35">Admin Panel</span>
+                <span className="text-[#0a1628]/25 text-[10px]">▾</span>
               </div>
-            ))}
-          </div>
-          <div className="mt-auto pt-3 border-t border-gray-200">
-            <p className="text-[9px] font-semibold uppercase tracking-[0.18em] text-gray-400 mb-1.5">Live integrations</p>
-            <div className="flex flex-wrap gap-1">
-              {['HubSpot', 'WhatsApp', 'Jira', 'Email'].map((tag) => (
-                <span key={tag} className="text-[9px] font-semibold bg-white border border-gray-200 text-[#0a1628]/60 px-2 py-0.5">{tag}</span>
+              {['Dashboard', 'Access management', 'User management'].map(item => (
+                <button key={item} className="w-full text-left px-3 py-1.5 text-[11px] text-[#0a1628]/50 hover:text-[#0a1628]/80 hover:bg-white/70 transition-colors">
+                  {item}
+                </button>
+              ))}
+            </div>
+
+            <div className="space-y-0.5 mb-4">
+              {['Chats history', 'Collected leads'].map(item => (
+                <button key={item} className="w-full text-left px-3 py-1.5 text-[11px] text-[#0a1628]/50 hover:text-[#0a1628]/80 hover:bg-white/70 transition-colors">
+                  {item}
+                </button>
+              ))}
+            </div>
+
+            {/* Assistants */}
+            <div className="border-t border-gray-200 pt-3">
+              <div className="flex items-center justify-between px-1 mb-2">
+                <p className="text-[9px] font-bold uppercase tracking-[0.18em] text-[#0a1628]/35">Assistants</p>
+                <span className="text-[9px] text-[#0a1628]/30 font-medium">2 / 40</span>
+              </div>
+              {assistants.map((asst, i) => (
+                <button
+                  key={asst.name}
+                  onClick={() => setActiveAsst(i)}
+                  className={`w-full flex items-center gap-2 px-2 py-2 mb-1 text-left transition-all ${
+                    activeAsst === i
+                      ? 'bg-white border border-gray-200 shadow-[0_1px_4px_rgba(10,22,40,0.06)]'
+                      : 'hover:bg-white/60'
+                  }`}
+                >
+                  <div className="w-5 h-5 bg-[#228DC1] flex items-center justify-center shrink-0">
+                    <span className="text-white text-[8px] font-black">K</span>
+                  </div>
+                  <span className={`text-[11px] truncate flex-1 ${activeAsst === i ? 'text-[#0a1628] font-semibold' : 'text-[#0a1628]/50'}`}>
+                    {asst.name}
+                  </span>
+                  {asst.live && (
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#059669] shrink-0" style={{ animation: 'pulse 2s ease-in-out infinite' }} />
+                  )}
+                </button>
               ))}
             </div>
           </div>
+
+          {/* Usage stats pinned to bottom */}
+          <div className="px-3 py-4 border-t border-gray-200 shrink-0">
+            <div className="flex items-center justify-between mb-2.5">
+              <p className="text-[9px] font-bold text-[#0a1628]/35 uppercase tracking-[0.14em]">Enterprise plan</p>
+              <span className="text-[9px] text-[#228DC1] font-semibold">Active</span>
+            </div>
+            {[
+              { label: 'Sessions', pct: 25 },
+              { label: 'Tokens',   pct: 11 },
+              { label: 'Messages', pct: 4  },
+            ].map(u => (
+              <div key={u.label} className="mb-2">
+                <div className="flex justify-between text-[9px] text-[#0a1628]/40 mb-0.5">
+                  <span>{u.label}</span><span>{u.pct}%</span>
+                </div>
+                <div className="h-0.5 bg-gray-200 overflow-hidden">
+                  <div className="h-full bg-[#228DC1] transition-all" style={{ width: `${u.pct}%` }} />
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
+
+        {/* ── Main content ── */}
+        <div className="flex flex-col bg-white">
+
+          {/* Tab bar */}
+          <div className="flex items-end border-b border-gray-100 overflow-x-auto shrink-0">
+            {tabs.map(tab => {
+              const key = tab.toLowerCase().replace(/\s+/g, '-')
+              return (
+                <button
+                  key={tab}
+                  onClick={() => setActiveTab(key)}
+                  className={`px-4 py-3 text-[11px] whitespace-nowrap transition-colors border-b-2 -mb-px ${
+                    activeTab === key
+                      ? 'border-[#228DC1] text-[#228DC1] font-semibold'
+                      : 'border-transparent text-[#0a1628]/40 hover:text-[#0a1628]/65 font-medium'
+                  }`}
+                >
+                  {tab}
+                </button>
+              )
+            })}
+          </div>
+
+          {/* Tab content */}
+          <div className="flex-1 overflow-auto">
+
+            {activeTab === 'details' && (
+              <div className="p-6 space-y-5">
+                <div className="grid grid-cols-2 gap-5">
+                  <div>
+                    <p className="text-[9px] font-bold uppercase tracking-[0.18em] text-[#0a1628]/35 mb-1.5">Name</p>
+                    <div className="flex items-center gap-2">
+                      <p className="text-[#0a1628] font-semibold text-[13px]">{assistants[activeAsst].name}</p>
+                      <span className="text-[#228DC1]/40 text-[11px] cursor-pointer hover:text-[#228DC1] transition-colors">✎</span>
+                    </div>
+                  </div>
+                  <div>
+                    <p className="text-[9px] font-bold uppercase tracking-[0.18em] text-[#0a1628]/35 mb-1.5">Status</p>
+                    <span className="inline-flex items-center gap-1.5 text-[12px] font-semibold text-[#059669]">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#059669]" style={{ animation: 'pulse 2s ease-in-out infinite' }} />
+                      Live
+                    </span>
+                  </div>
+                  <div>
+                    <p className="text-[9px] font-bold uppercase tracking-[0.18em] text-[#0a1628]/35 mb-1.5">AI model</p>
+                    <div className="inline-flex items-center gap-2 bg-[#f8fafc] border border-gray-200 px-3 py-1.5 cursor-pointer hover:border-gray-300 transition-colors">
+                      <span className="text-[#0a1628] text-[12px] font-medium">Claude Sonnet</span>
+                      <span className="text-gray-400 text-[9px]">▾</span>
+                    </div>
+                  </div>
+                  <div>
+                    <p className="text-[9px] font-bold uppercase tracking-[0.18em] text-[#0a1628]/35 mb-1.5">Sessions (30d)</p>
+                    <p className="text-[#0a1628] font-semibold text-[13px]">{assistants[activeAsst].sessions}</p>
+                  </div>
+                  <div>
+                    <p className="text-[9px] font-bold uppercase tracking-[0.18em] text-[#0a1628]/35 mb-1.5">Created</p>
+                    <p className="text-[#0a1628]/65 text-[12px]">12 Mar 2025</p>
+                  </div>
+                  <div>
+                    <p className="text-[9px] font-bold uppercase tracking-[0.18em] text-[#0a1628]/35 mb-1.5">Last trained</p>
+                    <p className="text-[#0a1628]/65 text-[12px]">Today, 08:14</p>
+                  </div>
+                </div>
+
+                <div className="pt-4 border-t border-gray-100">
+                  <p className="text-[9px] font-bold uppercase tracking-[0.18em] text-[#0a1628]/35 mb-2.5">Active channels</p>
+                  <div className="flex gap-2 flex-wrap">
+                    {['Web chat', 'WhatsApp', 'Email', 'Microsoft Teams'].map(ch => (
+                      <span key={ch} className="text-[10px] font-medium text-[#228DC1] bg-[#e5f4fa] border border-[#228DC1]/20 px-2.5 py-1">{ch}</span>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="pt-4 border-t border-gray-100">
+                  <p className="text-[9px] font-bold uppercase tracking-[0.18em] text-[#0a1628]/35 mb-2.5">Performance (30d)</p>
+                  <div className="grid grid-cols-3 gap-3">
+                    {[
+                      { label: 'Resolution',      val: '74%',   color: '#059669' },
+                      { label: 'Avg handle time', val: '45s',   color: '#228DC1' },
+                      { label: 'CSAT score',      val: '4.7/5', color: '#7c3aed' },
+                    ].map(s => (
+                      <div key={s.label} className="bg-[#f8fafc] border border-gray-100 px-3 py-3">
+                        <p className="font-black text-[18px] leading-none mb-1" style={{ color: s.color, letterSpacing: '-0.02em' }}>{s.val}</p>
+                        <p className="text-[9px] text-[#0a1628]/40">{s.label}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {activeTab === 'instructions' && (
+              <div className="p-6 space-y-5">
+                <div>
+                  <p className="text-[9px] font-bold uppercase tracking-[0.18em] text-[#0a1628]/35 mb-2">System instruction</p>
+                  <div className="bg-[#f8fafc] border border-gray-100 p-4 font-mono text-[11px] text-[#0a1628]/60 leading-relaxed">
+                    You are Kai, an AI agent for AWTG's Contact Centre. Assist customers with account queries, order tracking, billing and technical support. Always verify identity before accessing account data. Escalate safeguarding concerns or formal complaints to a human agent immediately. Maintain a professional, empathetic tone at all times.
+                  </div>
+                </div>
+                <div>
+                  <p className="text-[9px] font-bold uppercase tracking-[0.18em] text-[#0a1628]/35 mb-2">Escalation rules</p>
+                  <div className="border border-gray-100 divide-y divide-gray-100">
+                    {[
+                      { trigger: 'Safeguarding concern',   action: 'Immediate escalation' },
+                      { trigger: 'Formal complaint',        action: 'Senior agent queue' },
+                      { trigger: 'Billing dispute > £500',  action: 'Finance team + full transcript' },
+                      { trigger: 'Unresolved in 3 turns',   action: 'Human handoff with summary' },
+                    ].map(r => (
+                      <div key={r.trigger} className="flex items-center justify-between px-4 py-2.5">
+                        <span className="text-[11px] text-[#0a1628]/60 font-medium">{r.trigger}</span>
+                        <span className="text-[10px] text-[#228DC1] font-semibold shrink-0 ml-4">{r.action}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {activeTab === 'training' && (
+              <div className="p-6">
+                <p className="text-[9px] font-bold uppercase tracking-[0.18em] text-[#0a1628]/35 mb-3">Knowledge base</p>
+                <div className="border border-gray-100 divide-y divide-gray-100">
+                  {[
+                    { name: 'Contact Centre Policy v3.pdf', size: '2.4 MB', date: 'Today, 08:14', type: 'PDF' },
+                    { name: 'Product FAQ — Q1 2025.docx',  size: '890 KB', date: '14 May 2025',  type: 'DOC' },
+                    { name: 'Billing and Refunds Guide.pdf', size: '1.1 MB', date: '2 Apr 2025', type: 'PDF' },
+                  ].map(f => (
+                    <div key={f.name} className="flex items-center gap-3 px-4 py-3">
+                      <div className="w-7 h-7 bg-[#e5f4fa] flex items-center justify-center shrink-0">
+                        <span className="text-[#228DC1] text-[8px] font-black">{f.type}</span>
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-[11px] font-semibold text-[#0a1628] truncate">{f.name}</p>
+                        <p className="text-[9px] text-[#0a1628]/40">{f.size} · {f.date}</p>
+                      </div>
+                      <CheckCircle2 className="w-3.5 h-3.5 text-[#059669] shrink-0" />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {activeTab === 'integrations' && (
+              <div className="p-6">
+                <p className="text-[9px] font-bold uppercase tracking-[0.18em] text-[#0a1628]/35 mb-3">Connected services</p>
+                <div className="space-y-1.5">
+                  {[
+                    { name: 'HubSpot CRM',        status: 'Connected', badge: 'CRM'       },
+                    { name: 'Zendesk',             status: 'Connected', badge: 'Support'   },
+                    { name: 'WhatsApp Business',   status: 'Connected', badge: 'Messaging' },
+                    { name: 'Microsoft Teams',     status: 'Connected', badge: 'Messaging' },
+                    { name: 'Jira',                status: 'Available', badge: 'Ticketing' },
+                    { name: 'Salesforce',          status: 'Available', badge: 'CRM'       },
+                  ].map(svc => (
+                    <div key={svc.name} className="flex items-center gap-3 px-4 py-3 bg-[#f8fafc] border border-gray-100 hover:border-gray-200 transition-colors">
+                      <span className="text-[9px] font-bold text-[#0a1628]/35 bg-white border border-gray-200 px-2 py-0.5 w-[68px] text-center shrink-0">{svc.badge}</span>
+                      <span className="flex-1 text-[12px] font-medium text-[#0a1628]">{svc.name}</span>
+                      <span className={`text-[10px] font-semibold shrink-0 ${svc.status === 'Connected' ? 'text-[#059669]' : 'text-[#0a1628]/30'}`}>
+                        {svc.status === 'Connected' ? '● ' : '○ '}{svc.status}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {!['details','instructions','training','integrations'].includes(activeTab) && (
+              <div className="flex items-center justify-center h-full p-12 text-center">
+                <div>
+                  <p className="text-[#0a1628]/20 text-[13px] font-medium mb-1">
+                    {tabs.find(t => t.toLowerCase().replace(/\s+/g,'-') === activeTab)}
+                  </p>
+                  <p className="text-[#0a1628]/15 text-[11px]">Configure this section for your assistant</p>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* ── Playground ── */}
+        <div className="bg-[#f8fafc] flex flex-col">
+          <div className="flex items-center justify-between px-4 py-2.5 border-b border-gray-100 bg-white shrink-0">
+            <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#0a1628]/35">Playground</p>
+            <button onClick={runChat} className="text-[9px] font-bold uppercase tracking-[0.14em] text-[#228DC1]/45 hover:text-[#228DC1] transition-colors">Replay</button>
+          </div>
+
+          {/* Chat widget */}
+          <div className="flex flex-col flex-1 m-3 mb-2 bg-white border border-gray-100 overflow-hidden shadow-[0_4px_20px_rgba(10,22,40,0.07)]">
+            <div className="bg-[#228DC1] px-3.5 py-2.5 flex items-center justify-between shrink-0">
+              <div className="flex items-center gap-2">
+                <div className="w-6 h-6 bg-white/20 flex items-center justify-center shrink-0">
+                  <span className="text-white text-[8px] font-black">K</span>
+                </div>
+                <div className="leading-none">
+                  <p className="text-white font-semibold text-[11px]">{assistants[activeAsst].name}</p>
+                  <p className="text-white/50 text-[9px]">powered by AWTG</p>
+                </div>
+              </div>
+              <span className="w-2 h-2 rounded-full bg-[#34d399]" style={{ boxShadow: '0 0 6px rgba(52,211,153,0.7)', animation: 'pulse 2s ease-in-out infinite' }} />
+            </div>
+
+            <div className="flex-1 p-3 space-y-2.5 overflow-hidden" style={{ background: '#fafafa', minHeight: '200px' }}>
+              {/* Greeting bubble — always visible */}
+              <div className="flex gap-2 items-start">
+                <div className="w-5 h-5 bg-[#228DC1] flex items-center justify-center shrink-0 mt-0.5">
+                  <span className="text-white text-[8px] font-black">K</span>
+                </div>
+                <div className="bg-white border border-gray-100 px-3 py-2 shadow-[0_1px_3px_rgba(10,22,40,0.04)]">
+                  <p className="text-[#0a1628] text-[10px] leading-relaxed">Hi there! How can I help you today?</p>
+                </div>
+              </div>
+
+              {playMsgs.slice(0, 3).map((msg, i) => {
+                if (!visible.includes(i)) return null
+                if (msg.role === 'signal') return null
+                if (msg.role === 'user') return (
+                  <div key={i} className="flex justify-end" style={{ animation: 'fadeIn 200ms ease-out' }}>
+                    <div className="max-w-[82%] bg-[#228DC1] px-3 py-2">
+                      <p className="text-white text-[10px] leading-relaxed">{msg.text}</p>
+                    </div>
+                  </div>
+                )
+                return (
+                  <div key={i} className="flex gap-2 items-start" style={{ animation: 'fadeIn 200ms ease-out' }}>
+                    <div className="w-5 h-5 bg-[#228DC1] flex items-center justify-center shrink-0 mt-0.5">
+                      <span className="text-white text-[8px] font-black">K</span>
+                    </div>
+                    <div>
+                      <div className="bg-white border border-gray-100 px-3 py-2 shadow-[0_1px_3px_rgba(10,22,40,0.04)]">
+                        <p className="text-[#0a1628] text-[10px] leading-relaxed">{msg.text}</p>
+                      </div>
+                      {msg.meta && (
+                        <div className="mt-1 flex gap-1 flex-wrap">
+                          {msg.meta.split(' · ').map(m => (
+                            <span key={m} className="text-[8px] text-[#228DC1] bg-[#e5f4fa] border border-[#228DC1]/15 px-1.5 py-0.5">{m}</span>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                )
+              })}
+
+              {typing && (
+                <div className="flex gap-2 items-start" style={{ animation: 'fadeIn 150ms ease-out' }}>
+                  <div className="w-5 h-5 bg-[#228DC1] flex items-center justify-center shrink-0">
+                    <span className="text-white text-[8px] font-black">K</span>
+                  </div>
+                  <div className="bg-white border border-gray-100 px-3 py-2.5 flex gap-1 items-center">
+                    <span className="w-1.5 h-1.5 rounded-full bg-gray-300" style={{ animation: 'pulse 0.9s ease-in-out infinite' }} />
+                    <span className="w-1.5 h-1.5 rounded-full bg-gray-300" style={{ animation: 'pulse 0.9s ease-in-out 0.18s infinite' }} />
+                    <span className="w-1.5 h-1.5 rounded-full bg-gray-300" style={{ animation: 'pulse 0.9s ease-in-out 0.36s infinite' }} />
+                  </div>
+                </div>
+              )}
+
+              {resolved && (
+                <div className="flex items-center gap-1.5 px-3 py-2 bg-[#f0fdf4] border border-[#059669]/20" style={{ animation: 'fadeIn 300ms ease-out' }}>
+                  <CheckCircle2 className="w-3 h-3 text-[#059669] shrink-0" />
+                  <p className="text-[9px] text-[#059669] font-semibold">{playMsgs[3].text}</p>
+                </div>
+              )}
+            </div>
+
+            <div className="px-3 py-2 border-t border-gray-100 flex gap-1.5 shrink-0">
+              <div className="flex-1 bg-[#f8fafc] border border-gray-100 px-2.5 py-1.5 text-[10px] text-gray-300">
+                Type a message...
+              </div>
+              <div className="w-6 h-6 bg-[#228DC1] flex items-center justify-center shrink-0 self-center">
+                <ArrowRight className="w-3 h-3 text-white" />
+              </div>
+            </div>
+          </div>
+
+          {/* Resolution stat card */}
+          <div className="px-3 pb-3 shrink-0">
+            <div className="bg-white border border-gray-100 px-4 py-3 shadow-[0_1px_6px_rgba(10,22,40,0.04)]">
+              <div className="flex items-center justify-between mb-1.5">
+                <p className="text-[9px] font-bold uppercase tracking-[0.16em] text-[#0a1628]/35">AI resolution</p>
+                <p className="font-black text-[#059669] text-[15px] leading-none" style={{ letterSpacing: '-0.02em' }}>
+                  {resolved ? '74%' : '73%'}
+                </p>
+              </div>
+              <div className="h-1 bg-gray-100 overflow-hidden mb-2">
+                <div className="h-full bg-gradient-to-r from-[#228DC1] to-[#059669]"
+                  style={{ width: resolved ? '74%' : '73%', transition: 'width 0.9s ease-out' }} />
+              </div>
+              <div className="grid grid-cols-3 gap-1">
+                {[
+                  { label: 'CSAT',       val: '+17%',   color: '#228DC1' },
+                  { label: 'Contain.',   val: '+22%',   color: '#7c3aed' },
+                  { label: 'Escalat.',   val: '−13%',   color: '#059669' },
+                ].map(s => (
+                  <div key={s.label} className="text-center">
+                    <p className="text-[10px] font-bold" style={{ color: s.color }}>{s.val}</p>
+                    <p className="text-[8px] text-[#0a1628]/30">{s.label}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
   )
@@ -814,7 +1089,7 @@ export default function KaiPage() {
               Kai reads intent, checks live systems and keeps the workflow moving.
             </p>
           </div>
-          <KaiDemo />
+          <KaiDashboard />
           <div className="mt-10 grid sm:grid-cols-3 gap-4">
             {[
               { label: 'System-connected', desc: 'CRM, ticketing and messaging in one flow.' },

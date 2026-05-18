@@ -1,377 +1,770 @@
-﻿import { useState, useRef, useEffect } from 'react'
+﻿import { useState, useRef, useEffect, type CSSProperties } from 'react'
 import { Link } from 'react-router-dom'
-import { ArrowRight, CheckCircle2, Zap, Shield, BarChart2, Settings2, Check, X, Code2 } from 'lucide-react'
+import { ArrowRight, CheckCircle2, Zap, Shield, BarChart2, Settings2, Check } from 'lucide-react'
 import CTASection from '@/components/CTASection'
 
-// ── Demo messages ─────────────────────────────────────────────────────────────
-const demoMessages = [
-  { role: 'customer', text: 'Hi, I need to change the email address on my account but the portal isn\'t working.', delay: 500 },
-  { role: 'ai', text: 'I can help with that right now. Let me pull up your account details. Can you confirm the email address currently on file?', delay: 1800 },
-  { role: 'customer', text: 'It\'s james.miller@company.co.uk', delay: 3200 },
-  { role: 'ai', text: 'Found your account. I\'ve updated your email address and sent a confirmation to your new address. Is there anything else I can help you with today?', meta: 'CRM updated · Ticket closed · CSAT triggered', delay: 4800 },
-  { role: 'signal', text: 'Resolved without escalation · Handle time: 38s', delay: 6200 },
-]
+// ── Scroll utilities ──────────────────────────────────────────────────────────
+function useInView(threshold = 0.12) {
+  const ref = useRef<HTMLDivElement>(null)
+  const [inView, setInView] = useState(false)
+  useEffect(() => {
+    const el = ref.current
+    if (!el) return
+    const obs = new IntersectionObserver(
+      ([e]) => { if (e.isIntersecting) { setInView(true); obs.disconnect() } },
+      { threshold }
+    )
+    obs.observe(el)
+    return () => obs.disconnect()
+  }, [threshold])
+  return [ref, inView] as const
+}
 
-function KaiDemo() {
-  const [visible, setVisible] = useState<number[]>([])
-  const [typing, setTyping] = useState(false)
-  const timeoutsRef = useRef<number[]>([])
+function useCountUp(end: number, inView: boolean, duration = 1400) {
+  const [val, setVal] = useState(0)
+  useEffect(() => {
+    if (!inView) return
+    const t0 = Date.now()
+    const tick = () => {
+      const p = Math.min((Date.now() - t0) / duration, 1)
+      setVal((1 - Math.pow(1 - p, 3)) * end)
+      if (p < 1) requestAnimationFrame(tick)
+    }
+    requestAnimationFrame(tick)
+  }, [inView, end, duration])
+  return val
+}
 
-  const runDemo = () => {
+const reveal = (inView: boolean, delay = 0): CSSProperties => ({
+  opacity: inView ? 1 : 0,
+  transform: inView ? 'translateY(0)' : 'translateY(28px)',
+  transition: `opacity 0.65s cubic-bezier(0.16,1,0.3,1) ${delay}ms, transform 0.65s cubic-bezier(0.16,1,0.3,1) ${delay}ms`,
+})
+
+function ScrollProgress() {
+  const [pct, setPct] = useState(0)
+  useEffect(() => {
+    const fn = () => {
+      const d = document.documentElement
+      setPct(d.scrollTop / (d.scrollHeight - d.clientHeight))
+    }
+    window.addEventListener('scroll', fn, { passive: true })
+    return () => window.removeEventListener('scroll', fn)
+  }, [])
+  return (
+    <div className="fixed top-0 left-0 right-0 z-[60] h-[2px] pointer-events-none">
+      <div style={{ width: `${pct * 100}%`, background: 'linear-gradient(90deg, #228DC1, #0e6a9a)', transition: 'width 80ms linear' }} className="h-full" />
+    </div>
+  )
+}
+
+function StatCard({ prefix = '', num, suffix = '', label, note, delay = 0 }: {
+  prefix?: string; num: number; suffix?: string; label: string; note: string; delay?: number
+}) {
+  const [ref, inView] = useInView()
+  const val = useCountUp(num, inView)
+  const display = Number.isInteger(num) ? Math.round(val).toString() : val.toFixed(1)
+  return (
+    <div ref={ref} className="relative bg-white border border-gray-200 px-8 py-8 shadow-[0_1px_8px_rgba(10,22,40,0.03)] overflow-hidden" style={reveal(inView, delay)}>
+      <div className="absolute top-0 left-0 w-[3px] h-full bg-gradient-to-b from-[#228DC1] to-[#0e6a9a]" />
+      <p className="font-black leading-none mb-2" style={{ fontSize: 'clamp(24px, 2.8vw, 38px)', letterSpacing: '-0.02em', background: 'linear-gradient(135deg, #228DC1 0%, #0e6a9a 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>
+        {prefix}{display}{suffix}
+      </p>
+      <p className="text-[#0a1628] text-[13px] font-semibold mb-0.5">{label}</p>
+      <p className="text-[#0a1628]/60 text-[10px] font-normal">{note}</p>
+    </div>
+  )
+}
+
+// ── Kai Dashboard mockup ──────────────────────────────────────────────────────
+function KaiDashboard() {
+  const [activeTab,  setActiveTab]  = useState('details')
+  const [activeAsst, setActiveAsst] = useState(0)
+  const [visible,    setVisible]    = useState<number[]>([])
+  const [typing,     setTyping]     = useState(false)
+  const tmrRef = useRef<number[]>([])
+
+  type PlayMsg = { role: 'user' | 'ai' | 'signal'; text: string; meta?: string }
+  const playMsgs: PlayMsg[] = [
+    { role: 'user',   text: 'Hi, my order hasn\'t arrived — it\'s been 5 days.' },
+    { role: 'ai',     text: 'I can see order #48291. It shipped Monday and is with the courier — delivery is due today before 6 pm.', meta: 'Order lookup · CRM synced' },
+    { role: 'user',   text: 'Perfect, thank you!' },
+    { role: 'signal', text: 'Resolved · 22s handle time · CSAT triggered' },
+  ]
+  const delays = [900, 2300, 3900, 5100]
+
+  const runChat = () => {
     setVisible([])
     setTyping(false)
-    timeoutsRef.current.forEach(clearTimeout)
-    timeoutsRef.current = []
-    demoMessages.forEach((msg, i) => {
-      if (msg.role === 'ai' || msg.role === 'signal') {
-        const t1 = window.setTimeout(() => setTyping(true), msg.delay - 700)
-        timeoutsRef.current.push(t1)
+    tmrRef.current.forEach(clearTimeout)
+    tmrRef.current = []
+    playMsgs.forEach((msg, i) => {
+      if (msg.role === 'ai') {
+        const t1 = window.setTimeout(() => setTyping(true), delays[i] - 700)
+        tmrRef.current.push(t1)
       }
       const t = window.setTimeout(() => {
         setTyping(false)
         setVisible(prev => [...prev, i])
-      }, msg.delay)
-      timeoutsRef.current.push(t)
+      }, delays[i])
+      tmrRef.current.push(t)
     })
   }
 
   useEffect(() => {
-    const t = window.setTimeout(runDemo, 600)
-    return () => { clearTimeout(t); timeoutsRef.current.forEach(clearTimeout) }
+    const t = window.setTimeout(runChat, 700)
+    return () => { clearTimeout(t); tmrRef.current.forEach(clearTimeout) }
   }, [])
 
-  const signalVisible = visible.includes(4)
+  const resolved   = visible.includes(3)
+  const tabs       = ['Details', 'Instructions', 'Training', 'Prompts', 'Chat interface', 'Integrations']
+  const assistants = [
+    { name: 'Contact Centre AI', sessions: '12,481', live: true  },
+    { name: 'British Council',   sessions: '8,924',  live: true  },
+  ]
 
   return (
-    <div className="bg-white border border-gray-200 overflow-hidden shadow-[0_8px_48px_rgba(10,22,40,0.1)]">
-      {/* Chrome bar */}
-      <div className="flex items-center gap-1.5 px-4 py-3 bg-[#f3f4f6] border-b border-gray-200">
+    <div className="bg-white border border-gray-200 overflow-hidden shadow-[0_24px_60px_rgba(10,22,40,0.10)]">
+
+      {/* Browser chrome */}
+      <div className="flex items-center gap-1.5 px-4 py-2.5 bg-[#f0f2f5] border-b border-gray-200">
         <span className="w-2.5 h-2.5 rounded-full bg-[#fc5f57]" />
         <span className="w-2.5 h-2.5 rounded-full bg-[#febc2e]" />
         <span className="w-2.5 h-2.5 rounded-full bg-[#28c840]" />
         <div className="flex-1 flex justify-center">
-          <div className="bg-white border border-gray-200 px-3 py-1 text-[11px] text-gray-400 font-normal" style={{ minWidth: '220px', textAlign: 'center' }}>
-            app.kai.awtg.co.uk/agent
+          <div className="bg-white border border-gray-200 px-4 py-1 text-[11px] text-gray-400 font-normal text-center" style={{ minWidth: '240px' }}>
+            app.kai.awtg.co.uk/dashboard
           </div>
         </div>
-        <button onClick={runDemo} className="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#228DC1]/50 hover:text-[#228DC1] transition-colors">
+        <button onClick={runChat} className="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#228DC1]/50 hover:text-[#228DC1] transition-colors">
           Replay
         </button>
       </div>
 
-      {/* 3-panel layout */}
-      <div className="grid grid-cols-[180px_1fr_170px] divide-x divide-gray-100" style={{ minHeight: '400px' }}>
-
-        {/* Left: queue */}
-        <div className="bg-[#f8fafc] p-4">
-          <p className="text-[9px] font-semibold uppercase tracking-[0.18em] text-gray-400 mb-3">Live Queue</p>
-          <div className="space-y-1.5">
-            {[
-              { name: 'James M.', topic: 'Account update', active: true },
-              { name: 'Sarah K.', topic: 'Billing query', active: false },
-              { name: 'Tom R.', topic: 'Technical issue', active: false },
-              { name: 'Priya L.', topic: 'Onboarding', active: false },
-            ].map((item) => (
-              <div key={item.name} className={`px-2.5 py-2 text-[11px] ${item.active ? 'bg-[#228DC1] text-white' : 'text-gray-500 bg-white border border-gray-100'}`}>
-                <p className="font-semibold">{item.name}</p>
-                <p className={`text-[10px] ${item.active ? 'text-white/70' : 'text-gray-400'}`}>{item.topic}</p>
-              </div>
-            ))}
+      {/* App top bar */}
+      <div className="flex items-center justify-between px-5 py-2.5 bg-[#0a1628] border-b border-white/[0.07]">
+        <div className="flex items-center gap-2.5">
+          <div className="w-6 h-6 bg-[#228DC1] flex items-center justify-center shrink-0">
+            <img src="/kai-logo.svg" alt="Kai" className="w-3.5 h-3.5 object-contain brightness-0 invert"
+              onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }} />
           </div>
-          <div className="mt-4 pt-3 border-t border-gray-200">
-            <p className="text-[9px] font-semibold uppercase tracking-[0.18em] text-gray-400 mb-2">Today</p>
-            <div className="space-y-1">
-              <div className="flex justify-between text-[10px]">
-                <span className="text-gray-400">Resolved by AI</span>
-                <span className="text-[#059669] font-bold">{signalVisible ? '74%' : '73%'}</span>
-              </div>
-              <div className="flex justify-between text-[10px]">
-                <span className="text-gray-400">Avg handle time</span>
-                <span className="text-[#0a1628] font-semibold">45s</span>
-              </div>
-            </div>
+          <div className="leading-none">
+            <span className="text-white font-bold text-[13px] tracking-[-0.01em]">Kai</span>
+            <span className="text-white/30 text-[9px] ml-2">powered by AWTG</span>
           </div>
         </div>
-
-        {/* Centre: conversation */}
-        <div className="flex flex-col bg-white">
-          <div className="px-4 py-3 border-b border-gray-100 bg-[#f8fafc] flex items-center justify-between">
-            <div>
-              <p className="text-[11px] font-semibold text-[#0a1628]">James Miller</p>
-              <p className="text-[10px] text-gray-400">English Online · Account query</p>
-            </div>
-            <span className="text-[10px] font-semibold text-[#059669] bg-[#f0fdf4] border border-[#059669]/20 px-2 py-0.5">AI handling</span>
-          </div>
-
-          <div className="flex-1 p-4 space-y-4 overflow-hidden bg-[#fafafa]">
-            {demoMessages.slice(0, 4).map((msg, i) => {
-              if (!visible.includes(i)) return null
-              if (msg.role === 'customer') {
-                return (
-                  <div key={i} className="flex justify-end" style={{ animation: 'fadeIn 250ms ease-out' }}>
-                    <div className="max-w-[78%] bg-[#228DC1] px-3.5 py-2.5">
-                      <p className="text-[12px] text-white font-normal leading-relaxed">{msg.text}</p>
-                    </div>
-                  </div>
-                )
-              }
-              return (
-                <div key={i} className="flex gap-2.5 items-start" style={{ animation: 'fadeIn 250ms ease-out' }}>
-                  <div className="w-6 h-6 bg-[#228DC1] flex items-center justify-center shrink-0">
-                    <span className="text-white text-[9px] font-black">K</span>
-                  </div>
-                  <div className="flex-1">
-                    <div className="bg-white border border-gray-100 px-3.5 py-2.5 shadow-[0_1px_4px_rgba(10,22,40,0.06)]">
-                      <p className="text-[12px] text-[#0a1628] font-normal leading-relaxed">{msg.text}</p>
-                    </div>
-                    {msg.meta && (
-                      <div className="mt-1.5 flex gap-1.5 flex-wrap">
-                        {msg.meta.split(' · ').map((m) => (
-                          <span key={m} className="text-[10px] font-medium text-[#228DC1] bg-[#e5f4fa] border border-[#228DC1]/15 px-2 py-0.5">{m}</span>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                </div>
-              )
-            })}
-
-            {typing && (
-              <div className="flex gap-2.5 items-start" style={{ animation: 'fadeIn 150ms ease-out' }}>
-                <div className="w-6 h-6 bg-[#228DC1] flex items-center justify-center shrink-0">
-                  <span className="text-white text-[9px] font-black">K</span>
-                </div>
-                <div className="bg-white border border-gray-100 px-4 py-3 flex gap-1 items-center">
-                  <span className="w-1.5 h-1.5 rounded-full bg-gray-300" style={{ animation: 'pulse 0.9s ease-in-out infinite' }} />
-                  <span className="w-1.5 h-1.5 rounded-full bg-gray-300" style={{ animation: 'pulse 0.9s ease-in-out 0.18s infinite' }} />
-                  <span className="w-1.5 h-1.5 rounded-full bg-gray-300" style={{ animation: 'pulse 0.9s ease-in-out 0.36s infinite' }} />
-                </div>
-              </div>
-            )}
-
-            {signalVisible && (
-              <div className="px-3 py-2 bg-[#e5f4fa] border border-[#228DC1]/20 flex items-center gap-2" style={{ animation: 'fadeIn 400ms ease-out' }}>
-                <CheckCircle2 className="w-3.5 h-3.5 text-[#228DC1] shrink-0" />
-                <p className="text-[10px] text-[#228DC1] font-semibold">{demoMessages[4].text}</p>
-              </div>
-            )}
-          </div>
-
-          <div className="px-4 py-3 border-t border-gray-100 flex gap-2 items-center">
-            <div className="flex-1 bg-[#f8fafc] border border-gray-100 px-3 py-2 text-[11px] text-gray-300">
-              Message customer...
-            </div>
-            <div className="w-7 h-7 bg-[#228DC1] flex items-center justify-center shrink-0">
-              <ArrowRight className="w-3.5 h-3.5 text-white" />
-            </div>
+        <div className="flex items-center gap-2">
+          <button className="text-[10px] font-semibold text-white/80 border border-white/20 px-3 py-1 hover:bg-white/10 transition-colors">
+            Switch to Kai Agent
+          </button>
+          <div className="w-6 h-6 bg-white/10 flex items-center justify-center">
+            <Settings2 className="w-3 h-3 text-white/45" />
           </div>
         </div>
+      </div>
 
-        {/* Right: metrics */}
-        <div className="bg-[#f8fafc] p-4 flex flex-col gap-4">
-          <p className="text-[9px] font-semibold uppercase tracking-[0.18em] text-gray-400">Resolution</p>
-          <div>
-            <p className="font-black text-[#0a1628] leading-none mb-1" style={{ fontSize: '28px', letterSpacing: '-0.02em' }}>
-              {signalVisible ? '74' : '73'}<span className="text-[18px]">%</span>
-            </p>
-            <p className="text-[10px] text-gray-400 font-medium">AI resolution rate</p>
-            <div className="mt-2 h-1 bg-gray-200 overflow-hidden">
-              <div className="h-full bg-[#059669]" style={{ width: signalVisible ? '74%' : '73%', transition: 'width 0.8s ease-out' }} />
-            </div>
-          </div>
-          <div className="pt-3 border-t border-gray-200 space-y-3">
-            {[
-              { label: 'CSAT uplift', val: '+17%', color: '#228DC1' },
-              { label: 'Containment↑', val: '+22.5%', color: '#7c3aed' },
-              { label: 'Escalations↓', val: '−13%', color: '#059669' },
-            ].map((item) => (
-              <div key={item.label} className="flex justify-between items-center">
-                <span className="text-[10px] text-gray-400 font-medium">{item.label}</span>
-                <span className="text-[11px] font-bold" style={{ color: item.color }}>{item.val}</span>
+      {/* 3-column layout */}
+      <div className="grid grid-cols-[195px_1fr_235px] divide-x divide-gray-100" style={{ minHeight: '460px' }}>
+
+        {/* ── Sidebar ── */}
+        <div className="bg-[#f8fafc] flex flex-col">
+          <div className="flex-1 px-3 pt-5 pb-3 overflow-hidden">
+            <p className="font-bold text-[#0a1628] text-[14px] mb-4 px-1">Dashboard</p>
+
+            {/* Admin Panel nav group */}
+            <div className="mb-3">
+              <div className="flex items-center justify-between px-2 py-1 mb-0.5">
+                <span className="text-[9px] font-bold uppercase tracking-[0.18em] text-[#0a1628]/35">Admin Panel</span>
+                <span className="text-[#0a1628]/25 text-[10px]">▾</span>
               </div>
-            ))}
-          </div>
-          <div className="mt-auto pt-3 border-t border-gray-200">
-            <p className="text-[9px] font-semibold uppercase tracking-[0.18em] text-gray-400 mb-1.5">Live integrations</p>
-            <div className="flex flex-wrap gap-1">
-              {['HubSpot', 'WhatsApp', 'Jira', 'Email'].map((tag) => (
-                <span key={tag} className="text-[9px] font-semibold bg-white border border-gray-200 text-[#0a1628]/60 px-2 py-0.5">{tag}</span>
+              {['Dashboard', 'Access management', 'User management'].map(item => (
+                <button key={item} className="w-full text-left px-3 py-1.5 text-[11px] text-[#0a1628]/50 hover:text-[#0a1628]/80 hover:bg-white/70 transition-colors">
+                  {item}
+                </button>
+              ))}
+            </div>
+
+            <div className="space-y-0.5 mb-4">
+              {['Chats history', 'Collected leads'].map(item => (
+                <button key={item} className="w-full text-left px-3 py-1.5 text-[11px] text-[#0a1628]/50 hover:text-[#0a1628]/80 hover:bg-white/70 transition-colors">
+                  {item}
+                </button>
+              ))}
+            </div>
+
+            {/* Assistants */}
+            <div className="border-t border-gray-200 pt-3">
+              <div className="flex items-center justify-between px-1 mb-2">
+                <p className="text-[9px] font-bold uppercase tracking-[0.18em] text-[#0a1628]/35">Assistants</p>
+                <span className="text-[9px] text-[#0a1628]/30 font-medium">2 / 40</span>
+              </div>
+              {assistants.map((asst, i) => (
+                <button
+                  key={asst.name}
+                  onClick={() => setActiveAsst(i)}
+                  className={`w-full flex items-center gap-2 px-2 py-2 mb-1 text-left transition-all ${
+                    activeAsst === i
+                      ? 'bg-white border border-gray-200 shadow-[0_1px_4px_rgba(10,22,40,0.06)]'
+                      : 'hover:bg-white/60'
+                  }`}
+                >
+                  <div className="w-5 h-5 bg-[#228DC1] flex items-center justify-center shrink-0">
+                    <span className="text-white text-[8px] font-black">K</span>
+                  </div>
+                  <span className={`text-[11px] truncate flex-1 ${activeAsst === i ? 'text-[#0a1628] font-semibold' : 'text-[#0a1628]/50'}`}>
+                    {asst.name}
+                  </span>
+                  {asst.live && (
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#059669] shrink-0" style={{ animation: 'pulse 2s ease-in-out infinite' }} />
+                  )}
+                </button>
               ))}
             </div>
           </div>
+
+          {/* Usage stats pinned to bottom */}
+          <div className="px-3 py-4 border-t border-gray-200 shrink-0">
+            <div className="flex items-center justify-between mb-2.5">
+              <p className="text-[9px] font-bold text-[#0a1628]/35 uppercase tracking-[0.14em]">Enterprise plan</p>
+              <span className="text-[9px] text-[#228DC1] font-semibold">Active</span>
+            </div>
+            {[
+              { label: 'Sessions', pct: 25 },
+              { label: 'Tokens',   pct: 11 },
+              { label: 'Messages', pct: 4  },
+            ].map(u => (
+              <div key={u.label} className="mb-2">
+                <div className="flex justify-between text-[9px] text-[#0a1628]/40 mb-0.5">
+                  <span>{u.label}</span><span>{u.pct}%</span>
+                </div>
+                <div className="h-0.5 bg-gray-200 overflow-hidden">
+                  <div className="h-full bg-[#228DC1] transition-all" style={{ width: `${u.pct}%` }} />
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
+
+        {/* ── Main content ── */}
+        <div className="flex flex-col bg-white">
+
+          {/* Tab bar */}
+          <div className="flex items-end border-b border-gray-100 overflow-x-auto shrink-0">
+            {tabs.map(tab => {
+              const key = tab.toLowerCase().replace(/\s+/g, '-')
+              return (
+                <button
+                  key={tab}
+                  onClick={() => setActiveTab(key)}
+                  className={`px-4 py-3 text-[11px] whitespace-nowrap transition-colors border-b-2 -mb-px ${
+                    activeTab === key
+                      ? 'border-[#228DC1] text-[#228DC1] font-semibold'
+                      : 'border-transparent text-[#0a1628]/40 hover:text-[#0a1628]/65 font-medium'
+                  }`}
+                >
+                  {tab}
+                </button>
+              )
+            })}
+          </div>
+
+          {/* Tab content */}
+          <div className="flex-1 overflow-auto">
+
+            {activeTab === 'details' && (
+              <div className="p-6 space-y-5">
+                <div className="grid grid-cols-2 gap-5">
+                  <div>
+                    <p className="text-[9px] font-bold uppercase tracking-[0.18em] text-[#0a1628]/35 mb-1.5">Name</p>
+                    <div className="flex items-center gap-2">
+                      <p className="text-[#0a1628] font-semibold text-[13px]">{assistants[activeAsst].name}</p>
+                      <span className="text-[#228DC1]/40 text-[11px] cursor-pointer hover:text-[#228DC1] transition-colors">✎</span>
+                    </div>
+                  </div>
+                  <div>
+                    <p className="text-[9px] font-bold uppercase tracking-[0.18em] text-[#0a1628]/35 mb-1.5">Status</p>
+                    <span className="inline-flex items-center gap-1.5 text-[12px] font-semibold text-[#059669]">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#059669]" style={{ animation: 'pulse 2s ease-in-out infinite' }} />
+                      Live
+                    </span>
+                  </div>
+                  <div>
+                    <p className="text-[9px] font-bold uppercase tracking-[0.18em] text-[#0a1628]/35 mb-1.5">AI model</p>
+                    <div className="inline-flex items-center gap-2 bg-[#f8fafc] border border-gray-200 px-3 py-1.5 cursor-pointer hover:border-gray-300 transition-colors">
+                      <span className="text-[#0a1628] text-[12px] font-medium">Claude Sonnet</span>
+                      <span className="text-gray-400 text-[9px]">▾</span>
+                    </div>
+                  </div>
+                  <div>
+                    <p className="text-[9px] font-bold uppercase tracking-[0.18em] text-[#0a1628]/35 mb-1.5">Sessions (30d)</p>
+                    <p className="text-[#0a1628] font-semibold text-[13px]">{assistants[activeAsst].sessions}</p>
+                  </div>
+                  <div>
+                    <p className="text-[9px] font-bold uppercase tracking-[0.18em] text-[#0a1628]/35 mb-1.5">Created</p>
+                    <p className="text-[#0a1628]/65 text-[12px]">12 Mar 2025</p>
+                  </div>
+                  <div>
+                    <p className="text-[9px] font-bold uppercase tracking-[0.18em] text-[#0a1628]/35 mb-1.5">Last trained</p>
+                    <p className="text-[#0a1628]/65 text-[12px]">Today, 08:14</p>
+                  </div>
+                </div>
+
+                <div className="pt-4 border-t border-gray-100">
+                  <p className="text-[9px] font-bold uppercase tracking-[0.18em] text-[#0a1628]/35 mb-2.5">Active channels</p>
+                  <div className="flex gap-2 flex-wrap">
+                    {['Web chat', 'WhatsApp', 'Email', 'Microsoft Teams'].map(ch => (
+                      <span key={ch} className="text-[10px] font-medium text-[#228DC1] bg-[#e5f4fa] border border-[#228DC1]/20 px-2.5 py-1">{ch}</span>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="pt-4 border-t border-gray-100">
+                  <p className="text-[9px] font-bold uppercase tracking-[0.18em] text-[#0a1628]/35 mb-2.5">Performance (30d)</p>
+                  <div className="grid grid-cols-3 gap-3">
+                    {[
+                      { label: 'Resolution',      val: '74%',   color: '#059669' },
+                      { label: 'Avg handle time', val: '45s',   color: '#228DC1' },
+                      { label: 'CSAT score',      val: '4.7/5', color: '#7c3aed' },
+                    ].map(s => (
+                      <div key={s.label} className="bg-[#f8fafc] border border-gray-100 px-3 py-3">
+                        <p className="font-black text-[18px] leading-none mb-1" style={{ color: s.color, letterSpacing: '-0.02em' }}>{s.val}</p>
+                        <p className="text-[9px] text-[#0a1628]/40">{s.label}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {activeTab === 'instructions' && (
+              <div className="p-6 space-y-5">
+                <div>
+                  <p className="text-[9px] font-bold uppercase tracking-[0.18em] text-[#0a1628]/35 mb-2">System instruction</p>
+                  <div className="bg-[#f8fafc] border border-gray-100 p-4 font-mono text-[11px] text-[#0a1628]/60 leading-relaxed">
+                    You are Kai, an AI agent for AWTG's Contact Centre. Assist customers with account queries, order tracking, billing and technical support. Always verify identity before accessing account data. Escalate safeguarding concerns or formal complaints to a human agent immediately. Maintain a professional, empathetic tone at all times.
+                  </div>
+                </div>
+                <div>
+                  <p className="text-[9px] font-bold uppercase tracking-[0.18em] text-[#0a1628]/35 mb-2">Escalation rules</p>
+                  <div className="border border-gray-100 divide-y divide-gray-100">
+                    {[
+                      { trigger: 'Safeguarding concern',   action: 'Immediate escalation' },
+                      { trigger: 'Formal complaint',        action: 'Senior agent queue' },
+                      { trigger: 'Billing dispute > £500',  action: 'Finance team + full transcript' },
+                      { trigger: 'Unresolved in 3 turns',   action: 'Human handoff with summary' },
+                    ].map(r => (
+                      <div key={r.trigger} className="flex items-center justify-between px-4 py-2.5">
+                        <span className="text-[11px] text-[#0a1628]/60 font-medium">{r.trigger}</span>
+                        <span className="text-[10px] text-[#228DC1] font-semibold shrink-0 ml-4">{r.action}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {activeTab === 'training' && (
+              <div className="p-6">
+                <p className="text-[9px] font-bold uppercase tracking-[0.18em] text-[#0a1628]/35 mb-3">Knowledge base</p>
+                <div className="border border-gray-100 divide-y divide-gray-100">
+                  {[
+                    { name: 'Contact Centre Policy v3.pdf', size: '2.4 MB', date: 'Today, 08:14', type: 'PDF' },
+                    { name: 'Product FAQ — Q1 2025.docx',  size: '890 KB', date: '14 May 2025',  type: 'DOC' },
+                    { name: 'Billing and Refunds Guide.pdf', size: '1.1 MB', date: '2 Apr 2025', type: 'PDF' },
+                  ].map(f => (
+                    <div key={f.name} className="flex items-center gap-3 px-4 py-3">
+                      <div className="w-7 h-7 bg-[#e5f4fa] flex items-center justify-center shrink-0">
+                        <span className="text-[#228DC1] text-[8px] font-black">{f.type}</span>
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-[11px] font-semibold text-[#0a1628] truncate">{f.name}</p>
+                        <p className="text-[9px] text-[#0a1628]/40">{f.size} · {f.date}</p>
+                      </div>
+                      <CheckCircle2 className="w-3.5 h-3.5 text-[#059669] shrink-0" />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {activeTab === 'integrations' && (
+              <div className="p-6">
+                <p className="text-[9px] font-bold uppercase tracking-[0.18em] text-[#0a1628]/35 mb-3">Connected services</p>
+                <div className="space-y-1.5">
+                  {[
+                    { name: 'HubSpot CRM',        status: 'Connected', badge: 'CRM'       },
+                    { name: 'Zendesk',             status: 'Connected', badge: 'Support'   },
+                    { name: 'WhatsApp Business',   status: 'Connected', badge: 'Messaging' },
+                    { name: 'Microsoft Teams',     status: 'Connected', badge: 'Messaging' },
+                    { name: 'Jira',                status: 'Available', badge: 'Ticketing' },
+                    { name: 'Salesforce',          status: 'Available', badge: 'CRM'       },
+                  ].map(svc => (
+                    <div key={svc.name} className="flex items-center gap-3 px-4 py-3 bg-[#f8fafc] border border-gray-100 hover:border-gray-200 transition-colors">
+                      <span className="text-[9px] font-bold text-[#0a1628]/35 bg-white border border-gray-200 px-2 py-0.5 w-[68px] text-center shrink-0">{svc.badge}</span>
+                      <span className="flex-1 text-[12px] font-medium text-[#0a1628]">{svc.name}</span>
+                      <span className={`text-[10px] font-semibold shrink-0 ${svc.status === 'Connected' ? 'text-[#059669]' : 'text-[#0a1628]/30'}`}>
+                        {svc.status === 'Connected' ? '● ' : '○ '}{svc.status}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {!['details','instructions','training','integrations'].includes(activeTab) && (
+              <div className="flex items-center justify-center h-full p-12 text-center">
+                <div>
+                  <p className="text-[#0a1628]/20 text-[13px] font-medium mb-1">
+                    {tabs.find(t => t.toLowerCase().replace(/\s+/g,'-') === activeTab)}
+                  </p>
+                  <p className="text-[#0a1628]/15 text-[11px]">Configure this section for your assistant</p>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* ── Playground ── */}
+        <div className="bg-[#f8fafc] flex flex-col">
+          <div className="flex items-center justify-between px-4 py-2.5 border-b border-gray-100 bg-white shrink-0">
+            <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#0a1628]/35">Playground</p>
+            <button onClick={runChat} className="text-[9px] font-bold uppercase tracking-[0.14em] text-[#228DC1]/45 hover:text-[#228DC1] transition-colors">Replay</button>
+          </div>
+
+          {/* Chat widget */}
+          <div className="flex flex-col flex-1 m-3 mb-2 bg-white border border-gray-100 overflow-hidden shadow-[0_4px_20px_rgba(10,22,40,0.07)]">
+            <div className="bg-[#228DC1] px-3.5 py-2.5 flex items-center justify-between shrink-0">
+              <div className="flex items-center gap-2">
+                <div className="w-6 h-6 bg-white/20 flex items-center justify-center shrink-0">
+                  <span className="text-white text-[8px] font-black">K</span>
+                </div>
+                <div className="leading-none">
+                  <p className="text-white font-semibold text-[11px]">{assistants[activeAsst].name}</p>
+                  <p className="text-white/50 text-[9px]">powered by AWTG</p>
+                </div>
+              </div>
+              <span className="w-2 h-2 rounded-full bg-[#34d399]" style={{ boxShadow: '0 0 6px rgba(52,211,153,0.7)', animation: 'pulse 2s ease-in-out infinite' }} />
+            </div>
+
+            <div className="flex-1 p-3 space-y-2.5 overflow-hidden" style={{ background: '#fafafa', minHeight: '200px' }}>
+              {/* Greeting bubble — always visible */}
+              <div className="flex gap-2 items-start">
+                <div className="w-5 h-5 bg-[#228DC1] flex items-center justify-center shrink-0 mt-0.5">
+                  <span className="text-white text-[8px] font-black">K</span>
+                </div>
+                <div className="bg-white border border-gray-100 px-3 py-2 shadow-[0_1px_3px_rgba(10,22,40,0.04)]">
+                  <p className="text-[#0a1628] text-[10px] leading-relaxed">Hi there! How can I help you today?</p>
+                </div>
+              </div>
+
+              {playMsgs.slice(0, 3).map((msg, i) => {
+                if (!visible.includes(i)) return null
+                if (msg.role === 'signal') return null
+                if (msg.role === 'user') return (
+                  <div key={i} className="flex justify-end" style={{ animation: 'fadeIn 200ms ease-out' }}>
+                    <div className="max-w-[82%] bg-[#228DC1] px-3 py-2">
+                      <p className="text-white text-[10px] leading-relaxed">{msg.text}</p>
+                    </div>
+                  </div>
+                )
+                return (
+                  <div key={i} className="flex gap-2 items-start" style={{ animation: 'fadeIn 200ms ease-out' }}>
+                    <div className="w-5 h-5 bg-[#228DC1] flex items-center justify-center shrink-0 mt-0.5">
+                      <span className="text-white text-[8px] font-black">K</span>
+                    </div>
+                    <div>
+                      <div className="bg-white border border-gray-100 px-3 py-2 shadow-[0_1px_3px_rgba(10,22,40,0.04)]">
+                        <p className="text-[#0a1628] text-[10px] leading-relaxed">{msg.text}</p>
+                      </div>
+                      {msg.meta && (
+                        <div className="mt-1 flex gap-1 flex-wrap">
+                          {msg.meta.split(' · ').map(m => (
+                            <span key={m} className="text-[8px] text-[#228DC1] bg-[#e5f4fa] border border-[#228DC1]/15 px-1.5 py-0.5">{m}</span>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                )
+              })}
+
+              {typing && (
+                <div className="flex gap-2 items-start" style={{ animation: 'fadeIn 150ms ease-out' }}>
+                  <div className="w-5 h-5 bg-[#228DC1] flex items-center justify-center shrink-0">
+                    <span className="text-white text-[8px] font-black">K</span>
+                  </div>
+                  <div className="bg-white border border-gray-100 px-3 py-2.5 flex gap-1 items-center">
+                    <span className="w-1.5 h-1.5 rounded-full bg-gray-300" style={{ animation: 'pulse 0.9s ease-in-out infinite' }} />
+                    <span className="w-1.5 h-1.5 rounded-full bg-gray-300" style={{ animation: 'pulse 0.9s ease-in-out 0.18s infinite' }} />
+                    <span className="w-1.5 h-1.5 rounded-full bg-gray-300" style={{ animation: 'pulse 0.9s ease-in-out 0.36s infinite' }} />
+                  </div>
+                </div>
+              )}
+
+              {resolved && (
+                <div className="flex items-center gap-1.5 px-3 py-2 bg-[#f0fdf4] border border-[#059669]/20" style={{ animation: 'fadeIn 300ms ease-out' }}>
+                  <CheckCircle2 className="w-3 h-3 text-[#059669] shrink-0" />
+                  <p className="text-[9px] text-[#059669] font-semibold">{playMsgs[3].text}</p>
+                </div>
+              )}
+            </div>
+
+            <div className="px-3 py-2 border-t border-gray-100 flex gap-1.5 shrink-0">
+              <div className="flex-1 bg-[#f8fafc] border border-gray-100 px-2.5 py-1.5 text-[10px] text-gray-300">
+                Type a message...
+              </div>
+              <div className="w-6 h-6 bg-[#228DC1] flex items-center justify-center shrink-0 self-center">
+                <ArrowRight className="w-3 h-3 text-white" />
+              </div>
+            </div>
+          </div>
+
+          {/* Resolution stat card */}
+          <div className="px-3 pb-3 shrink-0">
+            <div className="bg-white border border-gray-100 px-4 py-3 shadow-[0_1px_6px_rgba(10,22,40,0.04)]">
+              <div className="flex items-center justify-between mb-1.5">
+                <p className="text-[9px] font-bold uppercase tracking-[0.16em] text-[#0a1628]/35">AI resolution</p>
+                <p className="font-black text-[#059669] text-[15px] leading-none" style={{ letterSpacing: '-0.02em' }}>
+                  {resolved ? '74%' : '73%'}
+                </p>
+              </div>
+              <div className="h-1 bg-gray-100 overflow-hidden mb-2">
+                <div className="h-full bg-gradient-to-r from-[#228DC1] to-[#059669]"
+                  style={{ width: resolved ? '74%' : '73%', transition: 'width 0.9s ease-out' }} />
+              </div>
+              <div className="grid grid-cols-3 gap-1">
+                {[
+                  { label: 'CSAT',       val: '+17%',   color: '#228DC1' },
+                  { label: 'Contain.',   val: '+22%',   color: '#7c3aed' },
+                  { label: 'Escalat.',   val: '−13%',   color: '#059669' },
+                ].map(s => (
+                  <div key={s.label} className="text-center">
+                    <p className="text-[10px] font-bold" style={{ color: s.color }}>{s.val}</p>
+                    <p className="text-[8px] text-[#0a1628]/30">{s.label}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
   )
 }
 
-// ── Integrations (animated) ───────────────────────────────────────────────────
-const INTEGRATIONS = [
-  { label: 'HubSpot',    category: 'CRM',        logo: '/logos/hubspot.svg',    color: '#FF7A59' },
-  { label: 'Salesforce', category: 'CRM',        logo: '/logos/salesforce.svg', color: '#00A1E0' },
-  { label: 'Zendesk',    category: 'Support',    logo: '/logos/zendesk.svg',    color: '#03363D' },
-  { label: 'Intercom',   category: 'Support',    logo: '/logos/intercom.svg',   color: '#1F8DED' },
-  { label: 'WhatsApp',   category: 'Messaging',  logo: '/logos/whatsapp.svg',   color: '#25D366' },
-  { label: 'Slack',      category: 'Messaging',  logo: '/logos/slack.svg',      color: '#4A154B' },
-  { label: 'Gmail',      category: 'Email',      logo: '/logos/gmail.svg',      color: '#EA4335' },
-  { label: 'Outlook',    category: 'Email',      logo: '/logos/outlook.svg',    color: '#0078D4' },
-  { label: 'Teams',      category: 'Messaging',  logo: '/logos/teams.svg',      color: '#6264A7' },
-  { label: 'Jira',       category: 'Ticketing',  logo: '/logos/jira.svg',       color: '#0052CC' },
-  { label: 'Zoom',       category: 'Video',      logo: '/logos/zoom.svg',       color: '#2D8CFF' },
-  { label: 'Custom API', category: 'Enterprise', logo: null,                    color: '#228DC1' },
-]
-
-// 3x4 grid: 11 integrations + Kai in the centre slot
-const GRID_ITEMS = [
-  INTEGRATIONS[0],  // HubSpot
-  INTEGRATIONS[1],  // Salesforce
-  INTEGRATIONS[2],  // Zendesk
-  INTEGRATIONS[3],  // Intercom
-  { label: 'Kai', category: 'AI Agent', logo: '/logo-icon.svg' as string | null, color: '#228DC1', isKai: true },
-  INTEGRATIONS[4],  // WhatsApp
-  INTEGRATIONS[5],  // Slack
-  INTEGRATIONS[6],  // Gmail
-  INTEGRATIONS[7],  // Outlook
-  INTEGRATIONS[8],  // Teams
-  INTEGRATIONS[9],  // Jira
-  INTEGRATIONS[10], // Zoom
-]
-
+// ── Integrations — Kai as glowing hub ────────────────────────────────────────
 function IntegrationsSection() {
-  const sectionRef               = useRef<HTMLDivElement>(null)
-  const [scrollProg, setScrollProg] = useState(0)
-  const [tilt, setTilt]          = useState({ x: 0, y: 0 })
-  const [hovCard, setHovCard]    = useState<string | null>(null)
+  const [ref, inView] = useInView(0.08)
 
-  // Scroll-driven progress: 0 = section below viewport, 1 = section comfortably in view
-  useEffect(() => {
-    const update = () => {
-      const el = sectionRef.current
-      if (!el) return
-      const { top } = el.getBoundingClientRect()
-      const wH = window.innerHeight
-      // starts when section top enters at 90% of viewport, completes at 15%
-      const prog = Math.max(0, Math.min(1, (wH * 0.9 - top) / (wH * 0.75)))
-      setScrollProg(prog)
-    }
-    update()
-    window.addEventListener('scroll', update, { passive: true })
-    return () => window.removeEventListener('scroll', update)
-  }, [])
+  // 5 × 3 grid = 15 slots; Kai sits at index 7 (row 1, col 2 — dead centre)
+  type Item = { label: string; category: string; logo: string | null; isKai?: true; isMcp?: true }
+  const items: Item[] = [
+    { label: 'HubSpot',    category: 'CRM',        logo: '/logos/hubspot.svg' },
+    { label: 'Salesforce', category: 'CRM',        logo: '/logos/salesforce.svg' },
+    { label: 'Zendesk',    category: 'Support',    logo: '/logos/zendesk.svg' },
+    { label: 'Intercom',   category: 'Support',    logo: '/logos/intercom.svg' },
+    { label: 'Freshdesk',  category: 'Support',    logo: '/logos/freshdesk.svg' },
+    { label: 'Fin',        category: 'AI Support', logo: '/logos/fin.svg' },
+    { label: 'WhatsApp',   category: 'Messaging',  logo: '/logos/whatsapp.svg' },
+    { label: 'Kai',        category: 'AI Agent',   logo: '/kai-logo.svg',        isKai: true },
+    { label: 'Slack',      category: 'Messaging',  logo: '/logos/slack.svg' },
+    { label: 'Teams',      category: 'Messaging',  logo: '/logos/teams.svg' },
+    { label: 'Zoom',       category: 'Video',      logo: '/logos/zoom.svg' },
+    { label: 'Gmail',      category: 'Email',      logo: '/logos/gmail.svg' },
+    { label: 'Outlook',    category: 'Email',      logo: '/logos/outlook.svg' },
+    { label: 'Jira',       category: 'Ticketing',  logo: '/logos/jira.svg' },
+    { label: 'MCP',        category: 'Protocol',   logo: null,                   isMcp: true },
+  ]
 
-  const onGridMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    const r = e.currentTarget.getBoundingClientRect()
-    setTilt({
-      x: ((e.clientY - r.top  - r.height / 2) / (r.height / 2)) * -4,
-      y: ((e.clientX - r.left - r.width  / 2) / (r.width  / 2)) *  4,
-    })
-  }
-
-  // Scroll-driven transform values
-  const scrollTiltX  = (1 - scrollProg) * 22         // 22° → 0° as section scrolls into view
-  const scrollShiftY = (1 - scrollProg) * 55         // drops 55px → 0
+  // Manhattan distance from center card (row 1, col 2 in a 5-col grid)
+  const dist = (i: number) => Math.abs(Math.floor(i / 5) - 1) + Math.abs((i % 5) - 2)
 
   return (
-    <section ref={sectionRef} className="py-20 bg-white border-t border-gray-100">
-      <div className="max-w-7xl mx-auto px-8 lg:px-12">
-        <div className="grid lg:grid-cols-[5fr_7fr] gap-16 items-center">
+    <section className="py-24 bg-white border-t border-gray-100">
+      <div className="max-w-5xl mx-auto px-8 lg:px-12">
 
-          {/* Left: copy */}
-          <div>
-            <p className="text-[11px] font-black uppercase tracking-[0.28em] text-[#228DC1] mb-4" style={{ opacity: 0.75 }}>Integrations</p>
-            <h2 className="font-heading text-[#0a1628] mb-5" style={{ fontSize: 'clamp(26px, 2.8vw, 40px)' }}>
-              Works with your existing stack.
-            </h2>
-            <p className="text-[#0a1628]/60 text-base font-normal leading-relaxed mb-8">
-              No rip-and-replace. Kai connects to your live systems on day one.
-              Not on the list? Kai integrates with any platform via REST API.
-            </p>
-            <Link to="/contact" className="inline-flex items-center gap-2 text-[13px] font-semibold text-[#228DC1] hover:gap-3 transition-all mb-10">
-              Discuss your stack <ArrowRight className="w-4 h-4" />
-            </Link>
-            <div>
-              <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#0a1628]/40 mb-3">Channels supported</p>
-              <div className="flex flex-wrap gap-2">
-                {['Web chat', 'WhatsApp', 'Email', 'Mobile', 'API'].map((ch) => (
-                  <span key={ch} className="text-[11px] font-medium text-[#0a1628]/55 border border-gray-200 px-3 py-1.5">{ch}</span>
-                ))}
-              </div>
-            </div>
-          </div>
+        {/* Header */}
+        <div className="text-center mb-14">
+          <p className="text-[#228DC1] mb-4" style={{ fontSize: '11px', fontWeight: 700, letterSpacing: '0.28em', textTransform: 'uppercase', opacity: 0.75 }}>Integrations</p>
+          <h2 className="font-heading text-[#0a1628] mb-4" style={{ fontSize: 'clamp(30px,3.2vw,46px)', lineHeight: 1.08 }}>
+            Works with your stack.<br />MCP-ready on day one.
+          </h2>
+          <p className="text-[#0a1628]/60 text-base leading-relaxed max-w-lg mx-auto">
+            Kai sits at the centre of your ecosystem, connected to every CRM, support platform, messaging channel and protocol without ripping anything out.
+          </p>
+        </div>
 
-          {/* Right: scroll-driven 3-D grid */}
-          <div className="relative overflow-hidden" style={{ maxHeight: '580px' }}>
-            {/* Bottom fade */}
-            <div className="absolute bottom-0 left-0 right-0 h-28 bg-gradient-to-t from-white via-white/80 to-transparent z-10 pointer-events-none" />
+        {/* 5 × 3 hub grid */}
+        <div ref={ref} className="grid grid-cols-3 sm:grid-cols-5 gap-2 sm:gap-3">
+          {items.map((item, i) => {
+            const d = dist(i)
+            const isCorner   = d === 3
+            const isAdjacent = d === 1
 
-            {/* Perspective wrapper */}
-            <div style={{ perspective: '1100px', perspectiveOrigin: '50% 40%' }}>
+            return (
               <div
-                className="grid grid-cols-3 gap-3 select-none"
+                key={item.label}
+                className={`relative flex flex-col items-center justify-center gap-2.5 p-4 sm:p-5 min-h-[108px] sm:min-h-[128px] transition-all duration-300 select-none ${
+                  item.isKai
+                    ? 'z-10'
+                    : isAdjacent
+                      ? 'bg-[#f9fcff] border border-[#228DC1]/18 hover:border-[#228DC1]/40 hover:shadow-sm cursor-default'
+                      : isCorner
+                        ? 'bg-white border border-gray-100 opacity-50 cursor-default'
+                        : 'bg-white border border-gray-100 hover:border-gray-200 hover:shadow-sm cursor-default'
+                }`}
                 style={{
-                  transformStyle: 'preserve-3d',
-                  // Scroll tilt + mouse tilt combine additively
-                  transform: `rotateX(${scrollTiltX + tilt.x}deg) rotateY(${tilt.y}deg) translateY(${scrollShiftY}px)`,
-                  transition: 'transform 0.12s linear',
-                  willChange: 'transform',
+                  ...reveal(inView, d * 75),
+                  ...(item.isKai ? {
+                    background: '#0a1628',
+                    border: '1.5px solid rgba(34,141,193,0.55)',
+                    boxShadow: '0 0 0 6px rgba(34,141,193,0.07), 0 0 40px rgba(34,141,193,0.22), 0 0 80px rgba(34,141,193,0.10), 0 8px 30px rgba(34,141,193,0.14)',
+                  } : {}),
                 }}
-                onMouseMove={onGridMove}
-                onMouseLeave={() => setTilt({ x: 0, y: 0 })}
               >
-                {GRID_ITEMS.map((item, i) => {
-                  const row   = Math.floor(i / 3)
-                  // Each row fades in as scroll progresses: row 0 first, row 3 last
-                  const rowThreshold = row * 0.2
-                  const rowOpacity   = Math.max(0, Math.min(1, (scrollProg - rowThreshold) / 0.22))
+                {/* Kai: inner radial glow backdrop */}
+                {item.isKai && (
+                  <div
+                    className="absolute inset-0 pointer-events-none"
+                    style={{ background: 'radial-gradient(ellipse at center, rgba(34,141,193,0.18) 0%, transparent 72%)' }}
+                  />
+                )}
 
-                  const isKai = item.label === 'Kai'
-                  const isHov = hovCard === item.label
-                  return (
-                    <div
-                      key={item.label}
-                      className="aspect-square flex flex-col items-center justify-center gap-3 rounded-2xl cursor-default"
-                      style={{
-                        background:     isKai ? '#0a1628'                   : '#ffffff',
-                        border:         isKai ? 'none'                      : '1px solid rgba(0,0,0,0.07)',
-                        boxShadow:      isHov
-                          ? (isKai ? '0 28px 64px rgba(10,22,40,0.5)' : '0 20px 56px rgba(0,0,0,0.13)')
-                          : (isKai ? '0 8px 28px rgba(10,22,40,0.22)' : '0 1px 5px rgba(0,0,0,0.05)'),
-                        transform:      isHov ? 'translateZ(30px) scale(1.04)' : 'translateZ(0) scale(1)',
-                        transformStyle: 'preserve-3d',
-                        opacity:        rowOpacity,
-                        // No transition on opacity (scroll-driven), spring only on hover transform
-                        transition:     'transform 0.35s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.35s ease',
-                      }}
-                      onMouseEnter={() => setHovCard(item.label)}
-                      onMouseLeave={() => setHovCard(null)}
-                    >
-                      {isKai ? (
-                        <>
-                          <img src="/logo-icon.svg" alt="Kai"
-                            className="w-12 h-12 object-contain brightness-0 invert"
-                            onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }} />
-                          <p className="text-white/70 font-semibold text-[11px] uppercase tracking-[0.2em]">Kai</p>
-                        </>
-                      ) : item.logo ? (
-                        <>
-                          <img src={item.logo} alt={item.label}
-                            className="w-14 h-14 object-contain"
-                            onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }} />
-                          <p className="text-[#0a1628]/55 font-medium text-[12px] tracking-[-0.01em]">{item.label}</p>
-                        </>
-                      ) : (
-                        <>
-                          <Code2 className="w-11 h-11" style={{ color: item.color }} strokeWidth={1.5} />
-                          <p className="text-[#0a1628]/55 font-medium text-[12px]">{item.label}</p>
-                        </>
-                      )}
+                {item.isKai ? (
+                  <>
+                    {/* Pulsing ring */}
+                    <div className="relative flex items-center justify-center">
+                      <div
+                        className="absolute w-12 h-12 border-2 border-[#228DC1]/50"
+                        style={{ animation: 'hubRing 2.6s ease-out infinite' }}
+                      />
+                      <div className="relative w-12 h-12 bg-[#228DC1] flex items-center justify-center shadow-[0_4px_18px_rgba(34,141,193,0.50)]">
+                        <img
+                          src="/kai-logo.svg"
+                          alt="Kai"
+                          className="w-7 h-7 object-contain brightness-0 invert"
+                          onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }}
+                        />
+                      </div>
                     </div>
-                  )
-                })}
+                    <p className="relative text-white font-bold text-[11px] uppercase tracking-[0.22em]">Kai</p>
+                    <span className="relative text-[9px] font-semibold text-[#228DC1] bg-[#228DC1]/15 border border-[#228DC1]/30 px-2 py-0.5">
+                      AI Agent · MCP
+                    </span>
+                  </>
+                ) : item.isMcp ? (
+                  <>
+                    <div className="w-9 h-9 flex items-center justify-center bg-[#e5f4fa] border border-[#228DC1]/25">
+                      <span className="text-[#228DC1] text-[10px] font-black tracking-tight">MCP</span>
+                    </div>
+                    <div className="text-center">
+                      <p className="text-[#0a1628]/65 text-[11px] font-semibold">MCP</p>
+                      <p className="text-[#0a1628]/35 text-[10px] leading-tight mt-0.5">Protocol</p>
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <img
+                      src={item.logo ?? undefined}
+                      alt={item.label}
+                      className="w-8 h-8 sm:w-9 sm:h-9 object-contain"
+                      onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }}
+                    />
+                    <div className="text-center">
+                      <p className="text-[#0a1628]/70 text-[11px] font-semibold leading-tight">{item.label}</p>
+                      <p className="text-[#0a1628]/35 text-[10px] leading-tight mt-0.5">{item.category}</p>
+                    </div>
+                  </>
+                )}
               </div>
+            )
+          })}
+        </div>
+
+        {/* Bottom stats */}
+        <div className="mt-5 grid sm:grid-cols-3 gap-3">
+          {[
+            { label: 'Native integrations', value: '14+ platforms' },
+            { label: 'Custom systems',      value: 'API + webhooks' },
+            { label: 'Tool access',         value: 'MCP supported' },
+          ].map((item) => (
+            <div key={item.label} className="bg-[#f8fafc] border border-gray-200 px-5 py-4">
+              <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-[#0a1628]/35 mb-1">{item.label}</p>
+              <p className="text-[#0a1628] text-[13px] font-semibold">{item.value}</p>
+            </div>
+          ))}
+        </div>
+
+      </div>
+    </section>
+  )
+}
+
+function SecurityComplianceSection() {
+  const [leftRef, leftInView] = useInView()
+  const [gridRef, gridInView] = useInView()
+  return (
+    <section className="py-24 bg-white border-t border-gray-100">
+      <div className="max-w-7xl mx-auto px-8 lg:px-12">
+        <div className="grid lg:grid-cols-[0.9fr_1.1fr] gap-14 lg:gap-16 items-start">
+          <div ref={leftRef} className="lg:sticky lg:top-28">
+            <p className="type-label text-[#228DC1] mb-4" style={reveal(leftInView)}>Security & Compliance</p>
+            <h2 className="font-heading text-[#0a1628] mb-5" style={{ fontSize: 'clamp(28px, 3.2vw, 46px)', lineHeight: 1.08, ...reveal(leftInView, 100) }}>
+              Designed for regulated environments.
+            </h2>
+            <p className="text-[#0a1628]/65 text-base font-normal leading-relaxed mb-8 max-w-xl" style={reveal(leftInView, 180)}>
+              Safe, measurable and auditable AI for teams with real governance requirements.
+            </p>
+
+            <div className="bg-[#0a1628] text-white p-8 shadow-[0_16px_50px_rgba(10,22,40,0.12)]" style={reveal(leftInView, 280)}>
+              <div className="w-11 h-11 flex items-center justify-center bg-white/10 mb-6">
+                <Shield className="w-5 h-5 text-[#6cc4ea]" strokeWidth={1.6} />
+              </div>
+              <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-white/45 mb-2">Governance proof</p>
+              <p className="font-heading text-[24px] leading-tight mb-3">ISO 42001 AI Management System certified</p>
+              <p className="text-white/58 text-sm font-normal leading-relaxed">
+                Governance, access control and auditability are built in from day one.
+              </p>
             </div>
           </div>
 
+          <div>
+            <div ref={gridRef} className="grid sm:grid-cols-2 gap-4">
+              {[
+                { badge: 'Encryption', title: 'Protected data paths', detail: 'TLS in transit. AES-256 at rest.' },
+                { badge: 'Access', title: 'Least-privilege control', detail: 'Roles, MFA, permissions and audit trails.' },
+                { badge: 'Testing', title: 'Verified posture', detail: 'CREST-aligned testing and TLS 1.3 checks.' },
+                { badge: 'Residency', title: 'Data control', detail: 'GDPR-aligned with UK residency options.' },
+                { badge: 'Deployment', title: 'Flexible deployment', detail: 'Cloud, hybrid or on-premises.' },
+                { badge: 'AI governance', title: 'Auditable AI', detail: 'Rules for access, consent and escalation.' },
+              ].map((item, i) => (
+                <div key={item.badge} className="group bg-white border border-gray-200 p-6 shadow-[0_1px_8px_rgba(10,22,40,0.03)] hover:shadow-[0_16px_40px_rgba(10,22,40,0.07)] hover:-translate-y-0.5 transition-all" style={reveal(gridInView, i * 80)}>
+                  <div className="flex items-center gap-3 mb-5">
+                    <span className="w-8 h-8 flex items-center justify-center bg-[#e5f4fa] text-[#228DC1]">
+                      <CheckCircle2 className="w-4 h-4" strokeWidth={1.7} />
+                    </span>
+                    <span className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#228DC1]">{item.badge}</span>
+                  </div>
+                  <h3 className="text-[#0a1628] text-[15px] font-semibold mb-2">{item.title}</h3>
+                  <p className="text-[#0a1628]/60 text-[13px] font-normal leading-relaxed">{item.detail}</p>
+                </div>
+              ))}
+            </div>
+
+            <div className="mt-5 grid sm:grid-cols-3 gap-3">
+              {[
+                { label: 'Audit ready', value: 'Logs + trails' },
+                { label: 'Data control', value: 'GDPR aligned' },
+                { label: 'Deployment', value: 'Your choice' },
+              ].map((item) => (
+                <div key={item.label} className="bg-[#f8fafc] border border-gray-200 px-5 py-4">
+                  <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-[#0a1628]/35 mb-1">{item.label}</p>
+                  <p className="text-[#0a1628] text-[13px] font-semibold">{item.value}</p>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -380,14 +773,25 @@ function IntegrationsSection() {
 
 // ── Main page ─────────────────────────────────────────────────────────────────
 export default function KaiPage() {
+  const [stepsRef, stepsInView] = useInView()
+  const [capsRef, capsInView] = useInView()
+  const [chartRef, chartInView] = useInView(0.3)
+
   return (
     <>
+      <ScrollProgress />
       {/* ── Hero ── */}
       <section className="relative overflow-hidden bg-white pt-32 pb-0">
-        {/* Subtle background grid */}
+        {/* Subtle dot grid */}
         <div className="absolute inset-0 pointer-events-none" style={{
-          backgroundImage: 'linear-gradient(rgba(34,141,193,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(34,141,193,0.04) 1px, transparent 1px)',
-          backgroundSize: '48px 48px',
+          backgroundImage: 'radial-gradient(circle, rgba(34,141,193,0.12) 1px, transparent 1px)',
+          backgroundSize: '32px 32px',
+          maskImage: 'linear-gradient(to bottom, transparent 0%, black 20%, black 70%, transparent 100%)',
+          WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, black 20%, black 70%, transparent 100%)',
+        }} />
+        {/* Colour wash */}
+        <div className="absolute inset-0 pointer-events-none" style={{
+          background: 'radial-gradient(ellipse 70% 50% at 70% 30%, rgba(34,141,193,0.07) 0%, transparent 70%)',
         }} />
 
         <div className="relative max-w-7xl mx-auto px-8 lg:px-12">
@@ -395,57 +799,44 @@ export default function KaiPage() {
 
             {/* Left: copy */}
             <div className="pb-24">
-              <p className="font-black text-[#228DC1] mb-4" style={{ fontSize: '13px', letterSpacing: '0.28em', textTransform: 'uppercase', opacity: 0.6 }}>
-                Kai · Enterprise AI Agent
-              </p>
+              <div className="flex items-center gap-3 mb-6">
+                <img src="/kai-logo.svg" alt="Kai" className="h-7 w-auto object-contain" />
+                <p className="font-black text-[#228DC1]" style={{ fontSize: '13px', letterSpacing: '0.28em', textTransform: 'uppercase', opacity: 0.6 }}>
+                  Kai · Enterprise AI Agent
+                </p>
+              </div>
               <h1 className="font-serif-display text-[#0a1628] leading-[1.02] mb-6" style={{ fontSize: 'clamp(40px, 4.8vw, 68px)' }}>
                 The enterprise AI agent<br />
-                that <span style={{ color: '#228DC1' }}>resolves,</span><br />not just responds.
+                that <span style={{ color: '#228DC1' }}>resolves,</span><br />
+                not just responds.
               </h1>
               <p className="text-[#0a1628]/60 text-lg font-normal leading-relaxed mb-10">
-                Kai handles customer service and operational workflows at scale. Connected to your systems, governed by your rules, measured by outcomes, not activity.
+                Kai connects to your systems, follows your rules and helps teams resolve work faster.
               </p>
               <div className="flex flex-wrap gap-4">
-                <Link to="/contact" className="px-7 py-3.5 bg-[#228DC1] text-white text-[13px] font-semibold hover:bg-[#1a6e99] transition-colors">
+                <Link to="/contact" className="inline-flex items-center gap-2 px-7 py-3.5 bg-[#228DC1] text-white text-[13px] font-semibold hover:bg-[#1a6e99] transition-colors">
                   Request a Demo
                 </Link>
                 <Link to="/contact" className="px-7 py-3.5 border border-gray-200 text-[#0a1628]/70 text-[13px] font-medium hover:border-[#228DC1]/50 hover:text-[#228DC1] transition-all">
                   Talk to an expert
                 </Link>
               </div>
-
-              <div className="mt-12 pt-8 border-t border-gray-100 flex flex-wrap items-center gap-4">
-                <p className="text-[#0a1628]/60 text-[10px] font-semibold uppercase tracking-[0.2em]">Live in production with</p>
-                <div className="border border-gray-100 bg-[#0a1628]/4 px-4 py-2.5 flex items-center gap-2.5">
-                  <img
-                    src="/logos/britishcouncil.svg"
-                    alt="British Council"
-                    className="h-5 w-5 object-contain rounded-sm"
-                    onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }}
-                  />
-                  <span className="text-[#0a1628]/60 text-[12px] font-semibold">British Council English Online</span>
-                </div>
-                <div className="border border-gray-100 bg-[#0a1628]/4 px-4 py-2.5">
-                  <span className="text-[#0a1628]/60 text-[12px] font-semibold">250,000 users / month</span>
-                </div>
-              </div>
             </div>
 
-            {/* Right: mockup — floats up, clipped at bottom edge */}
-            <div className="relative hidden lg:block">
-              {/* Glow behind mockup */}
-              <div className="absolute -inset-8 rounded-3xl pointer-events-none" style={{
-                background: 'radial-gradient(ellipse 80% 60% at 60% 50%, rgba(34,141,193,0.10) 0%, transparent 70%)',
+            {/* Right: mockup — floats from bottom, clipped at bottom edge */}
+            <div className="relative hidden lg:block self-end">
+              {/* Glow */}
+              <div className="absolute -inset-10 pointer-events-none" style={{
+                background: 'radial-gradient(ellipse 80% 60% at 55% 60%, rgba(34,141,193,0.12) 0%, transparent 70%)',
               }} />
               <div
-                className="relative overflow-hidden shadow-[0_20px_80px_rgba(10,22,40,0.12),0_4px_20px_rgba(34,141,193,0.08)] border border-gray-100/80"
-                style={{ borderRadius: '12px 12px 0 0', transform: 'translateY(0)' }}
+                className="relative overflow-hidden shadow-[0_20px_80px_rgba(10,22,40,0.12),0_4px_20px_rgba(34,141,193,0.08)] border border-gray-200/60"
+                style={{ borderRadius: '12px 12px 0 0' }}
               >
                 <img
                   src="/kai-mockup.svg"
                   alt="Kai platform interface"
                   className="w-full block"
-                  style={{ display: 'block' }}
                 />
               </div>
             </div>
@@ -453,6 +844,23 @@ export default function KaiPage() {
           </div>
         </div>
       </section>
+
+      {/* ── Marquee ── */}
+      <div className="bg-white border-y border-gray-100 py-4 overflow-hidden">
+        <div className="flex animate-[marquee_35s_linear_infinite] whitespace-nowrap w-max">
+          {[
+            'Enterprise Teams', 'Contact Centre AI', 'Customer Operations', 'Regulated Industries',
+            'ISO 42001 Certified', 'Financial Services', 'Higher Education', 'Public Sector',
+            'Healthcare', 'Mixed-Stack Teams', 'Governance-Led AI', 'Telco & Utilities',
+            'Enterprise Teams', 'Contact Centre AI', 'Customer Operations', 'Regulated Industries',
+          ].map((item, i) => (
+            <span key={i} className="inline-flex items-center text-[10px] font-semibold uppercase tracking-[0.2em] text-[#0a1628]/55 px-8">
+              {item}
+              <span className="ml-8 w-1 h-1 rounded-full bg-[#228DC1]/40 inline-block" />
+            </span>
+          ))}
+        </div>
+      </div>
 
       {/* ── Client logo strip ── */}
       <section className="bg-[#fafafa] border-t border-gray-100 border-b border-gray-100 py-10">
@@ -478,55 +886,102 @@ export default function KaiPage() {
         </div>
       </section>
 
-      {/* ── Real metrics ── */}
-      <section className="bg-white border-t border-gray-100">
-        <div className="max-w-7xl mx-auto px-8 lg:px-12">
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-px bg-gray-100 border border-gray-100">
-            {[
-              { stat: '250k+', label: 'Users / month', note: 'British Council English Online' },
-              { stat: '+22.5%', label: 'Containment uplift', note: 'Measured in production' },
-              { stat: '+17%', label: 'CSAT uplift', note: 'Learner satisfaction' },
-              { stat: '45s', label: 'Avg handle time', note: 'AI-resolved queries' },
-            ].map((item) => (
-              <div key={item.label} className="bg-white px-8 py-8">
-                <p className="font-black text-[#228DC1] leading-none mb-2" style={{ fontSize: 'clamp(24px, 2.8vw, 38px)', letterSpacing: '-0.02em' }}>
-                  {item.stat}
-                </p>
-                <p className="text-[#0a1628] text-[13px] font-semibold mb-0.5">{item.label}</p>
-                <p className="text-[#0a1628]/60 text-[10px] font-normal">{item.note}</p>
+      {/* ── Live in production ── */}
+      <section className="bg-[#f8fafc] border-b border-gray-100">
+        <div className="max-w-7xl mx-auto px-8 lg:px-12 py-20">
+          <div className="grid lg:grid-cols-[0.9fr_1.1fr] gap-14 lg:gap-20 items-center mb-14">
+            <div className="max-w-xl">
+              <p className="type-label text-[#228DC1] mb-5">Live in Production</p>
+              <h2 className="font-heading text-[#0a1628] mb-5" style={{ fontSize: 'clamp(30px, 3.4vw, 50px)', lineHeight: 1.06 }}>
+                Our AI agent is live at enterprise scale.
+              </h2>
+              <p className="text-[#0a1628]/64 text-[16px] font-normal leading-relaxed mb-8">
+                Live integrations across HubSpot, WhatsApp, Jira and email. Built for real support at production scale.
+              </p>
+              <Link to="/insights/case-studies" className="inline-flex items-center gap-2 text-[13px] font-semibold text-[#228DC1] hover:gap-3 transition-all">
+                Read the case study <ArrowRight className="w-4 h-4" />
+              </Link>
+            </div>
+
+            <div className="relative">
+              <div className="absolute -inset-5 bg-white/60 border border-white hidden lg:block" />
+              <div className="relative bg-white border border-gray-200 shadow-[0_16px_50px_rgba(10,22,40,0.07)]">
+                <div className="grid sm:grid-cols-[1fr_1.25fr]">
+                  <div className="p-8 bg-[#0a1628] text-white">
+                    <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-white/45 mb-8">Production reach</p>
+                    <p className="font-black leading-none mb-3" style={{ fontSize: 'clamp(46px, 5vw, 72px)', letterSpacing: '-0.04em' }}>
+                      250k+
+                    </p>
+                    <p className="text-white/75 text-[14px] font-medium leading-relaxed">
+                      learners supported each month across enterprise deployments.
+                    </p>
+                  </div>
+                  <div className="p-8">
+                    <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-[#0a1628]/35 mb-6">Deployment snapshot</p>
+                    <div className="space-y-5">
+                      {[
+                        { label: 'Channels', value: 'HubSpot, WhatsApp, Jira, email' },
+                        { label: 'Human control', value: 'Escalation paths built in' },
+                        { label: 'Measured', value: 'Containment, CSAT, escalations' },
+                      ].map((item) => (
+                        <div key={item.label} className="border-t border-gray-100 pt-5 first:border-t-0 first:pt-0">
+                          <p className="text-[#228DC1] text-[11px] font-bold uppercase tracking-[0.16em] mb-1">{item.label}</p>
+                          <p className="text-[#0a1628] text-[14px] font-semibold leading-relaxed">{item.value}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+                <div className="border-t border-gray-100 bg-[#fafafa] px-8 py-5">
+                  <p className="text-[#0a1628]/60 text-[13px] font-normal leading-relaxed">
+                    Built for real operational pressure, not a showcase demo.
+                  </p>
+                </div>
               </div>
-            ))}
+            </div>
+          </div>
+
+          {/* Metrics row — same section */}
+          <div className="grid grid-cols-2 sm:grid-cols-5 gap-4">
+            <StatCard num={250} suffix="k+" label="Users / month" note="Across enterprise deployments" delay={0} />
+            <StatCard prefix="+" num={22.5} suffix="%" label="Containment uplift" note="Measured in production" delay={100} />
+            <StatCard prefix="+" num={17} suffix="%" label="CSAT uplift" note="Learner satisfaction" delay={200} />
+            <StatCard num={45} suffix="s" label="Avg handle time" note="AI-resolved queries" delay={300} />
+            <StatCard num={150} suffix="+" label="Countries reached" note="Global enterprise reach" delay={400} />
           </div>
         </div>
       </section>
+
+      {/* ── Security & compliance ── */}
+      <SecurityComplianceSection />
 
       {/* ── Performance Graph ── */}
       <section className="py-24 bg-white border-t border-gray-100">
         <div className="max-w-7xl mx-auto px-8 lg:px-12">
           <div className="grid lg:grid-cols-[1fr_1.6fr] gap-16 items-center">
 
-            {/* Left: copy + stat list */}
+            {/* Left: heading + qualitative outcomes */}
             <div>
               <p className="type-label text-[#228DC1] mb-4">Measured Outcomes</p>
-              <h2 className="font-heading text-[#0a1628] mb-5" style={{ fontSize: 'clamp(26px, 3vw, 42px)' }}>
-                Performance you can<br />measure from week one.
+              <h2 className="font-heading text-[#0a1628] mb-5" style={{ fontSize: 'clamp(30px, 3.2vw, 46px)', lineHeight: 1.08 }}>
+                Performance you can measure.
               </h2>
-              <p className="text-[#0a1628]/60 text-base font-normal leading-relaxed mb-10">
-                Every Kai deployment is tracked against baseline. Containment, CSAT and handle time, live from day one, improving week on week.
+              <p className="text-[#0a1628]/60 text-base font-normal leading-relaxed mb-12">
+                Track containment, CSAT and handle time from day one.
               </p>
-              <div className="space-y-0 border-t border-gray-100">
+              <div className="space-y-8">
                 {[
-                  { stat: '+22.5%', label: 'Containment rate uplift', desc: 'More queries resolved without human handoff' },
-                  { stat: '+17%',   label: 'CSAT improvement',        desc: 'Learner satisfaction, British Council English Online' },
-                  { stat: '45s',    label: 'Avg handle time',          desc: 'AI-resolved queries, measured in production' },
-                ].map(item => (
-                  <div key={item.label} className="flex items-start gap-5 py-5 border-b border-gray-100">
-                    <p className="font-black text-[#228DC1] shrink-0 w-[72px] leading-none mt-0.5" style={{ fontSize: 'clamp(20px, 1.8vw, 26px)', letterSpacing: '-0.02em' }}>
-                      {item.stat}
-                    </p>
+                  { Icon: Zap,      label: 'Resolve at first touch',   desc: 'Kai handles routine queries end-to-end, keeping agents free for complex work.' },
+                  { Icon: BarChart2, label: 'Track what matters',       desc: 'Containment, CSAT and escalation rates visible from the moment Kai goes live.' },
+                  { Icon: Shield,   label: 'Governed before go-live',  desc: 'Rules, audit trails and escalation paths are configured, not bolted on later.' },
+                ].map(({ Icon, label, desc }) => (
+                  <div key={label} className="flex items-start gap-4">
+                    <div className="w-9 h-9 flex items-center justify-center shrink-0 mt-0.5" style={{ backgroundColor: '#228DC112' }}>
+                      <Icon className="w-4 h-4 text-[#228DC1]" strokeWidth={1.6} />
+                    </div>
                     <div>
-                      <p className="text-[#0a1628] font-semibold text-[14px] mb-0.5">{item.label}</p>
-                      <p className="text-[#0a1628]/60 text-[12px] font-normal leading-snug">{item.desc}</p>
+                      <p className="text-[#0a1628] font-semibold text-[14px] mb-1">{label}</p>
+                      <p className="text-[#0a1628]/55 text-[13px] font-normal leading-relaxed">{desc}</p>
                     </div>
                   </div>
                 ))}
@@ -534,116 +989,122 @@ export default function KaiPage() {
             </div>
 
             {/* Right: SVG area chart */}
-            <div className="border border-gray-100 shadow-[0_4px_40px_rgba(10,22,40,0.06)] p-8">
+            <div className="bg-white border border-gray-200 shadow-[0_16px_50px_rgba(10,22,40,0.07)] p-6 sm:p-8">
               {/* Chart header */}
-              <div className="flex items-start justify-between mb-6">
+              <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-5 mb-7">
                 <div>
-                  <p className="text-[#0a1628] font-semibold text-[14px] mb-1">Containment Rate · Weeks 1 to 12</p>
-                  <p className="text-[#0a1628]/60 text-[11px] font-normal">British Council English Online · Live deployment</p>
+                  <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#228DC1] mb-2">Live performance trend</p>
+                  <p className="text-[#0a1628] font-semibold text-[18px] leading-tight">Containment rate after launch</p>
                 </div>
                 <div className="flex items-center gap-5 pt-0.5">
                   <span className="flex items-center gap-2">
-                    <svg width="20" height="10"><line x1="0" y1="5" x2="20" y2="5" stroke="#0a1628" strokeWidth="1.5" strokeOpacity="0.3" strokeDasharray="4 3" /></svg>
-                    <span className="text-[11px] text-[#0a1628]/60">Pre-Kai</span>
+                    <svg width="22" height="10"><line x1="0" y1="5" x2="22" y2="5" stroke="#94a3b8" strokeWidth="1.5" strokeDasharray="4 4" /></svg>
+                    <span className="text-[11px] text-[#0a1628]/55">Baseline</span>
                   </span>
                   <span className="flex items-center gap-2">
-                    <svg width="20" height="10"><line x1="0" y1="5" x2="20" y2="5" stroke="#228DC1" strokeWidth="2" /></svg>
-                    <span className="text-[11px] text-[#0a1628]/65">After Kai</span>
+                    <svg width="22" height="10"><line x1="0" y1="5" x2="22" y2="5" stroke="#228DC1" strokeWidth="2.5" /></svg>
+                    <span className="text-[11px] text-[#0a1628]/65">Kai live</span>
                   </span>
                 </div>
               </div>
 
               {/* Chart */}
-              <svg viewBox="0 0 560 260" className="w-full" style={{ overflow: 'visible' }}>
+              <div ref={chartRef} className="bg-[#f8fbfd] border border-gray-100 px-4 sm:px-6 pt-6 pb-4">
+              <svg viewBox="0 0 560 280" className="w-full" style={{ overflow: 'visible' }}>
                 <defs>
                   <linearGradient id="areaGrad" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="#228DC1" stopOpacity="0.18" />
+                    <stop offset="0%" stopColor="#228DC1" stopOpacity="0.24" />
                     <stop offset="100%" stopColor="#228DC1" stopOpacity="0.01" />
                   </linearGradient>
+                  <filter id="chartGlow" x="-20%" y="-20%" width="140%" height="140%">
+                    <feDropShadow dx="0" dy="10" stdDeviation="10" floodColor="#228DC1" floodOpacity="0.18" />
+                  </filter>
                 </defs>
 
                 {/* Horizontal grid lines at 55%, 65%, 75% */}
                 {[
-                  { y: 186.67, label: '55%' },
-                  { y: 120,    label: '65%' },
-                  { y: 53.33,  label: '75%' },
+                  { y: 198, label: '55%' },
+                  { y: 132, label: '65%' },
+                  { y: 66,  label: '75%' },
                 ].map(({ y, label }) => (
                   <g key={label}>
-                    <line x1="40" y1={y} x2="540" y2={y} stroke="#0a1628" strokeWidth="0.5" strokeOpacity="0.07" />
-                    <text x="34" y={y + 4} textAnchor="end" fontSize="10" fill="#0a1628" fillOpacity="0.28" fontFamily="system-ui, sans-serif">{label}</text>
+                    <line x1="44" y1={y} x2="532" y2={y} stroke="#0a1628" strokeWidth="0.5" strokeOpacity="0.07" />
+                    <text x="34" y={y + 4} textAnchor="end" fontSize="10" fill="#0a1628" fillOpacity="0.32" fontFamily="system-ui, sans-serif">{label}</text>
                   </g>
                 ))}
 
                 {/* X-axis labels */}
                 {[
-                  { x: 40,     label: 'Wk −4' },
-                  { x: 165,    label: 'Go-live' },
-                  { x: 352.5,  label: 'Wk 6' },
-                  { x: 540,    label: 'Wk 12' },
+                  { x: 44,  label: 'Baseline' },
+                  { x: 168, label: 'Launch' },
+                  { x: 354, label: 'Week 6' },
+                  { x: 532, label: 'Week 12' },
                 ].map(({ x, label }) => (
-                  <text key={label} x={x} y="242" textAnchor="middle" fontSize="10" fill="#0a1628" fillOpacity="0.28" fontFamily="system-ui, sans-serif">{label}</text>
+                  <text key={label} x={x} y="258" textAnchor="middle" fontSize="10" fill="#0a1628" fillOpacity="0.36" fontFamily="system-ui, sans-serif">{label}</text>
                 ))}
 
                 {/* X-axis base line */}
-                <line x1="40" y1="220" x2="540" y2="220" stroke="#0a1628" strokeWidth="0.5" strokeOpacity="0.1" />
+                <line x1="44" y1="232" x2="532" y2="232" stroke="#0a1628" strokeWidth="0.5" strokeOpacity="0.1" />
 
                 {/* Kai go-live dashed vertical */}
-                <line x1="165" y1="18" x2="165" y2="220" stroke="#228DC1" strokeWidth="1" strokeDasharray="4 3" strokeOpacity="0.45" />
+                <line x1="168" y1="34" x2="168" y2="232" stroke="#228DC1" strokeWidth="1" strokeDasharray="4 4" strokeOpacity="0.38" />
 
                 {/* "Kai live" pill */}
-                <rect x="139" y="8" width="52" height="18" rx="3" fill="#228DC1" fillOpacity="0.12" />
-                <text x="165" y="21" textAnchor="middle" fontSize="10" fill="#228DC1" fontWeight="700" fontFamily="system-ui, sans-serif">Kai live</text>
+                <rect x="133" y="10" width="70" height="22" rx="11" fill="#228DC1" fillOpacity="0.12" />
+                <text x="168" y="25" textAnchor="middle" fontSize="10" fill="#228DC1" fontWeight="700" fontFamily="system-ui, sans-serif">Launch</text>
 
                 {/* Pre-Kai dashed baseline */}
                 <path
-                  d="M40,186.67 L71.25,193.33 L102.5,180 L133.75,186.67 L165,186.67"
+                  d="M44,198 L75,204 L106,191 L137,198 L168,198"
                   fill="none"
-                  stroke="#0a1628"
+                  stroke="#94a3b8"
                   strokeWidth="1.5"
-                  strokeOpacity="0.22"
                   strokeDasharray="5 4"
                 />
                 {/* Pre-Kai start dot */}
-                <circle cx="40" cy="186.67" r="3" fill="#0a1628" fillOpacity="0.2" />
+                <circle cx="44" cy="198" r="3" fill="#94a3b8" />
 
                 {/* Area fill under post-Kai line */}
                 <path
-                  d="M165,186.67 L196.25,140 L227.5,106.67 L258.75,86.67 L290,70 L321.25,60 L352.5,53.33 L383.75,46.67 L415,40 L446.25,38 L477.5,36.67 L508.75,36.67 L540,36.67 L540,220 L165,220 Z"
+                  d="M168,198 L199,152 L230,118 L261,98 L292,82 L323,72 L354,66 L385,58 L416,52 L447,49 L478,48 L509,48 L532,48 L532,232 L168,232 Z"
                   fill="url(#areaGrad)"
+                  style={{ opacity: chartInView ? 1 : 0, transition: 'opacity 1.2s ease 0.9s' }}
                 />
 
-                {/* Post-Kai solid line */}
+                {/* Post-Kai solid line — draws on scroll */}
                 <path
-                  d="M165,186.67 L196.25,140 L227.5,106.67 L258.75,86.67 L290,70 L321.25,60 L352.5,53.33 L383.75,46.67 L415,40 L446.25,38 L477.5,36.67 L508.75,36.67 L540,36.67"
+                  d="M168,198 L199,152 L230,118 L261,98 L292,82 L323,72 L354,66 L385,58 L416,52 L447,49 L478,48 L509,48 L532,48"
                   fill="none"
                   stroke="#228DC1"
-                  strokeWidth="2.5"
+                  strokeWidth="3"
                   strokeLinejoin="round"
+                  strokeLinecap="round"
+                  pathLength="1"
+                  style={{ strokeDasharray: 1, strokeDashoffset: chartInView ? 0 : 1, transition: 'stroke-dashoffset 1.8s cubic-bezier(0.16,1,0.3,1) 0.2s' } as CSSProperties}
+                  filter="url(#chartGlow)"
                 />
 
                 {/* Endpoint dot + value */}
-                <circle cx="540" cy="36.67" r="5" fill="#228DC1" />
-                <circle cx="540" cy="36.67" r="9" fill="#228DC1" fillOpacity="0.15" />
-                <text x="534" y="24" textAnchor="middle" fontSize="11" fill="#228DC1" fontWeight="700" fontFamily="system-ui, sans-serif">77.5%</text>
+                <circle cx="532" cy="48" r="12" fill="#228DC1" fillOpacity="0.14" style={{ opacity: chartInView ? 1 : 0, transition: 'opacity 0.4s ease 2s' }} />
+                <circle cx="532" cy="48" r="5.5" fill="#228DC1" style={{ opacity: chartInView ? 1 : 0, transition: 'opacity 0.4s ease 2s' }} />
+                <text x="519" y="33" textAnchor="middle" fontSize="12" fill="#228DC1" fontWeight="800" fontFamily="system-ui, sans-serif" style={{ opacity: chartInView ? 1 : 0, transition: 'opacity 0.4s ease 2.2s' }}>77.5%</text>
 
                 {/* +22.5% annotation badge */}
-                <rect x="208" y="52" width="78" height="22" rx="3" fill="#228DC1" fillOpacity="0.1" />
-                <text x="247" y="67" textAnchor="middle" fontSize="11" fill="#228DC1" fontWeight="700" fontFamily="system-ui, sans-serif">+22.5% ↑</text>
-
-                {/* CSAT mini-bar row */}
-                <text x="40" y="255" fontSize="10" fill="#0a1628" fillOpacity="0.25" fontFamily="system-ui, sans-serif">CSAT</text>
+                <rect x="242" y="82" width="92" height="26" rx="13" fill="#ffffff" stroke="#228DC1" strokeOpacity="0.18" style={{ opacity: chartInView ? 1 : 0, transition: 'opacity 0.4s ease 1.6s' }} />
+                <text x="288" y="99" textAnchor="middle" fontSize="11" fill="#228DC1" fontWeight="800" fontFamily="system-ui, sans-serif" style={{ opacity: chartInView ? 1 : 0, transition: 'opacity 0.4s ease 1.6s' }}>+22.5% uplift</text>
               </svg>
+              </div>
 
               {/* Bottom summary row */}
-              <div className="mt-4 pt-4 border-t border-gray-100 grid grid-cols-3 gap-4">
+              <div className="mt-5 grid grid-cols-1 sm:grid-cols-3 gap-3">
                 {[
-                  { val: '55%', label: 'Baseline containment', colour: '#0a162840' },
+                  { val: '55%', label: 'Baseline containment', colour: '#64748b' },
                   { val: '77.5%', label: 'Week 12 containment', colour: '#228DC1' },
-                  { val: '+17%', label: 'CSAT uplift (same period)', colour: '#228DC1' },
+                  { val: '+17%', label: 'CSAT uplift', colour: '#228DC1' },
                 ].map(item => (
-                  <div key={item.label} className="text-center">
-                    <p className="font-bold text-[15px] mb-0.5" style={{ color: item.colour, letterSpacing: '-0.01em' }}>{item.val}</p>
-                    <p className="text-[10px] text-[#0a1628]/60 font-normal leading-tight">{item.label}</p>
+                  <div key={item.label} className="bg-white border border-gray-200 px-5 py-4">
+                    <p className="font-black text-[20px] mb-1" style={{ color: item.colour, letterSpacing: '-0.02em' }}>{item.val}</p>
+                    <p className="text-[11px] text-[#0a1628]/58 font-medium leading-tight">{item.label}</p>
                   </div>
                 ))}
               </div>
@@ -657,21 +1118,21 @@ export default function KaiPage() {
         <div className="max-w-7xl mx-auto px-8 lg:px-12">
           <div className="max-w-2xl mb-14">
             <p className="type-label text-[#228DC1] mb-4">See Kai in Action</p>
-            <h2 className="font-heading text-[#0a1628] mb-4" style={{ fontSize: 'clamp(26px, 3vw, 42px)' }}>
+            <h2 className="font-heading text-[#0a1628] mb-4" style={{ fontSize: 'clamp(30px, 3.2vw, 46px)', lineHeight: 1.08 }}>
               From first message to resolved ticket.<br />No scripted flows. No dead ends.
             </h2>
             <p className="text-[#0a1628]/60 text-[16px] font-normal leading-relaxed">
-              Kai reads intent, retrieves data from your live systems, takes action and closes the interaction. Autonomously.
+              Kai reads intent, checks live systems and keeps the workflow moving.
             </p>
           </div>
-          <KaiDemo />
-          <div className="mt-10 grid sm:grid-cols-3 gap-px bg-gray-100 border border-gray-100">
+          <KaiDashboard />
+          <div className="mt-10 grid sm:grid-cols-3 gap-4">
             {[
-              { label: 'System-connected', desc: 'Kai reads and writes directly to your CRM and ticketing platform. It acts, not just chats.' },
-              { label: 'Policy-governed', desc: 'Every decision follows rules your team configured. Nothing outside those bounds. Ever.' },
-              { label: 'Outcome-measured', desc: 'Containment rate, CSAT and escalation tracked live. You see exactly what Kai delivers.' },
+              { label: 'System-connected', desc: 'CRM, ticketing and messaging in one flow.' },
+              { label: 'Policy-governed', desc: 'Actions follow your configured rules.' },
+              { label: 'Outcome-measured', desc: 'Containment, CSAT and escalation tracked live.' },
             ].map((item) => (
-              <div key={item.label} className="bg-white px-8 py-6">
+              <div key={item.label} className="bg-white border border-gray-200 px-8 py-6 shadow-[0_1px_8px_rgba(10,22,40,0.03)]">
                 <p className="text-[#0a1628] font-semibold text-[14px] mb-2">{item.label}</p>
                 <p className="text-[#0a1628]/60 text-sm font-normal leading-relaxed">{item.desc}</p>
               </div>
@@ -685,32 +1146,32 @@ export default function KaiPage() {
         <div className="max-w-7xl mx-auto px-8 lg:px-12">
           <div className="mb-16">
             <p className="type-label text-[#228DC1] mb-4">How It Works</p>
-            <h2 className="font-heading text-[#0a1628] mb-3" style={{ fontSize: 'clamp(26px, 3vw, 42px)' }}>
-              Live in weeks, not months.
+            <h2 className="font-heading text-[#0a1628] mb-3" style={{ fontSize: 'clamp(30px, 3.2vw, 46px)', lineHeight: 1.08 }}>
+              Live in 5 minutes.
             </h2>
             <p className="text-[#0a1628]/60 text-base font-normal leading-relaxed max-w-xl">
-              No migration. No retraining your team. Kai connects to your existing stack and goes live from day one.
+              Connect your stack and start handling real workflows in minutes.
             </p>
           </div>
-          <div className="grid sm:grid-cols-3 gap-px bg-gray-200 border border-gray-200">
+          <div ref={stepsRef} className="grid sm:grid-cols-3 gap-px bg-gray-200 border border-gray-200">
             {[
               {
                 num: '01', Icon: Settings2,
                 label: 'Connect your systems',
-                desc: 'Kai integrates with your CRM, helpdesk and ticketing tool. Live integrations include HubSpot, WhatsApp, Jira and email. Custom API for everything else.',
+                desc: 'CRM, helpdesk, messaging, email, API and MCP.',
               },
               {
                 num: '02', Icon: Shield,
                 label: 'Configure your rules',
-                desc: 'Define what Kai resolves autonomously, what it escalates, what tone it uses and what data it can access. Role-based, auditable, yours to update.',
+                desc: 'Set access, tone, escalation and approval rules.',
               },
               {
                 num: '03', Icon: BarChart2,
                 label: 'Measure real outcomes',
-                desc: 'Real-time dashboards surface containment rate, CSAT uplift and escalation reduction from week one. You own the data.',
+                desc: 'Track containment, CSAT and escalations live.',
               },
-            ].map((step) => (
-              <div key={step.num} className="bg-white p-8">
+            ].map((step, i) => (
+              <div key={step.num} className="group bg-white p-8 hover:bg-[#f8fafc] transition-colors" style={reveal(stepsInView, i * 120)}>
                 <div className="flex items-center gap-3 mb-6">
                   <span className="font-black text-[10px] text-[#228DC1]" style={{ letterSpacing: '0.05em' }}>{step.num}</span>
                   <div className="h-px flex-1 bg-gray-100" />
@@ -718,8 +1179,8 @@ export default function KaiPage() {
                 <div className="w-10 h-10 flex items-center justify-center mb-5" style={{ backgroundColor: '#228DC112' }}>
                   <step.Icon className="w-5 h-5 text-[#228DC1]" strokeWidth={1.5} />
                 </div>
-                <h3 className="text-[#0a1628] font-semibold text-[15px] leading-snug mb-3">{step.label}</h3>
-                <p className="text-[#0a1628]/65 text-sm font-normal leading-relaxed">{step.desc}</p>
+                <h3 className="text-[#0a1628] font-semibold text-[15px] leading-snug mb-2">{step.label}</h3>
+                <p className="text-[#0a1628]/60 text-sm font-normal leading-relaxed">{step.desc}</p>
               </div>
             ))}
           </div>
@@ -727,192 +1188,97 @@ export default function KaiPage() {
       </section>
 
       {/* ── Capabilities ── */}
-      <section className="py-20 bg-white border-t border-gray-100">
+      <section className="py-24 bg-white border-t border-gray-100">
         <div className="max-w-7xl mx-auto px-8 lg:px-12">
           <p className="type-label text-[#228DC1] mb-12">What Kai Does</p>
-          <div className="grid lg:grid-cols-3 gap-px bg-gray-100 border border-gray-100">
+          <div ref={capsRef} className="grid lg:grid-cols-3 gap-px bg-gray-200 border border-gray-200">
             {[
               {
                 Icon: Zap,
-                label: 'Resolves without humans.',
-                desc: 'Account updates, order queries, policy lookups. Kai closes them end-to-end. Average handle time: 45 seconds.',
+                label: 'Resolves routine queries faster.',
+                desc: 'Routine work moves quickly. Exceptions stay with your team.',
               },
               {
                 Icon: Settings2,
                 label: 'Hands off with full context.',
-                desc: 'When a human is needed, Kai transfers with full history, sentiment and a suggested next action. Escalations reduced by 13%.',
+                desc: 'Full history, sentiment and suggested next action.',
               },
               {
                 Icon: Shield,
                 label: 'Governed by your rules.',
-                desc: 'Role-based access, MFA, audit trails, configurable AI behaviour and GDPR-aligned data residency. Standard, not add-ons.',
+                desc: 'Roles, MFA, audit trails and configurable AI behaviour.',
               },
-            ].map((cap) => (
-              <div key={cap.label} className="bg-white p-10 hover:bg-[#f7f9ff] transition-colors">
-                <div className="w-10 h-10 flex items-center justify-center mb-6" style={{ backgroundColor: '#228DC112' }}>
+            ].map((cap, i) => (
+              <div key={cap.label} className="group bg-white p-8 hover:bg-[#f8fafc] transition-colors" style={reveal(capsInView, i * 120)}>
+                <div className="w-10 h-10 flex items-center justify-center mb-5" style={{ backgroundColor: '#228DC112' }}>
                   <cap.Icon className="w-5 h-5 text-[#228DC1]" strokeWidth={1.5} />
                 </div>
-                <h3 className="font-heading text-[#0a1628] mb-3" style={{ fontSize: 'clamp(17px, 1.8vw, 21px)' }}>{cap.label}</h3>
-                <p className="text-[#0a1628]/65 text-sm font-normal leading-relaxed">{cap.desc}</p>
+                <h3 className="text-[#0a1628] font-semibold text-[15px] leading-snug mb-2">{cap.label}</h3>
+                <p className="text-[#0a1628]/60 text-sm font-normal leading-relaxed">{cap.desc}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ── Why Kai vs alternatives ── */}
+      {/* ── What Kai Delivers ── */}
       <section className="py-24 bg-[#f8fafc] border-t border-gray-100">
         <div className="max-w-7xl mx-auto px-8 lg:px-12">
           <div className="max-w-2xl mb-14">
-            <p className="type-label text-[#228DC1] mb-4">How Kai is Different</p>
-            <h2 className="font-heading text-[#0a1628] mb-4" style={{ fontSize: 'clamp(26px, 3vw, 42px)' }}>
+            <p className="type-label text-[#228DC1] mb-4">What Kai Delivers</p>
+            <h2 className="font-heading text-[#0a1628] mb-4" style={{ fontSize: 'clamp(30px, 3.2vw, 46px)', lineHeight: 1.08 }}>
               AI that fits your business.<br />Not the other way around.
             </h2>
             <p className="text-[#0a1628]/65 text-base font-normal leading-relaxed">
-              Fin and Intercom are excellent within their ecosystem. Agentforce is powerful when you're Salesforce-native.
-              Kai is for everyone else, built for organisations where governance, compliance and integration complexity matter.
+              Built for mixed systems, regulated teams and workflows that need more than one vendor ecosystem.
             </p>
           </div>
 
-          {/* Comparison table */}
-          <div className="border border-gray-200 overflow-hidden">
-            {/* Header */}
-            <div className="grid grid-cols-4 bg-[#0a1628]">
+          {/* Kai capabilities table */}
+          <div className="border border-gray-200 overflow-hidden shadow-[0_1px_8px_rgba(10,22,40,0.03)]">
+            <div className="grid grid-cols-[1fr_1fr] bg-[#0a1628]">
               <div className="px-6 py-4 border-r border-white/10">
                 <p className="text-white/40 text-[11px] font-semibold uppercase tracking-[0.18em]">Capability</p>
               </div>
-              {[
-                { name: 'Fin / Intercom', logo: '/logos/fin.svg', isKai: false },
-                { name: 'Agentforce', logo: '/logos/agentforce.svg', isKai: false },
-                { name: 'Kai', logo: '/logo-icon.svg', isKai: true },
-              ].map((col, i) => (
-                <div key={col.name} className={`px-6 py-4 flex items-center gap-3 ${i < 2 ? 'border-r border-white/10' : ''}`}>
-                  <img
-                    src={col.logo}
-                    alt={col.name}
-                    className="shrink-0 h-7 w-7 object-contain rounded-sm"
-                    onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }}
-                  />
-                  <p className={`text-[13px] font-bold ${col.isKai ? 'text-[#228DC1]' : 'text-white/60'}`}>{col.name}</p>
-                </div>
-              ))}
+              <div className="px-6 py-4 flex items-center gap-3">
+                <img
+                  src="/kai-logo.svg"
+                  alt="Kai"
+                  className="shrink-0 h-7 w-7 object-contain brightness-0 invert"
+                  onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }}
+                />
+                <p className="text-[13px] font-bold text-[#228DC1]">Kai</p>
+              </div>
             </div>
-            {/* Rows */}
             {[
-              {
-                label: 'Best fit',
-                fin: 'Teams already using Intercom',
-                sf: 'Salesforce-native orgs',
-                kai: 'Mixed systems, bespoke workflows, regulated sectors',
-              },
-              {
-                label: 'Ecosystem',
-                fin: 'Intercom-centred',
-                sf: 'Salesforce native',
-                kai: 'Vendor-flexible, integration-led',
-              },
-              {
-                label: 'Custom governance',
-                fin: 'Platform controls',
-                sf: 'Salesforce guardrails',
-                kai: 'Configurable consent, escalation, audit, assurance',
-              },
-              {
-                label: 'Delivery model',
-                fin: 'SaaS self-serve',
-                sf: 'Salesforce implementation',
-                kai: 'Product + hands-on delivery, integration & optimisation',
-              },
-              {
-                label: 'Regulated sectors',
-                fin: false,
-                sf: false,
-                kai: true,
-              },
-              {
-                label: 'On-prem / hybrid deploy',
-                fin: false,
-                sf: false,
-                kai: true,
-              },
-              {
-                label: 'ISO 42001 AI certification',
-                fin: false,
-                sf: false,
-                kai: true,
-              },
+              { label: 'Best fit',                  kai: 'Mixed systems, regulated teams' },
+              { label: 'Ecosystem',                 kai: 'Vendor-flexible, integration-led' },
+              { label: 'Custom governance',         kai: 'Consent, escalation, audit' },
+              { label: 'Delivery model',            kai: 'Product + delivery support' },
+              { label: 'Regulated sectors',         kai: true },
+              { label: 'On-prem / hybrid deploy',   kai: true },
+              { label: 'ISO 42001 AI certification', kai: true },
             ].map((row, rowIdx) => (
-              <div key={row.label} className={`grid grid-cols-4 border-t border-gray-100 ${rowIdx % 2 === 0 ? 'bg-white' : 'bg-[#fafafa]'}`}>
+              <div key={row.label} className={`grid grid-cols-[1fr_1fr] border-t border-gray-100 ${rowIdx % 2 === 0 ? 'bg-white' : 'bg-[#fafafa]'}`}>
                 <div className="px-6 py-4 border-r border-gray-100">
                   <p className="text-[#0a1628] text-[13px] font-semibold">{row.label}</p>
                 </div>
-                {[row.fin, row.sf, row.kai].map((val, i) => (
-                  <div key={i} className={`px-6 py-4 ${i < 2 ? 'border-r border-gray-100' : ''} ${i === 2 ? 'bg-[#e5f4fa]/30' : ''}`}>
-                    {typeof val === 'boolean' ? (
-                      val
-                        ? <Check className="w-4 h-4 text-[#228DC1]" />
-                        : <X className="w-4 h-4 text-[#0a1628]/20" />
-                    ) : (
-                      <p className={`text-[12px] font-normal leading-snug ${i === 2 ? 'text-[#0a1628] font-medium' : 'text-[#0a1628]/60'}`}>{val}</p>
-                    )}
-                  </div>
-                ))}
+                <div className="px-6 py-4 bg-[#e5f4fa]/30">
+                  {typeof row.kai === 'boolean' ? (
+                    <Check className="w-4 h-4 text-[#228DC1]" />
+                  ) : (
+                    <p className="text-[12px] font-medium text-[#0a1628]">{row.kai}</p>
+                  )}
+                </div>
               </div>
             ))}
           </div>
 
-          <div className="mt-8 p-6 border border-[#228DC1]/20 bg-[#e5f4fa]/40">
+          <div className="mt-8 p-6 border border-[#228DC1]/20 bg-[#e5f4fa]/40 shadow-[0_1px_8px_rgba(10,22,40,0.03)]">
             <p className="text-[#0a1628] text-[14px] font-medium leading-relaxed">
               <span className="text-[#228DC1] font-semibold">The Kai difference:</span>{' '}
-              Kai can be configured around your escalation logic, consent flows, knowledge base, reporting needs, integrations, compliance requirements and operating model.
-              You're not buying software. You're getting implementation, prompt engineering, integration support, testing, governance and ongoing optimisation from AWTG's delivery team.
+              Configure Kai around your escalation logic, consent flows, integrations and governance model.
             </p>
-          </div>
-        </div>
-      </section>
-
-      {/* ── British Council case study ── */}
-      <section className="py-24 bg-white border-t border-gray-100">
-        <div className="max-w-7xl mx-auto px-8 lg:px-12">
-          <div className="grid lg:grid-cols-[1fr_1.1fr] gap-20 items-center">
-            <div>
-              <p className="type-label text-[#228DC1] mb-6">Live in Production</p>
-              <div className="flex items-center gap-3 mb-5">
-                <img
-                  src="/logos/britishcouncil.svg"
-                  alt="British Council"
-                  className="h-8 w-8 object-contain rounded"
-                  onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }}
-                />
-                <p className="text-[#0a1628]/60 text-[11px] font-semibold uppercase tracking-[0.2em]">British Council English Online</p>
-              </div>
-              <h2 className="font-heading text-[#0a1628] mb-5" style={{ fontSize: 'clamp(22px, 2.5vw, 36px)' }}>
-                Supporting 250,000 learners a month.<br />Live, not a pilot.
-              </h2>
-              <p className="text-[#0a1628]/60 text-[16px] font-normal leading-relaxed mb-8">
-                Kai was deployed into British Council English Online with live integrations across HubSpot, WhatsApp, Jira and email.
-                The result: faster resolution, higher satisfaction and fewer escalations, measured from week one.
-              </p>
-              <Link to="/insights/case-studies" className="inline-flex items-center gap-2 text-[13px] font-semibold text-[#228DC1] hover:gap-3 transition-all">
-                Read the case study <ArrowRight className="w-4 h-4" />
-              </Link>
-            </div>
-            <div className="grid grid-cols-2 gap-px bg-gray-200 border border-gray-200">
-              {[
-                { stat: '250k+', label: 'Users / month', desc: 'Supported in production' },
-                { stat: '+22.5%', label: 'Containment uplift', desc: 'More resolved without humans' },
-                { stat: '+17%', label: 'CSAT uplift', desc: 'Learner satisfaction' },
-                { stat: '−13%', label: 'Escalation reduction', desc: 'Fewer human handoffs needed' },
-              ].map((item) => (
-                <div key={item.label} className="bg-white px-6 py-8 text-center">
-                  <p className="font-black text-[#228DC1] leading-none mb-2" style={{ fontSize: 'clamp(20px, 2.2vw, 30px)', letterSpacing: '-0.02em' }}>
-                    {item.stat}
-                  </p>
-                  <p className="text-[#0a1628] text-[11px] font-semibold mb-1">{item.label}</p>
-                  <p className="text-[#0a1628]/60 text-[10px] font-normal">{item.desc}</p>
-                </div>
-              ))}
-            </div>
           </div>
         </div>
       </section>
@@ -920,50 +1286,18 @@ export default function KaiPage() {
       {/* ── Integrations ── */}
       <IntegrationsSection />
 
-      {/* ── Security & compliance ── */}
-      <section className="py-20 bg-white border-t border-gray-100">
-        <div className="max-w-7xl mx-auto px-8 lg:px-12">
-          <div className="grid lg:grid-cols-2 gap-16 items-start">
-            <div>
-              <p className="type-label text-[#228DC1] mb-4">Security & Compliance</p>
-              <h2 className="font-heading text-[#0a1628] mb-4" style={{ fontSize: 'clamp(24px, 2.8vw, 38px)' }}>
-                Designed for regulated environments.
-              </h2>
-              <p className="text-[#0a1628]/65 text-base font-normal leading-relaxed">
-                Built for public sector, education, healthcare and large enterprise — where AI needs to be safe, measurable and auditable within existing governance frameworks.
-              </p>
-            </div>
-            <div className="space-y-0 border border-gray-100">
-              {[
-                { badge: 'Encryption', detail: 'TLS 1.2+ / TLS 1.3 in transit · AES-256 at rest on GCP' },
-                { badge: 'Access control', detail: 'Role-based access · MFA · Least privilege · Audit trails' },
-                { badge: 'AI governance', detail: 'ISO 42001 AI Management System certified · AWTG' },
-                { badge: 'Penetration testing', detail: 'CREST-aligned testing · SSL Labs verified TLS 1.3' },
-                { badge: 'Data residency', detail: 'GDPR-aligned · DPIA support · UK data residency options' },
-                { badge: 'Deployment', detail: 'Cloud · Hybrid · On-premises. Your choice.' },
-              ].map((item, i) => (
-                <div key={item.badge} className={`flex items-start gap-4 px-6 py-4 ${i % 2 === 0 ? 'bg-white' : 'bg-[#fafafa]'} border-b border-gray-100 last:border-0`}>
-                  <span className="shrink-0 text-[10px] font-bold uppercase tracking-[0.14em] text-[#228DC1] bg-[#e5f4fa] px-2 py-1 mt-0.5">{item.badge}</span>
-                  <p className="text-[#0a1628]/65 text-[13px] font-normal leading-snug">{item.detail}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* ── Pilot CTA ── */}
-      <section className="py-16 bg-[#0a1628]">
+      <section className="py-16 bg-[#f8fafc] border-t border-gray-100">
         <div className="max-w-7xl mx-auto px-8 lg:px-12 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-8">
           <div>
-            <p className="text-white font-semibold text-lg mb-1">Start with a focused pilot.</p>
-            <p className="text-white/50 text-sm font-normal">
-              One channel. One use case. Measure containment rate and CSAT in four weeks. Scale from there.
+            <p className="text-[#0a1628] font-semibold text-lg mb-1">Start with a focused pilot.</p>
+            <p className="text-[#0a1628]/65 text-sm font-normal">
+              One channel. One workflow. Measure real outcomes, then scale.
             </p>
           </div>
           <Link
             to="/contact"
-            className="shrink-0 inline-flex items-center gap-2 px-7 py-3.5 bg-[#228DC1] text-white text-[13px] font-semibold hover:bg-[#1a6e99] transition-all"
+            className="shrink-0 inline-flex items-center gap-2 px-7 py-3.5 border border-[#228DC1] text-[#228DC1] text-[13px] font-semibold hover:bg-[#228DC1] hover:text-white transition-all"
           >
             Request a Demo <ArrowRight className="w-4 h-4" />
           </Link>

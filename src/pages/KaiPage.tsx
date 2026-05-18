@@ -1,7 +1,80 @@
-﻿import { useState, useRef, useEffect } from 'react'
+﻿import { useState, useRef, useEffect, type CSSProperties } from 'react'
 import { Link } from 'react-router-dom'
 import { ArrowRight, CheckCircle2, Zap, Shield, BarChart2, Settings2, Check, Code2 } from 'lucide-react'
 import CTASection from '@/components/CTASection'
+
+// ── Scroll utilities ──────────────────────────────────────────────────────────
+function useInView(threshold = 0.12) {
+  const ref = useRef<HTMLDivElement>(null)
+  const [inView, setInView] = useState(false)
+  useEffect(() => {
+    const el = ref.current
+    if (!el) return
+    const obs = new IntersectionObserver(
+      ([e]) => { if (e.isIntersecting) { setInView(true); obs.disconnect() } },
+      { threshold }
+    )
+    obs.observe(el)
+    return () => obs.disconnect()
+  }, [threshold])
+  return [ref, inView] as const
+}
+
+function useCountUp(end: number, inView: boolean, duration = 1400) {
+  const [val, setVal] = useState(0)
+  useEffect(() => {
+    if (!inView) return
+    const t0 = Date.now()
+    const tick = () => {
+      const p = Math.min((Date.now() - t0) / duration, 1)
+      setVal((1 - Math.pow(1 - p, 3)) * end)
+      if (p < 1) requestAnimationFrame(tick)
+    }
+    requestAnimationFrame(tick)
+  }, [inView, end, duration])
+  return val
+}
+
+const reveal = (inView: boolean, delay = 0): CSSProperties => ({
+  opacity: inView ? 1 : 0,
+  transform: inView ? 'translateY(0)' : 'translateY(28px)',
+  transition: `opacity 0.65s cubic-bezier(0.16,1,0.3,1) ${delay}ms, transform 0.65s cubic-bezier(0.16,1,0.3,1) ${delay}ms`,
+})
+
+function ScrollProgress() {
+  const [pct, setPct] = useState(0)
+  useEffect(() => {
+    const fn = () => {
+      const d = document.documentElement
+      setPct(d.scrollTop / (d.scrollHeight - d.clientHeight))
+    }
+    window.addEventListener('scroll', fn, { passive: true })
+    return () => window.removeEventListener('scroll', fn)
+  }, [])
+  return (
+    <div className="fixed top-0 left-0 right-0 z-[60] h-[2px] pointer-events-none">
+      <div style={{ width: `${pct * 100}%`, background: 'linear-gradient(90deg, #228DC1, #0e6a9a)', transition: 'width 80ms linear' }} className="h-full" />
+    </div>
+  )
+}
+
+function StatCard({ prefix = '', num, suffix = '', label, note, delay = 0 }: {
+  prefix?: string; num: number; suffix?: string; label: string; note: string; delay?: number
+}) {
+  const [ref, inView] = useInView()
+  const val = useCountUp(num, inView)
+  const display = Number.isInteger(num) ? Math.round(val).toString() : val.toFixed(1)
+  return (
+    <div ref={ref} className="relative bg-white border border-gray-200 px-8 py-8 shadow-[0_1px_8px_rgba(10,22,40,0.03)] overflow-hidden" style={reveal(inView, delay)}>
+      <div className="absolute top-0 left-0 w-[3px] h-full bg-gradient-to-b from-[#228DC1] to-[#0e6a9a]" />
+      <p className="font-black leading-none mb-2" style={{ fontSize: 'clamp(24px, 2.8vw, 38px)', letterSpacing: '-0.02em', background: 'linear-gradient(135deg, #228DC1 0%, #0e6a9a 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>
+        {prefix}{display}{suffix}
+      </p>
+      <p className="text-[#0a1628] text-[13px] font-semibold mb-0.5">{label}</p>
+      <p className="text-[#0a1628]/60 text-[10px] font-normal">{note}</p>
+    </div>
+  )
+}
 
 // ── Demo messages ─────────────────────────────────────────────────────────────
 const demoMessages = [
@@ -406,20 +479,22 @@ function IntegrationsSection() {
 }
 
 function SecurityComplianceSection() {
+  const [leftRef, leftInView] = useInView()
+  const [gridRef, gridInView] = useInView()
   return (
     <section className="py-24 bg-white border-t border-gray-100">
       <div className="max-w-7xl mx-auto px-8 lg:px-12">
         <div className="grid lg:grid-cols-[0.9fr_1.1fr] gap-14 lg:gap-16 items-start">
-          <div className="lg:sticky lg:top-28">
-            <p className="type-label text-[#228DC1] mb-4">Security & Compliance</p>
-            <h2 className="font-heading text-[#0a1628] mb-5" style={{ fontSize: 'clamp(28px, 3.2vw, 46px)', lineHeight: 1.08 }}>
+          <div ref={leftRef} className="lg:sticky lg:top-28">
+            <p className="type-label text-[#228DC1] mb-4" style={reveal(leftInView)}>Security & Compliance</p>
+            <h2 className="font-heading text-[#0a1628] mb-5" style={{ fontSize: 'clamp(28px, 3.2vw, 46px)', lineHeight: 1.08, ...reveal(leftInView, 100) }}>
               Designed for regulated environments.
             </h2>
-            <p className="text-[#0a1628]/65 text-base font-normal leading-relaxed mb-8 max-w-xl">
+            <p className="text-[#0a1628]/65 text-base font-normal leading-relaxed mb-8 max-w-xl" style={reveal(leftInView, 180)}>
               Safe, measurable and auditable AI for teams with real governance requirements.
             </p>
 
-            <div className="bg-[#0a1628] text-white p-8 shadow-[0_16px_50px_rgba(10,22,40,0.12)]">
+            <div className="bg-[#0a1628] text-white p-8 shadow-[0_16px_50px_rgba(10,22,40,0.12)]" style={reveal(leftInView, 280)}>
               <div className="w-11 h-11 flex items-center justify-center bg-white/10 mb-6">
                 <Shield className="w-5 h-5 text-[#6cc4ea]" strokeWidth={1.6} />
               </div>
@@ -432,7 +507,7 @@ function SecurityComplianceSection() {
           </div>
 
           <div>
-            <div className="grid sm:grid-cols-2 gap-4">
+            <div ref={gridRef} className="grid sm:grid-cols-2 gap-4">
               {[
                 { badge: 'Encryption', title: 'Protected data paths', detail: 'TLS in transit. AES-256 at rest.' },
                 { badge: 'Access', title: 'Least-privilege control', detail: 'Roles, MFA, permissions and audit trails.' },
@@ -440,8 +515,8 @@ function SecurityComplianceSection() {
                 { badge: 'Residency', title: 'Data control', detail: 'GDPR-aligned with UK residency options.' },
                 { badge: 'Deployment', title: 'Flexible deployment', detail: 'Cloud, hybrid or on-premises.' },
                 { badge: 'AI governance', title: 'Auditable AI', detail: 'Rules for access, consent and escalation.' },
-              ].map((item) => (
-                <div key={item.badge} className="group bg-white border border-gray-200 p-6 shadow-[0_1px_8px_rgba(10,22,40,0.03)] hover:shadow-[0_16px_40px_rgba(10,22,40,0.07)] hover:-translate-y-0.5 transition-all">
+              ].map((item, i) => (
+                <div key={item.badge} className="group bg-white border border-gray-200 p-6 shadow-[0_1px_8px_rgba(10,22,40,0.03)] hover:shadow-[0_16px_40px_rgba(10,22,40,0.07)] hover:-translate-y-0.5 transition-all" style={reveal(gridInView, i * 80)}>
                   <div className="flex items-center gap-3 mb-5">
                     <span className="w-8 h-8 flex items-center justify-center bg-[#e5f4fa] text-[#228DC1]">
                       <CheckCircle2 className="w-4 h-4" strokeWidth={1.7} />
@@ -475,8 +550,13 @@ function SecurityComplianceSection() {
 
 // ── Main page ─────────────────────────────────────────────────────────────────
 export default function KaiPage() {
+  const [stepsRef, stepsInView] = useInView()
+  const [capsRef, capsInView] = useInView()
+  const [chartRef, chartInView] = useInView(0.3)
+
   return (
     <>
+      <ScrollProgress />
       {/* ── Hero ── */}
       <section className="relative overflow-hidden bg-white pt-32 pb-24">
         {/* dot grid */}
@@ -611,21 +691,10 @@ export default function KaiPage() {
       <section className="bg-white border-t border-gray-100 py-12">
         <div className="max-w-7xl mx-auto px-8 lg:px-12">
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-            {[
-              { stat: '250k+', label: 'Users / month', note: 'British Council English Online' },
-              { stat: '+22.5%', label: 'Containment uplift', note: 'Measured in production' },
-              { stat: '+17%', label: 'CSAT uplift', note: 'Learner satisfaction' },
-              { stat: '45s', label: 'Avg handle time', note: 'AI-resolved queries' },
-            ].map((item) => (
-              <div key={item.label} className="relative bg-white border border-gray-200 px-8 py-8 shadow-[0_1px_8px_rgba(10,22,40,0.03)] overflow-hidden">
-                <div className="absolute top-0 left-0 w-[3px] h-full bg-gradient-to-b from-[#228DC1] to-[#0e6a9a]" />
-                <p className="font-black leading-none mb-2" style={{ fontSize: 'clamp(24px, 2.8vw, 38px)', letterSpacing: '-0.02em', background: 'linear-gradient(135deg, #228DC1 0%, #0e6a9a 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>
-                  {item.stat}
-                </p>
-                <p className="text-[#0a1628] text-[13px] font-semibold mb-0.5">{item.label}</p>
-                <p className="text-[#0a1628]/60 text-[10px] font-normal">{item.note}</p>
-              </div>
-            ))}
+            <StatCard num={250} suffix="k+" label="Users / month" note="British Council English Online" delay={0} />
+            <StatCard prefix="+" num={22.5} suffix="%" label="Containment uplift" note="Measured in production" delay={100} />
+            <StatCard prefix="+" num={17} suffix="%" label="CSAT uplift" note="Learner satisfaction" delay={200} />
+            <StatCard num={45} suffix="s" label="Avg handle time" note="AI-resolved queries" delay={300} />
           </div>
         </div>
       </section>
@@ -684,7 +753,7 @@ export default function KaiPage() {
               </div>
 
               {/* Chart */}
-              <div className="bg-[#f8fbfd] border border-gray-100 px-4 sm:px-6 pt-6 pb-4">
+              <div ref={chartRef} className="bg-[#f8fbfd] border border-gray-100 px-4 sm:px-6 pt-6 pb-4">
               <svg viewBox="0 0 560 280" className="w-full" style={{ overflow: 'visible' }}>
                 <defs>
                   <linearGradient id="areaGrad" x1="0" y1="0" x2="0" y2="1">
@@ -743,9 +812,10 @@ export default function KaiPage() {
                 <path
                   d="M168,198 L199,152 L230,118 L261,98 L292,82 L323,72 L354,66 L385,58 L416,52 L447,49 L478,48 L509,48 L532,48 L532,232 L168,232 Z"
                   fill="url(#areaGrad)"
+                  style={{ opacity: chartInView ? 1 : 0, transition: 'opacity 1.2s ease 0.9s' }}
                 />
 
-                {/* Post-Kai solid line */}
+                {/* Post-Kai solid line — draws on scroll */}
                 <path
                   d="M168,198 L199,152 L230,118 L261,98 L292,82 L323,72 L354,66 L385,58 L416,52 L447,49 L478,48 L509,48 L532,48"
                   fill="none"
@@ -753,17 +823,19 @@ export default function KaiPage() {
                   strokeWidth="3"
                   strokeLinejoin="round"
                   strokeLinecap="round"
+                  pathLength="1"
+                  style={{ strokeDasharray: 1, strokeDashoffset: chartInView ? 0 : 1, transition: 'stroke-dashoffset 1.8s cubic-bezier(0.16,1,0.3,1) 0.2s' } as CSSProperties}
                   filter="url(#chartGlow)"
                 />
 
                 {/* Endpoint dot + value */}
-                <circle cx="532" cy="48" r="12" fill="#228DC1" fillOpacity="0.14" />
-                <circle cx="532" cy="48" r="5.5" fill="#228DC1" />
-                <text x="519" y="33" textAnchor="middle" fontSize="12" fill="#228DC1" fontWeight="800" fontFamily="system-ui, sans-serif">77.5%</text>
+                <circle cx="532" cy="48" r="12" fill="#228DC1" fillOpacity="0.14" style={{ opacity: chartInView ? 1 : 0, transition: 'opacity 0.4s ease 2s' }} />
+                <circle cx="532" cy="48" r="5.5" fill="#228DC1" style={{ opacity: chartInView ? 1 : 0, transition: 'opacity 0.4s ease 2s' }} />
+                <text x="519" y="33" textAnchor="middle" fontSize="12" fill="#228DC1" fontWeight="800" fontFamily="system-ui, sans-serif" style={{ opacity: chartInView ? 1 : 0, transition: 'opacity 0.4s ease 2.2s' }}>77.5%</text>
 
                 {/* +22.5% annotation badge */}
-                <rect x="242" y="82" width="92" height="26" rx="13" fill="#ffffff" stroke="#228DC1" strokeOpacity="0.18" />
-                <text x="288" y="99" textAnchor="middle" fontSize="11" fill="#228DC1" fontWeight="800" fontFamily="system-ui, sans-serif">+22.5% uplift</text>
+                <rect x="242" y="82" width="92" height="26" rx="13" fill="#ffffff" stroke="#228DC1" strokeOpacity="0.18" style={{ opacity: chartInView ? 1 : 0, transition: 'opacity 0.4s ease 1.6s' }} />
+                <text x="288" y="99" textAnchor="middle" fontSize="11" fill="#228DC1" fontWeight="800" fontFamily="system-ui, sans-serif" style={{ opacity: chartInView ? 1 : 0, transition: 'opacity 0.4s ease 1.6s' }}>+22.5% uplift</text>
               </svg>
               </div>
 
@@ -825,7 +897,7 @@ export default function KaiPage() {
               Connect your stack and start handling real workflows in minutes.
             </p>
           </div>
-          <div className="grid sm:grid-cols-3 gap-4">
+          <div ref={stepsRef} className="grid sm:grid-cols-3 gap-4">
             {[
               {
                 num: '01', Icon: Settings2,
@@ -842,8 +914,8 @@ export default function KaiPage() {
                 label: 'Measure real outcomes',
                 desc: 'Track containment, CSAT and escalations live.',
               },
-            ].map((step) => (
-              <div key={step.num} className="group relative bg-white border border-gray-200 p-8 shadow-[0_1px_8px_rgba(10,22,40,0.03)] hover:shadow-[0_20px_48px_rgba(10,22,40,0.09)] hover:-translate-y-1 transition-all overflow-hidden">
+            ].map((step, i) => (
+              <div key={step.num} className="group relative bg-white border border-gray-200 p-8 shadow-[0_1px_8px_rgba(10,22,40,0.03)] hover:shadow-[0_20px_48px_rgba(10,22,40,0.09)] hover:-translate-y-1 transition-all overflow-hidden" style={reveal(stepsInView, i * 120)}>
                 <div className="absolute top-0 inset-x-0 h-[2px] bg-gradient-to-r from-[#228DC1] to-[#0e6a9a] transform -translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
                 <div className="flex items-center gap-3 mb-6">
                   <span className="font-black text-[10px] text-[#228DC1]" style={{ letterSpacing: '0.05em' }}>{step.num}</span>
@@ -864,7 +936,7 @@ export default function KaiPage() {
       <section className="py-24 bg-white border-t border-gray-100">
         <div className="max-w-7xl mx-auto px-8 lg:px-12">
           <p className="type-label text-[#228DC1] mb-12">What Kai Does</p>
-          <div className="grid lg:grid-cols-3 gap-4">
+          <div ref={capsRef} className="grid lg:grid-cols-3 gap-4">
             {[
               {
                 Icon: Zap,
@@ -881,8 +953,8 @@ export default function KaiPage() {
                 label: 'Governed by your rules.',
                 desc: 'Roles, MFA, audit trails and configurable AI behaviour.',
               },
-            ].map((cap) => (
-              <div key={cap.label} className="group relative bg-white border border-gray-200 p-8 shadow-[0_1px_8px_rgba(10,22,40,0.03)] hover:shadow-[0_20px_48px_rgba(10,22,40,0.09)] hover:-translate-y-1 transition-all overflow-hidden">
+            ].map((cap, i) => (
+              <div key={cap.label} className="group relative bg-white border border-gray-200 p-8 shadow-[0_1px_8px_rgba(10,22,40,0.03)] hover:shadow-[0_20px_48px_rgba(10,22,40,0.09)] hover:-translate-y-1 transition-all overflow-hidden" style={reveal(capsInView, i * 120)}>
                 <div className="absolute top-0 inset-x-0 h-[2px] bg-gradient-to-r from-[#228DC1] to-[#0e6a9a] transform -translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
                 <div className="w-10 h-10 flex items-center justify-center mb-5 group-hover:bg-[#228DC1]/15 transition-colors" style={{ backgroundColor: '#228DC112' }}>
                   <cap.Icon className="w-5 h-5 text-[#228DC1]" strokeWidth={1.5} />

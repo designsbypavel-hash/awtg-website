@@ -631,14 +631,23 @@ function IntegrationsSection() {
                     ...reveal(inView, d * 75),
                     ...(item.isKai ? {
                       background: '#ffffff',
-                      border: '1.5px solid rgba(144,62,142,0.25)',
-                      boxShadow: '0 0 0 4px rgba(144,62,142,0.05), 0 0 32px rgba(144,62,142,0.15), 0 4px 20px rgba(144,62,142,0.10)',
+                      border: '1.5px solid rgba(144,62,142,0.30)',
+                      animation: inView ? 'kaiGlow 3s ease-in-out infinite' : 'none',
                     } : {}),
                   }}
                 >
                   {item.isKai && (
-                    <div className="absolute inset-0 pointer-events-none"
-                      style={{ background: 'radial-gradient(ellipse at 50% 30%, rgba(144,62,142,0.06) 0%, transparent 70%)' }} />
+                    <>
+                      {/* Radial inner glow */}
+                      <div className="absolute inset-0 pointer-events-none"
+                        style={{ background: 'radial-gradient(ellipse at 50% 40%, rgba(144,62,142,0.08) 0%, transparent 70%)' }} />
+                      {/* Pulse ring 1 */}
+                      <div className="absolute inset-0 pointer-events-none rounded-sm"
+                        style={{ border: '1.5px solid rgba(144,62,142,0.35)', animation: 'kaiPulseRing 2.4s ease-out infinite' }} />
+                      {/* Pulse ring 2 — offset */}
+                      <div className="absolute inset-0 pointer-events-none rounded-sm"
+                        style={{ border: '1.5px solid rgba(144,62,142,0.20)', animation: 'kaiPulseRing 2.4s ease-out 1.2s infinite' }} />
+                    </>
                   )}
 
                   {item.isKai ? (

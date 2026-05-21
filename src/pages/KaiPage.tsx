@@ -1078,7 +1078,7 @@ export default function KaiPage() {
                 ].map(({ y, label }) => (
                   <g key={label}>
                     <line x1="44" y1={y} x2="532" y2={y} stroke="#0a1628" strokeWidth="0.5" strokeOpacity="0.07" />
-                    <text x="34" y={y + 4} textAnchor="end" fontSize="10" fill="#0a1628" fillOpacity="0.32" fontFamily="system-ui, sans-serif">{label}</text>
+                    <text x="34" y={y + 4} textAnchor="end" fontSize="10" fill="#0a1628" fillOpacity="0.32" fontFamily="Inter, system-ui, sans-serif">{label}</text>
                   </g>
                 ))}
 
@@ -1089,7 +1089,7 @@ export default function KaiPage() {
                   { x: 354, label: 'Week 6' },
                   { x: 532, label: 'Week 12' },
                 ].map(({ x, label }) => (
-                  <text key={label} x={x} y="258" textAnchor="middle" fontSize="10" fill="#0a1628" fillOpacity="0.36" fontFamily="system-ui, sans-serif">{label}</text>
+                  <text key={label} x={x} y="258" textAnchor="middle" fontSize="10" fill="#0a1628" fillOpacity="0.36" fontFamily="Inter, system-ui, sans-serif">{label}</text>
                 ))}
 
                 {/* X-axis base line */}
@@ -1100,7 +1100,7 @@ export default function KaiPage() {
 
                 {/* "Kai live" pill */}
                 <rect x="133" y="10" width="70" height="22" rx="11" fill="#228DC1" fillOpacity="0.12" />
-                <text x="168" y="25" textAnchor="middle" fontSize="10" fill="#228DC1" fontWeight="700" fontFamily="system-ui, sans-serif">Launch</text>
+                <text x="168" y="25" textAnchor="middle" fontSize="10" fill="#228DC1" fontWeight="700" fontFamily="Inter, system-ui, sans-serif">Launch</text>
 
                 {/* Pre-Kai dashed baseline */}
                 <path
@@ -1136,11 +1136,11 @@ export default function KaiPage() {
                 {/* Endpoint dot + value */}
                 <circle cx="532" cy="48" r="12" fill="#228DC1" fillOpacity="0.14" style={{ opacity: chartInView ? 1 : 0, transition: 'opacity 0.4s ease 2s' }} />
                 <circle cx="532" cy="48" r="5.5" fill="#228DC1" style={{ opacity: chartInView ? 1 : 0, transition: 'opacity 0.4s ease 2s' }} />
-                <text x="519" y="33" textAnchor="middle" fontSize="12" fill="#228DC1" fontWeight="800" fontFamily="system-ui, sans-serif" style={{ opacity: chartInView ? 1 : 0, transition: 'opacity 0.4s ease 2.2s' }}>77.5%</text>
+                <text x="519" y="33" textAnchor="middle" fontSize="12" fill="#228DC1" fontWeight="800" fontFamily="Inter, system-ui, sans-serif" style={{ opacity: chartInView ? 1 : 0, transition: 'opacity 0.4s ease 2.2s' }}>77.5%</text>
 
                 {/* +22.5% annotation badge */}
                 <rect x="242" y="82" width="92" height="26" rx="13" fill="#ffffff" stroke="#228DC1" strokeOpacity="0.18" style={{ opacity: chartInView ? 1 : 0, transition: 'opacity 0.4s ease 1.6s' }} />
-                <text x="288" y="99" textAnchor="middle" fontSize="11" fill="#228DC1" fontWeight="800" fontFamily="system-ui, sans-serif" style={{ opacity: chartInView ? 1 : 0, transition: 'opacity 0.4s ease 1.6s' }}>+22.5% uplift</text>
+                <text x="288" y="99" textAnchor="middle" fontSize="11" fill="#228DC1" fontWeight="800" fontFamily="Inter, system-ui, sans-serif" style={{ opacity: chartInView ? 1 : 0, transition: 'opacity 0.4s ease 1.6s' }}>+22.5% uplift</text>
               </svg>
               </div>
 

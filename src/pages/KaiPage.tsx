@@ -774,55 +774,29 @@ export default function KaiPage() {
     <>
       <ScrollProgress />
       {/* -- Hero -- */}
-      <section className="relative overflow-hidden bg-white pt-32 pb-20">
-
-        <div className="relative max-w-7xl mx-auto px-8 lg:px-12">
-          <div className="grid lg:grid-cols-[1fr_1.4fr] gap-8 lg:gap-12 items-center">
-
-            {/* Left: copy */}
-            <div>
-              <div className="flex items-center gap-3 mb-6">
-                <img src="/kai-logo.svg" alt="Kai" className="h-7 w-auto object-contain" />
-                <p className="font-black text-[#228DC1]" style={{ fontSize: '13px', letterSpacing: '0.28em', textTransform: 'uppercase', opacity: 0.6 }}>
-                  Kai · Enterprise AI Agent
-                </p>
-              </div>
-              <h1 className="font-serif-display text-[#0a1628] leading-[1.02] mb-6">
-                Enterprise AI<br />
-                that <span style={{ color: '#228DC1' }}>resolves,</span><br />
-                not just responds.
-              </h1>
-              <p className="text-[#0a1628]/65 text-[18px] font-normal leading-[1.7] mb-10">
-                Kai connects to your systems, follows your rules and helps teams resolve work faster.
-              </p>
-              <div className="flex flex-wrap gap-4">
-                <Link to="/contact" className="inline-flex items-center gap-2 px-7 py-3.5 bg-[#228DC1] text-white text-[13px] font-semibold hover:bg-[#1a6e99] transition-colors">
-                  Request a Demo
-                </Link>
-                <Link to="/contact" className="px-7 py-3.5 border border-gray-200 text-[#0a1628]/70 text-[13px] font-medium hover:border-[#228DC1]/50 hover:text-[#228DC1] transition-all">
-                  Talk to an expert
-                </Link>
-              </div>
-            </div>
-
-            {/* Right: mockup */}
-            <div className="relative hidden lg:block">
-              {/* Soft glow behind */}
-              <div className="absolute -inset-16 pointer-events-none" style={{
-                background: 'radial-gradient(ellipse 70% 60% at 50% 50%, rgba(144,62,142,0.07) 0%, rgba(34,141,193,0.06) 50%, transparent 75%)',
-              }} />
-              <div
-                className="relative w-full overflow-hidden shadow-[0_24px_80px_rgba(10,22,40,0.14),0_4px_24px_rgba(144,62,142,0.08)] border border-gray-200/70"
-                style={{ borderRadius: '16px' }}
-              >
-                <img
-                  src="/kai-mockup.png"
-                  alt="Kai platform interface"
-                  className="w-full block"
-                />
-              </div>
-            </div>
-
+      <section className="relative overflow-hidden bg-white pt-32 pb-24">
+        <div className="relative max-w-4xl mx-auto px-8 lg:px-12">
+          <div className="flex items-center gap-3 mb-6">
+            <img src="/kai-logo.svg" alt="Kai" className="h-7 w-auto object-contain" />
+            <p className="font-black text-[#228DC1]" style={{ fontSize: '13px', letterSpacing: '0.28em', textTransform: 'uppercase', opacity: 0.6 }}>
+              Kai · Enterprise AI Agent
+            </p>
+          </div>
+          <h1 className="font-serif-display text-[#0a1628] leading-[1.02] mb-6">
+            Enterprise AI<br />
+            that <span style={{ color: '#228DC1' }}>resolves,</span><br />
+            not just responds.
+          </h1>
+          <p className="text-[#0a1628]/65 text-[18px] font-normal leading-[1.7] mb-10 max-w-xl">
+            Kai connects to your systems, follows your rules and helps teams resolve work faster.
+          </p>
+          <div className="flex flex-wrap gap-4">
+            <Link to="/contact" className="inline-flex items-center gap-2 px-7 py-3.5 bg-[#228DC1] text-white text-[13px] font-semibold hover:bg-[#1a6e99] transition-colors">
+              Request a Demo
+            </Link>
+            <Link to="/contact" className="px-7 py-3.5 border border-gray-200 text-[#0a1628]/70 text-[13px] font-medium hover:border-[#228DC1]/50 hover:text-[#228DC1] transition-all">
+              Talk to an expert
+            </Link>
           </div>
         </div>
       </section>

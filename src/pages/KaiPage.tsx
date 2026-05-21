@@ -602,7 +602,7 @@ function IntegrationsSection() {
               ].map((item) => (
                 <div key={item.label} className="flex items-center gap-3">
                   <div className="w-1.5 h-1.5 bg-[#228DC1] rounded-full shrink-0" />
-                  <span className="text-[#0a1628]/60 text-[13px]">{item.label} � <span className="font-semibold text-[#0a1628]">{item.value}</span></span>
+                  <span className="text-[#0a1628]/60 text-[13px]">{item.label} <span className="font-semibold text-[#0a1628]">{item.value}</span></span>
                 </div>
               ))}
             </div>
@@ -650,7 +650,7 @@ function IntegrationsSection() {
                         onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }}
                       />
                       <span className="relative text-[8px] font-semibold text-[#903E8E] bg-[#903E8E]/10 border border-[#903E8E]/30 px-1.5 py-0.5 rounded-sm">
-                        AI Agent � MCP
+                        AI Agent · MCP
                       </span>
                     </>
                   ) : item.isMcp ? (
@@ -775,7 +775,7 @@ export default function KaiPage() {
               <div className="flex items-center gap-3 mb-6">
                 <img src="/kai-logo.svg" alt="Kai" className="h-7 w-auto object-contain" />
                 <p className="font-black text-[#228DC1]" style={{ fontSize: '13px', letterSpacing: '0.28em', textTransform: 'uppercase', opacity: 0.6 }}>
-                  Kai � Enterprise AI Agent
+                  Kai · Enterprise AI Agent
                 </p>
               </div>
               <h1 className="font-serif-display text-[#0a1628] leading-[1.02] mb-6">

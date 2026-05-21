@@ -208,7 +208,7 @@ function Hero() {
 
 function WhatWeDo() {
   const rows = [
-    { num: '01', label: 'AI Products & Software', line: 'Kai, Aruva and bespoke AI � built for production, not proof of concept.', href: '/solutions/generative-ai' },
+    { num: '01', label: 'AI Products & Software', line: 'Kai, Aruva and bespoke AI — built for production, not proof of concept.', href: '/solutions/generative-ai' },
     { num: '02', label: 'Private Networks', line: 'Managed 4G/5G designed, deployed and monitored end-to-end. Live in weeks.', href: '/solutions/mobile-private-networks' },
     { num: '03', label: 'Engineering & Consultancy', line: '5G RF design, network testing and transformation strategy across 20+ countries.', href: '/services/engineering' },
   ]
@@ -818,7 +818,7 @@ function Insights() {
               <div className="p-6">
                 <div className="flex items-center gap-2 mb-3 text-xs">
                   <span className={`font-semibold ${a.tagColor}`}>{a.tag}</span>
-                  <span className="text-[#0a1628]/20">�</span>
+                  <span className="text-[#0a1628]/20">·</span>
                   <span className="text-[#0a1628]/60 font-normal">{a.date}</span>
                 </div>
                 <p className="text-[14px] font-semibold text-[#0a1628] leading-[1.3] mb-4 line-clamp-3">{a.title}</p>
@@ -866,11 +866,11 @@ function ContactCTA() {
             <div className="border-t border-white/10 pt-6">
               <p className="text-[10px] font-semibold uppercase tracking-widest text-white/30 mb-2">Phone</p>
               <a href="tel:+442035155151" className="text-white/70 hover:text-white transition-colors font-medium">+44 (0) 20 3515 5151</a>
-              <p className="text-xs text-white/30 mt-1 font-normal">Mon�Fri, 9am�6pm GMT</p>
+              <p className="text-xs text-white/30 mt-1 font-normal">Mon–Fri, 9am–6pm GMT</p>
             </div>
             <div className="border-t border-white/10 pt-6">
               <p className="text-[10px] font-semibold uppercase tracking-widest text-white/30 mb-2">Offices</p>
-              <p className="text-white/70 font-medium">London � Lisbon � Stockholm � Singapore</p>
+              <p className="text-white/70 font-medium">London · Lisbon · Stockholm · Singapore</p>
             </div>
           </div>
         </div>

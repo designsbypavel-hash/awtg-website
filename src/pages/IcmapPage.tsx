@@ -401,7 +401,7 @@ export default function IcmapPage() {
 
         <div className="relative max-w-7xl mx-auto px-8 lg:px-12">
           <p className="font-black text-[#228DC1] mb-4" style={{ fontSize: '13px', letterSpacing: '0.28em', textTransform: 'uppercase', opacity: 0.6 }}>
-            iCMAP � Intelligent Coverage Mapping
+            iCMAP · Intelligent Coverage Mapping
           </p>
           <h1 className="font-serif-display text-[#0a1628] leading-[1.02] mb-6 max-w-4xl">
             See every gap.<br />

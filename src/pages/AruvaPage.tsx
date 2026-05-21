@@ -393,7 +393,7 @@ function SyllabusVisual() {
     <div className="bg-white border border-gray-200 overflow-hidden shadow-[0_2px_20px_rgba(10,22,40,0.06)]">
       {/* File header */}
       <div className="flex items-center gap-2 px-4 py-3 bg-[#f8fafc] border-b border-gray-100">
-        <span className="text-[10px] font-semibold uppercase tracking-[0.18em] text-[#0a1628]/60">business_strategy_101.xlsx � Week 3</span>
+        <span className="text-[10px] font-semibold uppercase tracking-[0.18em] text-[#0a1628]/60">business_strategy_101.xlsx — Week 3</span>
       </div>
       <div className="divide-y divide-gray-50">
         {[
@@ -457,8 +457,8 @@ function TutorVisual() {
           <span className="text-white text-[8px] font-black">A</span>
         </div>
         <span className="text-[11px] font-semibold text-[#0a1628]/60">Aruva Tutor</span>
-        <span className="text-[#0a1628]/20 text-[11px]">�</span>
-        <span className="text-[11px] text-[#0a1628]/60">Business Strategy 101 � Week 3</span>
+        <span className="text-[#0a1628]/20 text-[11px]">·</span>
+        <span className="text-[11px] text-[#0a1628]/60">Business Strategy 101 — Week 3</span>
         <div className="ml-auto">
           <span className="text-[10px] text-[#059669] font-medium">Socratic mode</span>
         </div>
@@ -501,7 +501,7 @@ function AnalyticsVisual() {
       <div className="flex items-start justify-between mb-5 pb-4 border-b border-gray-100">
         <div>
           <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-[#0a1628]/60 mb-1">Professor Dashboard</p>
-          <p className="text-[#0a1628] font-semibold text-sm">Business Strategy 101 � Week 3</p>
+          <p className="text-[#0a1628] font-semibold text-sm">Business Strategy 101 — Week 3</p>
         </div>
         <div className="text-right">
           <p className="text-[#059669] font-black text-2xl leading-none">87%</p>
@@ -913,7 +913,7 @@ export default function AruvaPage() {
         <div className="relative max-w-7xl mx-auto px-8 lg:px-12">
           {/* Top label */}
           <p className="font-black text-[#228DC1] mb-3" style={{ fontSize: '13px', letterSpacing: '0.28em', textTransform: 'uppercase', opacity: 0.6 }}>
-            Aruva � AI for Education
+            Aruva · AI for Education
           </p>
 
           {/* Headline */}

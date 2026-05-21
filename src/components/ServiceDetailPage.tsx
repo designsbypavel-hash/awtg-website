@@ -37,7 +37,7 @@ export default function ServiceDetailPage({
             {/* L5 — eyebrow label */}
             <p className="type-label text-[#7ac4e0] mb-5">Services</p>
             {/* L1 — hero display heading */}
-            <h1 className="font-serif-display text-[#0a1628] mb-6" style={{ fontSize: 'clamp(44px, 5.5vw, 78px)' }}>
+            <h1 className="font-serif-display text-[#0a1628] mb-6" style={{ fontSize: 'clamp(44px, 5.5vw, 78px)', fontFamily: "'Roboto', system-ui, sans-serif", fontWeight: 400 }}>
               {title}
             </h1>
             {/* L4 — body */}

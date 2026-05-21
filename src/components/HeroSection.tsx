@@ -21,7 +21,7 @@ export default function HeroSection() {
             <span className="text-[#228DC1] text-sm font-medium">Next-Generation Telecoms Solutions</span>
           </div>
 
-          <h1 className="font-serif-display text-[#0a1628] mb-6" style={{ fontSize: 'clamp(44px, 5.5vw, 80px)' }}>
+          <h1 className="font-serif-display text-[#0a1628] mb-6" style={{ fontSize: 'clamp(44px, 5.5vw, 80px)', fontFamily: "'Roboto', system-ui, sans-serif", fontWeight: 400 }}>
             Connecting the <span className="text-[#228DC1]">Future</span> of Enterprise Networks
           </h1>
 

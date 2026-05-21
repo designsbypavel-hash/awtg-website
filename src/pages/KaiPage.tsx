@@ -87,10 +87,10 @@ function KaiDashboard() {
 
   type PlayMsg = { role: 'user' | 'ai' | 'signal'; text: string; meta?: string }
   const playMsgs: PlayMsg[] = [
-    { role: 'user',   text: 'Hi, my order hasn\'t arrived — it\'s been 5 days.' },
-    { role: 'ai',     text: 'I can see order #48291. It shipped Monday and is with the courier — delivery is due today before 6 pm.', meta: 'Order lookup · CRM synced' },
+    { role: 'user',   text: 'Hi, my order hasn\'t arrived ï¿½ it\'s been 5 days.' },
+    { role: 'ai',     text: 'I can see order #48291. It shipped Monday and is with the courier ï¿½ delivery is due today before 6 pm.', meta: 'Order lookup ï¿½ CRM synced' },
     { role: 'user',   text: 'Perfect, thank you!' },
-    { role: 'signal', text: 'Resolved · 22s handle time · CSAT triggered' },
+    { role: 'signal', text: 'Resolved ï¿½ 22s handle time ï¿½ CSAT triggered' },
   ]
   const delays = [900, 2300, 3900, 5100]
 
@@ -351,7 +351,7 @@ function KaiDashboard() {
                     {[
                       { trigger: 'Safeguarding concern',   action: 'Immediate escalation' },
                       { trigger: 'Formal complaint',        action: 'Senior agent queue' },
-                      { trigger: 'Billing dispute > £500',  action: 'Finance team + full transcript' },
+                      { trigger: 'Billing dispute > ï¿½500',  action: 'Finance team + full transcript' },
                       { trigger: 'Unresolved in 3 turns',   action: 'Human handoff with summary' },
                     ].map(r => (
                       <div key={r.trigger} className="flex items-center justify-between px-4 py-2.5">
@@ -370,7 +370,7 @@ function KaiDashboard() {
                 <div className="border border-gray-100 divide-y divide-gray-100">
                   {[
                     { name: 'Contact Centre Policy v3.pdf', size: '2.4 MB', date: 'Today, 08:14', type: 'PDF' },
-                    { name: 'Product FAQ — Q1 2025.docx',  size: '890 KB', date: '14 May 2025',  type: 'DOC' },
+                    { name: 'Product FAQ ï¿½ Q1 2025.docx',  size: '890 KB', date: '14 May 2025',  type: 'DOC' },
                     { name: 'Billing and Refunds Guide.pdf', size: '1.1 MB', date: '2 Apr 2025', type: 'PDF' },
                   ].map(f => (
                     <div key={f.name} className="flex items-center gap-3 px-4 py-3">
@@ -379,7 +379,7 @@ function KaiDashboard() {
                       </div>
                       <div className="flex-1 min-w-0">
                         <p className="text-[11px] font-semibold text-[#0a1628] truncate">{f.name}</p>
-                        <p className="text-[9px] text-[#0a1628]/40">{f.size} · {f.date}</p>
+                        <p className="text-[9px] text-[#0a1628]/40">{f.size} ï¿½ {f.date}</p>
                       </div>
                       <FontAwesomeIcon icon={faCircleCheck} className="w-3.5 h-3.5 text-[#059669] shrink-0" />
                     </div>
@@ -448,7 +448,7 @@ function KaiDashboard() {
             </div>
 
             <div className="flex-1 p-3 space-y-2.5 overflow-hidden" style={{ background: '#fafafa', minHeight: '200px' }}>
-              {/* Greeting bubble — always visible */}
+              {/* Greeting bubble ï¿½ always visible */}
               <div className="flex gap-2 items-start">
                 <div className="w-5 h-5 bg-[#228DC1] flex items-center justify-center shrink-0 mt-0.5">
                   <span className="text-white text-[8px] font-black">K</span>
@@ -479,7 +479,7 @@ function KaiDashboard() {
                       </div>
                       {msg.meta && (
                         <div className="mt-1 flex gap-1 flex-wrap">
-                          {msg.meta.split(' · ').map(m => (
+                          {msg.meta.split(' ï¿½ ').map(m => (
                             <span key={m} className="text-[8px] text-[#228DC1] bg-[#e5f4fa] border border-[#228DC1]/15 px-1.5 py-0.5">{m}</span>
                           ))}
                         </div>
@@ -554,11 +554,11 @@ function KaiDashboard() {
   )
 }
 
-// -- Integrations — Kai as glowing hub ----------------------------------------
+// -- Integrations ï¿½ Kai as glowing hub ----------------------------------------
 function IntegrationsSection() {
   const [ref, inView] = useInView(0.08)
 
-  // 5 × 3 grid = 15 slots; Kai sits at index 7 (row 1, col 2 — dead centre)
+  // 5 ï¿½ 3 grid = 15 slots; Kai sits at index 7 (row 1, col 2 ï¿½ dead centre)
   type Item = { label: string; category: string; logo: string | null; isKai?: true; isMcp?: true }
   const items: Item[] = [
     { label: 'HubSpot',     category: 'CRM',        logo: '/logos/hubspot.svg' },
@@ -602,13 +602,13 @@ function IntegrationsSection() {
               ].map((item) => (
                 <div key={item.label} className="flex items-center gap-3">
                   <div className="w-1.5 h-1.5 bg-[#228DC1] rounded-full shrink-0" />
-                  <span className="text-[#0a1628]/60 text-[13px]">{item.label} — <span className="font-semibold text-[#0a1628]">{item.value}</span></span>
+                  <span className="text-[#0a1628]/60 text-[13px]">{item.label} ï¿½ <span className="font-semibold text-[#0a1628]">{item.value}</span></span>
                 </div>
               ))}
             </div>
           </div>
 
-          {/* Right: 5 × 3 hub grid */}
+          {/* Right: 5 ï¿½ 3 hub grid */}
           <div ref={ref} className="grid grid-cols-5 gap-2">
             {items.map((item, i) => {
               const d = dist(i)
@@ -650,7 +650,7 @@ function IntegrationsSection() {
                         onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }}
                       />
                       <span className="relative text-[8px] font-semibold text-[#903E8E] bg-[#903E8E]/10 border border-[#903E8E]/30 px-1.5 py-0.5 rounded-sm">
-                        AI Agent · MCP
+                        AI Agent ï¿½ MCP
                       </span>
                     </>
                   ) : item.isMcp ? (
@@ -775,10 +775,10 @@ export default function KaiPage() {
               <div className="flex items-center gap-3 mb-6">
                 <img src="/kai-logo.svg" alt="Kai" className="h-7 w-auto object-contain" />
                 <p className="font-black text-[#228DC1]" style={{ fontSize: '13px', letterSpacing: '0.28em', textTransform: 'uppercase', opacity: 0.6 }}>
-                  Kai · Enterprise AI Agent
+                  Kai ï¿½ Enterprise AI Agent
                 </p>
               </div>
-              <h1 className="font-serif-display text-[#0a1628] leading-[1.02] mb-6" style={{ fontSize: 'clamp(44px, 5.5vw, 80px)' }}>
+              <h1 className="font-serif-display text-[#0a1628] leading-[1.02] mb-6" style={{ fontSize: 'clamp(44px, 5.5vw, 80px)', fontFamily: "'Roboto', system-ui, sans-serif", fontWeight: 400 }}>
                 Enterprise AI<br />
                 that <span style={{ color: '#228DC1' }}>resolves,</span><br />
                 not just responds.
@@ -894,7 +894,7 @@ export default function KaiPage() {
             </div>
           </div>
 
-          {/* Metrics row — same section */}
+          {/* Metrics row ï¿½ same section */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
             <StatCard prefix="+" num={22.5} suffix="%" label="Containment uplift" note="Measured in production" delay={0} />
             <StatCard prefix="+" num={17} suffix="%" label="CSAT uplift" note="Learner satisfaction" delay={100} />
@@ -1121,7 +1121,7 @@ export default function KaiPage() {
                   style={{ opacity: chartInView ? 1 : 0, transition: 'opacity 1.2s ease 0.9s' }}
                 />
 
-                {/* Post-Kai solid line — draws on scroll */}
+                {/* Post-Kai solid line ï¿½ draws on scroll */}
                 <path
                   d="M168,198 L199,152 L230,118 L261,98 L292,82 L323,72 L354,66 L385,58 L416,52 L447,49 L478,48 L509,48 L532,48"
                   fill="none"
@@ -1301,7 +1301,7 @@ export default function KaiPage() {
                 <div className="px-6 py-4 border-r border-gray-100">
                   <p className="text-[#0a1628] text-[13px] font-semibold">{row.label}</p>
                 </div>
-                {/* Kai cell — highlighted */}
+                {/* Kai cell ï¿½ highlighted */}
                 <div className="px-6 py-4 border-r border-gray-100 bg-[#e5f4fa]/40">
                   {typeof row.kai === 'boolean' ? (
                     <FontAwesomeIcon icon={faCheck} className="w-4 h-4 text-[#228DC1]" />

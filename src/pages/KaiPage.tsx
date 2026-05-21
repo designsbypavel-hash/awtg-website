@@ -961,7 +961,7 @@ export default function KaiPage() {
             ].map((step, i) => (
               <div
                 key={step.num}
-                className="relative group rounded-2xl p-8 cursor-default transition-all duration-300 hover:-translate-y-1"
+                className="relative group rounded-2xl p-8 cursor-default"
                 style={{
                   ...reveal(stepsInView, i * 130),
                   background: 'rgba(255,255,255,0.06)',

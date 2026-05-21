@@ -152,7 +152,7 @@ function Hero() {
         </h1>
 
         {/* One-liner, StoryBrand: customer is the hero, AWTG is the guide */}
-        <p className="text-white/70 text-[15px] leading-relaxed max-w-sm mb-10 font-normal">
+        <p className="text-white/70 text-[16px] leading-[1.7] max-w-sm mb-10 font-normal">
           AWTG delivers AI, 5G, private networks and software solutions
           for UK enterprises and public sector, end-to-end,
           accountable, built to perform.
@@ -223,7 +223,7 @@ function WhatWeDo() {
                 <span className="type-label text-[#0a1628]/20 shrink-0 mt-1">{r.num}</span>
                 <div>
                   <h3 className="font-card-heading text-[#0a1628] mb-1.5">{r.label}</h3>
-                  <p className="text-[#0a1628]/60 text-sm font-normal leading-relaxed">{r.line}</p>
+                  <p className="text-[#0a1628]/60 text-[14px] font-normal leading-[1.7]">{r.line}</p>
                 </div>
               </div>
               <FontAwesomeIcon icon={faArrowRight} className="w-5 h-5 text-[#228DC1] shrink-0 opacity-0 group-hover:opacity-100 transition-opacity" />
@@ -273,7 +273,7 @@ function AIProofPoints() {
         <div className="grid lg:grid-cols-[1fr_auto] gap-16 items-center">
           <div>
             <p className="type-label text-[#228DC1] mb-6">Live in Production</p>
-            <h2 className="font-serif-display text-[#0a1628] leading-tight mb-4">
+            <h2 className="font-serif-display text-[#0a1628] leading-[1.1] mb-4">
               British Council.<br />
               <span className="italic text-[#228DC1]">AI handling learner support at scale.</span>
             </h2>
@@ -310,7 +310,7 @@ export function OurSolutions() {
         <div className="grid lg:grid-cols-2 gap-12 items-end mb-16">
           <div>
             <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#228DC1] mb-4">Our Solutions</p>
-            <h2 className="font-serif-display text-[#0a1628] leading-tight">
+            <h2 className="font-serif-display text-[#0a1628] leading-[1.1]">
               Advancing connectivity for the{' '}
               <span className="italic text-[#228DC1]">technology supercycle.</span>
             </h2>
@@ -326,8 +326,8 @@ export function OurSolutions() {
             {panel.flip ? (
               <>
                 <div className="p-12 lg:p-16 flex flex-col justify-center">
-                  <h3 className="text-2xl font-medium text-[#0a1628] leading-snug mb-4">{panel.title}</h3>
-                  <p className="text-[#0a1628]/60 text-[16px] leading-relaxed mb-6 font-normal">{panel.desc}</p>
+                  <h3 className="text-[24px] font-semibold text-[#0a1628] leading-[1.3] mb-4">{panel.title}</h3>
+                  <p className="text-[#0a1628]/60 text-[16px] leading-[1.7] mb-6 font-normal">{panel.desc}</p>
                   <Link to={panel.href} className="inline-flex items-center gap-2 text-sm font-medium text-[#228DC1] hover:gap-3 transition-all">
                     {panel.link} <FontAwesomeIcon icon={faArrowRight} className="w-4 h-4" />
                   </Link>
@@ -342,8 +342,8 @@ export function OurSolutions() {
                   <img src={panel.img} alt={panel.title} className="w-full h-full object-cover" loading="lazy" />
                 </div>
                 <div className="p-12 lg:p-16 flex flex-col justify-center">
-                  <h3 className="text-2xl font-medium text-[#0a1628] leading-snug mb-4">{panel.title}</h3>
-                  <p className="text-[#0a1628]/60 text-[16px] leading-relaxed mb-6 font-normal">{panel.desc}</p>
+                  <h3 className="text-[24px] font-semibold text-[#0a1628] leading-[1.3] mb-4">{panel.title}</h3>
+                  <p className="text-[#0a1628]/60 text-[16px] leading-[1.7] mb-6 font-normal">{panel.desc}</p>
                   <Link to={panel.href} className="inline-flex items-center gap-2 text-sm font-medium text-[#228DC1] hover:gap-3 transition-all">
                     {panel.link} <FontAwesomeIcon icon={faArrowRight} className="w-4 h-4" />
                   </Link>
@@ -407,7 +407,7 @@ function Industries() {
         <div className="grid lg:grid-cols-2 gap-12 items-end">
           <div>
             <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#228DC1] mb-4">Your Industry</p>
-            <h2 className="font-serif-display text-[#0a1628] leading-tight">
+            <h2 className="font-serif-display text-[#0a1628] leading-[1.1]">
               Powering transformation<br />across every sector.
             </h2>
           </div>
@@ -422,7 +422,7 @@ function Industries() {
             <img src={card.img} alt={card.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy" />
             <div className="absolute inset-0 bg-gradient-to-t from-[#050a12]/85 via-[#050a12]/20 to-transparent" />
             <div className="absolute bottom-0 left-0 right-0 p-8 lg:p-10">
-              <h3 className="text-white font-medium text-[20px] mb-2 leading-snug">{card.title}</h3>
+              <h3 className="text-white font-semibold text-[20px] mb-2 leading-[1.3]">{card.title}</h3>
               <span className="inline-flex items-center gap-1.5 text-sm text-[#0a1628]/60 group-hover:text-white transition-colors font-medium">
                 {card.sub} <FontAwesomeIcon icon={faArrowRight} className="w-3.5 h-3.5" />
               </span>
@@ -531,7 +531,7 @@ export function TechSolutions() {
           </div>
           <div className="bg-white p-12 lg:p-16 flex flex-col justify-center">
             <h3 className="font-serif-display text-[#0a1628] mb-4" style={{ fontSize: '24px', lineHeight: 1.1 }}>{tab.title}</h3>
-            <p className="text-[#0a1628]/60 text-[16px] leading-relaxed mb-7 font-normal">{tab.desc}</p>
+            <p className="text-[#0a1628]/60 text-[16px] leading-[1.7] mb-7 font-normal">{tab.desc}</p>
             <ul className="space-y-3 mb-8">
               {tab.features.map((f) => (
                 <li key={f} className="flex items-start gap-3 text-sm text-[#0a1628]/75">
@@ -559,12 +559,12 @@ function WhyAWTG() {
         <div className="grid lg:grid-cols-2 gap-16 items-end mb-16">
           <div>
             <p className="type-label text-[#228DC1] mb-4">Why AWTG</p>
-            <h2 className="font-serif-display text-[#0a1628] leading-tight">
+            <h2 className="font-serif-display text-[#0a1628] leading-[1.1]">
               19 years. 1,000+ sites.<br />
               <span className="italic text-[#228DC1]">8 sectors. One team.</span>
             </h2>
           </div>
-          <p className="text-[#0a1628]/60 text-[16px] font-normal leading-relaxed">
+          <p className="text-[#0a1628]/60 text-[16px] font-normal leading-[1.7]">
             Crown Commercial Service approved. ISO 9001, 27001, 14001, 45001 and 42001 certified. Cyber Essentials Plus. SC and DV cleared engineers.
           </p>
         </div>
@@ -578,7 +578,7 @@ function WhyAWTG() {
             <div key={s.label} className="bg-white p-8">
               <p className="font-serif-display text-[#0a1628] mb-1" style={{ fontSize: 'clamp(32px, 3.5vw, 48px)' }}>{s.value}</p>
               <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#228DC1] mb-1">{s.label}</p>
-              <p className="text-sm text-[#0a1628]/65 font-normal">{s.sub}</p>
+              <p className="text-[14px] text-[#0a1628]/65 font-normal">{s.sub}</p>
             </div>
           ))}
         </div>
@@ -613,11 +613,11 @@ export function PNaaS() {
             <span className="inline-block px-4 py-1.5 rounded-full border border-gray-200 text-[10px] font-semibold uppercase tracking-[0.2em] text-[#0a1628]/60 mb-8">
               PNaaS, Private Network as a Service
             </span>
-            <h2 className="font-serif-display text-[#0a1628] leading-tight mb-6">
+            <h2 className="font-serif-display text-[#0a1628] leading-[1.1] mb-6">
               Transforming the future of connectivity{' '}
               <span className="italic text-[#228DC1]">and beyond.</span>
             </h2>
-            <p className="text-[#0a1628]/60 text-[16px] leading-relaxed mb-10 font-normal">
+            <p className="text-[#0a1628]/60 text-[16px] leading-[1.7] mb-10 font-normal">
               AWTG's Private Network as a Service delivers enterprise-grade 4G/5G connectivity, fully managed, infinitely scalable, built around your operations.
             </p>
             <div className="flex flex-wrap gap-4">
@@ -639,7 +639,7 @@ export function PNaaS() {
                 </div>
                 <div>
                   <p className="text-[#0a1628] font-semibold mb-1">{title}</p>
-                  <p className="text-[#0a1628]/60 text-sm font-normal leading-snug">{desc}</p>
+                  <p className="text-[#0a1628]/60 text-[14px] font-normal leading-[1.3]">{desc}</p>
                 </div>
               </div>
             ))}
@@ -692,7 +692,7 @@ function ClientVoices() {
             <div className="absolute bottom-0 left-0 right-0 flex items-center gap-3 bg-[#0a1628]/60 backdrop-blur-sm px-5 py-3.5">
               <div className="w-8 h-8 rounded-full bg-[#228DC1] flex items-center justify-center text-white text-xs font-bold shrink-0">{t.initials}</div>
               <div>
-                <p className="text-white text-sm font-semibold leading-tight">{t.name}</p>
+                <p className="text-white text-[14px] font-semibold leading-[1.1]">{t.name}</p>
                 <p className="text-white/60 text-xs font-normal">{t.org}</p>
               </div>
             </div>
@@ -821,7 +821,7 @@ function Insights() {
                   <span className="text-[#0a1628]/20">�</span>
                   <span className="text-[#0a1628]/60 font-normal">{a.date}</span>
                 </div>
-                <p className="text-sm font-semibold text-[#0a1628] leading-snug mb-4 line-clamp-3">{a.title}</p>
+                <p className="text-[14px] font-semibold text-[#0a1628] leading-[1.3] mb-4 line-clamp-3">{a.title}</p>
                 <span className="text-xs font-medium text-[#228DC1] inline-flex items-center gap-1.5">
                   Read more <FontAwesomeIcon icon={faArrowRight} className="w-3 h-3" />
                 </span>
@@ -842,11 +842,11 @@ function ContactCTA() {
       <div className="max-w-7xl mx-auto px-8 lg:px-12">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           <div>
-            <h2 className="font-serif-display text-white leading-tight mb-4">
+            <h2 className="font-serif-display text-white leading-[1.1] mb-4">
               Ready to build<br />
               <span className="italic text-[#228DC1]">something that matters?</span>
             </h2>
-            <p className="text-white/55 text-[16px] font-normal leading-relaxed mb-10">
+            <p className="text-white/55 text-[16px] font-normal leading-[1.7] mb-10">
               No pitch. No jargon. Just honest advice from engineers who've done it before.
             </p>
             <div className="flex flex-wrap gap-4">

@@ -138,13 +138,13 @@ export default function AboutLeadershipPage() {
             Our People
           </span>
           <h1
-            className="font-serif-display text-[#0a1628] leading-tight mb-6"
+            className="font-serif-display text-[#0a1628] leading-[1.1] mb-6"
            
           >
             The team behind<br />
             <span className="text-[#228DC1]">AWTG's ambition.</span>
           </h1>
-          <p className="text-[#0a1628]/60 text-base leading-relaxed max-w-lg font-normal">
+          <p className="text-[#0a1628]/60 text-[16px] leading-[1.7] max-w-lg font-normal">
             A multidisciplinary team of engineers, technologists, and commercial leaders committed to delivering world-class outcomes for our clients.
           </p>
         </div>
@@ -163,9 +163,9 @@ export default function AboutLeadershipPage() {
                   <Avatar initials={person.initials} name={person.name} color={person.color} photo={person.photo} size="lg" />
                 </div>
                 <div className="p-5">
-                  <h3 className="font-semibold text-[#0a1628] text-sm mb-1 leading-snug">{person.name}</h3>
+                  <h3 className="font-semibold text-[#0a1628] text-[16px] mb-1 leading-[1.3]">{person.name}</h3>
                   <p className="text-[11px] font-semibold uppercase tracking-[0.1em] mb-3" style={{ color: person.color }}>{person.role}</p>
-                  <p className="text-xs text-[#0a1628]/60 leading-relaxed font-normal">{person.bio}</p>
+                  <p className="text-[14px] text-[#0a1628]/60 leading-[1.7] font-normal">{person.bio}</p>
                 </div>
               </div>
             ))}
@@ -186,9 +186,9 @@ export default function AboutLeadershipPage() {
                   <Avatar initials={person.initials} name={person.name} color={person.color} photo={person.photo} size="lg" />
                 </div>
                 <div className="p-6">
-                  <h3 className="font-semibold text-[#0a1628] text-sm mb-1 leading-snug">{person.name}</h3>
+                  <h3 className="font-semibold text-[#0a1628] text-[16px] mb-1 leading-[1.3]">{person.name}</h3>
                   <p className="text-[11px] font-semibold uppercase tracking-[0.1em] mb-3" style={{ color: person.color }}>{person.role}</p>
-                  <p className="text-xs text-[#0a1628]/60 leading-relaxed font-normal">{person.bio}</p>
+                  <p className="text-[14px] text-[#0a1628]/60 leading-[1.7] font-normal">{person.bio}</p>
                 </div>
               </div>
             ))}
@@ -209,8 +209,8 @@ export default function AboutLeadershipPage() {
                   <Avatar initials={person.initials} name={person.name} color={person.color} photo={person.photo} size="lg" />
                 </div>
                 <div className="p-4">
-                  <h3 className="font-semibold text-[#0a1628] text-sm leading-snug">{person.name}</h3>
-                  <p className="text-[11px] text-[#0a1628]/65 font-normal leading-snug mt-1">{person.role}</p>
+                  <h3 className="font-semibold text-[#0a1628] text-[16px] leading-[1.3]">{person.name}</h3>
+                  <p className="text-[11px] text-[#0a1628]/65 font-normal leading-[1.3] mt-1">{person.role}</p>
                 </div>
               </div>
             ))}
@@ -223,13 +223,13 @@ export default function AboutLeadershipPage() {
         <div className="max-w-3xl mx-auto px-6 lg:px-10 text-center">
           <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-[#228DC1] mb-6">Get in Touch</p>
           <h2
-            className="font-serif-display text-[#0a1628] leading-tight mb-6"
+            className="font-serif-display text-[#0a1628] leading-[1.1] mb-6"
            
           >
             Ready to explore what{' '}
             <span className="text-[#228DC1]">AWTG can do for you?</span>
           </h2>
-          <p className="text-[#0a1628]/65 text-base leading-relaxed mb-10 font-normal max-w-xl mx-auto">
+          <p className="text-[#0a1628]/65 text-[16px] leading-[1.7] mb-10 font-normal max-w-xl mx-auto">
             Whether you need private 5G, AI integration, smart city infrastructure, or telecoms testing, our engineers are ready to scope your project from day one.
           </p>
           <div className="flex flex-wrap justify-center gap-4">

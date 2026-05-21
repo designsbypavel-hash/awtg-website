@@ -43,7 +43,7 @@ export default function AboutSustainabilityPage() {
           <h1 className="font-serif-display text-[#0a1628] mb-6">
             Sustainability
           </h1>
-          <p className="text-[#0a1628]/70 text-lg max-w-xl font-normal leading-relaxed">
+          <p className="text-[#0a1628]/70 text-[18px] max-w-xl font-normal leading-[1.7]">
             Building a connected future responsibly. Our commitment to environmental and social sustainability is built into everything we deliver.
           </p>
         </div>
@@ -57,10 +57,10 @@ export default function AboutSustainabilityPage() {
             <h2 className="font-heading text-[#0a1628] mb-6">
               Technology for a Better World
             </h2>
-            <p className="text-[#0a1628]/75 leading-relaxed font-normal text-[17px] mb-4">
+            <p className="text-[#0a1628]/75 leading-[1.7] font-normal text-[16px] mb-4">
               We believe that technology should improve lives and protect the planet, not harm it. Sustainability is built into everything we do, from how we design networks to how we run our business.
             </p>
-            <p className="text-[#0a1628]/65 leading-relaxed font-normal">
+            <p className="text-[#0a1628]/65 leading-[1.7] font-normal">
               Our sustainability strategy covers three pillars: environmental responsibility, social impact, and governance. We report annually on our progress against measurable targets.
             </p>
           </div>
@@ -82,7 +82,7 @@ export default function AboutSustainabilityPage() {
             {pillars.map((p) => (
               <div key={p.label} className="bg-[#f8fafc] p-8">
                 <p className="type-label text-[#228DC1] mb-3">{p.label}</p>
-                <p className="text-[#0a1628]/70 font-normal text-sm leading-relaxed">{p.desc}</p>
+                <p className="text-[#0a1628]/70 font-normal text-[14px] leading-[1.7]">{p.desc}</p>
               </div>
             ))}
           </div>
@@ -106,7 +106,7 @@ export default function AboutSustainabilityPage() {
                     <p className="type-label text-[#0a1628]/60 mt-0.5">{c.statLabel}</p>
                   </div>
                 </div>
-                <p className="text-[#0a1628]/65 text-sm leading-relaxed font-normal">{c.desc}</p>
+                <p className="text-[#0a1628]/65 text-[14px] leading-[1.7] font-normal">{c.desc}</p>
               </div>
             ))}
           </div>

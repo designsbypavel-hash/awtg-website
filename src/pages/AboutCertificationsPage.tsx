@@ -41,7 +41,7 @@ export default function AboutCertificationsPage() {
               <div key={cert.name} className="bg-white p-7 hover:bg-[#f7f8fa] transition-colors">
                 <FontAwesomeIcon icon={faShieldHalved} className="w-6 h-6 text-[#228DC1] mb-5" />
                 <h3 className="font-card-heading text-[#0a1628] text-[15px] mb-2">{cert.name}</h3>
-                <p className="text-[#0a1628]/65 text-sm leading-relaxed font-normal">{cert.desc}</p>
+                <p className="text-[#0a1628]/65 text-[14px] leading-[1.7] font-normal">{cert.desc}</p>
               </div>
             ))}
           </div>

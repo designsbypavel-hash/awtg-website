@@ -457,7 +457,7 @@ export default function IcmapPage() {
             <h2 className="font-heading text-[#0a1628] mb-5">
               Every zone. Every generation. On a real map.
             </h2>
-            <p className="text-[#0a1628]/65 text-[17px] font-normal leading-relaxed">
+            <p className="text-[#0a1628]/65 text-[16px] font-normal leading-[1.7]">
               iCMAP overlays your network coverage data directly onto live geographic maps. Filter by generation, click any zone for signal strength and population data, and instantly see where the gaps are.
             </p>
           </div>
@@ -470,7 +470,7 @@ export default function IcmapPage() {
             ].map((item) => (
               <div key={item.label} className="bg-white px-8 py-6">
                 <p className="text-[#0a1628] font-semibold text-[14px] mb-2">{item.label}</p>
-                <p className="text-[#0a1628]/60 text-sm font-normal leading-relaxed">{item.desc}</p>
+                <p className="text-[#0a1628]/60 text-[14px] font-normal leading-[1.7]">{item.desc}</p>
               </div>
             ))}
           </div>
@@ -496,8 +496,8 @@ export default function IcmapPage() {
                   <span className="font-black text-[10px] tabular-nums" style={{ color: step.color, letterSpacing: '0.05em' }}>{step.num}</span>
                   <div className="h-px flex-1 bg-gray-100" />
                 </div>
-                <h3 className="text-[#0a1628] font-semibold text-[15px] leading-snug mb-3">{step.label}</h3>
-                <p className="text-[#0a1628]/65 text-sm font-normal leading-relaxed mb-4">{step.desc}</p>
+                <h3 className="text-[#0a1628] font-semibold text-[16px] leading-[1.3] mb-3">{step.label}</h3>
+                <p className="text-[#0a1628]/65 text-[14px] font-normal leading-[1.7] mb-4">{step.desc}</p>
                 <p className="text-[#0a1628]/65 text-[11px] font-normal italic">{step.detail}</p>
               </div>
             ))}
@@ -513,7 +513,7 @@ export default function IcmapPage() {
             <h2 className="font-heading text-[#0a1628] mb-4">
               Built for every layer of network intelligence
             </h2>
-            <p className="text-[#0a1628]/65 text-[16px] font-normal leading-relaxed max-w-2xl">
+            <p className="text-[#0a1628]/65 text-[16px] font-normal leading-[1.7] max-w-2xl">
               From live coverage visualisation to regulatory reporting, iCMAP gives operators, regulators and governments a single platform for the entire coverage intelligence lifecycle.
             </p>
           </div>
@@ -523,8 +523,8 @@ export default function IcmapPage() {
                 <div className="w-10 h-10 flex items-center justify-center mb-5" style={{ backgroundColor: '#228DC112' }}>
                   <FontAwesomeIcon icon={cap.icon} className="w-5 h-5 text-[#228DC1]" />
                 </div>
-                <h3 className="text-[#0a1628] font-semibold text-[15px] leading-snug mb-3">{cap.label}</h3>
-                <p className="text-[#0a1628]/65 text-sm font-normal leading-relaxed">{cap.desc}</p>
+                <h3 className="text-[#0a1628] font-semibold text-[16px] leading-[1.3] mb-3">{cap.label}</h3>
+                <p className="text-[#0a1628]/65 text-[14px] font-normal leading-[1.7]">{cap.desc}</p>
               </div>
             ))}
           </div>
@@ -544,13 +544,13 @@ export default function IcmapPage() {
             {useCases.map((uc) => (
               <div key={uc.label} className="bg-white p-10">
                 <p className="type-label text-[#228DC1] mb-4">{uc.label}</p>
-                <h3 className="text-[#0a1628] font-semibold text-[18px] leading-snug mb-4">{uc.headline}</h3>
-                <p className="text-[#0a1628]/60 text-sm font-normal leading-relaxed mb-8">{uc.desc}</p>
+                <h3 className="text-[#0a1628] font-semibold text-[18px] leading-[1.3] mb-4">{uc.headline}</h3>
+                <p className="text-[#0a1628]/60 text-[14px] font-normal leading-[1.7] mb-8">{uc.desc}</p>
                 <div className="space-y-3">
                   {uc.points.map((point) => (
                     <div key={point} className="flex items-start gap-3">
                       <FontAwesomeIcon icon={faCircleCheck} className="w-4 h-4 text-[#228DC1] shrink-0 mt-0.5" />
-                      <p className="text-[#0a1628]/75 text-sm font-normal">{point}</p>
+                      <p className="text-[#0a1628]/75 text-[14px] font-normal">{point}</p>
                     </div>
                   ))}
                 </div>
@@ -569,7 +569,7 @@ export default function IcmapPage() {
               <h2 className="font-heading text-[#0a1628] mb-6">
                 Coverage decisions are too important to be made without data
               </h2>
-              <p className="text-[#0a1628]/60 text-[17px] font-normal leading-relaxed mb-8">
+              <p className="text-[#0a1628]/60 text-[16px] font-normal leading-[1.7] mb-8">
                 Traditional coverage assessment is slow, manual and often inaccurate. iCMAP replaces static maps and spreadsheet planning with a live, AI-powered intelligence layer that reflects what is actually happening on your network today.
               </p>
               <div className="space-y-3">
@@ -582,7 +582,7 @@ export default function IcmapPage() {
                 ].map((point) => (
                   <div key={point} className="flex items-start gap-3">
                     <FontAwesomeIcon icon={faCircleCheck} className="w-4 h-4 text-[#228DC1] shrink-0 mt-0.5" />
-                    <p className="text-[#0a1628]/65 text-sm font-normal">{point}</p>
+                    <p className="text-[#0a1628]/65 text-[14px] font-normal">{point}</p>
                   </div>
                 ))}
               </div>
@@ -598,7 +598,7 @@ export default function IcmapPage() {
                     {col.items.map((item) => (
                       <div key={item} className="flex items-start gap-2.5">
                         <div className={`w-1 h-1 rounded-full shrink-0 mt-2 ${!col.dim ? 'bg-[#228DC1]' : 'bg-[#228DC1]/10'}`} />
-                        <p className={`text-sm font-normal leading-snug ${!col.dim ? 'text-[#0a1628]/70' : 'text-[#0a1628]/60 line-through'}`}>{item}</p>
+                        <p className={`text-[14px] font-normal leading-[1.3] ${!col.dim ? 'text-[#0a1628]/70' : 'text-[#0a1628]/60 line-through'}`}>{item}</p>
                       </div>
                     ))}
                   </div>
@@ -614,7 +614,7 @@ export default function IcmapPage() {
         <div className="max-w-7xl mx-auto px-8 lg:px-12 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-8">
           <div>
             <p className="text-[#0a1628] font-semibold text-[16px] mb-1">See your coverage picture in full.</p>
-            <p className="text-[#0a1628]/65 text-sm font-normal">
+            <p className="text-[#0a1628]/65 text-[14px] font-normal">
               Start with your existing network data. We map it, analyse it and show you where the gaps are within days.
             </p>
           </div>

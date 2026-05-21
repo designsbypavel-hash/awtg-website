@@ -32,13 +32,13 @@ export default function HeroSection() {
           <div className="flex flex-wrap gap-4">
             <Link
               to="/solutions"
-              className="inline-flex items-center gap-2 px-8 py-4 bg-[#228DC1] text-white font-semibold hover:bg-[#1a6e99] transition-colors text-base"
+              className="inline-flex items-center gap-2 px-8 py-4 bg-[#228DC1] text-white font-semibold hover:bg-[#1a6e99] transition-colors text-[16px]"
             >
               Explore Solutions
             </Link>
             <Link
               to="/about"
-              className="inline-flex items-center gap-2 px-8 py-4 border border-gray-200 text-[#0a1628]/70 font-semibold hover:border-[#228DC1]/40 hover:bg-[#228DC1]/5 transition-colors text-base"
+              className="inline-flex items-center gap-2 px-8 py-4 border border-gray-200 text-[#0a1628]/70 font-semibold hover:border-[#228DC1]/40 hover:bg-[#228DC1]/5 transition-colors text-[16px]"
             >
               About AWTG
             </Link>

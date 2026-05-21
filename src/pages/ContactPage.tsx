@@ -27,7 +27,7 @@ export default function ContactPage() {
             <h2 className="font-serif-display text-[#0a1628] mb-8">Send Us a Message</h2>
             {submitted ? (
               <div className="p-8 bg-[#f0f5ff] border border-[#228DC1]/20 text-[#0a1628]">
-                <p className="font-semibold text-lg mb-2">Thank you for getting in touch.</p>
+                <p className="font-semibold text-[18px] mb-2">Thank you for getting in touch.</p>
                 <p className="text-[#0a1628]/75 font-normal">A member of our team will respond within 2 business hours.</p>
               </div>
             ) : (
@@ -87,7 +87,7 @@ export default function ContactPage() {
                 <div>
                   <p className="text-xs font-semibold uppercase tracking-widest text-[#0a1628]/60 mb-1">Email</p>
                   <a href="mailto:info@awtg.co.uk" className="text-[#0a1628] font-medium hover:text-[#228DC1] transition-colors">info@awtg.co.uk</a>
-                  <p className="text-sm text-[#0a1628]/60 mt-0.5 font-normal">Typically reply within 2 hours</p>
+                  <p className="text-[14px] text-[#0a1628]/60 mt-0.5 font-normal">Typically reply within 2 hours</p>
                 </div>
               </div>
               <div className="flex gap-4">
@@ -95,7 +95,7 @@ export default function ContactPage() {
                 <div>
                   <p className="text-xs font-semibold uppercase tracking-widest text-[#0a1628]/60 mb-1">Phone</p>
                   <a href="tel:+442074000000" className="text-[#0a1628] font-medium hover:text-[#228DC1] transition-colors">+44 (0) 207 400 0000</a>
-                  <p className="text-sm text-[#0a1628]/60 mt-0.5 font-normal">Mon to Fri, 8:30am to 6:00pm GMT</p>
+                  <p className="text-[14px] text-[#0a1628]/60 mt-0.5 font-normal">Mon to Fri, 8:30am to 6:00pm GMT</p>
                 </div>
               </div>
               <div className="flex gap-4">
@@ -103,7 +103,7 @@ export default function ContactPage() {
                 <div>
                   <p className="text-xs font-semibold uppercase tracking-widest text-[#0a1628]/60 mb-1">Head Office</p>
                   <p className="text-[#0a1628] font-medium">London, United Kingdom</p>
-                  <p className="text-sm text-[#0a1628]/60 mt-0.5 font-normal">Registered in England &amp; Wales</p>
+                  <p className="text-[14px] text-[#0a1628]/60 mt-0.5 font-normal">Registered in England &amp; Wales</p>
                 </div>
               </div>
               <div className="flex gap-4">
@@ -111,14 +111,14 @@ export default function ContactPage() {
                 <div>
                   <p className="text-xs font-semibold uppercase tracking-widest text-[#0a1628]/60 mb-1">Response Time</p>
                   <p className="text-[#0a1628] font-medium">Within 2 business hours</p>
-                  <p className="text-sm text-[#0a1628]/60 mt-0.5 font-normal">For urgent matters, please call</p>
+                  <p className="text-[14px] text-[#0a1628]/60 mt-0.5 font-normal">For urgent matters, please call</p>
                 </div>
               </div>
             </div>
 
             <div className="mt-12 p-6 bg-[#f7f8fa] border border-gray-100">
               <p className="text-xs font-semibold uppercase tracking-widest text-[#0a1628]/60 mb-3">Regional Offices</p>
-              <div className="space-y-2 text-sm text-[#0a1628]/70 font-normal">
+              <div className="space-y-2 text-[14px] text-[#0a1628]/70 font-normal">
                 <p>Manchester &mdash; Birmingham &mdash; Edinburgh</p>
                 <p>Dubai &mdash; Singapore &mdash; Nairobi</p>
               </div>

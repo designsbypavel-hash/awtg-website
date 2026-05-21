@@ -80,14 +80,14 @@ export default function SolutionsPage() {
             <span className="text-[#228DC1] text-[11px] font-bold uppercase tracking-[0.3em]">Our Solutions</span>
           </div>
           <h1
-            className="font-serif-display text-[#0a1628] leading-tight mb-6 max-w-3xl"
+            className="font-serif-display text-[#0a1628] leading-[1.1] mb-6 max-w-3xl"
            
           >
             Technology solutions<br />
             built for the{' '}
             <span className="italic text-[#228DC1]">AI era.</span>
           </h1>
-          <p className="text-[#0a1628]/65 text-base leading-relaxed max-w-xl font-normal">
+          <p className="text-[#0a1628]/65 text-[16px] leading-[1.7] max-w-xl font-normal">
             From private 5G networks to enterprise AI deployment, AWTG delivers end-to-end technology solutions for UK enterprises and public sector, built to perform.
           </p>
         </div>
@@ -115,13 +115,13 @@ export default function SolutionsPage() {
             {/* Content */}
             <div className={`flex flex-col justify-center py-16 ${s.flip ? 'lg:order-1 pl-16 lg:pl-24 pr-12 lg:pr-16' : 'lg:order-2 pl-12 lg:pl-16 pr-16 lg:pr-24'}`}>
               <h2
-                className="font-serif-display text-[#0a1628] leading-tight mb-3"
+                className="font-serif-display text-[#0a1628] leading-[1.1] mb-3"
                
               >
                 {s.title}
               </h2>
               <p className="text-[#228DC1] text-sm font-medium italic mb-5">{s.headline}</p>
-              <p className="text-[#0a1628]/75 text-[15px] leading-relaxed mb-8 font-normal">
+              <p className="text-[#0a1628]/75 text-[16px] leading-[1.7] mb-8 font-normal">
                 {s.description}
               </p>
               <ul className="space-y-2.5 mb-10">
@@ -148,13 +148,13 @@ export default function SolutionsPage() {
         <div className="max-w-4xl mx-auto px-8 lg:px-12 text-center">
           <p className="text-[11px] font-bold uppercase tracking-[0.25em] text-[#228DC1] mb-6">Ready to get started?</p>
           <h2
-            className="font-serif-display text-[#0a1628] leading-tight mb-6"
+            className="font-serif-display text-[#0a1628] leading-[1.1] mb-6"
            
           >
             Not sure which solution<br />
             <span className="italic text-[#228DC1]">fits your challenge?</span>
           </h2>
-          <p className="text-[#0a1628]/60 text-base leading-relaxed mb-10 font-normal max-w-xl mx-auto">
+          <p className="text-[#0a1628]/60 text-[16px] leading-[1.7] mb-10 font-normal max-w-xl mx-auto">
             Our engineers will scope the right approach for your organisation. No obligation, just honest technical advice from people who have done it before.
           </p>
           <div className="flex flex-wrap justify-center gap-4">

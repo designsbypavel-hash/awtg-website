@@ -77,7 +77,7 @@ export default function InsightsCaseStudiesPage() {
           <h1 className="font-serif-display text-[#0a1628] mb-6">
             Case Studies
           </h1>
-          <p className="text-[#0a1628]/70 text-lg max-w-xl font-normal leading-relaxed">
+          <p className="text-[#0a1628]/70 text-[18px] max-w-xl font-normal leading-[1.7]">
             Real outcomes delivered for real clients. AI, private networks, smart infrastructure and digital transformation. Built, deployed and measured.
           </p>
         </div>
@@ -99,10 +99,10 @@ export default function InsightsCaseStudiesPage() {
                     {f.client}
                   </p>
                   {/* Scannable outcome */}
-                  <p className="text-[#228DC1] font-semibold text-lg leading-snug mb-5">
+                  <p className="text-[#228DC1] font-semibold text-[18px] leading-[1.3] mb-5">
                     {f.outcome}
                   </p>
-                  <p className="text-[#0a1628]/60 text-sm font-normal leading-relaxed">
+                  <p className="text-[#0a1628]/60 text-[14px] font-normal leading-[1.7]">
                     {f.desc}
                   </p>
                 </div>
@@ -131,12 +131,12 @@ export default function InsightsCaseStudiesPage() {
                 <div className="grid lg:grid-cols-[200px_1fr] gap-6">
                   {/* Client name — prominent */}
                   <div>
-                    <p className="font-bold text-[#0a1628] text-[15px] leading-snug mb-1">{cs.client}</p>
+                    <p className="font-bold text-[#0a1628] text-[16px] leading-[1.3] mb-1">{cs.client}</p>
                     <span className="type-label text-[#228DC1]">{cs.sector}</span>
                   </div>
                   <div>
                     <h2 className="font-card-heading text-[#0a1628] text-[15px] mb-2">{cs.title}</h2>
-                    <p className="text-[#0a1628]/60 text-sm font-normal leading-relaxed">{cs.desc}</p>
+                    <p className="text-[#0a1628]/60 text-[14px] font-normal leading-[1.7]">{cs.desc}</p>
                   </div>
                 </div>
                 {/* Stat */}

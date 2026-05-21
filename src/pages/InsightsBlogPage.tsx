@@ -93,12 +93,12 @@ export default function InsightsBlogPage() {
         <div className="max-w-7xl mx-auto px-8 lg:px-12">
           <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#228DC1] mb-4">Insights</p>
           <h1
-            className="font-serif-display text-[#0a1628] leading-tight mb-6"
+            className="font-serif-display text-[#0a1628] leading-[1.1] mb-6"
            
           >
             Blog
           </h1>
-          <p className="text-[#0a1628]/65 text-lg font-normal max-w-xl leading-relaxed">
+          <p className="text-[#0a1628]/65 text-[18px] font-normal max-w-xl leading-[1.7]">
             Expert perspectives on telecoms, AI, private networks, and the infrastructure decisions that define the next decade.
           </p>
         </div>
@@ -143,12 +143,12 @@ export default function InsightsBlogPage() {
                     </span>
                   </div>
                   <h2
-                    className="font-serif-display text-[#0a1628] leading-tight mb-5 group-hover:text-[#228DC1] transition-colors"
+                    className="font-serif-display text-[#0a1628] leading-[1.1] mb-5 group-hover:text-[#228DC1] transition-colors"
                     style={{ fontSize: 'clamp(22px, 2.5vw, 32px)' }}
                   >
                     {featured.title}
                   </h2>
-                  <p className="text-[#0a1628]/75 text-[15px] font-normal leading-relaxed max-w-lg">
+                  <p className="text-[#0a1628]/75 text-[16px] font-normal leading-[1.7] max-w-lg">
                     {featured.excerpt}
                   </p>
                 </div>
@@ -197,10 +197,10 @@ export default function InsightsBlogPage() {
                       <span className={`text-[10px] font-semibold uppercase tracking-[0.15em] px-2.5 py-1 mb-3 inline-block ${tagColour[post.tag] ?? 'bg-[#0a1628]/8 text-[#0a1628]'}`}>
                         {post.tag}
                       </span>
-                      <h2 className="text-[#0a1628] font-semibold leading-snug mb-2 group-hover:text-[#228DC1] transition-colors" style={{ fontSize: 'clamp(15px, 1.5vw, 18px)' }}>
+                      <h2 className="text-[#0a1628] font-semibold leading-[1.3] mb-2 group-hover:text-[#228DC1] transition-colors" style={{ fontSize: 'clamp(15px, 1.5vw, 18px)' }}>
                         {post.title}
                       </h2>
-                      <p className="text-[#0a1628]/65 text-sm font-normal leading-relaxed">
+                      <p className="text-[#0a1628]/65 text-[14px] font-normal leading-[1.7]">
                         {post.excerpt}
                       </p>
                     </div>

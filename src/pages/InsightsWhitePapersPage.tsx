@@ -38,12 +38,12 @@ export default function InsightsWhitePapersPage() {
         <div className="max-w-7xl mx-auto px-8 lg:px-12">
           <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#228DC1] mb-4">Insights</p>
           <h1
-            className="font-serif-display text-[#0a1628] leading-tight mb-6"
+            className="font-serif-display text-[#0a1628] leading-[1.1] mb-6"
            
           >
             White Papers &amp; Research
           </h1>
-          <p className="text-[#0a1628]/60 text-lg max-w-xl font-normal leading-relaxed">
+          <p className="text-[#0a1628]/60 text-[18px] max-w-xl font-normal leading-[1.7]">
             Authoritative research and practical frameworks from AWTG's technical and strategy teams, available to download at no cost.
           </p>
         </div>
@@ -69,7 +69,7 @@ export default function InsightsWhitePapersPage() {
                 <h2 className="font-serif-display text-[#0a1628] mb-3" style={{ fontSize: 'clamp(18px,2vw,24px)' }}>
                   {p.title}
                 </h2>
-                <p className="text-[#0a1628]/75 text-sm font-normal leading-relaxed">{p.desc}</p>
+                <p className="text-[#0a1628]/75 text-[14px] font-normal leading-[1.7]">{p.desc}</p>
               </div>
 
               {/* Download */}

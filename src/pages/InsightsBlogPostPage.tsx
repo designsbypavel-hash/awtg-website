@@ -221,7 +221,7 @@ export default function InsightsBlogPostPage() {
     return (
       <div className="pt-32 pb-24 max-w-3xl mx-auto px-6 text-center">
         <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#228DC1] mb-4">404</p>
-        <h1 className="text-4xl font-bold text-[#0a1628] mb-4">Article Not Found</h1>
+        <h1 className="text-[32px] font-bold text-[#0a1628] mb-4">Article Not Found</h1>
         <p className="text-[#0a1628]/60 mb-8 font-normal">This article doesn't exist or may have been moved.</p>
         <Link to="/insights/blog" className="inline-flex items-center gap-2 text-sm font-medium text-[#228DC1] border border-[#228DC1] px-5 py-2.5 hover:bg-[#228DC1] hover:text-white transition-all">
           <FontAwesomeIcon icon={faArrowLeft} className="w-4 h-4" /> Back to Blog
@@ -249,19 +249,19 @@ export default function InsightsBlogPostPage() {
           </div>
 
           <h1
-            className="font-serif-display text-[#0a1628] leading-tight mb-6"
+            className="font-serif-display text-[#0a1628] leading-[1.1] mb-6"
            
           >
             {post.title}
           </h1>
 
-          <p className="text-[#0a1628]/60 text-lg font-normal leading-relaxed mb-10 max-w-2xl">
+          <p className="text-[#0a1628]/60 text-[18px] font-normal leading-[1.7] mb-10 max-w-2xl">
             {post.excerpt}
           </p>
 
           <div className="flex items-center gap-6 pt-8 border-t border-gray-100">
             <div>
-              <p className="text-[#0a1628] text-sm font-medium">{post.author}</p>
+              <p className="text-[#0a1628] text-[14px] font-medium">{post.author}</p>
               <p className="text-[#0a1628]/60 text-xs mt-0.5">{post.role}</p>
             </div>
             <div className="w-px h-8 bg-[#228DC1]/8" />
@@ -308,7 +308,7 @@ export default function InsightsBlogPostPage() {
               return (
                 <ul key={i} className="my-8 space-y-3">
                   {block.items.map((item, j) => (
-                    <li key={j} className="flex items-start gap-3 text-[#0a1628]/70 text-[15px] font-normal leading-relaxed">
+                    <li key={j} className="flex items-start gap-3 text-[#0a1628]/70 text-[16px] font-normal leading-[1.7]">
                       <span className="mt-2 w-1 h-1 bg-[#228DC1] shrink-0" />
                       {item}
                     </li>
@@ -322,7 +322,7 @@ export default function InsightsBlogPostPage() {
                   {block.stats.map((s, j) => (
                     <div key={j} className={`px-6 py-6 ${j < block.stats!.length - 1 ? 'border-r border-gray-100' : ''}`}>
                       <p className="font-serif-display text-[#0a1628]" style={{ fontSize: '24px', lineHeight: 1.1 }}>{s.value}</p>
-                      <p className="text-[#0a1628]/65 text-xs font-normal leading-relaxed mt-1">{s.label}</p>
+                      <p className="text-[#0a1628]/65 text-[12px] font-normal leading-[1.7] mt-1">{s.label}</p>
                     </div>
                   ))}
                 </div>
@@ -373,7 +373,7 @@ export default function InsightsBlogPostPage() {
                 <span className={`text-[10px] font-semibold uppercase tracking-[0.15em] px-2.5 py-1 mb-4 inline-block ${tagColour[r.tag] ?? 'bg-[#0a1628]/8 text-[#0a1628]'}`}>
                   {r.tag}
                 </span>
-                <h3 className="text-[#0a1628] text-sm font-semibold leading-snug mb-3 group-hover:text-[#228DC1] transition-colors">
+                <h3 className="text-[#0a1628] text-[14px] font-semibold leading-[1.3] mb-3 group-hover:text-[#228DC1] transition-colors">
                   {r.title}
                 </h3>
                 <p className="text-[#0a1628]/60 text-xs">{r.date}</p>

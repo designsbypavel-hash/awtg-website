@@ -68,7 +68,7 @@ export default function GenerativeAIPage() {
             <p className="text-[#0a1628]/65 text-[18px] max-w-xl font-normal leading-[1.7] mb-3">
               Most AI projects never reach production. Ours do. We build AI that works inside real organisations, connected to your systems, governed by your rules, and measured by actual outcomes.
             </p>
-            <p className="text-[#0a1628]/60 text-sm font-normal leading-relaxed max-w-xl mb-9">
+            <p className="text-[#0a1628]/60 text-[14px] font-normal leading-[1.7] max-w-xl mb-9">
               Kai, Aruva and our AI consultancy practice are evidence of this. We have been shipping AI since 2016.
             </p>
             <div className="flex flex-wrap gap-4">
@@ -86,7 +86,7 @@ export default function GenerativeAIPage() {
             </div>
             <div className="border border-white/12 bg-[#0a1628]/4 px-6 py-5">
               <p className="text-[#0a1628]/65 text-[10px] uppercase tracking-[0.2em] font-semibold mb-2">Focus</p>
-              <p className="text-[#0a1628] text-base font-medium leading-snug">Production-ready AI: Kai, Aruva and enterprise GenAI</p>
+              <p className="text-[#0a1628] text-[16px] font-medium leading-[1.3]">Production-ready AI: Kai, Aruva and enterprise GenAI</p>
             </div>
           </div>
         </div>
@@ -95,9 +95,9 @@ export default function GenerativeAIPage() {
       {/* Metrics */}
       <section className="bg-white border-t border-gray-100">
         <div className="max-w-7xl mx-auto px-8 lg:px-12 py-10 grid sm:grid-cols-3 gap-8">
-          <div><p className="text-[#0a1628] text-3xl font-semibold mb-1">2016</p><p className="text-[#0a1628]/65 text-xs font-normal uppercase tracking-[0.18em]">AI products shipping since</p></div>
-          <div><p className="text-[#0a1628] text-3xl font-semibold mb-1">3</p><p className="text-[#0a1628]/65 text-xs font-normal uppercase tracking-[0.18em]">Production AI products</p></div>
-          <div><p className="text-[#0a1628] text-3xl font-semibold mb-1">Enterprise</p><p className="text-[#0a1628]/65 text-xs font-normal uppercase tracking-[0.18em]">Governed, secure deployment</p></div>
+          <div><p className="text-[#0a1628] text-[28px] font-semibold mb-1">2016</p><p className="text-[#0a1628]/65 text-[12px] font-normal uppercase tracking-[0.18em]">AI products shipping since</p></div>
+          <div><p className="text-[#0a1628] text-[28px] font-semibold mb-1">3</p><p className="text-[#0a1628]/65 text-[12px] font-normal uppercase tracking-[0.18em]">Production AI products</p></div>
+          <div><p className="text-[#0a1628] text-[28px] font-semibold mb-1">Enterprise</p><p className="text-[#0a1628]/65 text-[12px] font-normal uppercase tracking-[0.18em]">Governed, secure deployment</p></div>
         </div>
       </section>
 
@@ -119,12 +119,12 @@ export default function GenerativeAIPage() {
                   <p className="text-[#0a1628]/60 text-xs font-normal mt-6 italic">{p.proof}</p>
                 </div>
                 <div className="p-8">
-                  <p className="text-[#0a1628]/65 leading-relaxed font-normal mb-6">{p.desc}</p>
+                  <p className="text-[#0a1628]/65 text-[16px] leading-[1.7] font-normal mb-6">{p.desc}</p>
                   <div className="grid sm:grid-cols-2 gap-3">
                     {p.features.map((f) => (
                       <div key={f} className="flex items-start gap-2.5">
                         <FontAwesomeIcon icon={faCircleCheck} className="w-4 h-4 shrink-0 mt-0.5 text-[#228DC1]" />
-                        <span className="text-[#0a1628]/75 text-sm font-normal">{f}</span>
+                        <span className="text-[#0a1628]/75 text-[14px] font-normal">{f}</span>
                       </div>
                     ))}
                   </div>
@@ -146,8 +146,8 @@ export default function GenerativeAIPage() {
             {caseStudies.map((cs) => (
               <div key={cs.client} className="bg-white p-10">
                 <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#228DC1] mb-2">{cs.client}</p>
-                <h3 className="font-semibold text-[#0a1628] text-lg mb-4 leading-snug">{cs.project}</h3>
-                <p className="text-[#0a1628]/75 text-sm leading-relaxed font-normal mb-6">{cs.outcome}</p>
+                <h3 className="font-semibold text-[#0a1628] text-[18px] mb-4 leading-[1.3]">{cs.project}</h3>
+                <p className="text-[#0a1628]/75 text-[14px] leading-[1.7] font-normal mb-6">{cs.outcome}</p>
                 <div className="flex flex-wrap gap-2">
                   {cs.tags.map((t) => (
                     <span key={t} className="text-[10px] font-semibold uppercase tracking-[0.12em] px-3 py-1 bg-[#228DC1]/8 text-[#228DC1]">{t}</span>
@@ -175,8 +175,8 @@ export default function GenerativeAIPage() {
             ].map((c) => (
               <div key={c.title} className="bg-white p-8 hover:bg-[#f7f8fa] transition-colors">
                 <FontAwesomeIcon icon={faCircleCheck} className="w-5 h-5 text-[#228DC1] mb-5" />
-                <h3 className="text-[#0a1628] font-semibold mb-2 text-sm">{c.title}</h3>
-                <p className="text-[#0a1628]/65 text-sm font-normal leading-relaxed">{c.desc}</p>
+                <h3 className="text-[#0a1628] font-semibold mb-2 text-[14px]">{c.title}</h3>
+                <p className="text-[#0a1628]/65 text-[14px] font-normal leading-[1.7]">{c.desc}</p>
               </div>
             ))}
           </div>

@@ -52,7 +52,7 @@ export default function ServiceDetailPage({
             </div>
             <div className="border border-white/12 bg-[#0a1628]/4 px-6 py-5">
               <p className="type-label text-[#0a1628]/60 mb-2">Focus</p>
-              <p className="text-[#0a1628] text-base font-medium leading-snug">{navSummary}</p>
+              <p className="text-[#0a1628] text-[16px] font-medium leading-[1.3]">{navSummary}</p>
             </div>
           </div>
         </div>
@@ -89,7 +89,7 @@ export default function ServiceDetailPage({
                 {/* L3 — card heading */}
                 <h3 className="font-card-heading text-[#0a1628] text-[15px] mb-2">{capability.title}</h3>
                 {/* L4 — body */}
-                <p className="text-[#0a1628]/65 text-sm leading-relaxed font-normal">{capability.desc}</p>
+                <p className="text-[#0a1628]/65 text-[14px] leading-[1.7] font-normal">{capability.desc}</p>
               </div>
             ))}
           </div>
@@ -112,7 +112,7 @@ export default function ServiceDetailPage({
                 {/* L3 — card heading */}
                 <h3 className="font-card-heading text-[#0a1628] text-[18px] mb-3">{step.title}</h3>
                 {/* L4 — body */}
-                <p className="text-[#0a1628]/65 text-sm leading-relaxed font-normal">{step.desc}</p>
+                <p className="text-[#0a1628]/65 text-[14px] leading-[1.7] font-normal">{step.desc}</p>
               </div>
             ))}
           </div>

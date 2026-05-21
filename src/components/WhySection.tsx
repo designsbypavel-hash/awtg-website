@@ -31,11 +31,11 @@ export default function WhySection() {
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           <div>
-            <p className="text-[#228DC1] font-semibold text-sm uppercase tracking-widest mb-3">Why AWTG</p>
+            <p className="text-[#228DC1] font-semibold text-[11px] uppercase tracking-widest mb-3">Why AWTG</p>
             <h2 className="font-heading text-[#0a1628] mb-6">
               The Partner You Can Rely On
             </h2>
-            <p className="text-[#0a1628]/65 text-[18px] leading-[1.7] mb-8">
+            <p className="text-[#0a1628]/65 text-[18px] leading-[1.7] mb-8 font-normal">
               We don't just build networks, we build long-term partnerships. Our approach combines deep technical expertise with a genuine commitment to your success.
             </p>
             <div className="w-16 h-1 bg-[#228DC1] rounded" />
@@ -46,8 +46,8 @@ export default function WhySection() {
                 <div className="w-10 h-10 bg-[#228DC1]/10 rounded-lg flex items-center justify-center mb-4">
                   <FontAwesomeIcon icon={reason.icon} className="w-5 h-5 text-[#228DC1]" />
                 </div>
-                <h3 className="font-medium text-[#0a1628] mb-2">{reason.title}</h3>
-                <p className="text-[#0a1628]/75 text-sm leading-relaxed">{reason.description}</p>
+                <h3 className="font-semibold text-[#0a1628] mb-2">{reason.title}</h3>
+                <p className="text-[#0a1628]/75 text-[14px] leading-[1.7]">{reason.description}</p>
               </div>
             ))}
           </div>

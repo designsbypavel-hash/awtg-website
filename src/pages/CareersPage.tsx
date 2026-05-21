@@ -24,11 +24,11 @@ export default function CareersPage() {
     <>
       <section className="pt-32 pb-20 bg-[#f8fafc]">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <p className="text-[#228DC1] font-semibold text-sm uppercase tracking-widest mb-3">Careers</p>
-          <h1 className="text-5xl lg:text-6xl font-normal text-[#0a1628] mb-6 max-w-3xl leading-tight">
+          <p className="text-[#228DC1] font-semibold text-[11px] uppercase tracking-widest mb-3">Careers</p>
+          <h1 className="font-serif-display text-[#0a1628] mb-6 max-w-3xl leading-[1.1]">
             Shape the Future of Connectivity
           </h1>
-          <p className="text-[#0a1628]/60 text-xl max-w-2xl">
+          <p className="text-[#0a1628]/60 text-[18px] max-w-2xl">
             Join a team of world-class engineers, consultants and innovators solving the world's most complex connectivity challenges.
           </p>
         </div>
@@ -44,8 +44,8 @@ export default function CareersPage() {
                 <div className="w-11 h-11 bg-[#228DC1]/8 flex items-center justify-center mb-6">
                   <FontAwesomeIcon icon={v.icon} className="w-5 h-5 text-[#228DC1]" />
                 </div>
-                <h3 className="font-semibold text-[#0a1628] mb-2 text-sm">{v.title}</h3>
-                <p className="text-[#0a1628]/60 text-sm font-normal leading-relaxed">{v.desc}</p>
+                <h3 className="font-semibold text-[#0a1628] mb-2 text-[14px]">{v.title}</h3>
+                <p className="text-[#0a1628]/60 text-[14px] font-normal leading-[1.7]">{v.desc}</p>
               </div>
             ))}
           </div>
@@ -60,9 +60,9 @@ export default function CareersPage() {
             {openRoles.map((role) => (
               <li key={role.title} role="listitem" className="bg-white p-6 border border-gray-100 flex flex-col sm:flex-row sm:items-center justify-between gap-4 hover:border-[#228DC1]/40 hover:shadow-md transition-all">
                 <div>
-                  <div className="text-xs font-semibold text-[#228DC1] uppercase tracking-wider mb-1">{role.dept}</div>
-                  <h3 className="font-medium text-[#0a1628] text-lg">{role.title}</h3>
-                  <div className="flex items-center gap-4 mt-2 text-sm text-[#0a1628]/60">
+                  <div className="text-[12px] font-semibold text-[#228DC1] uppercase tracking-wider mb-1">{role.dept}</div>
+                  <h3 className="font-semibold text-[#0a1628] text-[20px]">{role.title}</h3>
+                  <div className="flex items-center gap-4 mt-2 text-[14px] text-[#0a1628]/60">
                     <span className="flex items-center gap-1"><FontAwesomeIcon icon={faLocationDot} className="w-3 h-3" /> {role.location}</span>
                     <span className="flex items-center gap-1"><FontAwesomeIcon icon={faBriefcase} className="w-3 h-3" /> {role.type}</span>
                   </div>

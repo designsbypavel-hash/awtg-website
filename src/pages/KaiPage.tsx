@@ -774,13 +774,13 @@ export default function KaiPage() {
     <>
       <ScrollProgress />
       {/* -- Hero -- */}
-      <section className="relative overflow-hidden bg-white pt-32 pb-20">
+      <section className="relative overflow-hidden bg-white pt-32 pb-0">
 
         <div className="relative max-w-7xl mx-auto px-8 lg:px-12">
-          <div className="grid lg:grid-cols-[3fr_2fr] gap-12 lg:gap-16 items-center">
+          <div className="grid lg:grid-cols-[1fr_1.4fr] gap-8 lg:gap-12 items-center">
 
             {/* Left: copy */}
-            <div>
+            <div className="pb-20">
               <div className="flex items-center gap-3 mb-6">
                 <img src="/kai-logo.svg" alt="Kai" className="h-7 w-auto object-contain" />
                 <p className="font-black text-[#228DC1]" style={{ fontSize: '13px', letterSpacing: '0.28em', textTransform: 'uppercase', opacity: 0.6 }}>
@@ -805,19 +805,21 @@ export default function KaiPage() {
               </div>
             </div>
 
-            {/* Right: mockup */}
-            <div className="relative hidden lg:block">
-              <div className="absolute -inset-10 pointer-events-none" style={{
-                background: 'radial-gradient(ellipse 80% 60% at 55% 50%, rgba(34,141,193,0.10) 0%, transparent 70%)',
+            {/* Right: mockup — oversized, bleeds off bottom */}
+            <div className="relative hidden lg:flex items-end self-end">
+              {/* Soft glow behind */}
+              <div className="absolute -inset-16 pointer-events-none" style={{
+                background: 'radial-gradient(ellipse 70% 60% at 50% 60%, rgba(144,62,142,0.07) 0%, rgba(34,141,193,0.06) 50%, transparent 75%)',
               }} />
               <div
-                className="relative overflow-hidden shadow-[0_20px_80px_rgba(10,22,40,0.12),0_4px_20px_rgba(34,141,193,0.08)] border border-gray-200/60"
-                style={{ borderRadius: '12px' }}
+                className="relative w-full overflow-hidden shadow-[0_24px_80px_rgba(10,22,40,0.14),0_4px_24px_rgba(144,62,142,0.08)] border border-gray-200/70"
+                style={{ borderRadius: '16px 16px 0 0', transform: 'translateY(0px)' }}
               >
                 <img
                   src="/kai-mockup.png"
                   alt="Kai platform interface"
                   className="w-full block"
+                  style={{ display: 'block' }}
                 />
               </div>
             </div>

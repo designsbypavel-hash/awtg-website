@@ -778,7 +778,7 @@ export default function KaiPage() {
                 </p>
               </div>
               <h1 className="font-serif-display text-[#0a1628] leading-[1.02] mb-6" style={{ fontSize: 'clamp(44px, 5.5vw, 80px)' }}>
-                The enterprise AI agent<br />
+                Enterprise AI<br />
                 that <span style={{ color: '#228DC1' }}>resolves,</span><br />
                 not just responds.
               </h1>

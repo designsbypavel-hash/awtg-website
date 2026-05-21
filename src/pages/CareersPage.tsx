@@ -37,7 +37,7 @@ export default function CareersPage() {
       {/* Values */}
       <section className="py-24 bg-white">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-[#0a1628] mb-12 text-center">Why Work at AWTG?</h2>
+          <h2 className="font-heading text-[#0a1628] mb-12 text-center" style={{ fontSize: 'clamp(28px, 3vw, 40px)' }}>Why Work at AWTG?</h2>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-px bg-gray-100 border border-gray-100 mb-16">
             {values.map((v) => (
               <div key={v.title} className="bg-white p-8 hover:bg-[#f7f8fa] transition-colors group">
@@ -55,13 +55,13 @@ export default function CareersPage() {
       {/* Open roles */}
       <section className="py-24 bg-[#f5f7fa]">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-[#0a1628] mb-12">Open Positions</h2>
+          <h2 className="font-heading text-[#0a1628] mb-12" style={{ fontSize: 'clamp(28px, 3vw, 40px)' }}>Open Positions</h2>
           <ul role="list" className="space-y-4">
             {openRoles.map((role) => (
               <li key={role.title} role="listitem" className="bg-white p-6 border border-gray-100 flex flex-col sm:flex-row sm:items-center justify-between gap-4 hover:border-[#228DC1]/40 hover:shadow-md transition-all">
                 <div>
                   <div className="text-xs font-semibold text-[#228DC1] uppercase tracking-wider mb-1">{role.dept}</div>
-                  <h3 className="font-bold text-[#0a1628] text-lg">{role.title}</h3>
+                  <h3 className="font-medium text-[#0a1628] text-lg">{role.title}</h3>
                   <div className="flex items-center gap-4 mt-2 text-sm text-[#0a1628]/60">
                     <span className="flex items-center gap-1"><FontAwesomeIcon icon={faLocationDot} className="w-3 h-3" /> {role.location}</span>
                     <span className="flex items-center gap-1"><FontAwesomeIcon icon={faBriefcase} className="w-3 h-3" /> {role.type}</span>

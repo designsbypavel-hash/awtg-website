@@ -40,7 +40,7 @@ export default function ServicesSection() {
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="text-center mb-16">
           <p className="text-[#228DC1] font-semibold text-sm uppercase tracking-widest mb-3">What We Do</p>
-          <h2 className="text-4xl lg:text-5xl font-bold text-[#0a1628] mb-4">Our Core Solutions</h2>
+          <h2 className="font-heading text-[#0a1628] mb-4" style={{ fontSize: 'clamp(32px, 4vw, 52px)' }}>Our Core Solutions</h2>
           <p className="text-[#0a1628]/75 text-lg max-w-2xl mx-auto">
             From private 5G networks to AI-driven analytics, we deliver end-to-end telecoms transformation.
           </p>
@@ -59,7 +59,7 @@ export default function ServicesSection() {
               >
                 <FontAwesomeIcon icon={service.icon} className="w-6 h-6 text-[#228DC1]" />
               </div>
-              <h3 className="text-xl font-bold text-[#0a1628] mb-3">{service.title}</h3>
+              <h3 className="text-xl font-medium text-[#0a1628] mb-3">{service.title}</h3>
               <p className="text-[#0a1628]/75 leading-relaxed mb-4">{service.description}</p>
               <span className="inline-flex items-center gap-1 text-[#228DC1] text-sm font-semibold group-hover:gap-2 transition-all">
                 Learn more <FontAwesomeIcon icon={faArrowRight} className="w-4 h-4" />

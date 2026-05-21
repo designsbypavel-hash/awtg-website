@@ -2,7 +2,6 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowRight, faCircleCheck, faChevronLeft, faChevronRight, faBolt, faShield, faChartBar } from '@fortawesome/free-solid-svg-icons'
-import type { IconDefinition } from '@fortawesome/fontawesome-svg-core'
 
 // --- BRAND SVG LOGOS --------------------------------------------------------
 
@@ -209,7 +208,7 @@ function Hero() {
 
 function WhatWeDo() {
   const rows = [
-    { num: '01', label: 'AI Products & Software', line: 'Kai, Aruva and bespoke AI — built for production, not proof of concept.', href: '/solutions/generative-ai' },
+    { num: '01', label: 'AI Products & Software', line: 'Kai, Aruva and bespoke AI ï¿½ built for production, not proof of concept.', href: '/solutions/generative-ai' },
     { num: '02', label: 'Private Networks', line: 'Managed 4G/5G designed, deployed and monitored end-to-end. Live in weeks.', href: '/solutions/mobile-private-networks' },
     { num: '03', label: 'Engineering & Consultancy', line: '5G RF design, network testing and transformation strategy across 20+ countries.', href: '/services/engineering' },
   ]
@@ -227,7 +226,7 @@ function WhatWeDo() {
                   <p className="text-[#0a1628]/60 text-sm font-normal leading-relaxed">{r.line}</p>
                 </div>
               </div>
-              <ArrowRight className="w-5 h-5 text-[#228DC1] shrink-0 opacity-0 group-hover:opacity-100 transition-opacity" />
+              <FontAwesomeIcon icon={faArrowRight} className="w-5 h-5 text-[#228DC1] shrink-0 opacity-0 group-hover:opacity-100 transition-opacity" />
             </Link>
           ))}
         </div>
@@ -327,7 +326,7 @@ export function OurSolutions() {
             {panel.flip ? (
               <>
                 <div className="p-12 lg:p-16 flex flex-col justify-center">
-                  <h3 className="text-2xl font-bold text-[#0a1628] leading-snug mb-4">{panel.title}</h3>
+                  <h3 className="text-2xl font-medium text-[#0a1628] leading-snug mb-4">{panel.title}</h3>
                   <p className="text-[#0a1628]/60 text-base leading-relaxed mb-6 font-normal">{panel.desc}</p>
                   <Link to={panel.href} className="inline-flex items-center gap-2 text-sm font-medium text-[#228DC1] hover:gap-3 transition-all">
                     {panel.link} <FontAwesomeIcon icon={faArrowRight} className="w-4 h-4" />
@@ -343,7 +342,7 @@ export function OurSolutions() {
                   <img src={panel.img} alt={panel.title} className="w-full h-full object-cover" loading="lazy" />
                 </div>
                 <div className="p-12 lg:p-16 flex flex-col justify-center">
-                  <h3 className="text-2xl font-bold text-[#0a1628] leading-snug mb-4">{panel.title}</h3>
+                  <h3 className="text-2xl font-medium text-[#0a1628] leading-snug mb-4">{panel.title}</h3>
                   <p className="text-[#0a1628]/60 text-base leading-relaxed mb-6 font-normal">{panel.desc}</p>
                   <Link to={panel.href} className="inline-flex items-center gap-2 text-sm font-medium text-[#228DC1] hover:gap-3 transition-all">
                     {panel.link} <FontAwesomeIcon icon={faArrowRight} className="w-4 h-4" />
@@ -423,7 +422,7 @@ function Industries() {
             <img src={card.img} alt={card.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy" />
             <div className="absolute inset-0 bg-gradient-to-t from-[#050a12]/85 via-[#050a12]/20 to-transparent" />
             <div className="absolute bottom-0 left-0 right-0 p-8 lg:p-10">
-              <h3 className="text-white font-bold text-xl mb-2 leading-snug">{card.title}</h3>
+              <h3 className="text-white font-medium text-xl mb-2 leading-snug">{card.title}</h3>
               <span className="inline-flex items-center gap-1.5 text-sm text-[#0a1628]/60 group-hover:text-white transition-colors font-medium">
                 {card.sub} <FontAwesomeIcon icon={faArrowRight} className="w-3.5 h-3.5" />
               </span>
@@ -689,7 +688,7 @@ function ClientVoices() {
             <img src={t.img} alt={t.name} className="w-full h-full object-cover object-top" loading="lazy" />
             {/* Subtle gradient just at the very bottom */}
             <div className="absolute inset-0 bg-gradient-to-t from-[#050a12]/70 via-transparent to-transparent" />
-            {/* Caption strip — pinned to bottom edge, full width */}
+            {/* Caption strip ï¿½ pinned to bottom edge, full width */}
             <div className="absolute bottom-0 left-0 right-0 flex items-center gap-3 bg-[#0a1628]/60 backdrop-blur-sm px-5 py-3.5">
               <div className="w-8 h-8 rounded-full bg-[#228DC1] flex items-center justify-center text-white text-xs font-bold shrink-0">{t.initials}</div>
               <div>
@@ -819,7 +818,7 @@ function Insights() {
               <div className="p-6">
                 <div className="flex items-center gap-2 mb-3 text-xs">
                   <span className={`font-semibold ${a.tagColor}`}>{a.tag}</span>
-                  <span className="text-[#0a1628]/20">·</span>
+                  <span className="text-[#0a1628]/20">ï¿½</span>
                   <span className="text-[#0a1628]/60 font-normal">{a.date}</span>
                 </div>
                 <p className="text-sm font-semibold text-[#0a1628] leading-snug mb-4 line-clamp-3">{a.title}</p>
@@ -867,11 +866,11 @@ function ContactCTA() {
             <div className="border-t border-white/10 pt-6">
               <p className="text-[10px] font-semibold uppercase tracking-widest text-white/30 mb-2">Phone</p>
               <a href="tel:+442035155151" className="text-white/70 hover:text-white transition-colors font-medium">+44 (0) 20 3515 5151</a>
-              <p className="text-xs text-white/30 mt-1 font-normal">Mon–Fri, 9am–6pm GMT</p>
+              <p className="text-xs text-white/30 mt-1 font-normal">Monï¿½Fri, 9amï¿½6pm GMT</p>
             </div>
             <div className="border-t border-white/10 pt-6">
               <p className="text-[10px] font-semibold uppercase tracking-widest text-white/30 mb-2">Offices</p>
-              <p className="text-white/70 font-medium">London · Lisbon · Stockholm · Singapore</p>
+              <p className="text-white/70 font-medium">London ï¿½ Lisbon ï¿½ Stockholm ï¿½ Singapore</p>
             </div>
           </div>
         </div>

@@ -32,7 +32,7 @@ export default function WhySection() {
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           <div>
             <p className="text-[#228DC1] font-semibold text-sm uppercase tracking-widest mb-3">Why AWTG</p>
-            <h2 className="text-4xl lg:text-5xl font-bold text-[#0a1628] mb-6 leading-tight">
+            <h2 className="font-heading text-[#0a1628] mb-6" style={{ fontSize: 'clamp(32px, 4vw, 52px)' }}>
               The Partner You Can Rely On
             </h2>
             <p className="text-[#0a1628]/75 text-lg leading-relaxed mb-8">
@@ -46,7 +46,7 @@ export default function WhySection() {
                 <div className="w-10 h-10 bg-[#228DC1]/10 rounded-lg flex items-center justify-center mb-4">
                   <FontAwesomeIcon icon={reason.icon} className="w-5 h-5 text-[#228DC1]" />
                 </div>
-                <h3 className="font-bold text-[#0a1628] mb-2">{reason.title}</h3>
+                <h3 className="font-medium text-[#0a1628] mb-2">{reason.title}</h3>
                 <p className="text-[#0a1628]/75 text-sm leading-relaxed">{reason.description}</p>
               </div>
             ))}

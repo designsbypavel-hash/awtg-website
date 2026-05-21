@@ -45,7 +45,7 @@ export default function InsightsSection() {
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end mb-12 gap-4">
           <div>
             <p className="text-[#228DC1] font-semibold text-sm uppercase tracking-widest mb-3">Latest Insights</p>
-            <h2 className="text-4xl font-bold text-[#0a1628]">News &amp; Thought Leadership</h2>
+            <h2 className="font-heading text-[#0a1628]" style={{ fontSize: 'clamp(28px, 3.5vw, 44px)' }}>News &amp; Thought Leadership</h2>
           </div>
           <Link
             to="/insights"
@@ -69,7 +69,7 @@ export default function InsightsSection() {
                 <span className={`inline-block text-xs font-semibold px-3 py-1 rounded-full mb-3 ${categoryColors[post.category]}`}>
                   {post.category}
                 </span>
-                <h3 className="font-bold text-[#0a1628] leading-snug mb-3 group-hover:text-[#228DC1] transition-colors">
+                <h3 className="font-medium text-[#0a1628] leading-snug mb-3 group-hover:text-[#228DC1] transition-colors">
                   {post.title}
                 </h3>
                 <p className="text-[#0a1628]/75 text-sm leading-relaxed mb-4">{post.excerpt}</p>

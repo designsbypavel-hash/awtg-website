@@ -110,10 +110,10 @@
    L5  Labels/UI     500  11px uppercase  +0.20em  structural signposting
    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 
-/* L1 — Hero H1: maximum weight, tightest tracking */
+/* L1 — Hero H1: regular weight, tightest tracking */
 .font-serif-display {
   font-family: 'Roboto', system-ui, sans-serif;
-  font-weight: 900;
+  font-weight: 400;
   letter-spacing: -0.03em;
   line-height: 1.02;
 }

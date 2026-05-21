@@ -13,7 +13,7 @@ export default function InsightsPage() {
       <section className="pt-32 pb-20 bg-[#f8fafc]">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <p className="text-[#228DC1] font-semibold text-sm uppercase tracking-widest mb-3">Insights</p>
-          <h1 className="text-5xl lg:text-6xl font-bold text-[#0a1628] mb-6 leading-tight">
+          <h1 className="text-5xl lg:text-6xl font-normal text-[#0a1628] mb-6 leading-tight">
             News &amp; Thought Leadership
           </h1>
           <p className="text-[#0a1628]/60 text-xl max-w-2xl">

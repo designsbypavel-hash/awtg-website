@@ -1,56 +1,45 @@
-<svg viewBox="0 0 420 100" xmlns="http://www.w3.org/2000/svg">
-  <defs>
-    <!-- Shield clip -->
-    <clipPath id="shieldClip">
-      <path d="M8 6 L58 6 L58 52 Q33 74 8 52 Z"/>
-    </clipPath>
-  </defs>
+<svg viewBox="0 0 560 100" xmlns="http://www.w3.org/2000/svg">
 
   <!-- ── Heraldic shield ── -->
-  <!-- Shield body fill -->
   <path d="M8 6 L58 6 L58 52 Q33 74 8 52 Z" fill="#006B54" opacity="0.12"/>
-  <!-- Shield outline -->
   <path d="M8 6 L58 6 L58 52 Q33 74 8 52 Z" fill="none" stroke="#006B54" stroke-width="2"/>
 
   <!-- Crown above shield -->
-  <path d="M13 6 L16 0 L20 4 L26 0 L33 0 L39 0 L46 4 L50 0 L54 6"
+  <path d="M13 6 L16 0 L20 4 L26 0 L33 0 L40 0 L46 4 L50 0 L54 6"
         fill="none" stroke="#006B54" stroke-width="1.8" stroke-linejoin="round"/>
 
-  <!-- Horizontal dividing bar -->
-  <line x1="8" y1="30" x2="58" y2="30" stroke="#006B54" stroke-width="1.4"/>
-  <!-- Vertical dividing bar -->
-  <line x1="33" y1="6" x2="33" y2="65" stroke="#006B54" stroke-width="1.4"/>
+  <!-- Dividers -->
+  <line x1="8"  y1="30" x2="58" y2="30" stroke="#006B54" stroke-width="1.4"/>
+  <line x1="33" y1="6"  x2="33" y2="65" stroke="#006B54" stroke-width="1.4"/>
 
-  <!-- Top-left quadrant: three horizontal lines (Azure fess) -->
+  <!-- Top-left: horizontal stripes -->
   <line x1="10" y1="15" x2="31" y2="15" stroke="#006B54" stroke-width="2.5"/>
   <line x1="10" y1="22" x2="31" y2="22" stroke="#006B54" stroke-width="2.5"/>
 
-  <!-- Top-right quadrant: diagonal cross (saltire) -->
+  <!-- Top-right: saltire -->
   <line x1="35" y1="8"  x2="56" y2="28" stroke="#006B54" stroke-width="1.8"/>
   <line x1="56" y1="8"  x2="35" y2="28" stroke="#006B54" stroke-width="1.8"/>
 
-  <!-- Bottom-left quadrant: chevron -->
+  <!-- Bottom-left: chevron -->
   <polyline points="10,46 21,36 31,46" fill="none" stroke="#006B54" stroke-width="2"/>
 
-  <!-- Bottom-right quadrant: small cross -->
+  <!-- Bottom-right: cross -->
   <line x1="44" y1="32" x2="44" y2="52" stroke="#006B54" stroke-width="1.8"/>
   <line x1="35" y1="42" x2="56" y2="42" stroke="#006B54" stroke-width="1.8"/>
 
   <!-- ── Typography ── -->
-  <!-- "West Berkshire" bold italic serif -->
-  <text x="74" y="58"
+  <text x="72" y="56"
         font-family="Georgia, Times New Roman, serif"
-        font-size="46"
+        font-size="44"
         font-weight="bold"
         font-style="italic"
-        fill="#006B54"
-        letter-spacing="-0.5">West Berkshire</text>
+        fill="#006B54">West Berkshire</text>
 
-  <!-- "COUNCIL" small caps with letter spacing -->
-  <text x="76" y="80"
+  <text x="74" y="78"
         font-family="Arial, Helvetica, sans-serif"
-        font-size="14"
+        font-size="13"
         font-weight="600"
-        letter-spacing="7"
+        letter-spacing="6"
         fill="#006B54">COUNCIL</text>
+
 </svg>

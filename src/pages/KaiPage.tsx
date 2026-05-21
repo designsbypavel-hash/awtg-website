@@ -767,7 +767,7 @@ export default function KaiPage() {
       <section className="relative overflow-hidden bg-white pt-32 pb-20">
 
         <div className="relative max-w-7xl mx-auto px-8 lg:px-12">
-          <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+          <div className="grid lg:grid-cols-[3fr_2fr] gap-12 lg:gap-16 items-center">
 
             {/* Left: copy */}
             <div>
@@ -777,7 +777,7 @@ export default function KaiPage() {
                   Kai · Enterprise AI Agent
                 </p>
               </div>
-              <h1 className="font-serif-display text-[#0a1628] leading-[1.02] mb-6" style={{ fontSize: 'clamp(44px, 5.2vw, 76px)' }}>
+              <h1 className="font-serif-display text-[#0a1628] leading-[1.02] mb-6" style={{ fontSize: 'clamp(44px, 5.5vw, 80px)' }}>
                 The enterprise AI agent<br />
                 that <span style={{ color: '#228DC1' }}>resolves,</span><br />
                 not just responds.

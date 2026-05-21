@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom'
 import { MapContainer, TileLayer, Polygon, useMap } from 'react-leaflet'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowRight, faCircleCheck, faMap, faTowerBroadcast, faChartBar, faGlobe, faLayerGroup, faBullseye } from '@fortawesome/free-solid-svg-icons'
-import type { IconDefinition } from '@fortawesome/fontawesome-svg-core'
 import CTASection from '@/components/CTASection'
 import 'leaflet/dist/leaflet.css'
 import type { LatLngExpression } from 'leaflet'
@@ -22,7 +21,7 @@ interface CoverageZone {
 }
 
 const coverageZones: CoverageZone[] = [
-  // 5G+ core — Manchester city centre
+  // 5G+ core ï¿½ Manchester city centre
   {
     id: 'z1', type: '5g-plus', label: '5G+',
     signal: '-72 dBm', population: '28,400 residents', operator: 'All operators',
@@ -32,7 +31,7 @@ const coverageZones: CoverageZone[] = [
       [53.462, -2.300], [53.488, -2.310],
     ],
   },
-  // 5G inner ring — inner Manchester suburbs
+  // 5G inner ring ï¿½ inner Manchester suburbs
   {
     id: 'z2', type: '5g', label: '5G',
     signal: '-85 dBm', population: '15,600 residents', operator: 'EE / Vodafone / O2',
@@ -53,7 +52,7 @@ const coverageZones: CoverageZone[] = [
       [53.358, -2.440], [53.432, -2.580], [53.540, -2.580],
     ],
   },
-  // 3G — Wigan area
+  // 3G ï¿½ Wigan area
   {
     id: 'z4', type: '3g', label: '3G',
     signal: '-105 dBm', population: '2,400 residents', operator: 'Three only',
@@ -62,7 +61,7 @@ const coverageZones: CoverageZone[] = [
       [53.505, -2.640], [53.530, -2.710],
     ],
   },
-  // 3G — Oldham / east side
+  // 3G ï¿½ Oldham / east side
   {
     id: 'z5', type: '3g', label: '3G',
     signal: '-108 dBm', population: '3,100 residents', operator: 'O2 only',
@@ -71,7 +70,7 @@ const coverageZones: CoverageZone[] = [
       [53.530, -1.920], [53.520, -1.990], [53.535, -2.060],
     ],
   },
-  // Gap — Pennines east
+  // Gap ï¿½ Pennines east
   {
     id: 'z6', type: 'gap', label: 'No Coverage',
     signal: 'No signal', population: 'Underserved area', operator: 'None',
@@ -80,7 +79,7 @@ const coverageZones: CoverageZone[] = [
       [53.475, -1.750], [53.470, -1.840], [53.495, -1.880],
     ],
   },
-  // Gap — rural north Lancashire
+  // Gap ï¿½ rural north Lancashire
   {
     id: 'z7', type: 'gap', label: 'No Coverage',
     signal: 'No signal', population: 'Underserved area', operator: 'None',
@@ -402,7 +401,7 @@ export default function IcmapPage() {
 
         <div className="relative max-w-7xl mx-auto px-8 lg:px-12">
           <p className="font-black text-[#228DC1] mb-4" style={{ fontSize: '13px', letterSpacing: '0.28em', textTransform: 'uppercase', opacity: 0.6 }}>
-            iCMAP · Intelligent Coverage Mapping
+            iCMAP ï¿½ Intelligent Coverage Mapping
           </p>
           <h1 className="font-serif-display text-[#0a1628] leading-[1.02] mb-6 max-w-4xl" style={{ fontSize: 'clamp(44px, 5.8vw, 80px)' }}>
             See every gap.<br />

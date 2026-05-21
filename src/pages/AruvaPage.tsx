@@ -2,7 +2,6 @@ import { useState, useRef, useEffect, type CSSProperties } from 'react'
 import { Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowRight, faBookOpen, faShield, faArrowsRotate, faWandSparkles, faCircleCheck } from '@fortawesome/free-solid-svg-icons'
-import type { IconDefinition } from '@fortawesome/fontawesome-svg-core'
 import CTASection from '@/components/CTASection'
 
 // -- Scroll utilities ----------------------------------------------------------
@@ -160,7 +159,7 @@ const demoMessages = [
   { role: 'ai', text: 'Which of the five forces do you think has the strongest impact on the airline industry? Start with your instinct.', cite: 'Porter, 2008, Ch.2', delay: 1700 },
   { role: 'student', text: 'Probably competitive rivalry between airlines?', delay: 3300 },
   { role: 'ai', text: 'Good instinct. Now, what specifically intensifies that rivalry? Think about cost structure and what it costs a passenger to switch carriers.', cite: 'Week 3, Rubric C', delay: 4700 },
-  { role: 'signal', text: 'Mastery signal captured · Learning Curve updated', delay: 6100 },
+  { role: 'signal', text: 'Mastery signal captured ï¿½ Learning Curve updated', delay: 6100 },
 ]
 
 function AnimatedDemo() {
@@ -192,7 +191,7 @@ function AnimatedDemo() {
     return () => { clearTimeout(t); timeoutsRef.current.forEach(clearTimeout) }
   }, [])
 
-  // Mastery bar values — animate when signal appears
+  // Mastery bar values ï¿½ animate when signal appears
   const masteryItems = [
     { label: 'Competitive Forces', pct: 72 },
     { label: 'Strategic Analysis', pct: 58 },
@@ -218,10 +217,10 @@ function AnimatedDemo() {
         </button>
       </div>
 
-      {/* App layout — 3 panels */}
+      {/* App layout ï¿½ 3 panels */}
       <div className="grid grid-cols-[180px_1fr_160px] divide-x divide-gray-100" style={{ minHeight: '420px' }}>
 
-        {/* Left sidebar — course nav */}
+        {/* Left sidebar ï¿½ course nav */}
         <div className="bg-[#f8fafc] p-4">
           <p className="text-[9px] font-semibold uppercase tracking-[0.18em] text-gray-400 mb-3">My Courses</p>
           <div className="space-y-1 mb-6">
@@ -241,13 +240,13 @@ function AnimatedDemo() {
           </div>
         </div>
 
-        {/* Centre — tutor chat */}
+        {/* Centre ï¿½ tutor chat */}
         <div className="flex flex-col bg-white">
           {/* Course context */}
           <div className="px-4 py-3 border-b border-gray-100 bg-[#f8fafc] flex items-center justify-between">
             <div>
               <p className="text-[11px] font-semibold text-[#0a1628]">Porter's Five Forces</p>
-              <p className="text-[10px] text-gray-400">Week 3 · Socratic mode · No direct answers</p>
+              <p className="text-[10px] text-gray-400">Week 3 ï¿½ Socratic mode ï¿½ No direct answers</p>
             </div>
           </div>
 
@@ -308,7 +307,7 @@ function AnimatedDemo() {
           </div>
         </div>
 
-        {/* Right panel — learning signals */}
+        {/* Right panel ï¿½ learning signals */}
         <div className="bg-[#f8fafc] p-4 flex flex-col gap-4">
           <p className="text-[9px] font-semibold uppercase tracking-[0.18em] text-gray-400">Learning Curve</p>
 
@@ -394,7 +393,7 @@ function SyllabusVisual() {
     <div className="bg-white border border-gray-200 overflow-hidden shadow-[0_2px_20px_rgba(10,22,40,0.06)]">
       {/* File header */}
       <div className="flex items-center gap-2 px-4 py-3 bg-[#f8fafc] border-b border-gray-100">
-        <span className="text-[10px] font-semibold uppercase tracking-[0.18em] text-[#0a1628]/60">business_strategy_101.xlsx · Week 3</span>
+        <span className="text-[10px] font-semibold uppercase tracking-[0.18em] text-[#0a1628]/60">business_strategy_101.xlsx ï¿½ Week 3</span>
       </div>
       <div className="divide-y divide-gray-50">
         {[
@@ -402,7 +401,7 @@ function SyllabusVisual() {
           { key: 'Objective', val: 'Analyse competitive dynamics' },
           { key: 'Reading', val: 'Porter, M. (2008) Ch. 1 to 3' },
           { key: 'Assessment', val: 'Case study, Rubric C' },
-          { key: 'AI Mode', val: 'Socratic hints only · No direct answers', highlight: true },
+          { key: 'AI Mode', val: 'Socratic hints only ï¿½ No direct answers', highlight: true },
         ].map((row) => (
           <div key={row.key} className={`flex gap-4 px-4 py-3 text-[12px] ${row.highlight ? 'bg-[#e5f4fa] border-l-2 border-[#228DC1]' : ''}`}>
             <span className="text-[#0a1628]/60 font-medium shrink-0 w-20">{row.key}</span>
@@ -458,8 +457,8 @@ function TutorVisual() {
           <span className="text-white text-[8px] font-black">A</span>
         </div>
         <span className="text-[11px] font-semibold text-[#0a1628]/60">Aruva Tutor</span>
-        <span className="text-[#0a1628]/20 text-[11px]">·</span>
-        <span className="text-[11px] text-[#0a1628]/60">Business Strategy 101 · Week 3</span>
+        <span className="text-[#0a1628]/20 text-[11px]">ï¿½</span>
+        <span className="text-[11px] text-[#0a1628]/60">Business Strategy 101 ï¿½ Week 3</span>
         <div className="ml-auto">
           <span className="text-[10px] text-[#059669] font-medium">Socratic mode</span>
         </div>
@@ -487,7 +486,7 @@ function TutorVisual() {
         {/* Signal */}
         <div className="px-3 py-2 bg-[#f0fdf4] border border-[#059669]/20 flex items-center gap-2">
           <div className="w-1.5 h-1.5 rounded-full bg-[#059669] shrink-0" />
-          <p className="text-[10px] text-[#059669] font-medium">Mastery signal captured · Learning Curve updated</p>
+          <p className="text-[10px] text-[#059669] font-medium">Mastery signal captured ï¿½ Learning Curve updated</p>
         </div>
       </div>
     </div>
@@ -502,7 +501,7 @@ function AnalyticsVisual() {
       <div className="flex items-start justify-between mb-5 pb-4 border-b border-gray-100">
         <div>
           <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-[#0a1628]/60 mb-1">Professor Dashboard</p>
-          <p className="text-[#0a1628] font-semibold text-sm">Business Strategy 101 · Week 3</p>
+          <p className="text-[#0a1628] font-semibold text-sm">Business Strategy 101 ï¿½ Week 3</p>
         </div>
         <div className="text-right">
           <p className="text-[#059669] font-black text-2xl leading-none">87%</p>
@@ -914,7 +913,7 @@ export default function AruvaPage() {
         <div className="relative max-w-7xl mx-auto px-8 lg:px-12">
           {/* Top label */}
           <p className="font-black text-[#228DC1] mb-3" style={{ fontSize: '13px', letterSpacing: '0.28em', textTransform: 'uppercase', opacity: 0.6 }}>
-            Aruva · AI for Education
+            Aruva ï¿½ AI for Education
           </p>
 
           {/* Headline */}
@@ -958,14 +957,14 @@ export default function AruvaPage() {
       {/* -- Animated Demo -- */}
       <section className="py-24 bg-white border-t border-gray-100">
         <div className="max-w-7xl mx-auto px-8 lg:px-12">
-          {/* Header — left aligned */}
+          {/* Header ï¿½ left aligned */}
           <div className="max-w-2xl mb-14">
             <p className="type-label text-[#228DC1] mb-4">See It in Action</p>
             <h2 className="font-heading text-[#0a1628] mb-5" style={{ fontSize: 'clamp(26px, 3vw, 42px)' }}>
               Guided learning, not shortcuts
             </h2>
             <p className="text-[#0a1628]/65 text-[17px] font-normal leading-relaxed">
-              The professor configured Socratic mode in the Smart Syllabus. The AI follows that intent exactly — every exchange builds genuine understanding and creates a measurable learning signal.
+              The professor configured Socratic mode in the Smart Syllabus. The AI follows that intent exactly ï¿½ every exchange builds genuine understanding and creates a measurable learning signal.
             </p>
           </div>
 

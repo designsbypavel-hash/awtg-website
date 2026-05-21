@@ -11,10 +11,10 @@ export default function ContactPage() {
         <div className="max-w-7xl mx-auto px-8 lg:px-12">
           <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#228DC1] mb-4">Contact Us</p>
           <h1 className="font-serif-display text-[#0a1628] leading-tight mb-6" style={{ fontSize: 'clamp(40px,5vw,72px)' }}>
-            Let's Start a Conversation
+            Let&apos;s Start a Conversation
           </h1>
           <p className="text-[#0a1628]/60 text-lg max-w-xl font-normal leading-relaxed">
-            Whether you have a project in mind or just want to explore what's possible, our experts are ready to help.
+            Whether you have a project in mind or just want to explore what&apos;s possible, our experts are ready to help.
           </p>
         </div>
       </section>
@@ -119,8 +119,8 @@ export default function ContactPage() {
             <div className="mt-12 p-6 bg-[#f7f8fa] border border-gray-100">
               <p className="text-xs font-semibold uppercase tracking-widest text-[#0a1628]/60 mb-3">Regional Offices</p>
               <div className="space-y-2 text-sm text-[#0a1628]/70 font-normal">
-                <p>Manchester · Birmingham · Edinburgh</p>
-                <p>Dubai · Singapore · Nairobi</p>
+                <p>Manchester &mdash; Birmingham &mdash; Edinburgh</p>
+                <p>Dubai &mdash; Singapore &mdash; Nairobi</p>
               </div>
             </div>
           </div>

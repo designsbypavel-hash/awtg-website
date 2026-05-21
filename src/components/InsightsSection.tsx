@@ -1,5 +1,6 @@
 ﻿import { Link } from 'react-router-dom'
-import { ArrowRight, Clock } from 'lucide-react'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faArrowRight, faClock } from '@fortawesome/free-solid-svg-icons'
 
 const posts = [
   {
@@ -50,7 +51,7 @@ export default function InsightsSection() {
             to="/insights"
             className="inline-flex items-center gap-2 text-[#228DC1] font-semibold hover:gap-3 transition-all text-sm"
           >
-            View all insights <ArrowRight className="w-4 h-4" />
+            View all insights <FontAwesomeIcon icon={faArrowRight} className="w-4 h-4" />
           </Link>
         </div>
 
@@ -76,7 +77,7 @@ export default function InsightsSection() {
                   <span>{post.date}</span>
                   <span>·</span>
                   <span className="inline-flex items-center gap-1">
-                    <Clock className="w-3 h-3" /> {post.readTime}
+                    <FontAwesomeIcon icon={faClock} className="w-3 h-3" /> {post.readTime}
                   </span>
                 </div>
               </div>

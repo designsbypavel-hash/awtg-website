@@ -1,8 +1,10 @@
-﻿import { useState } from 'react'
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { ArrowRight, CheckCircle, ChevronLeft, ChevronRight, Zap, Shield, BarChart3 } from 'lucide-react'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faArrowRight, faCircleCheck, faChevronLeft, faChevronRight, faBolt, faShield, faChartBar } from '@fortawesome/free-solid-svg-icons'
+import type { IconDefinition } from '@fortawesome/fontawesome-svg-core'
 
-// ─── BRAND SVG LOGOS ────────────────────────────────────────────────────────
+// --- BRAND SVG LOGOS --------------------------------------------------------
 
 function LogoBT() {
   return (
@@ -115,13 +117,13 @@ const tickerLogos = [
   { id: 'samsung', component: <LogoSamsung /> },
 ]
 
-// ─── HERO (Harvey-inspired) ──────────────────────────────────────────────────
+// --- HERO (Harvey-inspired) --------------------------------------------------
 
 function Hero() {
   return (
     <section className="relative h-screen min-h-[700px] flex flex-col overflow-hidden">
 
-      {/* ── Cinematic background (decorative, aria-hidden) ── */}
+      {/* -- Cinematic background (decorative, aria-hidden) -- */}
       <div className="absolute inset-0" aria-hidden="true">
         <video
           autoPlay
@@ -137,7 +139,7 @@ function Hero() {
         <div className="absolute inset-0 bg-gradient-to-tr from-black/80 via-black/55 to-black/30" />
       </div>
 
-      {/* ── Content, Harvey layout: bottom-left, minimal copy ── */}
+      {/* -- Content, Harvey layout: bottom-left, minimal copy -- */}
       <div className="relative flex-1 flex flex-col justify-end pb-16 max-w-7xl mx-auto w-full px-8 lg:px-12">
 
         {/* Headline, Nokia register: urgency + optimism, not fear */}
@@ -169,7 +171,7 @@ function Hero() {
 
       </div>
 
-      {/* ── Logo ticker bar, client logos do the talking (Harvey principle) ── */}
+      {/* -- Logo ticker bar, client logos do the talking (Harvey principle) -- */}
       <div className="relative border-t border-gray-100 bg-white overflow-hidden">
         <div className="flex items-center">
           <div className="shrink-0 px-8 py-4 border-r border-black/10">
@@ -194,7 +196,7 @@ function Hero() {
               to="/about/partnerships"
               className="text-[#0a1628]/60 hover:text-[#0a1628] text-[11px] font-medium tracking-widest uppercase whitespace-nowrap transition-colors"
             >
-              Our Partners →
+              Our Partners ?
             </Link>
           </div>
         </div>
@@ -203,11 +205,11 @@ function Hero() {
   )
 }
 
-// ─── WHAT WE DO ─────────────────────────────────────────────────────────────
+// --- WHAT WE DO -------------------------------------------------------------
 
 function WhatWeDo() {
   const rows = [
-    { num: '01', label: 'AI Products & Software', line: 'Kai, Aruva and bespoke AI — built for production, not proof of concept.', href: '/solutions/generative-ai' },
+    { num: '01', label: 'AI Products & Software', line: 'Kai, Aruva and bespoke AI � built for production, not proof of concept.', href: '/solutions/generative-ai' },
     { num: '02', label: 'Private Networks', line: 'Managed 4G/5G designed, deployed and monitored end-to-end. Live in weeks.', href: '/solutions/mobile-private-networks' },
     { num: '03', label: 'Engineering & Consultancy', line: '5G RF design, network testing and transformation strategy across 20+ countries.', href: '/services/engineering' },
   ]
@@ -234,7 +236,7 @@ function WhatWeDo() {
   )
 }
 
-// ─── OUR SOLUTIONS ───────────────────────────────────────────────────────────
+// --- OUR SOLUTIONS -----------------------------------------------------------
 
 const solutionPanels = [
   {
@@ -263,7 +265,7 @@ const solutionPanels = [
   },
 ]
 
-// ─── AI PROOF POINTS ─────────────────────────────────────────────────────────
+// --- AI PROOF POINTS ---------------------------------------------------------
 
 function AIProofPoints() {
   return (
@@ -280,7 +282,7 @@ function AIProofPoints() {
               We deployed Kai directly into British Council English Online. Customer satisfaction is up. Escalations are down. It's live, not a demo.
             </p>
             <Link to="/contact" className="inline-flex items-center gap-2 text-sm font-medium text-[#228DC1] hover:gap-3 transition-all">
-              Discuss a similar project <ArrowRight className="w-4 h-4" />
+              Discuss a similar project <FontAwesomeIcon icon={faArrowRight} className="w-4 h-4" />
             </Link>
           </div>
           <div className="grid grid-cols-2 gap-px bg-gray-200 border border-gray-200 shrink-0">
@@ -328,7 +330,7 @@ export function OurSolutions() {
                   <h3 className="text-2xl font-bold text-[#0a1628] leading-snug mb-4">{panel.title}</h3>
                   <p className="text-[#0a1628]/60 text-base leading-relaxed mb-6 font-normal">{panel.desc}</p>
                   <Link to={panel.href} className="inline-flex items-center gap-2 text-sm font-medium text-[#228DC1] hover:gap-3 transition-all">
-                    {panel.link} <ArrowRight className="w-4 h-4" />
+                    {panel.link} <FontAwesomeIcon icon={faArrowRight} className="w-4 h-4" />
                   </Link>
                 </div>
                 <div className="h-64 lg:h-auto min-h-[300px] bg-gray-100">
@@ -344,7 +346,7 @@ export function OurSolutions() {
                   <h3 className="text-2xl font-bold text-[#0a1628] leading-snug mb-4">{panel.title}</h3>
                   <p className="text-[#0a1628]/60 text-base leading-relaxed mb-6 font-normal">{panel.desc}</p>
                   <Link to={panel.href} className="inline-flex items-center gap-2 text-sm font-medium text-[#228DC1] hover:gap-3 transition-all">
-                    {panel.link} <ArrowRight className="w-4 h-4" />
+                    {panel.link} <FontAwesomeIcon icon={faArrowRight} className="w-4 h-4" />
                   </Link>
                 </div>
               </>
@@ -356,7 +358,7 @@ export function OurSolutions() {
   )
 }
 
-// ─── AWTG VISION ─────────────────────────────────────────────────────────────
+// --- AWTG VISION -------------------------------------------------------------
 
 export function Vision() {
   return (
@@ -376,7 +378,7 @@ export function Vision() {
   )
 }
 
-// ─── YOUR INDUSTRY ───────────────────────────────────────────────────────────
+// --- YOUR INDUSTRY -----------------------------------------------------------
 
 const industryCards = [
   {
@@ -423,7 +425,7 @@ function Industries() {
             <div className="absolute bottom-0 left-0 right-0 p-8 lg:p-10">
               <h3 className="text-white font-bold text-xl mb-2 leading-snug">{card.title}</h3>
               <span className="inline-flex items-center gap-1.5 text-sm text-[#0a1628]/60 group-hover:text-white transition-colors font-medium">
-                {card.sub} <ArrowRight className="w-3.5 h-3.5" />
+                {card.sub} <FontAwesomeIcon icon={faArrowRight} className="w-3.5 h-3.5" />
               </span>
             </div>
           </Link>
@@ -433,7 +435,7 @@ function Industries() {
   )
 }
 
-// ─── AI-POWERED TECHNOLOGY SOLUTIONS ─────────────────────────────────────────
+// --- AI-POWERED TECHNOLOGY SOLUTIONS -----------------------------------------
 
 const tabs = [
   {
@@ -534,7 +536,7 @@ export function TechSolutions() {
             <ul className="space-y-3 mb-8">
               {tab.features.map((f) => (
                 <li key={f} className="flex items-start gap-3 text-sm text-[#0a1628]/75">
-                  <CheckCircle className="w-4 h-4 text-[#228DC1] mt-0.5 shrink-0" />
+                  <FontAwesomeIcon icon={faCircleCheck} className="w-4 h-4 text-[#228DC1] mt-0.5 shrink-0" />
                   {f}
                 </li>
               ))}
@@ -549,7 +551,7 @@ export function TechSolutions() {
   )
 }
 
-// ─── WHY AWTG ────────────────────────────────────────────────────────────────
+// --- WHY AWTG ----------------------------------------------------------------
 
 function WhyAWTG() {
   return (
@@ -583,7 +585,7 @@ function WhyAWTG() {
         </div>
         <div className="mt-8 text-right">
           <Link to="/about/certifications" className="text-sm font-medium text-[#0a1628]/60 hover:text-[#228DC1] transition-colors">
-            View all certifications →
+            View all certifications ?
           </Link>
         </div>
       </div>
@@ -591,12 +593,12 @@ function WhyAWTG() {
   )
 }
 
-// ─── PNAAS ────────────────────────────────────────────────────────────────────
+// --- PNAAS --------------------------------------------------------------------
 
 const pnaasFeatures = [
-  { icon: Zap, title: 'Live in weeks', desc: 'From scoping to live network, faster than any alternative' },
-  { icon: Shield, title: '99.99% uptime SLA', desc: 'Enterprise-grade reliability, AWTG NOC monitoring 24/7' },
-  { icon: BarChart3, title: 'Fully managed', desc: 'Continuous optimisation, proactive support included' },
+  { icon: faBolt, title: 'Live in weeks', desc: 'From scoping to live network, faster than any alternative' },
+  { icon: faShield, title: '99.99% uptime SLA', desc: 'Enterprise-grade reliability, AWTG NOC monitoring 24/7' },
+  { icon: faChartBar, title: 'Fully managed', desc: 'Continuous optimisation, proactive support included' },
 ]
 
 export function PNaaS() {
@@ -626,15 +628,15 @@ export function PNaaS() {
               </Link>
               <Link to="/contact"
                 className="inline-flex items-center gap-2 px-6 py-3 text-[#0a1628]/60 hover:text-white text-sm font-medium transition-colors">
-                Talk to an Engineer →
+                Talk to an Engineer ?
               </Link>
             </div>
           </div>
           <div className="space-y-3">
-            {pnaasFeatures.map(({ icon: Icon, title, desc }) => (
+            {pnaasFeatures.map(({ icon, title, desc }) => (
               <div key={title} className="flex items-start gap-5 bg-white/[0.04] hover:bg-white/[0.07] p-6 border border-gray-100 transition-colors">
                 <div className="w-10 h-10 bg-[#228DC1]/15 flex items-center justify-center shrink-0">
-                  <Icon className="w-5 h-5 text-[#228DC1]" />
+                  <FontAwesomeIcon icon={icon} className="w-5 h-5 text-[#228DC1]" />
                 </div>
                 <div>
                   <p className="text-[#0a1628] font-semibold mb-1">{title}</p>
@@ -650,7 +652,7 @@ export function PNaaS() {
 }
 
 
-// ─── CLIENT VOICES ────────────────────────────────────────────────────────────
+// --- CLIENT VOICES ------------------------------------------------------------
 
 const testimonials = [
   {
@@ -687,7 +689,7 @@ function ClientVoices() {
             <img src={t.img} alt={t.name} className="w-full h-full object-cover object-top" loading="lazy" />
             {/* Subtle gradient just at the very bottom */}
             <div className="absolute inset-0 bg-gradient-to-t from-[#050a12]/70 via-transparent to-transparent" />
-            {/* Caption strip — pinned to bottom edge, full width */}
+            {/* Caption strip � pinned to bottom edge, full width */}
             <div className="absolute bottom-0 left-0 right-0 flex items-center gap-3 bg-[#0a1628]/60 backdrop-blur-sm px-5 py-3.5">
               <div className="w-8 h-8 rounded-full bg-[#228DC1] flex items-center justify-center text-white text-xs font-bold shrink-0">{t.initials}</div>
               <div>
@@ -707,11 +709,11 @@ function ClientVoices() {
             <div className="flex items-center gap-4 mt-8">
               <button onClick={() => setCurrent((c) => (c - 1 + testimonials.length) % testimonials.length)}
                 className="w-10 h-10 rounded-full border border-gray-200 hover:border-gray-300 flex items-center justify-center text-[#0a1628]/60 hover:text-white transition-all">
-                <ChevronLeft className="w-4 h-4" />
+                <FontAwesomeIcon icon={faChevronLeft} className="w-4 h-4" />
               </button>
               <button onClick={() => setCurrent((c) => (c + 1) % testimonials.length)}
                 className="w-10 h-10 rounded-full border border-gray-200 hover:border-gray-300 flex items-center justify-center text-[#0a1628]/60 hover:text-white transition-all">
-                <ChevronRight className="w-4 h-4" />
+                <FontAwesomeIcon icon={faChevronRight} className="w-4 h-4" />
               </button>
               <div className="flex gap-1.5">
                 {testimonials.map((_, i) => (
@@ -727,7 +729,7 @@ function ClientVoices() {
   )
 }
 
-// ─── PARTNERS ─────────────────────────────────────────────────────────────────
+// --- PARTNERS -----------------------------------------------------------------
 
 const partnerLogos = [
   { id: 'bt', component: <LogoBT /> },
@@ -762,7 +764,7 @@ export function Partners() {
   )
 }
 
-// ─── INSIGHTS ─────────────────────────────────────────────────────────────────
+// --- INSIGHTS -----------------------------------------------------------------
 
 const articles = [
   {
@@ -805,7 +807,7 @@ function Insights() {
             <h2 className="font-serif-display text-[#0a1628]" style={{ fontSize: 'clamp(32px, 3.5vw, 48px)' }}>Explore the latest<br />from AWTG.</h2>
           </div>
           <Link to="/insights" className="text-sm font-medium text-[#228DC1] hover:text-[#1a6e99] transition-colors">
-            All insights ↗
+            All insights ?
           </Link>
         </div>
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
@@ -817,12 +819,12 @@ function Insights() {
               <div className="p-6">
                 <div className="flex items-center gap-2 mb-3 text-xs">
                   <span className={`font-semibold ${a.tagColor}`}>{a.tag}</span>
-                  <span className="text-[#0a1628]/20">·</span>
+                  <span className="text-[#0a1628]/20">�</span>
                   <span className="text-[#0a1628]/60 font-normal">{a.date}</span>
                 </div>
                 <p className="text-sm font-semibold text-[#0a1628] leading-snug mb-4 line-clamp-3">{a.title}</p>
                 <span className="text-xs font-medium text-[#228DC1] inline-flex items-center gap-1.5">
-                  Read more <ArrowRight className="w-3 h-3" />
+                  Read more <FontAwesomeIcon icon={faArrowRight} className="w-3 h-3" />
                 </span>
               </div>
             </Link>
@@ -833,7 +835,7 @@ function Insights() {
   )
 }
 
-// ─── CONTACT CTA ──────────────────────────────────────────────────────────────
+// --- CONTACT CTA --------------------------------------------------------------
 
 function ContactCTA() {
   return (
@@ -850,7 +852,7 @@ function ContactCTA() {
             </p>
             <div className="flex flex-wrap gap-4">
               <Link to="/contact" className="inline-flex items-center gap-2 px-7 py-3.5 bg-[#228DC1] text-white text-sm font-medium hover:bg-[#1a6e99] transition-colors">
-                Talk to an Expert <ArrowRight className="w-4 h-4" />
+                Talk to an Expert <FontAwesomeIcon icon={faArrowRight} className="w-4 h-4" />
               </Link>
               <Link to="/solutions" className="inline-flex items-center gap-2 px-7 py-3.5 border border-white/20 text-white/70 text-sm font-medium hover:border-white/40 hover:text-white transition-all">
                 Explore Solutions
@@ -865,11 +867,11 @@ function ContactCTA() {
             <div className="border-t border-white/10 pt-6">
               <p className="text-[10px] font-semibold uppercase tracking-widest text-white/30 mb-2">Phone</p>
               <a href="tel:+442035155151" className="text-white/70 hover:text-white transition-colors font-medium">+44 (0) 20 3515 5151</a>
-              <p className="text-xs text-white/30 mt-1 font-normal">Mon–Fri, 9am–6pm GMT</p>
+              <p className="text-xs text-white/30 mt-1 font-normal">Mon�Fri, 9am�6pm GMT</p>
             </div>
             <div className="border-t border-white/10 pt-6">
               <p className="text-[10px] font-semibold uppercase tracking-widest text-white/30 mb-2">Offices</p>
-              <p className="text-white/70 font-medium">London · Lisbon · Stockholm · Singapore</p>
+              <p className="text-white/70 font-medium">London � Lisbon � Stockholm � Singapore</p>
             </div>
           </div>
         </div>
@@ -878,7 +880,7 @@ function ContactCTA() {
   )
 }
 
-// ─── PAGE ─────────────────────────────────────────────────────────────────────
+// --- PAGE ---------------------------------------------------------------------
 
 export default function Home() {
   return (

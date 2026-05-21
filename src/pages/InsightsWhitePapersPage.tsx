@@ -1,5 +1,6 @@
 ﻿import { Link } from 'react-router-dom'
-import { Download } from 'lucide-react'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faDownload } from '@fortawesome/free-solid-svg-icons'
 import CTASection from '@/components/CTASection'
 
 const papers = [
@@ -77,7 +78,7 @@ export default function InsightsWhitePapersPage() {
                   to="/contact"
                   className="inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-[#228DC1] text-white text-[13px] font-medium tracking-wide hover:bg-[#1a6e99] transition-colors w-full"
                 >
-                  <Download className="w-4 h-4 shrink-0" />
+                  <FontAwesomeIcon icon={faDownload} className="w-4 h-4 shrink-0" />
                   Download PDF
                 </Link>
                 <p className="text-[11px] text-[#0a1628]/60 font-normal text-center">No registration required</p>

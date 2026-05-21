@@ -1,6 +1,7 @@
 ﻿import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { Clock, ArrowRight } from 'lucide-react'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faClock, faArrowRight } from '@fortawesome/free-solid-svg-icons'
 
 const posts = [
   {
@@ -155,10 +156,10 @@ export default function InsightsBlogPage() {
                   <div className="flex items-center gap-4 text-[#0a1628]/60 text-xs">
                     <span>{featured.date}</span>
                     <span>·</span>
-                    <span className="flex items-center gap-1.5"><Clock className="w-3 h-3" /> {featured.readTime} read</span>
+                    <span className="flex items-center gap-1.5"><FontAwesomeIcon icon={faClock} className="w-3 h-3" /> {featured.readTime} read</span>
                   </div>
                   <span className="text-[#228DC1] text-xs font-semibold uppercase tracking-[0.1em] flex items-center gap-1.5 group-hover:gap-3 transition-all">
-                    Read article <ArrowRight className="w-3.5 h-3.5" />
+                    Read article <FontAwesomeIcon icon={faArrowRight} className="w-3.5 h-3.5" />
                   </span>
                 </div>
               </div>
@@ -207,10 +208,10 @@ export default function InsightsBlogPage() {
                   <div className="flex lg:flex-col lg:items-end gap-4 lg:gap-2">
                     <span className="text-[#0a1628]/65 text-xs">{post.date}</span>
                     <span className="text-[#0a1628]/65 text-xs flex items-center gap-1.5">
-                      <Clock className="w-3 h-3" /> {post.readTime} read
+                      <FontAwesomeIcon icon={faClock} className="w-3 h-3" /> {post.readTime} read
                     </span>
                     <span className="text-[#228DC1] text-xs font-semibold uppercase tracking-[0.1em] flex items-center gap-1 group-hover:gap-2 transition-all ml-auto">
-                      Read <ArrowRight className="w-3 h-3" />
+                      Read <FontAwesomeIcon icon={faArrowRight} className="w-3 h-3" />
                     </span>
                   </div>
                 </Link>

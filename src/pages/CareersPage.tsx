@@ -1,5 +1,7 @@
-﻿import CTASection from '@/components/CTASection'
-import { MapPin, Briefcase, Lightbulb, Users, TrendingUp, Globe } from 'lucide-react'
+import CTASection from '@/components/CTASection'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faLocationDot, faBriefcase, faLightbulb, faUsers, faArrowTrendUp, faGlobe } from '@fortawesome/free-solid-svg-icons'
+import type { IconDefinition } from '@fortawesome/fontawesome-svg-core'
 
 const openRoles = [
   { title: 'Senior RF Engineer', location: 'London, UK', type: 'Full-time', dept: 'Engineering' },
@@ -10,11 +12,11 @@ const openRoles = [
   { title: 'DevOps Engineer, Network Automation', location: 'Remote (UK)', type: 'Full-time', dept: 'Engineering' },
 ]
 
-const values = [
-  { icon: Lightbulb, title: 'Innovation', desc: 'We encourage bold thinking and support you in exploring new ideas.' },
-  { icon: Users, title: 'Collaboration', desc: 'You\'ll work alongside brilliant people from diverse backgrounds.' },
-  { icon: TrendingUp, title: 'Growth', desc: 'Continuous learning is built into how we work, with dedicated development budgets.' },
-  { icon: Globe, title: 'Impact', desc: 'Your work will directly shape how organisations and cities stay connected.' },
+const values: { icon: IconDefinition; title: string; desc: string }[] = [
+  { icon: faLightbulb,     title: 'Innovation',    desc: 'We encourage bold thinking and support you in exploring new ideas.' },
+  { icon: faUsers,         title: 'Collaboration', desc: "You'll work alongside brilliant people from diverse backgrounds." },
+  { icon: faArrowTrendUp,  title: 'Growth',        desc: 'Continuous learning is built into how we work, with dedicated development budgets.' },
+  { icon: faGlobe,         title: 'Impact',        desc: 'Your work will directly shape how organisations and cities stay connected.' },
 ]
 
 export default function CareersPage() {
@@ -40,7 +42,7 @@ export default function CareersPage() {
             {values.map((v) => (
               <div key={v.title} className="bg-white p-8 hover:bg-[#f7f8fa] transition-colors group">
                 <div className="w-11 h-11 bg-[#228DC1]/8 flex items-center justify-center mb-6">
-                  <v.icon className="w-5 h-5 text-[#228DC1]" strokeWidth={1.5} />
+                  <FontAwesomeIcon icon={v.icon} className="w-5 h-5 text-[#228DC1]" />
                 </div>
                 <h3 className="font-semibold text-[#0a1628] mb-2 text-sm">{v.title}</h3>
                 <p className="text-[#0a1628]/60 text-sm font-normal leading-relaxed">{v.desc}</p>
@@ -61,8 +63,8 @@ export default function CareersPage() {
                   <div className="text-xs font-semibold text-[#228DC1] uppercase tracking-wider mb-1">{role.dept}</div>
                   <h3 className="font-bold text-[#0a1628] text-lg">{role.title}</h3>
                   <div className="flex items-center gap-4 mt-2 text-sm text-[#0a1628]/60">
-                    <span className="flex items-center gap-1"><MapPin className="w-3 h-3" /> {role.location}</span>
-                    <span className="flex items-center gap-1"><Briefcase className="w-3 h-3" /> {role.type}</span>
+                    <span className="flex items-center gap-1"><FontAwesomeIcon icon={faLocationDot} className="w-3 h-3" /> {role.location}</span>
+                    <span className="flex items-center gap-1"><FontAwesomeIcon icon={faBriefcase} className="w-3 h-3" /> {role.type}</span>
                   </div>
                 </div>
                 <button className="flex-shrink-0 px-6 py-2.5 bg-[#228DC1] text-white rounded font-semibold text-sm hover:bg-[#1a6e99] transition-colors">

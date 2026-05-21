@@ -1,5 +1,6 @@
-ï»¿import { useState } from 'react'
-import { Mail, Phone, MapPin, Clock } from 'lucide-react'
+import { useState } from 'react'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faEnvelope, faPhone, faLocationDot, faClock } from '@fortawesome/free-solid-svg-icons'
 
 export default function ContactPage() {
   const [submitted, setSubmitted] = useState(false)
@@ -82,7 +83,7 @@ export default function ContactPage() {
             <h2 className="font-serif-display text-[#0a1628] mb-8" style={{ fontSize: 'clamp(24px,3vw,36px)' }}>Get in Touch Directly</h2>
             <div className="space-y-8">
               <div className="flex gap-4">
-                <Mail className="w-5 h-5 text-[#228DC1] shrink-0 mt-0.5" />
+                <FontAwesomeIcon icon={faEnvelope} className="w-5 h-5 text-[#228DC1] shrink-0 mt-0.5" />
                 <div>
                   <p className="text-xs font-semibold uppercase tracking-widest text-[#0a1628]/60 mb-1">Email</p>
                   <a href="mailto:info@awtg.co.uk" className="text-[#0a1628] font-medium hover:text-[#228DC1] transition-colors">info@awtg.co.uk</a>
@@ -90,7 +91,7 @@ export default function ContactPage() {
                 </div>
               </div>
               <div className="flex gap-4">
-                <Phone className="w-5 h-5 text-[#228DC1] shrink-0 mt-0.5" />
+                <FontAwesomeIcon icon={faPhone} className="w-5 h-5 text-[#228DC1] shrink-0 mt-0.5" />
                 <div>
                   <p className="text-xs font-semibold uppercase tracking-widest text-[#0a1628]/60 mb-1">Phone</p>
                   <a href="tel:+442074000000" className="text-[#0a1628] font-medium hover:text-[#228DC1] transition-colors">+44 (0) 207 400 0000</a>
@@ -98,7 +99,7 @@ export default function ContactPage() {
                 </div>
               </div>
               <div className="flex gap-4">
-                <MapPin className="w-5 h-5 text-[#228DC1] shrink-0 mt-0.5" />
+                <FontAwesomeIcon icon={faLocationDot} className="w-5 h-5 text-[#228DC1] shrink-0 mt-0.5" />
                 <div>
                   <p className="text-xs font-semibold uppercase tracking-widest text-[#0a1628]/60 mb-1">Head Office</p>
                   <p className="text-[#0a1628] font-medium">London, United Kingdom</p>
@@ -106,7 +107,7 @@ export default function ContactPage() {
                 </div>
               </div>
               <div className="flex gap-4">
-                <Clock className="w-5 h-5 text-[#228DC1] shrink-0 mt-0.5" />
+                <FontAwesomeIcon icon={faClock} className="w-5 h-5 text-[#228DC1] shrink-0 mt-0.5" />
                 <div>
                   <p className="text-xs font-semibold uppercase tracking-widest text-[#0a1628]/60 mb-1">Response Time</p>
                   <p className="text-[#0a1628] font-medium">Within 2 business hours</p>
@@ -118,8 +119,8 @@ export default function ContactPage() {
             <div className="mt-12 p-6 bg-[#f7f8fa] border border-gray-100">
               <p className="text-xs font-semibold uppercase tracking-widest text-[#0a1628]/60 mb-3">Regional Offices</p>
               <div className="space-y-2 text-sm text-[#0a1628]/70 font-normal">
-                <p>Manchester Â· Birmingham Â· Edinburgh</p>
-                <p>Dubai Â· Singapore Â· Nairobi</p>
+                <p>Manchester · Birmingham · Edinburgh</p>
+                <p>Dubai · Singapore · Nairobi</p>
               </div>
             </div>
           </div>

@@ -1,9 +1,11 @@
-﻿import { useState, useRef, useEffect, type CSSProperties } from 'react'
+import { useState, useRef, useEffect, type CSSProperties } from 'react'
 import { Link } from 'react-router-dom'
-import { ArrowRight, BookOpen, Shield, RefreshCw, Sparkles, CheckCircle2 } from 'lucide-react'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faArrowRight, faBookOpen, faShield, faArrowsRotate, faWandSparkles, faCircleCheck } from '@fortawesome/free-solid-svg-icons'
+import type { IconDefinition } from '@fortawesome/fontawesome-svg-core'
 import CTASection from '@/components/CTASection'
 
-// ── Scroll utilities ──────────────────────────────────────────────────────────
+// -- Scroll utilities ----------------------------------------------------------
 function useInView(threshold = 0.12) {
   const ref = useRef<HTMLDivElement>(null)
   const [inView, setInView] = useState(false)
@@ -43,31 +45,31 @@ function ScrollProgress() {
   )
 }
 
-// ── Four founding principles ──────────────────────────────────────────────────
+// -- Four founding principles --------------------------------------------------
 const principles = [
   {
-    Icon: BookOpen,
+    icon: faBookOpen,
     label: 'Education',
     title: 'Pedagogy at the Core',
     desc: 'Every response is grounded in course design, learning outcomes and educator intent.',
     color: '#228DC1',
   },
   {
-    Icon: Shield,
+    icon: faShield,
     label: 'Governance',
     title: 'Institution in Control',
     desc: 'Role-based access, audit trails and data residency give institutions full oversight of every AI interaction.',
     color: '#059669',
   },
   {
-    Icon: RefreshCw,
+    icon: faArrowsRotate,
     label: 'Feedback Loop',
     title: 'Continuous Learning Intelligence',
     desc: 'Student interactions and assessment signals feed back into a live model of learning.',
     color: '#7c3aed',
   },
   {
-    Icon: Sparkles,
+    icon: faWandSparkles,
     label: 'Personalisation',
     title: 'Adaptive to Every Student',
     desc: 'Learning Curve AI builds performance profiles across mastery, confidence, pace and workload.',
@@ -75,7 +77,7 @@ const principles = [
   },
 ]
 
-// ── Platform pillars ──────────────────────────────────────────────────────────
+// -- Platform pillars ----------------------------------------------------------
 const pillars = [
   {
     num: '01',
@@ -121,7 +123,7 @@ const pillars = [
   },
 ]
 
-// ── Who it's for ──────────────────────────────────────────────────────────────
+// -- Who it's for --------------------------------------------------------------
 const audiences = [
   {
     label: 'Students',
@@ -152,13 +154,13 @@ const audiences = [
   },
 ]
 
-// ── Animated demo messages ────────────────────────────────────────────────────
+// -- Animated demo messages ----------------------------------------------------
 const demoMessages = [
   { role: 'student', text: 'Can you solve this Porter\'s Five Forces analysis for me?', delay: 500 },
   { role: 'ai', text: 'Which of the five forces do you think has the strongest impact on the airline industry? Start with your instinct.', cite: 'Porter, 2008, Ch.2', delay: 1700 },
   { role: 'student', text: 'Probably competitive rivalry between airlines?', delay: 3300 },
   { role: 'ai', text: 'Good instinct. Now, what specifically intensifies that rivalry? Think about cost structure and what it costs a passenger to switch carriers.', cite: 'Week 3, Rubric C', delay: 4700 },
-  { role: 'signal', text: 'Mastery signal captured · Learning Curve updated', delay: 6100 },
+  { role: 'signal', text: 'Mastery signal captured � Learning Curve updated', delay: 6100 },
 ]
 
 function AnimatedDemo() {
@@ -190,7 +192,7 @@ function AnimatedDemo() {
     return () => { clearTimeout(t); timeoutsRef.current.forEach(clearTimeout) }
   }, [])
 
-  // Mastery bar values — animate when signal appears
+  // Mastery bar values � animate when signal appears
   const masteryItems = [
     { label: 'Competitive Forces', pct: 72 },
     { label: 'Strategic Analysis', pct: 58 },
@@ -216,10 +218,10 @@ function AnimatedDemo() {
         </button>
       </div>
 
-      {/* App layout — 3 panels */}
+      {/* App layout � 3 panels */}
       <div className="grid grid-cols-[180px_1fr_160px] divide-x divide-gray-100" style={{ minHeight: '420px' }}>
 
-        {/* Left sidebar — course nav */}
+        {/* Left sidebar � course nav */}
         <div className="bg-[#f8fafc] p-4">
           <p className="text-[9px] font-semibold uppercase tracking-[0.18em] text-gray-400 mb-3">My Courses</p>
           <div className="space-y-1 mb-6">
@@ -239,13 +241,13 @@ function AnimatedDemo() {
           </div>
         </div>
 
-        {/* Centre — tutor chat */}
+        {/* Centre � tutor chat */}
         <div className="flex flex-col bg-white">
           {/* Course context */}
           <div className="px-4 py-3 border-b border-gray-100 bg-[#f8fafc] flex items-center justify-between">
             <div>
               <p className="text-[11px] font-semibold text-[#0a1628]">Porter's Five Forces</p>
-              <p className="text-[10px] text-gray-400">Week 3 · Socratic mode · No direct answers</p>
+              <p className="text-[10px] text-gray-400">Week 3 � Socratic mode � No direct answers</p>
             </div>
           </div>
 
@@ -301,12 +303,12 @@ function AnimatedDemo() {
               Ask a question about Week 3...
             </div>
             <div className="w-7 h-7 bg-[#228DC1] flex items-center justify-center shrink-0">
-              <ArrowRight className="w-3.5 h-3.5 text-white" />
+              <FontAwesomeIcon icon={faArrowRight} className="w-3.5 h-3.5 text-white" />
             </div>
           </div>
         </div>
 
-        {/* Right panel — learning signals */}
+        {/* Right panel � learning signals */}
         <div className="bg-[#f8fafc] p-4 flex flex-col gap-4">
           <p className="text-[9px] font-semibold uppercase tracking-[0.18em] text-gray-400">Learning Curve</p>
 
@@ -355,7 +357,7 @@ function AnimatedDemo() {
   )
 }
 
-// ── How It Works steps ────────────────────────────────────────────────────────
+// -- How It Works steps --------------------------------------------------------
 const howItWorksSteps = [
   {
     num: '01',
@@ -392,7 +394,7 @@ function SyllabusVisual() {
     <div className="bg-white border border-gray-200 overflow-hidden shadow-[0_2px_20px_rgba(10,22,40,0.06)]">
       {/* File header */}
       <div className="flex items-center gap-2 px-4 py-3 bg-[#f8fafc] border-b border-gray-100">
-        <span className="text-[10px] font-semibold uppercase tracking-[0.18em] text-[#0a1628]/60">business_strategy_101.xlsx · Week 3</span>
+        <span className="text-[10px] font-semibold uppercase tracking-[0.18em] text-[#0a1628]/60">business_strategy_101.xlsx � Week 3</span>
       </div>
       <div className="divide-y divide-gray-50">
         {[
@@ -400,7 +402,7 @@ function SyllabusVisual() {
           { key: 'Objective', val: 'Analyse competitive dynamics' },
           { key: 'Reading', val: 'Porter, M. (2008) Ch. 1 to 3' },
           { key: 'Assessment', val: 'Case study, Rubric C' },
-          { key: 'AI Mode', val: 'Socratic hints only · No direct answers', highlight: true },
+          { key: 'AI Mode', val: 'Socratic hints only � No direct answers', highlight: true },
         ].map((row) => (
           <div key={row.key} className={`flex gap-4 px-4 py-3 text-[12px] ${row.highlight ? 'bg-[#e5f4fa] border-l-2 border-[#228DC1]' : ''}`}>
             <span className="text-[#0a1628]/60 font-medium shrink-0 w-20">{row.key}</span>
@@ -456,8 +458,8 @@ function TutorVisual() {
           <span className="text-white text-[8px] font-black">A</span>
         </div>
         <span className="text-[11px] font-semibold text-[#0a1628]/60">Aruva Tutor</span>
-        <span className="text-[#0a1628]/20 text-[11px]">·</span>
-        <span className="text-[11px] text-[#0a1628]/60">Business Strategy 101 · Week 3</span>
+        <span className="text-[#0a1628]/20 text-[11px]">�</span>
+        <span className="text-[11px] text-[#0a1628]/60">Business Strategy 101 � Week 3</span>
         <div className="ml-auto">
           <span className="text-[10px] text-[#059669] font-medium">Socratic mode</span>
         </div>
@@ -485,7 +487,7 @@ function TutorVisual() {
         {/* Signal */}
         <div className="px-3 py-2 bg-[#f0fdf4] border border-[#059669]/20 flex items-center gap-2">
           <div className="w-1.5 h-1.5 rounded-full bg-[#059669] shrink-0" />
-          <p className="text-[10px] text-[#059669] font-medium">Mastery signal captured · Learning Curve updated</p>
+          <p className="text-[10px] text-[#059669] font-medium">Mastery signal captured � Learning Curve updated</p>
         </div>
       </div>
     </div>
@@ -500,7 +502,7 @@ function AnalyticsVisual() {
       <div className="flex items-start justify-between mb-5 pb-4 border-b border-gray-100">
         <div>
           <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-[#0a1628]/60 mb-1">Professor Dashboard</p>
-          <p className="text-[#0a1628] font-semibold text-sm">Business Strategy 101 · Week 3</p>
+          <p className="text-[#0a1628] font-semibold text-sm">Business Strategy 101 � Week 3</p>
         </div>
         <div className="text-right">
           <p className="text-[#059669] font-black text-2xl leading-none">87%</p>
@@ -541,7 +543,7 @@ function AnalyticsVisual() {
   )
 }
 
-// ── Platform architecture diagram ─────────────────────────────────────────────
+// -- Platform architecture diagram ---------------------------------------------
 function PlatformDiagram() {
   const uiCards = [
     {
@@ -638,7 +640,7 @@ function PlatformDiagram() {
 
         <div className="space-y-0">
 
-          {/* ── Row 1: User Interface ── */}
+          {/* -- Row 1: User Interface -- */}
           <div className="flex items-stretch rounded-2xl overflow-hidden border border-[#e2d9cf] shadow-[0_4px_20px_rgba(10,22,40,0.06)]">
             <SectionLabel>User Interface</SectionLabel>
             <div className="flex-1 bg-white p-5">
@@ -665,7 +667,7 @@ function PlatformDiagram() {
             </div>
           </div>
 
-          {/* ── Connector 1: horizontal bracket + API label ── */}
+          {/* -- Connector 1: horizontal bracket + API label -- */}
           <div className="ml-12 px-10 flex flex-col items-center">
             <div className="w-px h-4 bg-[#c8bdb0]" />
             <div className="w-full flex items-center">
@@ -680,7 +682,7 @@ function PlatformDiagram() {
             <div className="w-px h-4 bg-[#c8bdb0]" />
           </div>
 
-          {/* ── Row 2: Services ── */}
+          {/* -- Row 2: Services -- */}
           <div className="flex items-stretch rounded-2xl overflow-hidden border border-[#e2d9cf] shadow-[0_4px_20px_rgba(10,22,40,0.06)]">
             <SectionLabel>Services</SectionLabel>
             <div className="flex-1 bg-white p-6 lg:p-7">
@@ -715,7 +717,7 @@ function PlatformDiagram() {
             </div>
           </div>
 
-          {/* ── Connector 2: two labelled branches ── */}
+          {/* -- Connector 2: two labelled branches -- */}
           <div className="ml-12 flex">
             {['Sync & Deploy', 'Read & Write'].map((label) => (
               <div key={label} className="flex-1 flex flex-col items-center">
@@ -730,7 +732,7 @@ function PlatformDiagram() {
             ))}
           </div>
 
-          {/* ── Row 3: Integration ── */}
+          {/* -- Row 3: Integration -- */}
           <div className="flex items-stretch rounded-2xl overflow-hidden border border-[#e2d9cf] shadow-[0_4px_20px_rgba(10,22,40,0.06)]">
             <SectionLabel>Integration</SectionLabel>
             <div className="flex-1 bg-white p-6 lg:p-7">
@@ -793,7 +795,7 @@ function PlatformDiagram() {
   )
 }
 
-// ── Four principles ──────────────────────────────────────────────────────────
+// -- Four principles ----------------------------------------------------------
 function PrinciplesSection() {
   const [ref, inView] = useInView(0.08)
   return (
@@ -812,7 +814,7 @@ function PrinciplesSection() {
           {principles.map((p, i) => (
             <div key={p.label} className="group bg-white p-8 hover:bg-[#f8fafc] transition-colors" style={reveal(inView, i * 80)}>
               <div className="w-10 h-10 flex items-center justify-center mb-6" style={{ backgroundColor: '#228DC112' }}>
-                <p.Icon className="w-5 h-5 text-[#228DC1]" strokeWidth={1.5} />
+                <FontAwesomeIcon icon={p.icon} className="w-5 h-5 text-[#228DC1]" />
               </div>
               <p className="type-label text-[#228DC1] mb-2">{p.label}</p>
               <h3 className="text-[#0a1628] font-semibold text-[15px] leading-snug mb-3">{p.title}</h3>
@@ -825,7 +827,7 @@ function PrinciplesSection() {
   )
 }
 
-// ── Pillars card grid ─────────────────────────────────────────────────────────
+// -- Pillars card grid ---------------------------------------------------------
 function PillarsSection() {
   const [ref, inView] = useInView(0.08)
 
@@ -860,7 +862,7 @@ function PillarsSection() {
   )
 }
 
-// ── Who it's for ──────────────────────────────────────────────────────────────
+// -- Who it's for --------------------------------------------------------------
 function AudienceSection() {
   const [ref, inView] = useInView(0.08)
 
@@ -882,13 +884,13 @@ function AudienceSection() {
               <div className="space-y-3">
                 {a.points.map((point) => (
                   <div key={point} className="flex items-start gap-2.5">
-                    <CheckCircle2 className="w-4 h-4 text-[#228DC1] shrink-0 mt-0.5" />
+                    <FontAwesomeIcon icon={faCircleCheck} className="w-4 h-4 text-[#228DC1] shrink-0 mt-0.5" />
                     <p className="text-[#0a1628]/70 text-[13px] font-normal leading-relaxed">{point}</p>
                   </div>
                 ))}
               </div>
               <Link to="/contact" className="inline-flex items-center gap-1.5 mt-6 text-[12px] font-semibold text-[#228DC1] hover:gap-2.5 transition-all">
-                Learn more <ArrowRight className="w-3.5 h-3.5" />
+                Learn more <FontAwesomeIcon icon={faArrowRight} className="w-3.5 h-3.5" />
               </Link>
             </div>
           ))}
@@ -898,12 +900,12 @@ function AudienceSection() {
   )
 }
 
-// ── Main page ─────────────────────────────────────────────────────────────────
+// -- Main page -----------------------------------------------------------------
 export default function AruvaPage() {
   return (
     <>
       <ScrollProgress />
-      {/* ── Hero ── */}
+      {/* -- Hero -- */}
       <section className="relative overflow-hidden bg-[#f8fafc] pt-32 pb-20">
         <div
           className="absolute inset-0 pointer-events-none"
@@ -912,7 +914,7 @@ export default function AruvaPage() {
         <div className="relative max-w-7xl mx-auto px-8 lg:px-12">
           {/* Top label */}
           <p className="font-black text-[#228DC1] mb-3" style={{ fontSize: '13px', letterSpacing: '0.28em', textTransform: 'uppercase', opacity: 0.6 }}>
-            Aruva · AI for Education
+            Aruva � AI for Education
           </p>
 
           {/* Headline */}
@@ -936,7 +938,7 @@ export default function AruvaPage() {
         </div>
       </section>
 
-      {/* ── Marquee ── */}
+      {/* -- Marquee -- */}
       <div className="bg-[#f8fafc] border-y border-gray-100 py-3.5 overflow-hidden">
         <div className="flex gap-10 animate-[marquee_35s_linear_infinite] whitespace-nowrap w-max">
           {[
@@ -953,17 +955,17 @@ export default function AruvaPage() {
         </div>
       </div>
 
-      {/* ── Animated Demo ── */}
+      {/* -- Animated Demo -- */}
       <section className="py-24 bg-white border-t border-gray-100">
         <div className="max-w-7xl mx-auto px-8 lg:px-12">
-          {/* Header — left aligned */}
+          {/* Header � left aligned */}
           <div className="max-w-2xl mb-14">
             <p className="type-label text-[#228DC1] mb-4">See It in Action</p>
             <h2 className="font-heading text-[#0a1628] mb-5" style={{ fontSize: 'clamp(26px, 3vw, 42px)' }}>
               Guided learning, not shortcuts
             </h2>
             <p className="text-[#0a1628]/65 text-[17px] font-normal leading-relaxed">
-              The professor configured Socratic mode in the Smart Syllabus. The AI follows that intent exactly — every exchange builds genuine understanding and creates a measurable learning signal.
+              The professor configured Socratic mode in the Smart Syllabus. The AI follows that intent exactly � every exchange builds genuine understanding and creates a measurable learning signal.
             </p>
           </div>
 
@@ -986,10 +988,10 @@ export default function AruvaPage() {
         </div>
       </section>
 
-      {/* ── Platform Architecture ── */}
+      {/* -- Platform Architecture -- */}
       <PlatformDiagram />
 
-      {/* ── How It Works ── */}
+      {/* -- How It Works -- */}
       <section className="py-28 bg-white">
         <div className="max-w-7xl mx-auto px-8 lg:px-12">
           <div className="mb-20">
@@ -1040,16 +1042,16 @@ export default function AruvaPage() {
         </div>
       </section>
 
-      {/* ── Four principles ── */}
+      {/* -- Four principles -- */}
       <PrinciplesSection />
 
-      {/* ── Platform pillars ── */}
+      {/* -- Platform pillars -- */}
       <PillarsSection />
 
-      {/* ── Who it's for ── */}
+      {/* -- Who it's for -- */}
       <AudienceSection />
 
-      {/* ── Governance ── */}
+      {/* -- Governance -- */}
       <section className="py-20 bg-[#f8fafc] border-t border-gray-100">
         <div className="max-w-7xl mx-auto px-8 lg:px-12">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
@@ -1080,7 +1082,7 @@ export default function AruvaPage() {
         </div>
       </section>
 
-      {/* ── Pilot CTA strip ── */}
+      {/* -- Pilot CTA strip -- */}
       <section className="py-16 bg-[#f8fafc] border-t border-gray-100">
         <div className="max-w-7xl mx-auto px-8 lg:px-12 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-8">
           <div>
@@ -1093,7 +1095,7 @@ export default function AruvaPage() {
             to="/contact"
             className="shrink-0 inline-flex items-center gap-2 px-7 py-3.5 border border-[#228DC1] text-[#228DC1] text-[13px] font-semibold hover:bg-[#228DC1] hover:text-white transition-all"
           >
-            Request a Demo <ArrowRight className="w-4 h-4" />
+            Request a Demo <FontAwesomeIcon icon={faArrowRight} className="w-4 h-4" />
           </Link>
         </div>
       </section>

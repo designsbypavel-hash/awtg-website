@@ -1,12 +1,14 @@
-﻿import { useState } from 'react'
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { MapContainer, TileLayer, Polygon, useMap } from 'react-leaflet'
-import { ArrowRight, CheckCircle2, Map, Radio, BarChart2, Globe, Layers, Target } from 'lucide-react'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faArrowRight, faCircleCheck, faMap, faTowerBroadcast, faChartBar, faGlobe, faLayerGroup, faBullseye } from '@fortawesome/free-solid-svg-icons'
+import type { IconDefinition } from '@fortawesome/fontawesome-svg-core'
 import CTASection from '@/components/CTASection'
 import 'leaflet/dist/leaflet.css'
 import type { LatLngExpression } from 'leaflet'
 
-// ── Coverage zone data ────────────────────────────────────────────────────────
+// -- Coverage zone data --------------------------------------------------------
 type CoverageType = '5g-plus' | '5g' | '4g' | '3g' | 'gap'
 
 interface CoverageZone {
@@ -20,7 +22,7 @@ interface CoverageZone {
 }
 
 const coverageZones: CoverageZone[] = [
-  // 5G+ core — Manchester city centre
+  // 5G+ core � Manchester city centre
   {
     id: 'z1', type: '5g-plus', label: '5G+',
     signal: '-72 dBm', population: '28,400 residents', operator: 'All operators',
@@ -30,7 +32,7 @@ const coverageZones: CoverageZone[] = [
       [53.462, -2.300], [53.488, -2.310],
     ],
   },
-  // 5G inner ring — inner Manchester suburbs
+  // 5G inner ring � inner Manchester suburbs
   {
     id: 'z2', type: '5g', label: '5G',
     signal: '-85 dBm', population: '15,600 residents', operator: 'EE / Vodafone / O2',
@@ -51,7 +53,7 @@ const coverageZones: CoverageZone[] = [
       [53.358, -2.440], [53.432, -2.580], [53.540, -2.580],
     ],
   },
-  // 3G — Wigan area
+  // 3G � Wigan area
   {
     id: 'z4', type: '3g', label: '3G',
     signal: '-105 dBm', population: '2,400 residents', operator: 'Three only',
@@ -60,7 +62,7 @@ const coverageZones: CoverageZone[] = [
       [53.505, -2.640], [53.530, -2.710],
     ],
   },
-  // 3G — Oldham / east side
+  // 3G � Oldham / east side
   {
     id: 'z5', type: '3g', label: '3G',
     signal: '-108 dBm', population: '3,100 residents', operator: 'O2 only',
@@ -69,7 +71,7 @@ const coverageZones: CoverageZone[] = [
       [53.530, -1.920], [53.520, -1.990], [53.535, -2.060],
     ],
   },
-  // Gap — Pennines east
+  // Gap � Pennines east
   {
     id: 'z6', type: 'gap', label: 'No Coverage',
     signal: 'No signal', population: 'Underserved area', operator: 'None',
@@ -78,7 +80,7 @@ const coverageZones: CoverageZone[] = [
       [53.475, -1.750], [53.470, -1.840], [53.495, -1.880],
     ],
   },
-  // Gap — rural north Lancashire
+  // Gap � rural north Lancashire
   {
     id: 'z7', type: 'gap', label: 'No Coverage',
     signal: 'No signal', population: 'Underserved area', operator: 'None',
@@ -104,7 +106,7 @@ function MapFit() {
   return null
 }
 
-// ── Coverage map component ────────────────────────────────────────────────────
+// -- Coverage map component ----------------------------------------------------
 function CoverageMap() {
   const [activeLayer, setActiveLayer] = useState<string>('all')
   const [selected, setSelected] = useState<CoverageZone | null>(null)
@@ -276,47 +278,47 @@ function CoverageMap() {
   )
 }
 
-// ── Capabilities ─────────────────────────────────────────────────────────────
+// -- Capabilities -------------------------------------------------------------
 const capabilities = [
   {
-    Icon: Map,
+    icon: faMap,
     label: 'Coverage Visualisation',
     desc: 'Renders 2G, 3G, 4G and 5G network coverage as interactive maps across any region or terrain type.',
     color: '#228DC1',
   },
   {
-    Icon: Radio,
+    icon: faTowerBroadcast,
     label: 'Real-Time Performance Monitoring',
     desc: 'Live signal quality, throughput and coverage data ingested continuously. Identify degradation and dead zones as they emerge.',
     color: '#7c3aed',
   },
   {
-    Icon: Target,
+    icon: faBullseye,
     label: 'Gap Detection and Prioritisation',
     desc: 'AI analysis surfaces underserved areas, calculates population impact and ranks expansion opportunities by cost-efficiency.',
     color: '#059669',
   },
   {
-    Icon: BarChart2,
+    icon: faChartBar,
     label: 'Investment Planning Intelligence',
     desc: 'Data-driven inputs for network rollout planning. iCMAP helps operators and governments prioritise where to deploy next.',
     color: '#d97706',
   },
   {
-    Icon: Globe,
+    icon: faGlobe,
     label: 'Multi-Generational Network Support',
     desc: 'Works across all active network generations simultaneously. Model migration paths from legacy infrastructure to 5G.',
     color: '#dc2626',
   },
   {
-    Icon: Layers,
+    icon: faLayerGroup,
     label: 'Regulator and Government Reporting',
     desc: 'Outputs formatted for regulatory submissions, universal service reporting and national broadband mapping requirements.',
     color: '#0891b2',
   },
 ]
 
-// ── Use cases ─────────────────────────────────────────────────────────────────
+// -- Use cases -----------------------------------------------------------------
 const useCases = [
   {
     label: 'Mobile Network Operators',
@@ -353,7 +355,7 @@ const useCases = [
   },
 ]
 
-// ── How it works ─────────────────────────────────────────────────────────────
+// -- How it works -------------------------------------------------------------
 const steps = [
   {
     num: '01',
@@ -385,11 +387,11 @@ const steps = [
   },
 ]
 
-// ── Main page ─────────────────────────────────────────────────────────────────
+// -- Main page -----------------------------------------------------------------
 export default function IcmapPage() {
   return (
     <>
-      {/* ── Hero ── */}
+      {/* -- Hero -- */}
       <section className="relative overflow-hidden bg-white pt-32 pb-24">
         <div
           className="absolute inset-0 pointer-events-none"
@@ -400,7 +402,7 @@ export default function IcmapPage() {
 
         <div className="relative max-w-7xl mx-auto px-8 lg:px-12">
           <p className="font-black text-[#228DC1] mb-4" style={{ fontSize: '13px', letterSpacing: '0.28em', textTransform: 'uppercase', opacity: 0.6 }}>
-            iCMAP · Intelligent Coverage Mapping
+            iCMAP � Intelligent Coverage Mapping
           </p>
           <h1 className="font-serif-display text-[#0a1628] leading-[1.02] mb-6 max-w-4xl" style={{ fontSize: 'clamp(44px, 5.8vw, 80px)' }}>
             See every gap.<br />
@@ -428,7 +430,7 @@ export default function IcmapPage() {
         </div>
       </section>
 
-      {/* ── Key metrics ── */}
+      {/* -- Key metrics -- */}
       <section className="bg-white border-t border-gray-100">
         <div className="max-w-7xl mx-auto px-8 lg:px-12">
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-px bg-white/6 border border-white/6">
@@ -448,7 +450,7 @@ export default function IcmapPage() {
         </div>
       </section>
 
-      {/* ── Live Coverage Map ── */}
+      {/* -- Live Coverage Map -- */}
       <section className="py-24 bg-white border-t border-gray-100">
         <div className="max-w-7xl mx-auto px-8 lg:px-12">
           <div className="max-w-2xl mb-14">
@@ -476,7 +478,7 @@ export default function IcmapPage() {
         </div>
       </section>
 
-      {/* ── How it works ── */}
+      {/* -- How it works -- */}
       <section className="py-28 bg-[#f8fafc] border-t border-gray-100">
         <div className="max-w-7xl mx-auto px-8 lg:px-12">
           <div className="mb-20">
@@ -504,7 +506,7 @@ export default function IcmapPage() {
         </div>
       </section>
 
-      {/* ── Capabilities ── */}
+      {/* -- Capabilities -- */}
       <section className="py-28 bg-white">
         <div className="max-w-7xl mx-auto px-8 lg:px-12">
           <div className="mb-16">
@@ -520,7 +522,7 @@ export default function IcmapPage() {
             {capabilities.map((cap) => (
               <div key={cap.label} className="bg-white p-8 hover:bg-[#f7f9ff] transition-colors">
                 <div className="w-10 h-10 flex items-center justify-center mb-5" style={{ backgroundColor: '#228DC112' }}>
-                  <cap.Icon className="w-5 h-5 text-[#228DC1]" strokeWidth={1.5} />
+                  <FontAwesomeIcon icon={cap.icon} className="w-5 h-5 text-[#228DC1]" />
                 </div>
                 <h3 className="text-[#0a1628] font-semibold text-[15px] leading-snug mb-3">{cap.label}</h3>
                 <p className="text-[#0a1628]/65 text-sm font-normal leading-relaxed">{cap.desc}</p>
@@ -530,7 +532,7 @@ export default function IcmapPage() {
         </div>
       </section>
 
-      {/* ── Who it's for ── */}
+      {/* -- Who it's for -- */}
       <section className="py-28 bg-[#f8fafc] border-t border-gray-100">
         <div className="max-w-7xl mx-auto px-8 lg:px-12">
           <div className="mb-16">
@@ -548,7 +550,7 @@ export default function IcmapPage() {
                 <div className="space-y-3">
                   {uc.points.map((point) => (
                     <div key={point} className="flex items-start gap-3">
-                      <CheckCircle2 className="w-4 h-4 text-[#228DC1] shrink-0 mt-0.5" />
+                      <FontAwesomeIcon icon={faCircleCheck} className="w-4 h-4 text-[#228DC1] shrink-0 mt-0.5" />
                       <p className="text-[#0a1628]/75 text-sm font-normal">{point}</p>
                     </div>
                   ))}
@@ -559,7 +561,7 @@ export default function IcmapPage() {
         </div>
       </section>
 
-      {/* ── Why iCMAP ── */}
+      {/* -- Why iCMAP -- */}
       <section className="py-24 bg-white">
         <div className="max-w-7xl mx-auto px-8 lg:px-12">
           <div className="grid lg:grid-cols-2 gap-20 items-center">
@@ -580,7 +582,7 @@ export default function IcmapPage() {
                   'Single platform across all network generations and all regions',
                 ].map((point) => (
                   <div key={point} className="flex items-start gap-3">
-                    <CheckCircle2 className="w-4 h-4 text-[#228DC1] shrink-0 mt-0.5" />
+                    <FontAwesomeIcon icon={faCircleCheck} className="w-4 h-4 text-[#228DC1] shrink-0 mt-0.5" />
                     <p className="text-[#0a1628]/65 text-sm font-normal">{point}</p>
                   </div>
                 ))}
@@ -608,7 +610,7 @@ export default function IcmapPage() {
         </div>
       </section>
 
-      {/* ── CTA strip ── */}
+      {/* -- CTA strip -- */}
       <section className="py-16 bg-white border-t border-gray-100">
         <div className="max-w-7xl mx-auto px-8 lg:px-12 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-8">
           <div>
@@ -621,7 +623,7 @@ export default function IcmapPage() {
             to="/contact"
             className="shrink-0 inline-flex items-center gap-2 px-7 py-3.5 border border-[#228DC1] text-[#228DC1] text-[13px] font-semibold hover:bg-[#228DC1] hover:text-white transition-all"
           >
-            Request a Demo <ArrowRight className="w-4 h-4" />
+            Request a Demo <FontAwesomeIcon icon={faArrowRight} className="w-4 h-4" />
           </Link>
         </div>
       </section>

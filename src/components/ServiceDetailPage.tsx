@@ -1,5 +1,6 @@
 ﻿import { Link } from 'react-router-dom'
-import { ArrowRight, CheckCircle2 } from 'lucide-react'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faArrowRight, faCircleCheck } from '@fortawesome/free-solid-svg-icons'
 
 type Metric = { value: string; label: string }
 type Capability = { title: string; desc: string }
@@ -42,7 +43,7 @@ export default function ServiceDetailPage({
             {/* L4 — body */}
             <p className="text-[#0a1628]/75 text-lg max-w-xl font-normal leading-relaxed mb-9">{hero}</p>
             <Link to="/contact" className="inline-flex items-center gap-2 px-7 py-3.5 bg-[#228DC1] text-white text-sm font-medium hover:bg-[#1a6e99] transition-colors">
-              Request a Demo <ArrowRight className="w-4 h-4" />
+              Request a Demo <FontAwesomeIcon icon={faArrowRight} className="w-4 h-4" />
             </Link>
           </div>
           <div className="flex flex-col">
@@ -84,7 +85,7 @@ export default function ServiceDetailPage({
           <div className="grid sm:grid-cols-2 gap-4">
             {capabilities.map((capability) => (
               <div key={capability.title} className="border border-gray-100 p-6 hover:border-[#228DC1]/30 hover:shadow-sm transition-all bg-white">
-                <CheckCircle2 className="w-5 h-5 text-[#228DC1] mb-4" />
+                <FontAwesomeIcon icon={faCircleCheck} className="w-5 h-5 text-[#228DC1] mb-4" />
                 {/* L3 — card heading */}
                 <h3 className="font-card-heading text-[#0a1628] text-[15px] mb-2">{capability.title}</h3>
                 {/* L4 — body */}
@@ -134,7 +135,7 @@ export default function ServiceDetailPage({
               {related.map((link) => (
                 <Link key={link.href} to={link.href} className="flex items-center justify-between border-b border-gray-100 pb-3 text-[#0a1628]/70 hover:text-white font-normal text-[15px] transition-colors">
                   {link.label}
-                  <ArrowRight className="w-4 h-4" />
+                  <FontAwesomeIcon icon={faArrowRight} className="w-4 h-4" />
                 </Link>
               ))}
             </div>

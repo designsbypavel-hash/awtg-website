@@ -1,6 +1,7 @@
 ﻿import { useState, useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
-import { ArrowRight } from 'lucide-react'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faArrowRight } from '@fortawesome/free-solid-svg-icons'
 import CTASection from '@/components/CTASection'
 
 const latestInsights = [
@@ -293,7 +294,7 @@ export default function AboutOverviewPage() {
               to="/insights/blog"
               className="hidden sm:inline-flex items-center gap-2 text-sm font-medium text-[#0a1628]/60 hover:text-[#228DC1] transition-colors shrink-0"
             >
-              All articles <ArrowRight className="w-4 h-4" />
+              All articles <FontAwesomeIcon icon={faArrowRight} className="w-4 h-4" />
             </Link>
           </div>
 
@@ -317,7 +318,7 @@ export default function AboutOverviewPage() {
                   </p>
                 </div>
                 <div className="flex items-center gap-2 mt-6 text-[#228DC1] text-xs font-semibold uppercase tracking-[0.14em]">
-                  Read <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
+                  Read <FontAwesomeIcon icon={faArrowRight} className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
                 </div>
               </Link>
             ))}

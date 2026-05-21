@@ -1,5 +1,6 @@
 ﻿import { Link } from 'react-router-dom'
-import { ArrowRight, CheckCircle2 } from 'lucide-react'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faArrowRight, faCircleCheck } from '@fortawesome/free-solid-svg-icons'
 
 const products = [
   {
@@ -72,7 +73,7 @@ export default function GenerativeAIPage() {
             </p>
             <div className="flex flex-wrap gap-4">
               <Link to="/contact" className="inline-flex items-center gap-2 px-7 py-3.5 bg-[#228DC1] text-white text-sm font-medium hover:bg-[#1a6e99] transition-colors">
-                Request a Demo <ArrowRight className="w-4 h-4" />
+                Request a Demo <FontAwesomeIcon icon={faArrowRight} className="w-4 h-4" />
               </Link>
               <Link to="/solutions" className="inline-flex items-center gap-2 px-7 py-3.5 text-[#0a1628]/60 hover:text-[#228DC1] text-sm font-medium transition-colors">
                 View all solutions
@@ -122,7 +123,7 @@ export default function GenerativeAIPage() {
                   <div className="grid sm:grid-cols-2 gap-3">
                     {p.features.map((f) => (
                       <div key={f} className="flex items-start gap-2.5">
-                        <CheckCircle2 className="w-4 h-4 shrink-0 mt-0.5 text-[#228DC1]" />
+                        <FontAwesomeIcon icon={faCircleCheck} className="w-4 h-4 shrink-0 mt-0.5 text-[#228DC1]" />
                         <span className="text-[#0a1628]/75 text-sm font-normal">{f}</span>
                       </div>
                     ))}
@@ -173,7 +174,7 @@ export default function GenerativeAIPage() {
               { title: 'Safe Deployment', desc: 'Deployed on your infrastructure or in a private cloud. You stay in control of your data, with full observability from day one.' },
             ].map((c) => (
               <div key={c.title} className="bg-white p-8 hover:bg-[#f7f8fa] transition-colors">
-                <CheckCircle2 className="w-5 h-5 text-[#228DC1] mb-5" />
+                <FontAwesomeIcon icon={faCircleCheck} className="w-5 h-5 text-[#228DC1] mb-5" />
                 <h3 className="text-[#0a1628] font-semibold mb-2 text-sm">{c.title}</h3>
                 <p className="text-[#0a1628]/65 text-sm font-normal leading-relaxed">{c.desc}</p>
               </div>

@@ -1,5 +1,6 @@
 ﻿import { Link } from 'react-router-dom'
-import { ArrowRight, CheckCircle } from 'lucide-react'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faArrowRight, faCircleCheck } from '@fortawesome/free-solid-svg-icons'
 
 const solutions = [
   {
@@ -126,7 +127,7 @@ export default function SolutionsPage() {
               <ul className="space-y-2.5 mb-10">
                 {s.highlights.map((h) => (
                   <li key={h} className="flex items-start gap-3 text-sm text-[#0a1628]/75 font-normal">
-                    <CheckCircle className="w-4 h-4 text-[#228DC1] shrink-0 mt-0.5" />
+                    <FontAwesomeIcon icon={faCircleCheck} className="w-4 h-4 text-[#228DC1] shrink-0 mt-0.5" />
                     {h}
                   </li>
                 ))}
@@ -135,7 +136,7 @@ export default function SolutionsPage() {
                 to={s.href}
                 className="inline-flex items-center gap-2 text-sm font-medium text-[#228DC1] hover:gap-3 transition-all duration-200 w-fit"
               >
-                Explore {s.title} <ArrowRight className="w-4 h-4" />
+                Explore {s.title} <FontAwesomeIcon icon={faArrowRight} className="w-4 h-4" />
               </Link>
             </div>
           </div>

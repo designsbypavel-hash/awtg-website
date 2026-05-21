@@ -1,5 +1,6 @@
 ﻿import { Link } from 'react-router-dom'
-import { ArrowRight } from 'lucide-react'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faArrowRight } from '@fortawesome/free-solid-svg-icons'
 import CTASection from '@/components/CTASection'
 
 // ── Featured clients — hero treatment ──────────────────────────────────────
@@ -108,7 +109,7 @@ export default function InsightsCaseStudiesPage() {
                 <div className="mt-8 flex items-center justify-between border-t border-gray-100 pt-6">
                   <span className="text-[#0a1628]/65 text-xs font-normal">{f.deliverable}</span>
                   <Link to="/contact" className="type-label text-[#228DC1] hover:text-white transition-colors flex items-center gap-2">
-                    Discuss a similar project <ArrowRight className="w-3 h-3" />
+                    Discuss a similar project <FontAwesomeIcon icon={faArrowRight} className="w-3 h-3" />
                   </Link>
                 </div>
               </div>

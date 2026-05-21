@@ -1,6 +1,7 @@
 ﻿import { useState, useEffect, useRef } from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import { ChevronDown, Menu, X } from 'lucide-react'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faChevronDown, faBars, faXmark } from '@fortawesome/free-solid-svg-icons'
 
 
 type NavItem = { label: string; desc: string; href: string }
@@ -192,7 +193,7 @@ export default function Navigation() {
                   className={`relative flex items-center gap-1 px-4 py-5 text-[13px] font-medium transition-colors duration-200 ${linkCls} ${activeDropdown === key ? (scrolled || !isHome ? 'text-[#0a1628]' : 'text-white') : ''}`}
                 >
                   {label}
-                  <ChevronDown className={`w-3 h-3 opacity-50 transition-transform duration-200 ${activeDropdown === key ? 'rotate-180' : ''}`} aria-hidden="true" />
+                  <FontAwesomeIcon icon={faChevronDown} className={`w-3 h-3 opacity-50 transition-transform duration-200 ${activeDropdown === key ? 'rotate-180' : ''}`} aria-hidden="true" />
                   {/* Harvey-style active underline */}
                   {activeDropdown === key && (
                     <span className="absolute bottom-0 left-4 right-4 h-px bg-current opacity-30" aria-hidden="true" />
@@ -235,7 +236,7 @@ export default function Navigation() {
               aria-controls="mobile-menu"
               onClick={() => setMobileOpen(!mobileOpen)}
             >
-              {mobileOpen ? <X className="w-5 h-5" aria-hidden="true" /> : <Menu className="w-5 h-5" aria-hidden="true" />}
+              {mobileOpen ? <FontAwesomeIcon icon={faXmark} className="w-5 h-5" aria-hidden="true" /> : <FontAwesomeIcon icon={faBars} className="w-5 h-5" aria-hidden="true" />}
             </button>
           </div>
         </div>
@@ -328,7 +329,7 @@ export default function Navigation() {
                   className="flex items-center justify-between w-full py-3.5 text-[#0a1628] text-sm font-medium"
                 >
                   {nav.label}
-                  <ChevronDown className={`w-4 h-4 opacity-40 transition-transform ${mobileExpanded === nav.key ? 'rotate-180' : ''}`} aria-hidden="true" />
+                  <FontAwesomeIcon icon={faChevronDown} className={`w-4 h-4 opacity-40 transition-transform ${mobileExpanded === nav.key ? 'rotate-180' : ''}`} aria-hidden="true" />
                 </button>
                 {mobileExpanded === nav.key && (
                   <div id={`mobile-submenu-${nav.key}`} className="pb-4 space-y-4 pl-2">

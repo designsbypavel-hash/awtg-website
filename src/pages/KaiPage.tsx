@@ -1,9 +1,10 @@
-﻿import { useState, useRef, useEffect, type CSSProperties } from 'react'
+import { useState, useRef, useEffect, type CSSProperties } from 'react'
 import { Link } from 'react-router-dom'
-import { ArrowRight, CheckCircle2, Zap, Shield, BarChart2, Settings2, Check, X, MessageCircleCheck, TrendingUp, Sparkles, SlidersHorizontal, BookOpen, Plug2 } from 'lucide-react'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faArrowRight, faCircleCheck, faBolt, faShield, faChartBar, faGear, faCheck, faXmark, faComments, faArrowTrendUp, faWandSparkles, faSliders, faBookOpen, faPlug } from '@fortawesome/free-solid-svg-icons'
 import CTASection from '@/components/CTASection'
 
-// ── Scroll utilities ──────────────────────────────────────────────────────────
+// -- Scroll utilities ----------------------------------------------------------
 function useInView(threshold = 0.12) {
   const ref = useRef<HTMLDivElement>(null)
   const [inView, setInView] = useState(false)
@@ -76,7 +77,7 @@ function StatCard({ prefix = '', num, suffix = '', label, note, delay = 0 }: {
   )
 }
 
-// ── Kai Dashboard mockup ──────────────────────────────────────────────────────
+// -- Kai Dashboard mockup ------------------------------------------------------
 function KaiDashboard() {
   const [activeTab,  setActiveTab]  = useState('details')
   const [activeAsst, setActiveAsst] = useState(0)
@@ -86,10 +87,10 @@ function KaiDashboard() {
 
   type PlayMsg = { role: 'user' | 'ai' | 'signal'; text: string; meta?: string }
   const playMsgs: PlayMsg[] = [
-    { role: 'user',   text: 'Hi, my order hasn\'t arrived — it\'s been 5 days.' },
-    { role: 'ai',     text: 'I can see order #48291. It shipped Monday and is with the courier — delivery is due today before 6 pm.', meta: 'Order lookup · CRM synced' },
+    { role: 'user',   text: 'Hi, my order hasn\'t arrived � it\'s been 5 days.' },
+    { role: 'ai',     text: 'I can see order #48291. It shipped Monday and is with the courier � delivery is due today before 6 pm.', meta: 'Order lookup � CRM synced' },
     { role: 'user',   text: 'Perfect, thank you!' },
-    { role: 'signal', text: 'Resolved · 22s handle time · CSAT triggered' },
+    { role: 'signal', text: 'Resolved � 22s handle time � CSAT triggered' },
   ]
   const delays = [900, 2300, 3900, 5100]
 
@@ -158,7 +159,7 @@ function KaiDashboard() {
             Switch to Kai Agent
           </button>
           <div className="w-6 h-6 bg-white/10 flex items-center justify-center">
-            <Settings2 className="w-3 h-3 text-white/45" />
+            <FontAwesomeIcon icon={faGear} className="w-3 h-3 text-white/45" />
           </div>
         </div>
       </div>
@@ -166,7 +167,7 @@ function KaiDashboard() {
       {/* 3-column layout */}
       <div className="grid grid-cols-[195px_1fr_235px] divide-x divide-gray-100" style={{ minHeight: '460px' }}>
 
-        {/* ── Sidebar ── */}
+        {/* -- Sidebar -- */}
         <div className="bg-[#f8fafc] flex flex-col">
           <div className="flex-1 px-3 pt-5 pb-3 overflow-hidden">
             <p className="font-bold text-[#0a1628] text-[14px] mb-4 px-1">Dashboard</p>
@@ -175,7 +176,7 @@ function KaiDashboard() {
             <div className="mb-3">
               <div className="flex items-center justify-between px-2 py-1 mb-0.5">
                 <span className="text-[9px] font-bold uppercase tracking-[0.18em] text-[#0a1628]/35">Admin Panel</span>
-                <span className="text-[#0a1628]/25 text-[10px]">▾</span>
+                <span className="text-[#0a1628]/25 text-[10px]">?</span>
               </div>
               {['Dashboard', 'Access management', 'User management'].map(item => (
                 <button key={item} className="w-full text-left px-3 py-1.5 text-[11px] text-[#0a1628]/50 hover:text-[#0a1628]/80 hover:bg-white/70 transition-colors">
@@ -245,7 +246,7 @@ function KaiDashboard() {
           </div>
         </div>
 
-        {/* ── Main content ── */}
+        {/* -- Main content -- */}
         <div className="flex flex-col bg-white">
 
           {/* Tab bar */}
@@ -278,7 +279,7 @@ function KaiDashboard() {
                     <p className="text-[9px] font-bold uppercase tracking-[0.18em] text-[#0a1628]/35 mb-1.5">Name</p>
                     <div className="flex items-center gap-2">
                       <p className="text-[#0a1628] font-semibold text-[13px]">{assistants[activeAsst].name}</p>
-                      <span className="text-[#228DC1]/40 text-[11px] cursor-pointer hover:text-[#228DC1] transition-colors">✎</span>
+                      <span className="text-[#228DC1]/40 text-[11px] cursor-pointer hover:text-[#228DC1] transition-colors">?</span>
                     </div>
                   </div>
                   <div>
@@ -292,7 +293,7 @@ function KaiDashboard() {
                     <p className="text-[9px] font-bold uppercase tracking-[0.18em] text-[#0a1628]/35 mb-1.5">AI model</p>
                     <div className="inline-flex items-center gap-2 bg-[#f8fafc] border border-gray-200 px-3 py-1.5 cursor-pointer hover:border-gray-300 transition-colors">
                       <span className="text-[#0a1628] text-[12px] font-medium">Claude Sonnet</span>
-                      <span className="text-gray-400 text-[9px]">▾</span>
+                      <span className="text-gray-400 text-[9px]">?</span>
                     </div>
                   </div>
                   <div>
@@ -350,7 +351,7 @@ function KaiDashboard() {
                     {[
                       { trigger: 'Safeguarding concern',   action: 'Immediate escalation' },
                       { trigger: 'Formal complaint',        action: 'Senior agent queue' },
-                      { trigger: 'Billing dispute > £500',  action: 'Finance team + full transcript' },
+                      { trigger: 'Billing dispute > �500',  action: 'Finance team + full transcript' },
                       { trigger: 'Unresolved in 3 turns',   action: 'Human handoff with summary' },
                     ].map(r => (
                       <div key={r.trigger} className="flex items-center justify-between px-4 py-2.5">
@@ -369,7 +370,7 @@ function KaiDashboard() {
                 <div className="border border-gray-100 divide-y divide-gray-100">
                   {[
                     { name: 'Contact Centre Policy v3.pdf', size: '2.4 MB', date: 'Today, 08:14', type: 'PDF' },
-                    { name: 'Product FAQ — Q1 2025.docx',  size: '890 KB', date: '14 May 2025',  type: 'DOC' },
+                    { name: 'Product FAQ � Q1 2025.docx',  size: '890 KB', date: '14 May 2025',  type: 'DOC' },
                     { name: 'Billing and Refunds Guide.pdf', size: '1.1 MB', date: '2 Apr 2025', type: 'PDF' },
                   ].map(f => (
                     <div key={f.name} className="flex items-center gap-3 px-4 py-3">
@@ -378,9 +379,9 @@ function KaiDashboard() {
                       </div>
                       <div className="flex-1 min-w-0">
                         <p className="text-[11px] font-semibold text-[#0a1628] truncate">{f.name}</p>
-                        <p className="text-[9px] text-[#0a1628]/40">{f.size} · {f.date}</p>
+                        <p className="text-[9px] text-[#0a1628]/40">{f.size} � {f.date}</p>
                       </div>
-                      <CheckCircle2 className="w-3.5 h-3.5 text-[#059669] shrink-0" />
+                      <FontAwesomeIcon icon={faCircleCheck} className="w-3.5 h-3.5 text-[#059669] shrink-0" />
                     </div>
                   ))}
                 </div>
@@ -403,7 +404,7 @@ function KaiDashboard() {
                       <span className="text-[9px] font-bold text-[#0a1628]/35 bg-white border border-gray-200 px-2 py-0.5 w-[68px] text-center shrink-0">{svc.badge}</span>
                       <span className="flex-1 text-[12px] font-medium text-[#0a1628]">{svc.name}</span>
                       <span className={`text-[10px] font-semibold shrink-0 ${svc.status === 'Connected' ? 'text-[#059669]' : 'text-[#0a1628]/30'}`}>
-                        {svc.status === 'Connected' ? '● ' : '○ '}{svc.status}
+                        {svc.status === 'Connected' ? '? ' : '? '}{svc.status}
                       </span>
                     </div>
                   ))}
@@ -424,7 +425,7 @@ function KaiDashboard() {
           </div>
         </div>
 
-        {/* ── Playground ── */}
+        {/* -- Playground -- */}
         <div className="bg-[#f8fafc] flex flex-col">
           <div className="flex items-center justify-between px-4 py-2.5 border-b border-gray-100 bg-white shrink-0">
             <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#0a1628]/35">Playground</p>
@@ -447,7 +448,7 @@ function KaiDashboard() {
             </div>
 
             <div className="flex-1 p-3 space-y-2.5 overflow-hidden" style={{ background: '#fafafa', minHeight: '200px' }}>
-              {/* Greeting bubble — always visible */}
+              {/* Greeting bubble � always visible */}
               <div className="flex gap-2 items-start">
                 <div className="w-5 h-5 bg-[#228DC1] flex items-center justify-center shrink-0 mt-0.5">
                   <span className="text-white text-[8px] font-black">K</span>
@@ -478,7 +479,7 @@ function KaiDashboard() {
                       </div>
                       {msg.meta && (
                         <div className="mt-1 flex gap-1 flex-wrap">
-                          {msg.meta.split(' · ').map(m => (
+                          {msg.meta.split(' � ').map(m => (
                             <span key={m} className="text-[8px] text-[#228DC1] bg-[#e5f4fa] border border-[#228DC1]/15 px-1.5 py-0.5">{m}</span>
                           ))}
                         </div>
@@ -503,7 +504,7 @@ function KaiDashboard() {
 
               {resolved && (
                 <div className="flex items-center gap-1.5 px-3 py-2 bg-[#f0fdf4] border border-[#059669]/20" style={{ animation: 'fadeIn 300ms ease-out' }}>
-                  <CheckCircle2 className="w-3 h-3 text-[#059669] shrink-0" />
+                  <FontAwesomeIcon icon={faCircleCheck} className="w-3 h-3 text-[#059669] shrink-0" />
                   <p className="text-[9px] text-[#059669] font-semibold">{playMsgs[3].text}</p>
                 </div>
               )}
@@ -514,7 +515,7 @@ function KaiDashboard() {
                 Type a message...
               </div>
               <div className="w-6 h-6 bg-[#228DC1] flex items-center justify-center shrink-0 self-center">
-                <ArrowRight className="w-3 h-3 text-white" />
+                <FontAwesomeIcon icon={faArrowRight} className="w-3 h-3 text-white" />
               </div>
             </div>
           </div>
@@ -536,7 +537,7 @@ function KaiDashboard() {
                 {[
                   { label: 'CSAT',       val: '+17%',   color: '#228DC1' },
                   { label: 'Contain.',   val: '+22%',   color: '#7c3aed' },
-                  { label: 'Escalat.',   val: '−13%',   color: '#059669' },
+                  { label: 'Escalat.',   val: '-13%',   color: '#059669' },
                 ].map(s => (
                   <div key={s.label} className="text-center">
                     <p className="text-[10px] font-bold" style={{ color: s.color }}>{s.val}</p>
@@ -553,11 +554,11 @@ function KaiDashboard() {
   )
 }
 
-// ── Integrations — Kai as glowing hub ────────────────────────────────────────
+// -- Integrations � Kai as glowing hub ----------------------------------------
 function IntegrationsSection() {
   const [ref, inView] = useInView(0.08)
 
-  // 5 × 3 grid = 15 slots; Kai sits at index 7 (row 1, col 2 — dead centre)
+  // 5 � 3 grid = 15 slots; Kai sits at index 7 (row 1, col 2 � dead centre)
   type Item = { label: string; category: string; logo: string | null; isKai?: true; isMcp?: true }
   const items: Item[] = [
     { label: 'HubSpot',     category: 'CRM',        logo: '/logos/hubspot.svg' },
@@ -601,13 +602,13 @@ function IntegrationsSection() {
               ].map((item) => (
                 <div key={item.label} className="flex items-center gap-3">
                   <div className="w-1.5 h-1.5 bg-[#228DC1] rounded-full shrink-0" />
-                  <span className="text-[#0a1628]/60 text-[13px]">{item.label} — <span className="font-semibold text-[#0a1628]">{item.value}</span></span>
+                  <span className="text-[#0a1628]/60 text-[13px]">{item.label} � <span className="font-semibold text-[#0a1628]">{item.value}</span></span>
                 </div>
               ))}
             </div>
           </div>
 
-          {/* Right: 5 × 3 hub grid */}
+          {/* Right: 5 � 3 hub grid */}
           <div ref={ref} className="grid grid-cols-5 gap-2">
             {items.map((item, i) => {
               const d = dist(i)
@@ -649,7 +650,7 @@ function IntegrationsSection() {
                         onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }}
                       />
                       <span className="relative text-[8px] font-semibold text-[#903E8E] bg-[#903E8E]/10 border border-[#903E8E]/30 px-1.5 py-0.5 rounded-sm">
-                        AI Agent · MCP
+                        AI Agent � MCP
                       </span>
                     </>
                   ) : item.isMcp ? (
@@ -702,7 +703,7 @@ function SecurityComplianceSection() {
 
             <div className="bg-[#0a1628] text-white p-8 shadow-[0_16px_50px_rgba(10,22,40,0.12)]" style={reveal(leftInView, 280)}>
               <div className="w-11 h-11 flex items-center justify-center bg-white/10 mb-6">
-                <Shield className="w-5 h-5 text-[#6cc4ea]" strokeWidth={1.6} />
+                <FontAwesomeIcon icon={faShield} className="w-5 h-5 text-[#6cc4ea]" />
               </div>
               <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-white/45 mb-2">Governance proof</p>
               <p className="font-heading text-[24px] leading-tight mb-3">ISO 42001 AI Management System certified</p>
@@ -725,7 +726,7 @@ function SecurityComplianceSection() {
                 <div key={item.badge} className="group bg-white border border-gray-200 p-6 shadow-[0_1px_8px_rgba(10,22,40,0.03)] hover:shadow-[0_16px_40px_rgba(10,22,40,0.07)] hover:-translate-y-0.5 transition-all" style={reveal(gridInView, i * 80)}>
                   <div className="flex items-center gap-3 mb-5">
                     <span className="w-8 h-8 flex items-center justify-center bg-[#e5f4fa] text-[#228DC1]">
-                      <CheckCircle2 className="w-4 h-4" strokeWidth={1.7} />
+                      <FontAwesomeIcon icon={faCircleCheck} className="w-4 h-4" />
                     </span>
                     <span className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#228DC1]">{item.badge}</span>
                   </div>
@@ -754,7 +755,7 @@ function SecurityComplianceSection() {
   )
 }
 
-// ── Main page ─────────────────────────────────────────────────────────────────
+// -- Main page -----------------------------------------------------------------
 export default function KaiPage() {
   const [stepsRef, stepsInView] = useInView()
   const [capsRef, capsInView] = useInView()
@@ -763,7 +764,7 @@ export default function KaiPage() {
   return (
     <>
       <ScrollProgress />
-      {/* ── Hero ── */}
+      {/* -- Hero -- */}
       <section className="relative overflow-hidden bg-white pt-32 pb-20">
 
         <div className="relative max-w-7xl mx-auto px-8 lg:px-12">
@@ -774,7 +775,7 @@ export default function KaiPage() {
               <div className="flex items-center gap-3 mb-6">
                 <img src="/kai-logo.svg" alt="Kai" className="h-7 w-auto object-contain" />
                 <p className="font-black text-[#228DC1]" style={{ fontSize: '13px', letterSpacing: '0.28em', textTransform: 'uppercase', opacity: 0.6 }}>
-                  Kai · Enterprise AI Agent
+                  Kai � Enterprise AI Agent
                 </p>
               </div>
               <h1 className="font-serif-display text-[#0a1628] leading-[1.02] mb-6" style={{ fontSize: 'clamp(44px, 5.5vw, 80px)' }}>
@@ -816,7 +817,7 @@ export default function KaiPage() {
         </div>
       </section>
 
-      {/* ── Single combined logo strip ── */}
+      {/* -- Single combined logo strip -- */}
       {(() => {
         const items = [
           { src: '/logos/clients/kaiser-permanente.svg', alt: 'Kaiser Permanente' },
@@ -855,7 +856,7 @@ export default function KaiPage() {
         )
       })()}
 
-      {/* ── Live in production ── */}
+      {/* -- Live in production -- */}
       <section className="bg-[#f8fafc] border-b border-gray-100">
         <div className="max-w-7xl mx-auto px-8 lg:px-12 py-20">
           <div className="grid lg:grid-cols-[0.9fr_1.1fr] gap-14 lg:gap-20 items-center mb-14">
@@ -868,7 +869,7 @@ export default function KaiPage() {
                 Live integrations across HubSpot, WhatsApp, Jira and email. Built for real support at production scale.
               </p>
               <Link to="/insights/case-studies" className="inline-flex items-center gap-2 text-[13px] font-semibold text-[#228DC1] hover:gap-3 transition-all">
-                Read the case study <ArrowRight className="w-4 h-4" />
+                Read the case study <FontAwesomeIcon icon={faArrowRight} className="w-4 h-4" />
               </Link>
             </div>
 
@@ -893,7 +894,7 @@ export default function KaiPage() {
             </div>
           </div>
 
-          {/* Metrics row — same section */}
+          {/* Metrics row � same section */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
             <StatCard prefix="+" num={22.5} suffix="%" label="Containment uplift" note="Measured in production" delay={0} />
             <StatCard prefix="+" num={17} suffix="%" label="CSAT uplift" note="Learner satisfaction" delay={100} />
@@ -903,10 +904,10 @@ export default function KaiPage() {
         </div>
       </section>
 
-      {/* ── Integrations ── */}
+      {/* -- Integrations -- */}
       <IntegrationsSection />
 
-      {/* ── How Kai Works ── */}
+      {/* -- How Kai Works -- */}
       <section className="relative overflow-hidden" style={{ background: 'linear-gradient(135deg, #0a1628 0%, #0d2240 40%, #0a3352 70%, #0a1628 100%)' }}>
         {/* Ambient glow blobs */}
         <div className="absolute inset-0 pointer-events-none">
@@ -941,21 +942,21 @@ export default function KaiPage() {
                 pill: 'PARAMETERS',
                 label: 'Define Parameters',
                 desc: 'Set your tone, escalation rules, identity checks and policy boundaries. Kai operates exactly within the limits you configure.',
-                Icon: SlidersHorizontal,
+                icon: faSliders,
               },
               {
                 num: '02',
                 pill: 'KNOWLEDGE',
                 label: 'Build Knowledge Base',
                 desc: 'Upload documents, connect FAQs and link live data sources. Kai draws from your knowledge, not generic web data.',
-                Icon: BookOpen,
+                icon: faBookOpen,
               },
               {
                 num: '03',
                 pill: 'SYSTEMS',
                 label: 'Connect Systems',
                 desc: 'Link your CRM, helpdesk, messaging channels and APIs in minutes. Kai takes action in your live systems, not just chat.',
-                Icon: Plug2,
+                icon: faPlug,
               },
             ].map((step, i) => (
               <div
@@ -991,7 +992,7 @@ export default function KaiPage() {
                 {/* Icon bottom-right */}
                 <div className="mt-6 flex justify-end">
                   <div className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: 'rgba(34,141,193,0.15)', border: '1px solid rgba(34,141,193,0.25)' }}>
-                    <step.Icon className="w-4 h-4 text-[#228DC1]" strokeWidth={1.5} />
+                    <FontAwesomeIcon icon={step.icon} className="w-4 h-4 text-[#228DC1]" />
                   </div>
                 </div>
               </div>
@@ -1001,10 +1002,10 @@ export default function KaiPage() {
         </div>
       </section>
 
-      {/* ── Security & compliance ── */}
+      {/* -- Security & compliance -- */}
       <SecurityComplianceSection />
 
-      {/* ── Performance Graph ── */}
+      {/* -- Performance Graph -- */}
       <section className="py-24 bg-white border-t border-gray-100">
         <div className="max-w-7xl mx-auto px-8 lg:px-12">
           <div className="grid lg:grid-cols-[1fr_1.6fr] gap-16 items-center">
@@ -1020,13 +1021,13 @@ export default function KaiPage() {
               </p>
               <div className="space-y-8">
                 {[
-                  { Icon: Zap,      label: 'Resolve at first touch',   desc: 'Kai handles routine queries from start to finish, keeping agents free for complex work.' },
-                  { Icon: BarChart2, label: 'Track what matters',       desc: 'Containment, CSAT and escalation rates visible from the moment Kai goes live.' },
-                  { Icon: Shield,   label: 'Governed before go-live',  desc: 'Rules, audit trails and escalation paths are configured, not bolted on later.' },
-                ].map(({ Icon, label, desc }) => (
+                  { icon: faBolt,      label: 'Resolve at first touch',   desc: 'Kai handles routine queries from start to finish, keeping agents free for complex work.' },
+                  { icon: faChartBar, label: 'Track what matters',       desc: 'Containment, CSAT and escalation rates visible from the moment Kai goes live.' },
+                  { icon: faShield,   label: 'Governed before go-live',  desc: 'Rules, audit trails and escalation paths are configured, not bolted on later.' },
+                ].map(({ icon, label, desc }) => (
                   <div key={label} className="flex items-start gap-4">
                     <div className="w-9 h-9 flex items-center justify-center shrink-0 mt-0.5" style={{ backgroundColor: '#228DC112' }}>
-                      <Icon className="w-4 h-4 text-[#228DC1]" strokeWidth={1.6} />
+                      <FontAwesomeIcon icon={icon} className="w-4 h-4 text-[#228DC1]" />
                     </div>
                     <div>
                       <p className="text-[#0a1628] font-semibold text-[14px] mb-1">{label}</p>
@@ -1120,7 +1121,7 @@ export default function KaiPage() {
                   style={{ opacity: chartInView ? 1 : 0, transition: 'opacity 1.2s ease 0.9s' }}
                 />
 
-                {/* Post-Kai solid line — draws on scroll */}
+                {/* Post-Kai solid line � draws on scroll */}
                 <path
                   d="M168,198 L199,152 L230,118 L261,98 L292,82 L323,72 L354,66 L385,58 L416,52 L447,49 L478,48 L509,48 L532,48"
                   fill="none"
@@ -1162,7 +1163,7 @@ export default function KaiPage() {
         </div>
       </section>
 
-      {/* ── Animated Demo ── */}
+      {/* -- Animated Demo -- */}
       <section className="py-24 bg-white border-t border-gray-100">
         <div className="max-w-7xl mx-auto px-8 lg:px-12">
           <div className="max-w-2xl mb-14">
@@ -1190,31 +1191,31 @@ export default function KaiPage() {
         </div>
       </section>
 
-      {/* ── Capabilities ── */}
+      {/* -- Capabilities -- */}
       <section className="py-24 bg-white border-t border-gray-100">
         <div className="max-w-7xl mx-auto px-8 lg:px-12">
           <p className="type-label text-[#228DC1] mb-12">What Kai Does</p>
           <div ref={capsRef} className="grid lg:grid-cols-3 gap-px bg-gray-200 border border-gray-200">
             {[
               {
-                Icon: MessageCircleCheck,
+                icon: faComments,
                 label: 'Resolve customer issues.',
                 desc: 'Kai handles queries from first message to closed ticket, without waiting for a human.',
               },
               {
-                Icon: TrendingUp,
+                icon: faArrowTrendUp,
                 label: 'Identify leads.',
                 desc: 'Spot buying signals in every conversation and route high-intent contacts to your sales team instantly.',
               },
               {
-                Icon: Sparkles,
+                icon: faWandSparkles,
                 label: 'Coming soon.',
                 desc: 'More capabilities are on the way. Check back shortly.',
               },
             ].map((cap, i) => (
               <div key={cap.label} className="group bg-white p-8 hover:bg-[#f8fafc] transition-colors" style={reveal(capsInView, i * 120)}>
                 <div className="w-10 h-10 flex items-center justify-center mb-5" style={{ backgroundColor: '#228DC112' }}>
-                  <cap.Icon className="w-5 h-5 text-[#228DC1]" strokeWidth={1.5} />
+                  <FontAwesomeIcon icon={cap.icon} className="w-5 h-5 text-[#228DC1]" />
                 </div>
                 <h3 className="text-[#0a1628] font-semibold text-[15px] leading-snug mb-2">{cap.label}</h3>
                 <p className="text-[#0a1628]/60 text-sm font-normal leading-relaxed">{cap.desc}</p>
@@ -1224,7 +1225,7 @@ export default function KaiPage() {
         </div>
       </section>
 
-      {/* ── What Kai Delivers ── */}
+      {/* -- What Kai Delivers -- */}
       <section className="py-24 bg-[#f8fafc] border-t border-gray-100">
         <div className="max-w-7xl mx-auto px-8 lg:px-12">
           <div className="max-w-2xl mb-14">
@@ -1300,10 +1301,10 @@ export default function KaiPage() {
                 <div className="px-6 py-4 border-r border-gray-100">
                   <p className="text-[#0a1628] text-[13px] font-semibold">{row.label}</p>
                 </div>
-                {/* Kai cell — highlighted */}
+                {/* Kai cell � highlighted */}
                 <div className="px-6 py-4 border-r border-gray-100 bg-[#e5f4fa]/40">
                   {typeof row.kai === 'boolean' ? (
-                    <Check className="w-4 h-4 text-[#228DC1]" />
+                    <FontAwesomeIcon icon={faCheck} className="w-4 h-4 text-[#228DC1]" />
                   ) : (
                     <p className="text-[12px] font-medium text-[#0a1628]">{row.kai}</p>
                   )}
@@ -1312,8 +1313,8 @@ export default function KaiPage() {
                 <div className="px-6 py-4">
                   {typeof row.competitor === 'boolean' ? (
                     row.competitor
-                      ? <Check className="w-4 h-4 text-[#228DC1]" />
-                      : <X className="w-4 h-4 text-gray-300" />
+                      ? <FontAwesomeIcon icon={faCheck} className="w-4 h-4 text-[#228DC1]" />
+                      : <FontAwesomeIcon icon={faXmark} className="w-4 h-4 text-gray-300" />
                   ) : (
                     <p className="text-[12px] font-normal text-[#0a1628]/50">{row.competitor}</p>
                   )}
@@ -1332,7 +1333,7 @@ export default function KaiPage() {
       </section>
 
 
-      {/* ── Pilot CTA ── */}
+      {/* -- Pilot CTA -- */}
       <section className="py-16 bg-[#f8fafc] border-t border-gray-100">
         <div className="max-w-7xl mx-auto px-8 lg:px-12 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-8">
           <div>
@@ -1345,7 +1346,7 @@ export default function KaiPage() {
             to="/contact"
             className="shrink-0 inline-flex items-center gap-2 px-7 py-3.5 border border-[#228DC1] text-[#228DC1] text-[13px] font-semibold hover:bg-[#228DC1] hover:text-white transition-all"
           >
-            Request a Demo <ArrowRight className="w-4 h-4" />
+            Request a Demo <FontAwesomeIcon icon={faArrowRight} className="w-4 h-4" />
           </Link>
         </div>
       </section>

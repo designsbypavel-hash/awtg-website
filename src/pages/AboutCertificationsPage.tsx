@@ -1,4 +1,5 @@
-﻿import { ShieldCheck } from 'lucide-react'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faShieldHalved } from '@fortawesome/free-solid-svg-icons'
 import CTASection from '@/components/CTASection'
 
 const certs = [
@@ -38,7 +39,7 @@ export default function AboutCertificationsPage() {
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-px bg-gray-100 border border-gray-100">
             {certs.map((cert) => (
               <div key={cert.name} className="bg-white p-7 hover:bg-[#f7f8fa] transition-colors">
-                <ShieldCheck className="w-6 h-6 text-[#228DC1] mb-5" />
+                <FontAwesomeIcon icon={faShieldHalved} className="w-6 h-6 text-[#228DC1] mb-5" />
                 <h3 className="font-card-heading text-[#0a1628] text-[15px] mb-2">{cert.name}</h3>
                 <p className="text-[#0a1628]/65 text-sm leading-relaxed font-normal">{cert.desc}</p>
               </div>

@@ -1,5 +1,6 @@
 ﻿import { useParams, Link } from 'react-router-dom'
-import { ArrowLeft, Clock, Calendar, ArrowRight } from 'lucide-react'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faArrowLeft, faClock, faCalendarDays, faArrowRight } from '@fortawesome/free-solid-svg-icons'
 
 type Post = {
   title: string
@@ -223,7 +224,7 @@ export default function InsightsBlogPostPage() {
         <h1 className="text-4xl font-bold text-[#0a1628] mb-4">Article Not Found</h1>
         <p className="text-[#0a1628]/60 mb-8 font-normal">This article doesn't exist or may have been moved.</p>
         <Link to="/insights/blog" className="inline-flex items-center gap-2 text-sm font-medium text-[#228DC1] border border-[#228DC1] px-5 py-2.5 hover:bg-[#228DC1] hover:text-white transition-all">
-          <ArrowLeft className="w-4 h-4" /> Back to Blog
+          <FontAwesomeIcon icon={faArrowLeft} className="w-4 h-4" /> Back to Blog
         </Link>
       </div>
     )
@@ -239,7 +240,7 @@ export default function InsightsBlogPostPage() {
               to="/insights/blog"
               className="inline-flex items-center gap-2 text-[#0a1628]/60 hover:text-white text-xs font-medium uppercase tracking-[0.12em] transition-colors"
             >
-              <ArrowLeft className="w-3.5 h-3.5" /> Blog
+              <FontAwesomeIcon icon={faArrowLeft} className="w-3.5 h-3.5" /> Blog
             </Link>
             <span className="text-[#0a1628]/60">·</span>
             <span className={`text-[11px] font-semibold uppercase tracking-[0.15em] px-2.5 py-1 ${tagColour[post.tag] ?? 'bg-[#228DC1]/8 text-[#0a1628]/60'}`}>
@@ -265,8 +266,8 @@ export default function InsightsBlogPostPage() {
             </div>
             <div className="w-px h-8 bg-[#228DC1]/8" />
             <div className="flex items-center gap-4 text-[#0a1628]/60 text-xs">
-              <span className="flex items-center gap-1.5"><Calendar className="w-3 h-3" /> {post.date}</span>
-              <span className="flex items-center gap-1.5"><Clock className="w-3 h-3" /> {post.readTime} read</span>
+              <span className="flex items-center gap-1.5"><FontAwesomeIcon icon={faCalendarDays} className="w-3 h-3" /> {post.date}</span>
+              <span className="flex items-center gap-1.5"><FontAwesomeIcon icon={faClock} className="w-3 h-3" /> {post.readTime} read</span>
             </div>
           </div>
         </div>
@@ -352,7 +353,7 @@ export default function InsightsBlogPostPage() {
               to="/insights/blog"
               className="px-7 py-3.5 bg-[#228DC1] text-white text-sm font-medium hover:bg-[#1a6e99] transition-all inline-flex items-center gap-2"
             >
-              More articles <ArrowRight className="w-4 h-4" />
+              More articles <FontAwesomeIcon icon={faArrowRight} className="w-4 h-4" />
             </Link>
           </div>
         </div>

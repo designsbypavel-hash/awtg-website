@@ -815,7 +815,7 @@ export default function KaiPage() {
                 style={{ borderRadius: '12px' }}
               >
                 <img
-                  src="/kai-mockup.svg"
+                  src="/kai-mockup.png"
                   alt="Kai platform interface"
                   className="w-full block"
                 />

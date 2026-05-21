@@ -826,7 +826,6 @@ export default function KaiPage() {
           { name: 'British Council',             fw: '700', ff: 'system-ui, sans-serif'                       },
           { name: 'Borderlands 5GIR',            fw: '800', ff: 'system-ui, sans-serif'                       },
           { name: 'Retail Hub',                  fw: '400', ff: 'Georgia, serif'                              },
-          { name: 'Fard Solicitors',             fw: '600', ff: 'system-ui, sans-serif'                       },
         ]
         const all = [...items, ...items]
         return (

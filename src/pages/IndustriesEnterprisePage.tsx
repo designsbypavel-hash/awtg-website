@@ -17,7 +17,7 @@ export default function IndustriesEnterprisePage() {
       <section className="pt-32 pb-20 bg-[#f8fafc]">
         <div className="max-w-7xl mx-auto px-8 lg:px-12">
           <p className="type-label text-[#228DC1] mb-4">Industries</p>
-          <h1 className="font-serif-display text-[#0a1628] mb-6" style={{ fontSize: 'clamp(40px,5vw,72px)' }}>
+          <h1 className="font-serif-display text-[#0a1628] mb-6" style={{ fontSize: '40px', lineHeight: 1.1 }}>
             Enterprises and Connected Industries
           </h1>
           <p className="text-[#0a1628]/70 text-lg max-w-2xl font-normal leading-relaxed">
@@ -30,15 +30,15 @@ export default function IndustriesEnterprisePage() {
       <section className="bg-[#f8fafc] border-t border-gray-100">
         <div className="max-w-7xl mx-auto px-8 lg:px-12 py-12 grid sm:grid-cols-3 gap-8">
           <div>
-            <p className="font-black text-[#0a1628] mb-1" style={{ fontSize: 'clamp(28px,3vw,40px)', letterSpacing: '-0.02em' }}>500+</p>
+            <p className="font-black text-[#0a1628] mb-1" style={{ fontSize: '32px', lineHeight: 1.1, letterSpacing: '-0.02em' }}>500+</p>
             <p className="type-label text-[#0a1628]/60">Hectares of private network coverage delivered</p>
           </div>
           <div>
-            <p className="font-black text-[#0a1628] mb-1" style={{ fontSize: 'clamp(28px,3vw,40px)', letterSpacing: '-0.02em' }}>40%</p>
+            <p className="font-black text-[#0a1628] mb-1" style={{ fontSize: '32px', lineHeight: 1.1, letterSpacing: '-0.02em' }}>40%</p>
             <p className="type-label text-[#0a1628]/60">Average productivity gain reported</p>
           </div>
           <div>
-            <p className="font-black text-[#0a1628] mb-1" style={{ fontSize: 'clamp(28px,3vw,40px)', letterSpacing: '-0.02em' }}>20+</p>
+            <p className="font-black text-[#0a1628] mb-1" style={{ fontSize: '32px', lineHeight: 1.1, letterSpacing: '-0.02em' }}>20+</p>
             <p className="type-label text-[#0a1628]/60">Enterprise sectors served</p>
           </div>
         </div>
@@ -48,7 +48,7 @@ export default function IndustriesEnterprisePage() {
       <section className="py-24 bg-white">
         <div className="max-w-7xl mx-auto px-8 lg:px-12">
           <p className="type-label text-[#228DC1] mb-4">What we deliver</p>
-          <h2 className="font-heading text-[#0a1628] mb-4" style={{ fontSize: 'clamp(26px,3vw,44px)' }}>
+          <h2 className="font-heading text-[#0a1628] mb-4" style={{ fontSize: '32px', lineHeight: 1.1 }}>
             Solutions for enterprise connectivity
           </h2>
           <p className="text-[#0a1628]/65 mb-14 max-w-2xl font-normal text-[17px] leading-relaxed">

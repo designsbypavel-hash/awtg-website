@@ -20,8 +20,8 @@ export default function CTASection({
   return (
     <section className="py-24 bg-[#f8fafc]">
       <div className="max-w-4xl mx-auto px-6 lg:px-8 text-center">
-        <h2 className="font-heading text-[#0a1628] mb-6" style={{ fontSize: 'clamp(28px, 3.8vw, 50px)' }}>{title}</h2>
-        <p className="text-[#0a1628]/75 text-[17px] mb-10 max-w-2xl mx-auto font-normal leading-relaxed">{subtitle}</p>
+        <h2 className="font-heading text-[#0a1628] mb-6" style={{ fontSize: '32px', lineHeight: 1.1 }}>{title}</h2>
+        <p className="text-[#0a1628]/75 text-[16px] mb-10 max-w-2xl mx-auto font-normal leading-relaxed">{subtitle}</p>
         <div className="flex flex-wrap justify-center gap-4">
           <Link
             to={primaryHref}

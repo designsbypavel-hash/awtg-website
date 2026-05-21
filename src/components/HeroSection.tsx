@@ -21,11 +21,11 @@ export default function HeroSection() {
             <span className="text-[#228DC1] text-sm font-medium">Next-Generation Telecoms Solutions</span>
           </div>
 
-          <h1 className="font-serif-display text-[#0a1628] mb-6" style={{ fontSize: 'clamp(44px, 5.5vw, 80px)', fontFamily: "'Roboto', system-ui, sans-serif", fontWeight: 400 }}>
+          <h1 className="font-serif-display text-[#0a1628] mb-6" style={{ fontSize: '40px', lineHeight: 1.1, fontFamily: "'Roboto', system-ui, sans-serif", fontWeight: 400 }}>
             Connecting the <span className="text-[#228DC1]">Future</span> of Enterprise Networks
           </h1>
 
-          <p className="text-xl text-[#0a1628]/60 leading-relaxed mb-10 max-w-2xl">
+          <p className="text-[16px] text-[#0a1628]/60 leading-relaxed mb-10 max-w-2xl">
             AWTG delivers cutting-edge 5G, AI, and private network solutions that empower businesses and governments to thrive in an increasingly connected world.
           </p>
 

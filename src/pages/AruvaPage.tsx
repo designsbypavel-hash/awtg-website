@@ -629,10 +629,10 @@ function PlatformDiagram() {
         {/* Header */}
         <div className="mb-14">
           <p className="type-label text-[#228DC1] mb-4">Platform Architecture</p>
-          <h2 className="font-heading text-[#0a1628] mb-4" style={{ fontSize: 'clamp(26px, 3vw, 42px)' }}>
+          <h2 className="font-heading text-[#0a1628] mb-4" style={{ fontSize: '32px', lineHeight: 1.1 }}>
             How Aruva is built
           </h2>
-          <p className="text-[#0a1628]/65 text-lg font-normal leading-relaxed max-w-2xl">
+          <p className="text-[#0a1628]/65 text-[16px] font-normal leading-relaxed max-w-2xl">
             Three connected layers: the interfaces educators and students use, the core intelligence platform, and the integrations that connect Aruva to your existing systems.
           </p>
         </div>
@@ -802,7 +802,7 @@ function PrinciplesSection() {
       <div className="max-w-7xl mx-auto px-8 lg:px-12">
         <div className="mb-14">
           <p className="type-label text-[#228DC1] mb-4">Our Principles</p>
-          <h2 className="font-heading text-[#0a1628] mb-3" style={{ fontSize: 'clamp(26px, 3vw, 42px)' }}>
+          <h2 className="font-heading text-[#0a1628] mb-3" style={{ fontSize: '32px', lineHeight: 1.1 }}>
             Four foundations every decision is built on
           </h2>
           <p className="text-[#0a1628]/60 text-base font-normal leading-relaxed max-w-xl">
@@ -835,7 +835,7 @@ function PillarsSection() {
       <div className="max-w-7xl mx-auto px-8 lg:px-12">
         <div className="mb-14" style={reveal(true, 0)}>
           <p className="type-label text-[#228DC1] mb-4">Platform</p>
-          <h2 className="font-heading text-[#0a1628] mb-4" style={{ fontSize: 'clamp(26px, 3vw, 42px)' }}>
+          <h2 className="font-heading text-[#0a1628] mb-4" style={{ fontSize: '32px', lineHeight: 1.1 }}>
             Six pillars, one learning loop
           </h2>
           <p className="text-[#0a1628]/60 text-base font-normal leading-relaxed max-w-xl">
@@ -870,7 +870,7 @@ function AudienceSection() {
       <div className="max-w-7xl mx-auto px-8 lg:px-12">
         <div className="mb-14">
           <p className="type-label text-[#228DC1] mb-4">Who It's For</p>
-          <h2 className="font-heading text-[#0a1628]" style={{ fontSize: 'clamp(26px, 3vw, 42px)' }}>
+          <h2 className="font-heading text-[#0a1628]" style={{ fontSize: '32px', lineHeight: 1.1 }}>
             Built for every layer of the institution
           </h2>
         </div>
@@ -917,13 +917,13 @@ export default function AruvaPage() {
           </p>
 
           {/* Headline */}
-          <h1 className="font-serif-display text-[#0a1628] leading-[1.02] mb-6 max-w-4xl" style={{ fontSize: 'clamp(44px, 5.8vw, 80px)' }}>
+          <h1 className="font-serif-display text-[#0a1628] leading-[1.02] mb-6 max-w-4xl" style={{ fontSize: '40px', lineHeight: 1.1 }}>
             AI native learning.<br />
             <span style={{ color: '#228DC1' }}>Professor guided.</span><br />
             Built around every student.
           </h1>
 
-          <p className="text-[#0a1628]/60 text-lg font-normal leading-relaxed max-w-2xl mb-10">
+          <p className="text-[#0a1628]/60 text-[16px] font-normal leading-relaxed max-w-2xl mb-10">
             An AI teaching and formative assessment platform for higher education. Personalised, governed and guided entirely by educator intent.
           </p>
           <div className="flex flex-wrap gap-4">
@@ -960,7 +960,7 @@ export default function AruvaPage() {
           {/* Header � left aligned */}
           <div className="max-w-2xl mb-14">
             <p className="type-label text-[#228DC1] mb-4">See It in Action</p>
-            <h2 className="font-heading text-[#0a1628] mb-5" style={{ fontSize: 'clamp(26px, 3vw, 42px)' }}>
+            <h2 className="font-heading text-[#0a1628] mb-5" style={{ fontSize: '32px', lineHeight: 1.1 }}>
               Guided learning, not shortcuts
             </h2>
             <p className="text-[#0a1628]/65 text-[17px] font-normal leading-relaxed">
@@ -995,10 +995,10 @@ export default function AruvaPage() {
         <div className="max-w-7xl mx-auto px-8 lg:px-12">
           <div className="mb-20">
             <p className="type-label text-[#228DC1] mb-4">How It Works</p>
-            <h2 className="font-heading text-[#0a1628] mb-4" style={{ fontSize: 'clamp(26px, 3vw, 42px)' }}>
+            <h2 className="font-heading text-[#0a1628] mb-4" style={{ fontSize: '32px', lineHeight: 1.1 }}>
               From syllabus to intelligent tutor in hours
             </h2>
-            <p className="text-[#0a1628]/65 text-lg font-normal leading-relaxed max-w-2xl">
+            <p className="text-[#0a1628]/65 text-[16px] font-normal leading-relaxed max-w-2xl">
               Aruva transforms your existing course structure into a governed AI teaching layer. No rip-and-replace, no new workflows.
             </p>
           </div>
@@ -1020,7 +1020,7 @@ export default function AruvaPage() {
                         <span className="font-black tabular-nums text-[#228DC1] text-sm" style={{ letterSpacing: '-0.01em' }}>{step.num}</span>
                         <div className="h-px flex-1 bg-gray-100 max-w-8" />
                       </div>
-                      <h3 className="font-semibold text-[#0a1628] mb-4" style={{ fontSize: 'clamp(20px, 2.2vw, 28px)' }}>
+                      <h3 className="font-semibold text-[#0a1628] mb-4" style={{ fontSize: '20px', lineHeight: 1.1 }}>
                         {step.label}
                       </h3>
                       <p className="text-[#0a1628]/65 text-[16px] font-normal leading-relaxed">
@@ -1056,7 +1056,7 @@ export default function AruvaPage() {
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <div>
               <p className="type-label text-[#228DC1] mb-4">Governance and Trust</p>
-              <h2 className="font-heading text-[#0a1628] mb-5" style={{ fontSize: 'clamp(24px, 2.5vw, 36px)' }}>
+              <h2 className="font-heading text-[#0a1628] mb-5" style={{ fontSize: '32px', lineHeight: 1.1 }}>
                 AI that institutions can govern.
               </h2>
               <p className="text-[#0a1628]/65 text-base font-normal leading-relaxed">
@@ -1085,7 +1085,7 @@ export default function AruvaPage() {
       <section className="py-16 bg-[#f8fafc] border-t border-gray-100">
         <div className="max-w-7xl mx-auto px-8 lg:px-12 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-8">
           <div>
-            <p className="text-[#0a1628] font-semibold text-lg mb-1">Start with a focused course pilot.</p>
+            <p className="text-[#0a1628] font-semibold text-[16px] mb-1">Start with a focused course pilot.</p>
             <p className="text-[#0a1628]/65 text-sm font-normal">
               Select 2 to 3 courses, connect your LMS and measure value before scaling across departments.
             </p>

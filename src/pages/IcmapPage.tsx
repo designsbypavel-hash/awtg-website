@@ -403,12 +403,12 @@ export default function IcmapPage() {
           <p className="font-black text-[#228DC1] mb-4" style={{ fontSize: '13px', letterSpacing: '0.28em', textTransform: 'uppercase', opacity: 0.6 }}>
             iCMAP � Intelligent Coverage Mapping
           </p>
-          <h1 className="font-serif-display text-[#0a1628] leading-[1.02] mb-6 max-w-4xl" style={{ fontSize: 'clamp(44px, 5.8vw, 80px)' }}>
+          <h1 className="font-serif-display text-[#0a1628] leading-[1.02] mb-6 max-w-4xl" style={{ fontSize: '40px', lineHeight: 1.1 }}>
             See every gap.<br />
             <span style={{ color: '#228DC1' }}>5G coverage intelligence</span><br />
             that drives decisions.
           </h1>
-          <p className="text-[#0a1628]/60 text-lg font-normal leading-relaxed max-w-2xl mb-10">
+          <p className="text-[#0a1628]/60 text-[16px] font-normal leading-relaxed max-w-2xl mb-10">
             iCMAP is an AI-powered network coverage platform that maps 2G to 5G performance in real time, identifies underserved areas and gives operators, regulators and governments the evidence to act.
           </p>
           <div className="flex flex-wrap gap-4">
@@ -454,7 +454,7 @@ export default function IcmapPage() {
         <div className="max-w-7xl mx-auto px-8 lg:px-12">
           <div className="max-w-2xl mb-14">
             <p className="type-label text-[#228DC1] mb-4">Live Coverage Intelligence</p>
-            <h2 className="font-heading text-[#0a1628] mb-5" style={{ fontSize: 'clamp(26px, 3vw, 42px)' }}>
+            <h2 className="font-heading text-[#0a1628] mb-5" style={{ fontSize: '32px', lineHeight: 1.1 }}>
               Every zone. Every generation. On a real map.
             </h2>
             <p className="text-[#0a1628]/65 text-[17px] font-normal leading-relaxed">
@@ -482,10 +482,10 @@ export default function IcmapPage() {
         <div className="max-w-7xl mx-auto px-8 lg:px-12">
           <div className="mb-20">
             <p className="type-label text-[#228DC1] mb-4">How It Works</p>
-            <h2 className="font-heading text-[#0a1628] mb-4" style={{ fontSize: 'clamp(26px, 3vw, 42px)' }}>
+            <h2 className="font-heading text-[#0a1628] mb-4" style={{ fontSize: '32px', lineHeight: 1.1 }}>
               From raw network data to actionable coverage intelligence
             </h2>
-            <p className="text-[#0a1628]/65 text-lg font-normal leading-relaxed max-w-2xl">
+            <p className="text-[#0a1628]/65 text-[16px] font-normal leading-relaxed max-w-2xl">
               iCMAP ingests data from multiple sources, maps it in real time and uses AI to identify where action is needed and where investment will have the greatest impact.
             </p>
           </div>
@@ -510,10 +510,10 @@ export default function IcmapPage() {
         <div className="max-w-7xl mx-auto px-8 lg:px-12">
           <div className="mb-16">
             <p className="type-label text-[#228DC1] mb-4">Capabilities</p>
-            <h2 className="font-heading text-[#0a1628] mb-4" style={{ fontSize: 'clamp(26px, 3vw, 42px)' }}>
+            <h2 className="font-heading text-[#0a1628] mb-4" style={{ fontSize: '32px', lineHeight: 1.1 }}>
               Built for every layer of network intelligence
             </h2>
-            <p className="text-[#0a1628]/65 text-lg font-normal leading-relaxed max-w-2xl">
+            <p className="text-[#0a1628]/65 text-[16px] font-normal leading-relaxed max-w-2xl">
               From live coverage visualisation to regulatory reporting, iCMAP gives operators, regulators and governments a single platform for the entire coverage intelligence lifecycle.
             </p>
           </div>
@@ -536,7 +536,7 @@ export default function IcmapPage() {
         <div className="max-w-7xl mx-auto px-8 lg:px-12">
           <div className="mb-16">
             <p className="type-label text-[#228DC1] mb-4">Who It's For</p>
-            <h2 className="font-heading text-[#0a1628]" style={{ fontSize: 'clamp(26px, 3vw, 42px)' }}>
+            <h2 className="font-heading text-[#0a1628]" style={{ fontSize: '32px', lineHeight: 1.1 }}>
               Operators, regulators and governments
             </h2>
           </div>
@@ -566,7 +566,7 @@ export default function IcmapPage() {
           <div className="grid lg:grid-cols-2 gap-20 items-center">
             <div>
               <p className="type-label text-[#228DC1] mb-6">Why iCMAP</p>
-              <h2 className="font-heading text-[#0a1628] mb-6" style={{ fontSize: 'clamp(24px, 2.5vw, 36px)' }}>
+              <h2 className="font-heading text-[#0a1628] mb-6" style={{ fontSize: '32px', lineHeight: 1.1 }}>
                 Coverage decisions are too important to be made without data
               </h2>
               <p className="text-[#0a1628]/60 text-[17px] font-normal leading-relaxed mb-8">
@@ -613,7 +613,7 @@ export default function IcmapPage() {
       <section className="py-16 bg-white border-t border-gray-100">
         <div className="max-w-7xl mx-auto px-8 lg:px-12 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-8">
           <div>
-            <p className="text-[#0a1628] font-semibold text-lg mb-1">See your coverage picture in full.</p>
+            <p className="text-[#0a1628] font-semibold text-[16px] mb-1">See your coverage picture in full.</p>
             <p className="text-[#0a1628]/65 text-sm font-normal">
               Start with your existing network data. We map it, analyse it and show you where the gaps are within days.
             </p>

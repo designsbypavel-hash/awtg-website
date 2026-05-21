@@ -74,7 +74,7 @@ export default function InsightsCaseStudiesPage() {
       <section className="pt-32 pb-20 bg-[#f8fafc]">
         <div className="max-w-7xl mx-auto px-8 lg:px-12">
           <p className="type-label text-[#228DC1] mb-4">Insights</p>
-          <h1 className="font-serif-display text-[#0a1628] mb-6" style={{ fontSize: 'clamp(40px,5vw,72px)' }}>
+          <h1 className="font-serif-display text-[#0a1628] mb-6" style={{ fontSize: '40px', lineHeight: 1.1 }}>
             Case Studies
           </h1>
           <p className="text-[#0a1628]/70 text-lg max-w-xl font-normal leading-relaxed">
@@ -95,7 +95,7 @@ export default function InsightsCaseStudiesPage() {
                     <span className="type-label text-[#0a1628]/60">0{i + 1}</span>
                   </div>
                   {/* Client name — the hero */}
-                  <p className="font-black text-[#0a1628] mb-2" style={{ fontSize: 'clamp(26px, 3vw, 38px)', letterSpacing: '-0.02em' }}>
+                  <p className="font-black text-[#0a1628] mb-2" style={{ fontSize: '32px', lineHeight: 1.1, letterSpacing: '-0.02em' }}>
                     {f.client}
                   </p>
                   {/* Scannable outcome */}

@@ -38,11 +38,11 @@ export default function SolutionDetailPage({
             {/* L5 — eyebrow label */}
             <p className="type-label text-[#7ac4e0] mb-5">AI Solutions</p>
             {/* L1 — hero display heading */}
-            <h1 className="font-serif-display text-[#0a1628] mb-6" style={{ fontSize: 'clamp(44px, 5.7vw, 78px)', fontFamily: "'Roboto', system-ui, sans-serif", fontWeight: 400 }}>
+            <h1 className="font-serif-display text-[#0a1628] mb-6" style={{ fontSize: '40px', lineHeight: 1.1, fontFamily: "'Roboto', system-ui, sans-serif", fontWeight: 400 }}>
               {title}
             </h1>
             {/* L4 — body */}
-            <p className="text-[#0a1628]/75 text-lg max-w-xl font-normal leading-relaxed mb-9">{hero}</p>
+            <p className="text-[#0a1628]/75 text-[16px] max-w-xl font-normal leading-relaxed mb-9">{hero}</p>
             <div className="flex flex-wrap gap-4">
               <Link to="/contact" className="inline-flex items-center gap-2 px-7 py-3.5 bg-[#228DC1] text-white text-sm font-medium hover:bg-[#1a6e99] transition-colors">
                 Request a Demo <FontAwesomeIcon icon={faArrowRight} className="w-4 h-4" />
@@ -83,11 +83,11 @@ export default function SolutionDetailPage({
           <div>
             <p className="type-label text-[#228DC1] mb-4">What it solves</p>
             {/* L2 — section heading */}
-            <h2 className="font-heading text-[#0a1628] mb-6" style={{ fontSize: 'clamp(28px, 3.5vw, 48px)' }}>
+            <h2 className="font-heading text-[#0a1628] mb-6" style={{ fontSize: '32px', lineHeight: 1.1 }}>
               {overviewTitle}
             </h2>
             {/* L4 — body */}
-            <p className="text-[#0a1628]/80 leading-relaxed font-normal text-[17px]">{overview}</p>
+            <p className="text-[#0a1628]/80 leading-relaxed font-normal text-[16px]">{overview}</p>
           </div>
           <div className="grid sm:grid-cols-2 gap-4">
             {capabilities.map((capability) => (
@@ -108,7 +108,7 @@ export default function SolutionDetailPage({
         <div className="max-w-7xl mx-auto px-8 lg:px-12">
           <div className="max-w-2xl mb-14">
             <p className="type-label text-[#228DC1] mb-4">How we work</p>
-            <h2 className="font-heading text-[#0a1628]" style={{ fontSize: 'clamp(26px, 3vw, 44px)' }}>
+            <h2 className="font-heading text-[#0a1628]" style={{ fontSize: '32px', lineHeight: 1.1 }}>
               From ambition to production.
             </h2>
           </div>
@@ -131,10 +131,10 @@ export default function SolutionDetailPage({
         <div className="max-w-7xl mx-auto px-8 lg:px-12 grid lg:grid-cols-[1fr_0.8fr] gap-16 items-center">
           <div>
             <p className="type-label text-[#7ac4e0] mb-4">Proof</p>
-            <h2 className="font-heading text-[#0a1628] mb-6" style={{ fontSize: 'clamp(28px, 3.8vw, 52px)' }}>
+            <h2 className="font-heading text-[#0a1628] mb-6" style={{ fontSize: '32px', lineHeight: 1.1 }}>
               {proofTitle}
             </h2>
-            <p className="text-[#0a1628]/70 text-[17px] leading-relaxed font-normal">{proof}</p>
+            <p className="text-[#0a1628]/70 text-[16px] leading-relaxed font-normal">{proof}</p>
           </div>
           <div className="border border-gray-100 p-7 bg-white/[0.03]">
             <p className="type-label text-[#0a1628]/60 mb-6">Related pages</p>

@@ -20,10 +20,10 @@ export default function AboutCertificationsPage() {
       <section className="pt-32 pb-20 bg-[#f8fafc]">
         <div className="max-w-7xl mx-auto px-8 lg:px-12">
           <p className="type-label text-[#228DC1] mb-4">About AWTG</p>
-          <h1 className="font-serif-display text-[#0a1628] mb-6" style={{ fontSize: 'clamp(40px, 5vw, 72px)' }}>
+          <h1 className="font-serif-display text-[#0a1628] mb-6" style={{ fontSize: '40px', lineHeight: 1.1 }}>
             Certifications and Accreditations
           </h1>
-          <p className="text-[#0a1628]/70 text-lg max-w-2xl font-normal leading-relaxed">
+          <p className="text-[#0a1628]/70 text-[16px] max-w-2xl font-normal leading-relaxed">
             Our quality management, security and technology partner certifications demonstrate our commitment to the highest standards.
           </p>
         </div>
@@ -33,7 +33,7 @@ export default function AboutCertificationsPage() {
       <section className="py-24 bg-white">
         <div className="max-w-7xl mx-auto px-8 lg:px-12">
           <p className="type-label text-[#228DC1] mb-4">Accreditations</p>
-          <h2 className="font-heading text-[#0a1628] mb-14" style={{ fontSize: 'clamp(26px, 3vw, 42px)' }}>
+          <h2 className="font-heading text-[#0a1628] mb-14" style={{ fontSize: '32px', lineHeight: 1.1 }}>
             Standards you can rely on
           </h2>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-px bg-gray-100 border border-gray-100">

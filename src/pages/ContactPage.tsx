@@ -10,10 +10,10 @@ export default function ContactPage() {
       <section className="pt-32 pb-20 bg-[#f8fafc]">
         <div className="max-w-7xl mx-auto px-8 lg:px-12">
           <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#228DC1] mb-4">Contact Us</p>
-          <h1 className="font-serif-display text-[#0a1628] leading-tight mb-6" style={{ fontSize: 'clamp(40px,5vw,72px)' }}>
+          <h1 className="font-serif-display text-[#0a1628] leading-tight mb-6" style={{ fontSize: '40px', lineHeight: 1.1 }}>
             Let&apos;s Start a Conversation
           </h1>
-          <p className="text-[#0a1628]/60 text-lg max-w-xl font-normal leading-relaxed">
+          <p className="text-[#0a1628]/60 text-[16px] max-w-xl font-normal leading-relaxed">
             Whether you have a project in mind or just want to explore what&apos;s possible, our experts are ready to help.
           </p>
         </div>
@@ -24,7 +24,7 @@ export default function ContactPage() {
         <div className="max-w-7xl mx-auto px-8 lg:px-12 grid lg:grid-cols-2 gap-20">
           {/* Form */}
           <div>
-            <h2 className="font-serif-display text-[#0a1628] mb-8" style={{ fontSize: 'clamp(24px,3vw,36px)' }}>Send Us a Message</h2>
+            <h2 className="font-serif-display text-[#0a1628] mb-8" style={{ fontSize: '32px', lineHeight: 1.1 }}>Send Us a Message</h2>
             {submitted ? (
               <div className="p-8 bg-[#f0f5ff] border border-[#228DC1]/20 text-[#0a1628]">
                 <p className="font-semibold text-lg mb-2">Thank you for getting in touch.</p>
@@ -80,7 +80,7 @@ export default function ContactPage() {
 
           {/* Contact info */}
           <div>
-            <h2 className="font-serif-display text-[#0a1628] mb-8" style={{ fontSize: 'clamp(24px,3vw,36px)' }}>Get in Touch Directly</h2>
+            <h2 className="font-serif-display text-[#0a1628] mb-8" style={{ fontSize: '32px', lineHeight: 1.1 }}>Get in Touch Directly</h2>
             <div className="space-y-8">
               <div className="flex gap-4">
                 <FontAwesomeIcon icon={faEnvelope} className="w-5 h-5 text-[#228DC1] shrink-0 mt-0.5" />

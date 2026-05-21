@@ -250,7 +250,7 @@ export default function InsightsBlogPostPage() {
 
           <h1
             className="font-serif-display text-[#0a1628] leading-tight mb-6"
-            style={{ fontSize: 'clamp(28px, 4vw, 52px)' }}
+            style={{ fontSize: '32px', lineHeight: 1.1 }}
           >
             {post.title}
           </h1>
@@ -282,7 +282,7 @@ export default function InsightsBlogPostPage() {
                 <h2
                   key={i}
                   className="font-serif-display text-[#0a1628] mt-14 mb-5"
-                  style={{ fontSize: 'clamp(20px, 2.5vw, 28px)' }}
+                  style={{ fontSize: '20px', lineHeight: 1.1 }}
                 >
                   {block.text}
                 </h2>
@@ -321,7 +321,7 @@ export default function InsightsBlogPostPage() {
                 <div key={i} className="my-12 grid grid-cols-3 border border-gray-100">
                   {block.stats.map((s, j) => (
                     <div key={j} className={`px-6 py-6 ${j < block.stats!.length - 1 ? 'border-r border-gray-100' : ''}`}>
-                      <p className="font-serif-display text-[#0a1628]" style={{ fontSize: 'clamp(24px, 3vw, 36px)' }}>{s.value}</p>
+                      <p className="font-serif-display text-[#0a1628]" style={{ fontSize: '24px', lineHeight: 1.1 }}>{s.value}</p>
                       <p className="text-[#0a1628]/65 text-xs font-normal leading-relaxed mt-1">{s.label}</p>
                     </div>
                   ))}
@@ -338,7 +338,7 @@ export default function InsightsBlogPostPage() {
         <div className="max-w-7xl mx-auto px-8 lg:px-12 flex flex-col md:flex-row md:items-end justify-between gap-8">
           <div>
             <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#228DC1] mb-4">Talk to AWTG</p>
-            <h2 className="font-serif-display text-[#0a1628] leading-tight" style={{ fontSize: 'clamp(28px, 3.5vw, 44px)' }}>
+            <h2 className="font-serif-display text-[#0a1628] leading-tight" style={{ fontSize: '32px', lineHeight: 1.1 }}>
               Want to go further<br />than the article?
             </h2>
           </div>

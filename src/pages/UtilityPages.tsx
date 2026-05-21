@@ -30,7 +30,7 @@ function UtilityPage({
       <section className="pt-32 pb-20 bg-[#f8fafc]">
         <div className="max-w-7xl mx-auto px-8 lg:px-12">
           <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#228DC1] mb-4">{eyebrow}</p>
-          <h1 className="font-serif-display text-[#0a1628] leading-tight mb-6" style={{ fontSize: 'clamp(40px,5vw,72px)' }}>
+          <h1 className="font-serif-display text-[#0a1628] leading-tight mb-6" style={{ fontSize: '40px', lineHeight: 1.1 }}>
             {title}
           </h1>
           <p className="text-[#0a1628]/60 text-lg max-w-2xl font-normal leading-relaxed">{intro}</p>

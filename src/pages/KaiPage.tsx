@@ -589,7 +589,7 @@ function IntegrationsSection() {
           {/* Left: copy */}
           <div>
             <p className="text-[#228DC1] mb-4" style={{ fontSize: '11px', fontWeight: 700, letterSpacing: '0.28em', textTransform: 'uppercase', opacity: 0.75 }}>Integrations</p>
-            <h2 className="font-heading text-[#0a1628] mb-5" style={{ fontSize: '40px', lineHeight: 1.1 }}>
+            <h2 className="font-heading text-[#0a1628] mb-5" style={{ fontSize: '32px', lineHeight: 1.1 }}>
               Works with your stack.<br />MCP-ready on day one.
             </h2>
             <p className="text-[#0a1628]/60 text-[16px] leading-relaxed mb-8">
@@ -694,10 +694,10 @@ function SecurityComplianceSection() {
         <div className="grid lg:grid-cols-[0.9fr_1.1fr] gap-14 lg:gap-16 items-start">
           <div ref={leftRef} className="lg:sticky lg:top-28">
             <p className="type-label text-[#228DC1] mb-4" style={reveal(leftInView)}>Security & Compliance</p>
-            <h2 className="font-heading text-[#0a1628] mb-5" style={{ fontSize: '40px', lineHeight: 1.1, ...reveal(leftInView, 100) }}>
+            <h2 className="font-heading text-[#0a1628] mb-5" style={{ fontSize: '32px', lineHeight: 1.1, ...reveal(leftInView, 100) }}>
               Designed for regulated<br />environments.
             </h2>
-            <p className="text-[#0a1628]/65 text-base font-normal leading-relaxed mb-8 max-w-xl" style={reveal(leftInView, 180)}>
+            <p className="text-[#0a1628]/65 text-[16px] font-normal leading-relaxed mb-8 max-w-xl" style={reveal(leftInView, 180)}>
               Safe, measurable and auditable AI for teams with real governance requirements.
             </p>
 
@@ -778,12 +778,12 @@ export default function KaiPage() {
                   Kai � Enterprise AI Agent
                 </p>
               </div>
-              <h1 className="font-serif-display text-[#0a1628] leading-[1.02] mb-6" style={{ fontSize: 'clamp(40px, 4.5vw, 56px)', fontFamily: "'Roboto', system-ui, sans-serif", fontWeight: 400 }}>
+              <h1 className="font-serif-display text-[#0a1628] leading-[1.02] mb-6" style={{ fontSize: '40px', lineHeight: 1.1, fontFamily: "'Roboto', system-ui, sans-serif", fontWeight: 400 }}>
                 Enterprise AI<br />
                 that <span style={{ color: '#228DC1' }}>resolves,</span><br />
                 not just responds.
               </h1>
-              <p className="text-[#0a1628]/60 text-lg font-normal leading-relaxed mb-10">
+              <p className="text-[#0a1628]/60 text-[16px] font-normal leading-relaxed mb-10">
                 Kai connects to your systems, follows your rules and helps teams resolve work faster.
               </p>
               <div className="flex flex-wrap gap-4">
@@ -862,7 +862,7 @@ export default function KaiPage() {
           <div className="grid lg:grid-cols-[0.9fr_1.1fr] gap-14 lg:gap-20 items-center mb-14">
             <div className="max-w-xl">
               <p className="type-label text-[#228DC1] mb-5">Live in Production</p>
-              <h2 className="font-heading text-[#0a1628] mb-5" style={{ fontSize: '40px', lineHeight: 1.1 }}>
+              <h2 className="font-heading text-[#0a1628] mb-5" style={{ fontSize: '32px', lineHeight: 1.1 }}>
                 Our AI agent is live<br />at enterprise scale.
               </h2>
               <p className="text-[#0a1628]/64 text-[16px] font-normal leading-relaxed mb-8">
@@ -926,10 +926,10 @@ export default function KaiPage() {
           {/* Heading */}
           <div className="mb-16">
             <p className="text-[#228DC1] mb-4 font-bold uppercase tracking-[0.28em]" style={{ fontSize: '11px' }}>How It Works</p>
-            <h2 className="font-heading text-white mb-4" style={{ fontSize: '40px', lineHeight: 1.1 }}>
+            <h2 className="font-heading text-white mb-4" style={{ fontSize: '32px', lineHeight: 1.1 }}>
               How Kai drives<br />efficiency
             </h2>
-            <p className="text-white/50 text-base max-w-lg leading-relaxed">
+            <p className="text-white/50 text-[16px] max-w-lg leading-relaxed">
               Three steps from setup to live AI resolution. No rip and replace required.
             </p>
           </div>
@@ -1013,10 +1013,10 @@ export default function KaiPage() {
             {/* Left: heading + qualitative outcomes */}
             <div>
               <p className="type-label text-[#228DC1] mb-4">Measured Outcomes</p>
-              <h2 className="font-heading text-[#0a1628] mb-5" style={{ fontSize: '40px', lineHeight: 1.1 }}>
+              <h2 className="font-heading text-[#0a1628] mb-5" style={{ fontSize: '32px', lineHeight: 1.1 }}>
                 Performance<br />you can measure.
               </h2>
-              <p className="text-[#0a1628]/60 text-base font-normal leading-relaxed mb-12">
+              <p className="text-[#0a1628]/60 text-[16px] font-normal leading-relaxed mb-12">
                 Track containment, CSAT and handle time from day one.
               </p>
               <div className="space-y-8">
@@ -1168,7 +1168,7 @@ export default function KaiPage() {
         <div className="max-w-7xl mx-auto px-8 lg:px-12">
           <div className="max-w-2xl mb-14">
             <p className="type-label text-[#228DC1] mb-4">See Kai in Action</p>
-            <h2 className="font-heading text-[#0a1628] mb-4" style={{ fontSize: '40px', lineHeight: 1.1 }}>
+            <h2 className="font-heading text-[#0a1628] mb-4" style={{ fontSize: '32px', lineHeight: 1.1 }}>
               From first message<br />to resolved ticket.
             </h2>
             <p className="text-[#0a1628]/60 text-[16px] font-normal leading-relaxed">
@@ -1184,7 +1184,7 @@ export default function KaiPage() {
             ].map((item) => (
               <div key={item.label} className="bg-white border border-gray-200 px-8 py-6 shadow-[0_1px_8px_rgba(10,22,40,0.03)]">
                 <p className="text-[#0a1628] font-semibold text-[14px] mb-2">{item.label}</p>
-                <p className="text-[#0a1628]/60 text-sm font-normal leading-relaxed">{item.desc}</p>
+                <p className="text-[#0a1628]/60 text-[16px] font-normal leading-relaxed">{item.desc}</p>
               </div>
             ))}
           </div>
@@ -1195,7 +1195,7 @@ export default function KaiPage() {
       <section className="py-24 bg-white border-t border-gray-100">
         <div className="max-w-7xl mx-auto px-8 lg:px-12">
           <p className="type-label text-[#228DC1] mb-4">What Kai Does</p>
-          <h2 className="font-heading text-[#0a1628] mb-12" style={{ fontSize: '40px', lineHeight: 1.1 }}>
+          <h2 className="font-heading text-[#0a1628] mb-12" style={{ fontSize: '32px', lineHeight: 1.1 }}>
             Built to act,<br />not just answer.
           </h2>
           <div ref={capsRef} className="grid lg:grid-cols-3 gap-px bg-gray-200 border border-gray-200">
@@ -1233,10 +1233,10 @@ export default function KaiPage() {
         <div className="max-w-7xl mx-auto px-8 lg:px-12">
           <div className="max-w-2xl mb-14">
             <p className="type-label text-[#228DC1] mb-4">What Kai Delivers</p>
-            <h2 className="font-heading text-[#0a1628] mb-4" style={{ fontSize: '40px', lineHeight: 1.1 }}>
+            <h2 className="font-heading text-[#0a1628] mb-4" style={{ fontSize: '32px', lineHeight: 1.1 }}>
               AI that fits your business.<br />Not the other way around.
             </h2>
-            <p className="text-[#0a1628]/65 text-base font-normal leading-relaxed">
+            <p className="text-[#0a1628]/65 text-[16px] font-normal leading-relaxed">
               Built for mixed systems, regulated teams and workflows that need more than one vendor ecosystem.
             </p>
           </div>
@@ -1340,8 +1340,8 @@ export default function KaiPage() {
       <section className="py-16 bg-[#f8fafc] border-t border-gray-100">
         <div className="max-w-7xl mx-auto px-8 lg:px-12 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-8">
           <div>
-            <p className="text-[#0a1628] font-semibold text-lg mb-1">Start with a focused pilot.</p>
-            <p className="text-[#0a1628]/65 text-sm font-normal">
+            <p className="text-[#0a1628] font-semibold text-[16px] mb-1">Start with a focused pilot.</p>
+            <p className="text-[#0a1628]/65 text-[16px] font-normal">
               One channel. One workflow. Measure real outcomes, then scale.
             </p>
           </div>

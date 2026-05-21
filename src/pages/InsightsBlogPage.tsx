@@ -94,7 +94,7 @@ export default function InsightsBlogPage() {
           <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#228DC1] mb-4">Insights</p>
           <h1
             className="font-serif-display text-[#0a1628] leading-tight mb-6"
-            style={{ fontSize: 'clamp(36px, 5vw, 64px)' }}
+            style={{ fontSize: '40px', lineHeight: 1.1 }}
           >
             Blog
           </h1>
@@ -233,7 +233,7 @@ export default function InsightsBlogPage() {
         <div className="max-w-7xl mx-auto px-8 lg:px-12 flex flex-col md:flex-row md:items-center justify-between gap-8">
           <div>
             <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#228DC1] mb-3">Work with AWTG</p>
-            <h2 className="font-serif-display text-[#0a1628]" style={{ fontSize: 'clamp(24px, 3vw, 38px)' }}>
+            <h2 className="font-serif-display text-[#0a1628]" style={{ fontSize: '24px', lineHeight: 1.1 }}>
               Ready to talk about<br />your network?
             </h2>
           </div>

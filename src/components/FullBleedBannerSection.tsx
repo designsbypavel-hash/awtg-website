@@ -14,8 +14,8 @@ export default function FullBleedBannerSection({ title, subtitle }: FullBleedBan
         }}
       />
       <div className="relative max-w-4xl mx-auto px-6 lg:px-8 text-center">
-        <h2 className="font-heading text-[#0a1628]" style={{ fontSize: 'clamp(32px, 4.5vw, 60px)' }}>{title}</h2>
-        {subtitle && <p className="mt-6 text-[#0a1628]/60 text-xl">{subtitle}</p>}
+        <h2 className="font-heading text-[#0a1628]" style={{ fontSize: '32px', lineHeight: 1.1 }}>{title}</h2>
+        {subtitle && <p className="mt-6 text-[#0a1628]/60 text-[16px]">{subtitle}</p>}
       </div>
     </section>
   )

@@ -83,7 +83,7 @@
           </p>
           <h1
             className="font-serif-display text-[#0a1628] leading-tight mb-6"
-            style={{ fontSize: 'clamp(40px, 5vw, 72px)' }}
+            style={{ fontSize: '40px', lineHeight: 1.1 }}
           >
             Why the Website<br />
             Looks the Way It Does
@@ -118,7 +118,7 @@
           <p className="text-[#0a1628]/60 text-[11px] font-semibold uppercase tracking-[0.22em] mb-6">The Core Principle</p>
           <blockquote
             className="font-serif-display text-[#0a1628] leading-tight mx-auto max-w-4xl italic"
-            style={{ fontSize: 'clamp(24px, 3.5vw, 42px)' }}
+            style={{ fontSize: '32px', lineHeight: 1.1 }}
           >
             "AWTG is a company serious enough that it doesn't need to perform seriousness."
           </blockquote>

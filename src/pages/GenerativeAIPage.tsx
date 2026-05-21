@@ -62,10 +62,10 @@ export default function GenerativeAIPage() {
         <div className="relative max-w-7xl mx-auto px-8 lg:px-12 grid lg:grid-cols-[1.05fr_0.95fr] gap-16 items-end">
           <div>
             <p className="type-label text-[#7ac4e0] mb-5">AI Solutions</p>
-            <h1 className="font-serif-display text-[#0a1628] leading-[1.02] mb-6" style={{ fontSize: 'clamp(44px, 5.7vw, 82px)' }}>
+            <h1 className="font-serif-display text-[#0a1628] leading-[1.02] mb-6" style={{ fontSize: '40px', lineHeight: 1.1 }}>
               Generative AI
             </h1>
-            <p className="text-[#0a1628]/75 text-lg max-w-xl font-normal leading-relaxed mb-3">
+            <p className="text-[#0a1628]/75 text-[16px] max-w-xl font-normal leading-relaxed mb-3">
               Most AI projects never reach production. Ours do. We build AI that works inside real organisations, connected to your systems, governed by your rules, and measured by actual outcomes.
             </p>
             <p className="text-[#0a1628]/60 text-sm font-normal leading-relaxed max-w-xl mb-9">
@@ -105,7 +105,7 @@ export default function GenerativeAIPage() {
       <section className="py-24 bg-white">
         <div className="max-w-7xl mx-auto px-8 lg:px-12">
           <p className="type-label text-[#228DC1] mb-4">Our AI Products</p>
-          <h2 className="font-heading text-[#0a1628] mb-16" style={{ fontSize: 'clamp(28px, 3.5vw, 48px)' }}>
+          <h2 className="font-heading text-[#0a1628] mb-16" style={{ fontSize: '32px', lineHeight: 1.1 }}>
             Built and shipped.<br />Not theoretical.
           </h2>
           <div className="space-y-px">
@@ -114,7 +114,7 @@ export default function GenerativeAIPage() {
                 <div className="p-8 border-b lg:border-b-0 lg:border-r border-gray-100 flex flex-col justify-between">
                   <div>
                     <p className="text-[10px] font-semibold uppercase tracking-[0.2em] mb-2" style={{ color: p.color }}>{p.tag}</p>
-                    <h3 className="font-serif-display text-[#0a1628]" style={{ fontSize: 'clamp(32px, 3vw, 44px)' }}>{p.name}</h3>
+                    <h3 className="font-serif-display text-[#0a1628]" style={{ fontSize: '28px', lineHeight: 1.1 }}>{p.name}</h3>
                   </div>
                   <p className="text-[#0a1628]/60 text-xs font-normal mt-6 italic">{p.proof}</p>
                 </div>
@@ -139,7 +139,7 @@ export default function GenerativeAIPage() {
       <section className="py-24 bg-[#f7f8fa]">
         <div className="max-w-7xl mx-auto px-8 lg:px-12">
           <p className="type-label text-[#228DC1] mb-4">Delivered</p>
-          <h2 className="font-heading text-[#0a1628] mb-16" style={{ fontSize: 'clamp(28px, 3.5vw, 48px)' }}>
+          <h2 className="font-heading text-[#0a1628] mb-16" style={{ fontSize: '32px', lineHeight: 1.1 }}>
             Proof points, not promises.
           </h2>
           <div className="grid lg:grid-cols-2 gap-px bg-gray-100 border border-gray-100">
@@ -163,7 +163,7 @@ export default function GenerativeAIPage() {
       <section className="py-24 bg-white border-t border-gray-100">
         <div className="max-w-7xl mx-auto px-8 lg:px-12">
           <p className="type-label text-[#228DC1] mb-4">What we build</p>
-          <h2 className="font-heading text-[#0a1628] mb-12" style={{ fontSize: 'clamp(28px, 3.5vw, 48px)' }}>
+          <h2 className="font-heading text-[#0a1628] mb-12" style={{ fontSize: '32px', lineHeight: 1.1 }}>
             Built to work in your organisation.
           </h2>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-px bg-gray-100 border border-gray-100">
@@ -187,10 +187,10 @@ export default function GenerativeAIPage() {
       <section className="py-24 bg-white">
         <div className="max-w-3xl mx-auto px-8 lg:px-12 text-center">
           <p className="type-label text-[#228DC1] mb-6">Get in Touch</p>
-          <h2 className="font-heading text-[#0a1628] mb-6" style={{ fontSize: 'clamp(30px, 4vw, 54px)' }}>
+          <h2 className="font-heading text-[#0a1628] mb-6" style={{ fontSize: '32px', lineHeight: 1.1 }}>
             Ready to build AI that actually works in your organisation?
           </h2>
-          <p className="text-[#0a1628]/75 text-[17px] leading-relaxed mb-10 font-normal max-w-xl mx-auto">
+          <p className="text-[#0a1628]/75 text-[16px] leading-relaxed mb-10 font-normal max-w-xl mx-auto">
             We have the products, the experience and the delivery track record. Talk to us about what you need and we will show you what is possible.
           </p>
           <div className="flex flex-wrap justify-center gap-4">

@@ -105,17 +105,20 @@
 }
 
 /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-   TYPE SYSTEM — Roboto, regular-weight hierarchy
+   TYPE SYSTEM — fixed pixel scale
    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-   L1  Hero H1       400  clamp(44–82px)  -0.03em  large, effortless
-   L2  Section H2    400  clamp(32–56px)  -0.02em  clear section breaks
-   L3  Card H3       500  16–22px         -0.01em  slightly distinct
-   L4  Body text     400  15–18px          0       comfortable reading
-   L5  Labels/UI     500  11px uppercase  +0.20em  structural signposting
+   40px  Hero H1        — page-level title only
+   32px  Section H2     — main section headings
+   28px  Sub-section H3 — section-level h3
+   24px  Card H2/H3     — card/feature group headings
+   20px  Item H3        — smaller named elements
+   16px  Body           — paragraphs and descriptions
+   12px  Secondary/meta — notes, captions, stat footnotes
+   11px  Labels/eyebrow — UPPERCASE tracking (minimum)
    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 
-/* L1 — Hero H1 */
+/* Hero H1 — font-family and weight only; font-size set in JSX */
 .font-serif-display {
   font-family: 'Roboto', system-ui, sans-serif !important;
   font-weight: 400 !important;
@@ -123,7 +126,7 @@
   line-height: 1.02;
 }
 
-/* L2 — Section H2 */
+/* Section H2 — font-family and weight only; font-size set in JSX */
 .font-heading {
   font-family: 'Roboto', system-ui, sans-serif !important;
   font-weight: 400 !important;

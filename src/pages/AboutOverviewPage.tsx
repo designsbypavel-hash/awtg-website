@@ -98,7 +98,7 @@ function TimelineSection() {
     <section className="py-28 bg-[#f8fafc]">
       <div className="max-w-3xl mx-auto px-8 lg:px-12">
         <p className="type-label text-[#228DC1] mb-4">History</p>
-        <h2 className="font-heading text-[#0a1628] mb-20" style={{ fontSize: 'clamp(26px, 3vw, 42px)' }}>
+        <h2 className="font-heading text-[#0a1628] mb-20" style={{ fontSize: '32px', lineHeight: 1.1 }}>
           Our journey
         </h2>
 
@@ -224,10 +224,10 @@ export default function AboutOverviewPage() {
       <section className="pt-32 pb-20 bg-[#f8fafc]">
         <div className="max-w-7xl mx-auto px-8 lg:px-12">
           <p className="type-label text-[#228DC1] mb-4">About AWTG</p>
-          <h1 className="font-serif-display text-[#0a1628] mb-6" style={{ fontSize: 'clamp(40px, 5vw, 72px)' }}>
+          <h1 className="font-serif-display text-[#0a1628] mb-6" style={{ fontSize: '40px', lineHeight: 1.1 }}>
             Over Two Decades of Telecoms Excellence
           </h1>
-          <p className="text-[#0a1628]/70 text-lg max-w-2xl font-normal leading-relaxed">
+          <p className="text-[#0a1628]/70 text-[16px] max-w-2xl font-normal leading-relaxed">
             AWTG is an Advanced Wireless Technology Group, a UK-based specialist in private networks, telecoms AI and smart infrastructure for enterprises and governments worldwide.
           </p>
         </div>
@@ -238,10 +238,10 @@ export default function AboutOverviewPage() {
         <div className="max-w-7xl mx-auto px-8 lg:px-12 grid lg:grid-cols-2 gap-16 items-center">
           <div>
             <p className="type-label text-[#228DC1] mb-4">Our Mission</p>
-            <h2 className="font-heading text-[#0a1628] mb-6" style={{ fontSize: 'clamp(26px, 3vw, 42px)' }}>
+            <h2 className="font-heading text-[#0a1628] mb-6" style={{ fontSize: '32px', lineHeight: 1.1 }}>
               Connectivity that transforms organisations
             </h2>
-            <p className="text-[#0a1628]/75 leading-relaxed font-normal text-[17px] mb-4">
+            <p className="text-[#0a1628]/75 leading-relaxed font-normal text-[16px] mb-4">
               We exist to make cutting-edge wireless technology accessible, reliable and transformative for organisations that depend on connectivity. From a single-site private 5G deployment to a national smart city programme, we bring the expertise and commitment to deliver.
             </p>
             <p className="text-[#0a1628]/65 leading-relaxed font-normal">
@@ -286,7 +286,7 @@ export default function AboutOverviewPage() {
           <div className="flex items-end justify-between mb-10 gap-8">
             <div>
               <p className="type-label text-[#228DC1] mb-3">Insights</p>
-              <h2 className="font-heading text-[#0a1628]" style={{ fontSize: 'clamp(22px, 2.5vw, 34px)' }}>
+              <h2 className="font-heading text-[#0a1628]" style={{ fontSize: '32px', lineHeight: 1.1 }}>
                 Latest thinking from AWTG
               </h2>
             </div>

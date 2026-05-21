@@ -924,12 +924,12 @@ export default function KaiPage() {
         <div className="relative max-w-7xl mx-auto px-8 lg:px-12 py-28">
 
           {/* Heading */}
-          <div className="text-center mb-16">
+          <div className="mb-16">
             <p className="text-[#228DC1] mb-4 font-bold uppercase tracking-[0.28em]" style={{ fontSize: '11px' }}>How It Works</p>
             <h2 className="font-heading text-white mb-4" style={{ fontSize: 'clamp(32px, 4vw, 56px)', lineHeight: 1.06 }}>
               How Kai drives efficiency
             </h2>
-            <p className="text-white/50 text-base max-w-lg mx-auto leading-relaxed">
+            <p className="text-white/50 text-base max-w-lg leading-relaxed">
               Three steps from setup to live AI resolution. No rip and replace required.
             </p>
           </div>

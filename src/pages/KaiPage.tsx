@@ -882,31 +882,14 @@ export default function KaiPage() {
             <div className="relative">
               <div className="absolute -inset-5 bg-white/60 border border-white hidden lg:block" />
               <div className="relative bg-white border border-gray-200 shadow-[0_16px_50px_rgba(10,22,40,0.07)]">
-                <div className="grid sm:grid-cols-[1fr_1.25fr]">
-                  <div className="p-8 bg-[#0a1628] text-white">
-                    <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-white/45 mb-8">Production reach</p>
-                    <p className="font-black leading-none mb-3" style={{ fontSize: 'clamp(46px, 5vw, 72px)', letterSpacing: '-0.04em' }}>
-                      250k+
-                    </p>
-                    <p className="text-white/75 text-[14px] font-medium leading-relaxed">
-                      learners supported each month across enterprise deployments.
-                    </p>
-                  </div>
-                  <div className="p-8">
-                    <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-[#0a1628]/35 mb-6">Deployment snapshot</p>
-                    <div className="space-y-5">
-                      {[
-                        { label: 'Channels', value: 'HubSpot, WhatsApp, Jira, email' },
-                        { label: 'Human control', value: 'Escalation paths built in' },
-                        { label: 'Measured', value: 'Containment, CSAT, escalations' },
-                      ].map((item) => (
-                        <div key={item.label} className="border-t border-gray-100 pt-5 first:border-t-0 first:pt-0">
-                          <p className="text-[#228DC1] text-[11px] font-bold uppercase tracking-[0.16em] mb-1">{item.label}</p>
-                          <p className="text-[#0a1628] text-[14px] font-semibold leading-relaxed">{item.value}</p>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
+                <div className="p-8 bg-[#0a1628] text-white">
+                  <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-white/45 mb-8">Production reach</p>
+                  <p className="font-black leading-none mb-3" style={{ fontSize: 'clamp(46px, 5vw, 72px)', letterSpacing: '-0.04em' }}>
+                    250k+
+                  </p>
+                  <p className="text-white/75 text-[14px] font-medium leading-relaxed">
+                    learners supported each month across enterprise deployments.
+                  </p>
                 </div>
                 <div className="border-t border-gray-100 bg-[#fafafa] px-8 py-5">
                   <p className="text-[#0a1628]/60 text-[13px] font-normal leading-relaxed">

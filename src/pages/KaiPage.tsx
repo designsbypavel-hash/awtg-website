@@ -818,14 +818,12 @@ export default function KaiPage() {
 
       {/* ── Single combined logo strip ── */}
       {(() => {
-        // Text-only wordmarks — font weight + style give each brand its character
-        const items: { name: string; fw: string; fs?: string; ff?: string }[] = [
-          { name: 'Kaiser Permanente',           fw: '500', ff: 'Georgia, serif'                              },
-          { name: 'Cambridgeshire County Council',fw: '400', ff: 'system-ui, sans-serif'                      },
-          { name: 'Ocean Infinity',              fw: '300', ff: 'system-ui, sans-serif', fs: 'italic'         },
-          { name: 'British Council',             fw: '700', ff: 'system-ui, sans-serif'                       },
-          { name: 'Borderlands 5GIR',            fw: '800', ff: 'system-ui, sans-serif'                       },
-          { name: 'Retail Hub',                  fw: '400', ff: 'Georgia, serif'                              },
+        const items = [
+          { src: '/logos/clients/kaiser-permanente.svg', alt: 'Kaiser Permanente' },
+          { src: '/logos/clients/cambridgeshire.svg',    alt: 'Cambridgeshire County Council' },
+          { src: '/logos/britishcouncil.svg',            alt: 'British Council' },
+          { src: '/logos/clients/borderlands.svg',       alt: 'Borderlands 5G Innovation Region' },
+          { src: '/logos/clients/west-berkshire.svg',    alt: 'West Berkshire Council' },
         ]
         const all = [...items, ...items]
         return (
@@ -838,22 +836,16 @@ export default function KaiPage() {
                 style={{ background: 'linear-gradient(to right, white, transparent)' }} />
               <div className="absolute right-0 top-0 bottom-0 w-36 z-10 pointer-events-none"
                 style={{ background: 'linear-gradient(to left, white, transparent)' }} />
-              <div className="flex animate-[marquee_50s_linear_infinite] whitespace-nowrap w-max items-center">
+              <div className="flex animate-[marquee_50s_linear_infinite] whitespace-nowrap w-max items-center gap-0">
                 {all.map((item, i) => (
-                  <span
-                    key={i}
-                    className="inline-block px-12 text-[#0a1628]/50 hover:text-[#0a1628]/80 transition-colors duration-300 select-none"
-                    style={{
-                      fontSize: '22px',
-                      fontWeight: item.fw,
-                      fontFamily: item.ff,
-                      fontStyle: item.fs ?? 'normal',
-                      letterSpacing: '-0.02em',
-                      lineHeight: 1,
-                    }}
-                  >
-                    {item.name}
-                  </span>
+                  <div key={i} className="inline-flex items-center justify-center px-14 select-none">
+                    <img
+                      src={item.src}
+                      alt={item.alt}
+                      className="h-9 w-auto object-contain opacity-60 hover:opacity-90 transition-opacity duration-300 grayscale hover:grayscale-0"
+                      style={{ maxWidth: '160px' }}
+                    />
+                  </div>
                 ))}
               </div>
             </div>

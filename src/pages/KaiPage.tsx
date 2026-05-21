@@ -824,6 +824,7 @@ export default function KaiPage() {
           { src: '/logos/britishcouncil.svg',            alt: 'British Council' },
           { src: '/logos/clients/borderlands.svg',       alt: 'Borderlands 5G Innovation Region' },
           { src: '/logos/clients/west-berkshire.svg',    alt: 'West Berkshire Council' },
+          { src: '/logos/clients/retail-hub.svg',        alt: 'Retail Hub' },
         ]
         const all = [...items, ...items]
         return (

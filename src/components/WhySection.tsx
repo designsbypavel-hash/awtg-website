@@ -32,10 +32,10 @@ export default function WhySection() {
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           <div>
             <p className="text-[#228DC1] font-semibold text-sm uppercase tracking-widest mb-3">Why AWTG</p>
-            <h2 className="font-heading text-[#0a1628] mb-6" style={{ fontSize: '32px', lineHeight: 1.1 }}>
+            <h2 className="font-heading text-[#0a1628] mb-6">
               The Partner You Can Rely On
             </h2>
-            <p className="text-[#0a1628]/75 text-[16px] leading-relaxed mb-8">
+            <p className="text-[#0a1628]/65 text-[18px] leading-[1.7] mb-8">
               We don't just build networks, we build long-term partnerships. Our approach combines deep technical expertise with a genuine commitment to your success.
             </p>
             <div className="w-16 h-1 bg-[#228DC1] rounded" />

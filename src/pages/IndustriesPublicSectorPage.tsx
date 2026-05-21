@@ -18,7 +18,7 @@ export default function IndustriesPublicSectorPage() {
           <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#228DC1] mb-4">Industries</p>
           <h1
             className="font-serif-display text-[#0a1628] leading-tight mb-6"
-            style={{ fontSize: '40px', lineHeight: 1.1 }}
+           
           >
             Public Sector
           </h1>
@@ -49,7 +49,7 @@ export default function IndustriesPublicSectorPage() {
         <div className="max-w-7xl mx-auto px-8 lg:px-12">
           <h2
             className="font-serif-display text-[#0a1628] mb-4"
-            style={{ fontSize: '32px', lineHeight: 1.1 }}
+           
           >
             Solutions for Public Sector
           </h2>

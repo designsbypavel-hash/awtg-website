@@ -74,7 +74,7 @@ export default function InsightsCaseStudiesPage() {
       <section className="pt-32 pb-20 bg-[#f8fafc]">
         <div className="max-w-7xl mx-auto px-8 lg:px-12">
           <p className="type-label text-[#228DC1] mb-4">Insights</p>
-          <h1 className="font-serif-display text-[#0a1628] mb-6" style={{ fontSize: '40px', lineHeight: 1.1 }}>
+          <h1 className="font-serif-display text-[#0a1628] mb-6">
             Case Studies
           </h1>
           <p className="text-[#0a1628]/70 text-lg max-w-xl font-normal leading-relaxed">

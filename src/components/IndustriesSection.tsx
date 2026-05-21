@@ -15,8 +15,8 @@ export default function IndustriesSection() {
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="text-center mb-16">
           <p className="text-[#228DC1] font-semibold text-sm uppercase tracking-widest mb-3">Industries</p>
-          <h2 className="font-heading text-[#0a1628] mb-4" style={{ fontSize: '32px', lineHeight: 1.1 }}>Sectors We Serve</h2>
-          <p className="text-[#0a1628]/75 text-[16px] max-w-2xl mx-auto">
+          <h2 className="font-heading text-[#0a1628] mb-4">Sectors We Serve</h2>
+          <p className="text-[#0a1628]/65 text-[18px] max-w-2xl mx-auto">
             We bring deep domain expertise across critical industries that demand reliable, secure connectivity.
           </p>
         </div>

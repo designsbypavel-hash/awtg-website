@@ -139,7 +139,7 @@ export default function AboutLeadershipPage() {
           </span>
           <h1
             className="font-serif-display text-[#0a1628] leading-tight mb-6"
-            style={{ fontSize: '40px', lineHeight: 1.1 }}
+           
           >
             The team behind<br />
             <span className="text-[#228DC1]">AWTG's ambition.</span>
@@ -224,7 +224,7 @@ export default function AboutLeadershipPage() {
           <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-[#228DC1] mb-6">Get in Touch</p>
           <h2
             className="font-serif-display text-[#0a1628] leading-tight mb-6"
-            style={{ fontSize: '32px', lineHeight: 1.1 }}
+           
           >
             Ready to explore what{' '}
             <span className="text-[#228DC1]">AWTG can do for you?</span>

@@ -250,7 +250,7 @@ export default function InsightsBlogPostPage() {
 
           <h1
             className="font-serif-display text-[#0a1628] leading-tight mb-6"
-            style={{ fontSize: '32px', lineHeight: 1.1 }}
+           
           >
             {post.title}
           </h1>
@@ -338,7 +338,7 @@ export default function InsightsBlogPostPage() {
         <div className="max-w-7xl mx-auto px-8 lg:px-12 flex flex-col md:flex-row md:items-end justify-between gap-8">
           <div>
             <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#228DC1] mb-4">Talk to AWTG</p>
-            <h2 className="font-serif-display text-[#0a1628] leading-tight" style={{ fontSize: '32px', lineHeight: 1.1 }}>
+            <h2 className="font-serif-display text-[#0a1628] leading-tight">
               Want to go further<br />than the article?
             </h2>
           </div>

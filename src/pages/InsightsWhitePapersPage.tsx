@@ -39,7 +39,7 @@ export default function InsightsWhitePapersPage() {
           <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#228DC1] mb-4">Insights</p>
           <h1
             className="font-serif-display text-[#0a1628] leading-tight mb-6"
-            style={{ fontSize: '40px', lineHeight: 1.1 }}
+           
           >
             White Papers &amp; Research
           </h1>

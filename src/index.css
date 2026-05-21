@@ -6,14 +6,14 @@
 
 @layer base {
   * { box-sizing: border-box; margin: 0; padding: 0; hyphens: none; -webkit-hyphens: none; }
-  h1, h2, h3, h4, h5, h6 { font-family: 'Roboto', system-ui, sans-serif; font-weight: 400; }
+  h1, h2, h3, h4, h5, h6 { font-family: 'Roboto', system-ui, sans-serif; font-weight: 600; }
   html { scroll-behavior: smooth; }
 
   body {
     font-family: 'Roboto', system-ui, -apple-system, sans-serif;
     font-weight: 400;
     font-size: 16px;
-    line-height: 1.65;
+    line-height: 1.7;
     background-color: #ffffff;
     color: #0a1628;
     -webkit-font-smoothing: antialiased;
@@ -105,49 +105,53 @@
 }
 
 /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-   TYPE SYSTEM — fixed pixel scale
+   TYPE SYSTEM — Intercom-inspired scale (Roboto)
    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-   40px  Hero H1        — page-level title only
-   32px  Section H2     — main section headings
-   28px  Sub-section H3 — section-level h3
-   24px  Card H2/H3     — card/feature group headings
-   20px  Item H3        — smaller named elements
-   16px  Body           — paragraphs and descriptions
-   12px  Secondary/meta — notes, captions, stat footnotes
-   11px  Labels/eyebrow — UPPERCASE tracking (minimum)
+   52px  Hero H1        — page-level title, weight 700
+   40px  Section H2     — main section headings, weight 600
+   28px  Sub-section H3 — section-level sub-headings, weight 600
+   24px  Card heading   — card/feature group titles, weight 600
+   20px  Item heading   — smaller named items, weight 600
+   16px  Body           — paragraphs, line-height 1.7
+   14px  Secondary      — supporting body, muted
+   12px  Meta/caption   — notes, stat footnotes
+   11px  Label/eyebrow  — UPPERCASE tracking (minimum)
    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 
-/* Hero H1 — font-family and weight only; font-size set in JSX */
+/* Hero H1 */
 .font-serif-display {
   font-family: 'Roboto', system-ui, sans-serif !important;
-  font-weight: 400 !important;
+  font-weight: 700 !important;
+  font-size: 52px;
   letter-spacing: -0.03em;
-  line-height: 1.02;
+  line-height: 1.05;
 }
 
-/* Section H2 — font-family and weight only; font-size set in JSX */
+/* Section H2 */
 .font-heading {
   font-family: 'Roboto', system-ui, sans-serif !important;
-  font-weight: 400 !important;
+  font-weight: 600 !important;
+  font-size: 40px;
   letter-spacing: -0.02em;
-  line-height: 1.08;
+  line-height: 1.1;
 }
 
-/* L3 — Card / feature headings */
+/* Card / feature headings */
 .font-card-heading {
   font-family: 'Roboto', system-ui, sans-serif;
-  font-weight: 500;
+  font-weight: 600;
+  font-size: 20px;
   letter-spacing: -0.01em;
   line-height: 1.3;
 }
 
-/* L5 — Eyebrow labels */
+/* Eyebrow labels */
 .type-label {
   font-family: 'Roboto', system-ui, sans-serif;
   font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 0.20em;
+  font-weight: 600;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   line-height: 1;
 }

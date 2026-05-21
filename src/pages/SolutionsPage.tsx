@@ -81,7 +81,7 @@ export default function SolutionsPage() {
           </div>
           <h1
             className="font-serif-display text-[#0a1628] leading-tight mb-6 max-w-3xl"
-            style={{ fontSize: '40px', lineHeight: 1.1 }}
+           
           >
             Technology solutions<br />
             built for the{' '}
@@ -116,7 +116,7 @@ export default function SolutionsPage() {
             <div className={`flex flex-col justify-center py-16 ${s.flip ? 'lg:order-1 pl-16 lg:pl-24 pr-12 lg:pr-16' : 'lg:order-2 pl-12 lg:pl-16 pr-16 lg:pr-24'}`}>
               <h2
                 className="font-serif-display text-[#0a1628] leading-tight mb-3"
-                style={{ fontSize: '32px', lineHeight: 1.1 }}
+               
               >
                 {s.title}
               </h2>
@@ -149,7 +149,7 @@ export default function SolutionsPage() {
           <p className="text-[11px] font-bold uppercase tracking-[0.25em] text-[#228DC1] mb-6">Ready to get started?</p>
           <h2
             className="font-serif-display text-[#0a1628] leading-tight mb-6"
-            style={{ fontSize: '32px', lineHeight: 1.1 }}
+           
           >
             Not sure which solution<br />
             <span className="italic text-[#228DC1]">fits your challenge?</span>

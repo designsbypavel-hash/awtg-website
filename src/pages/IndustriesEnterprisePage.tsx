@@ -17,7 +17,7 @@ export default function IndustriesEnterprisePage() {
       <section className="pt-32 pb-20 bg-[#f8fafc]">
         <div className="max-w-7xl mx-auto px-8 lg:px-12">
           <p className="type-label text-[#228DC1] mb-4">Industries</p>
-          <h1 className="font-serif-display text-[#0a1628] mb-6" style={{ fontSize: '40px', lineHeight: 1.1 }}>
+          <h1 className="font-serif-display text-[#0a1628] mb-6">
             Enterprises and Connected Industries
           </h1>
           <p className="text-[#0a1628]/70 text-lg max-w-2xl font-normal leading-relaxed">
@@ -48,10 +48,10 @@ export default function IndustriesEnterprisePage() {
       <section className="py-24 bg-white">
         <div className="max-w-7xl mx-auto px-8 lg:px-12">
           <p className="type-label text-[#228DC1] mb-4">What we deliver</p>
-          <h2 className="font-heading text-[#0a1628] mb-4" style={{ fontSize: '32px', lineHeight: 1.1 }}>
+          <h2 className="font-heading text-[#0a1628] mb-4">
             Solutions for enterprise connectivity
           </h2>
-          <p className="text-[#0a1628]/65 mb-14 max-w-2xl font-normal text-[17px] leading-relaxed">
+          <p className="text-[#0a1628]/65 mb-14 max-w-2xl font-normal text-[18px] leading-[1.7]">
             AWTG designs and deploys the wireless and AI infrastructure that enterprise organisations need to operate securely, efficiently and at scale.
           </p>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-px bg-gray-100 border border-gray-100">

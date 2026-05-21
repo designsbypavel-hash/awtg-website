@@ -45,7 +45,7 @@ export default function InsightsSection() {
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end mb-12 gap-4">
           <div>
             <p className="text-[#228DC1] font-semibold text-sm uppercase tracking-widest mb-3">Latest Insights</p>
-            <h2 className="font-heading text-[#0a1628]" style={{ fontSize: '32px', lineHeight: 1.1 }}>News &amp; Thought Leadership</h2>
+            <h2 className="font-heading text-[#0a1628]">News &amp; Thought Leadership</h2>
           </div>
           <Link
             to="/insights"

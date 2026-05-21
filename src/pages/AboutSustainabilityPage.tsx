@@ -40,7 +40,7 @@ export default function AboutSustainabilityPage() {
       <section className="pt-32 pb-20 bg-[#f8fafc]">
         <div className="max-w-7xl mx-auto px-8 lg:px-12">
           <p className="type-label text-[#228DC1] mb-4">About AWTG</p>
-          <h1 className="font-serif-display text-[#0a1628] mb-6" style={{ fontSize: '40px', lineHeight: 1.1 }}>
+          <h1 className="font-serif-display text-[#0a1628] mb-6">
             Sustainability
           </h1>
           <p className="text-[#0a1628]/70 text-lg max-w-xl font-normal leading-relaxed">
@@ -54,7 +54,7 @@ export default function AboutSustainabilityPage() {
         <div className="max-w-7xl mx-auto px-8 lg:px-12 grid lg:grid-cols-2 gap-16 items-center">
           <div>
             <p className="type-label text-[#228DC1] mb-4">Our Approach</p>
-            <h2 className="font-heading text-[#0a1628] mb-6" style={{ fontSize: '32px', lineHeight: 1.1 }}>
+            <h2 className="font-heading text-[#0a1628] mb-6">
               Technology for a Better World
             </h2>
             <p className="text-[#0a1628]/75 leading-relaxed font-normal text-[17px] mb-4">
@@ -93,7 +93,7 @@ export default function AboutSustainabilityPage() {
       <section className="py-24 bg-white">
         <div className="max-w-7xl mx-auto px-8 lg:px-12">
           <p className="type-label text-[#228DC1] mb-4">Commitments</p>
-          <h2 className="font-heading text-[#0a1628] mb-14" style={{ fontSize: '32px', lineHeight: 1.1 }}>
+          <h2 className="font-heading text-[#0a1628] mb-14">
             Measurable targets. Annual reporting.
           </h2>
           <div className="grid sm:grid-cols-2 gap-6">

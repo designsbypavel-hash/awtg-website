@@ -32,36 +32,48 @@ const navItems: NavEntry[] = [
           { label: 'Digital Transformation', desc: 'End-to-end modernisation programmes', href: '/services/digital-transformation' },
         ],
       },
+      {
+        heading: 'Industries',
+        items: [
+          { label: 'Education', desc: 'Connected campus and EdTech platforms', href: '/industries/education' },
+          { label: 'Health Tech', desc: 'NHS and healthcare digital infrastructure', href: '/industries/health-tech' },
+          { label: 'Retail', desc: 'Omnichannel connectivity and AI solutions', href: '/industries/retail' },
+          { label: 'Public Sector', desc: 'Central and local government technology', href: '/industries/public-sector' },
+        ],
+      },
     ],
   },
   {
     label: 'AI for Connectivity',
     key: 'ai-connectivity',
-    cols: 3,
-    items: [
-      { label: 'iCMAP', desc: 'Intelligent 5G coverage mapping and network gap analysis', href: '/products/icmap' },
-      { label: 'SCAP', desc: 'Spectrum and capacity analysis platform for network planning', href: '/products/scap' },
-      { label: 'Borderlands', desc: 'Edge network management and border connectivity platform', href: '/products/borderlands' },
-      { label: 'Telecoms AI', desc: 'AI-powered network intelligence and optimisation', href: '/solutions/telecoms-ai' },
-      { label: 'Private Network as a Service', desc: 'Managed 4G/5G enterprise connectivity', href: '/solutions/mobile-private-networks' },
-      { label: 'Smart Cities', desc: 'Urban IoT and digital infrastructure platforms', href: '/solutions/smart-cities' },
-      { label: 'Industry 4.0', desc: 'Connected manufacturing and logistics solutions', href: '/solutions/industry-4' },
-      { label: 'Smart Health', desc: 'Digital health connectivity and AI platforms', href: '/solutions/smart-health' },
-      { label: 'IoT Platforms', desc: 'Connected device management and analytics', href: '/services/iot' },
-      { label: 'Engineering', desc: 'RF, 5G and network engineering services', href: '/services/engineering' },
-    ],
-  },
-  {
-    label: 'Industries',
-    key: 'industries',
-    cols: 3,
-    items: [
-      { label: 'Telecommunications', desc: 'MNOs, MVNOs and infrastructure vendors', href: '/industries/telecoms' },
-      { label: 'Public Sector', desc: 'Central and local government technology', href: '/industries/public-sector' },
-      { label: 'Health Tech', desc: 'NHS and healthcare digital infrastructure', href: '/industries/health-tech' },
-      { label: 'Education', desc: 'Connected campus and EdTech platforms', href: '/industries/education' },
-      { label: 'Retail', desc: 'Omnichannel connectivity and AI solutions', href: '/industries/retail' },
-      { label: 'Defence', desc: 'Secure, mission-critical communications', href: '/industries/defence' },
+    groups: [
+      {
+        heading: 'Products',
+        items: [
+          { label: 'iCMAP', desc: 'Intelligent 5G coverage mapping and network gap analysis', href: '/products/icmap' },
+          { label: 'SCAP', desc: 'Spectrum and capacity analysis platform for network planning', href: '/products/scap' },
+          { label: 'Borderlands', desc: 'Edge network management and border connectivity platform', href: '/products/borderlands' },
+        ],
+      },
+      {
+        heading: 'Solutions',
+        items: [
+          { label: 'Telecoms AI', desc: 'AI-powered network intelligence and optimisation', href: '/solutions/telecoms-ai' },
+          { label: 'Private Network as a Service', desc: 'Managed 4G/5G enterprise connectivity', href: '/solutions/mobile-private-networks' },
+          { label: 'Smart Cities', desc: 'Urban IoT and digital infrastructure platforms', href: '/solutions/smart-cities' },
+          { label: 'Industry 4.0', desc: 'Connected manufacturing and logistics solutions', href: '/solutions/industry-4' },
+          { label: 'Smart Health', desc: 'Digital health connectivity and AI platforms', href: '/solutions/smart-health' },
+          { label: 'IoT Platforms', desc: 'Connected device management and analytics', href: '/services/iot' },
+          { label: 'Engineering', desc: 'RF, 5G and network engineering services', href: '/services/engineering' },
+        ],
+      },
+      {
+        heading: 'Industries',
+        items: [
+          { label: 'Telecommunications', desc: 'MNOs, MVNOs and infrastructure vendors', href: '/industries/telecoms' },
+          { label: 'Defence', desc: 'Secure, mission-critical communications', href: '/industries/defence' },
+        ],
+      },
     ],
   },
   {
@@ -286,7 +298,7 @@ export default function Navigation() {
 
                 {/* Grouped layout (About — Company + Insights side by side) */}
                 {nav.groups && (
-                  <div className="grid grid-cols-2 gap-10">
+                  <div className={`grid gap-10 ${nav.groups.length === 3 ? 'grid-cols-3' : 'grid-cols-2'}`}>
                     {nav.groups.map((group) => (
                       <div key={group.heading}>
                         <p className="text-[12px] font-semibold uppercase tracking-[0.2em] text-[#0a1628]/65 mb-3 px-4">

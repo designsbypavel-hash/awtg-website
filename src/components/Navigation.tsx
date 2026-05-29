@@ -12,39 +12,43 @@ type NavEntry =
 
 const navItems: NavEntry[] = [
   {
-    label: 'Products',
-    key: 'products',
-    cols: 3,
-    items: [
-      { label: 'Aruva', desc: 'AI-powered teaching and formative assessment for higher education', href: '/products/aruva' },
-      { label: 'Kai', desc: 'Enterprise AI platform for customer service and operations', href: '/products/kai' },
-      { label: 'iCMAP', desc: 'Intelligent 5G coverage mapping and network gap analysis', href: '/products/icmap' },
+    label: 'AI for Solutions',
+    key: 'ai-solutions',
+    groups: [
+      {
+        heading: 'Products',
+        items: [
+          { label: 'Kai', desc: 'Enterprise AI platform for customer service and operations', href: '/products/kai' },
+          { label: 'Aruva', desc: 'AI-powered teaching and formative assessment for higher education', href: '/products/aruva' },
+        ],
+      },
+      {
+        heading: 'Services',
+        items: [
+          { label: 'Generative AI', desc: 'Production-ready GenAI for enterprise workflows', href: '/solutions/generative-ai' },
+          { label: 'AI/ML Solutions', desc: 'Machine learning and intelligent automation', href: '/services/ai-ml' },
+          { label: 'Software Development', desc: 'Custom platforms and application development', href: '/services/software' },
+          { label: 'Consultancy', desc: 'Strategic technology advisory and planning', href: '/services/consultancy' },
+          { label: 'Digital Transformation', desc: 'End-to-end modernisation programmes', href: '/services/digital-transformation' },
+        ],
+      },
     ],
   },
   {
-    label: 'Solutions',
-    key: 'solutions',
+    label: 'AI for Connectivity',
+    key: 'ai-connectivity',
     cols: 3,
     items: [
+      { label: 'iCMAP', desc: 'Intelligent 5G coverage mapping and network gap analysis', href: '/products/icmap' },
+      { label: 'SCAP', desc: 'Spectrum and capacity analysis platform for network planning', href: '/products/scap' },
+      { label: 'Borderlands', desc: 'Edge network management and border connectivity platform', href: '/products/borderlands' },
       { label: 'Telecoms AI', desc: 'AI-powered network intelligence and optimisation', href: '/solutions/telecoms-ai' },
-      { label: 'Generative AI', desc: 'Production-ready GenAI for enterprise workflows', href: '/solutions/generative-ai' },
       { label: 'Private Network as a Service', desc: 'Managed 4G/5G enterprise connectivity', href: '/solutions/mobile-private-networks' },
       { label: 'Smart Cities', desc: 'Urban IoT and digital infrastructure platforms', href: '/solutions/smart-cities' },
       { label: 'Industry 4.0', desc: 'Connected manufacturing and logistics solutions', href: '/solutions/industry-4' },
       { label: 'Smart Health', desc: 'Digital health connectivity and AI platforms', href: '/solutions/smart-health' },
-    ],
-  },
-  {
-    label: 'Services',
-    key: 'services',
-    cols: 3,
-    items: [
-      { label: 'Consultancy', desc: 'Strategic technology advisory and planning', href: '/services/consultancy' },
-      { label: 'Engineering', desc: 'RF, 5G and network engineering services', href: '/services/engineering' },
-      { label: 'Software Development', desc: 'Custom platforms and application development', href: '/services/software' },
-      { label: 'Digital Transformation', desc: 'End-to-end modernisation programmes', href: '/services/digital-transformation' },
       { label: 'IoT Platforms', desc: 'Connected device management and analytics', href: '/services/iot' },
-      { label: 'AI/ML Solutions', desc: 'Machine learning and intelligent automation', href: '/services/ai-ml' },
+      { label: 'Engineering', desc: 'RF, 5G and network engineering services', href: '/services/engineering' },
     ],
   },
   {
@@ -190,7 +194,7 @@ export default function Navigation() {
                   onMouseEnter={() => openDropdown(key)}
                   onFocus={() => openDropdown(key)}
                   onClick={(e) => { e.stopPropagation(); activeDropdown === key ? closeDropdownNow() : openDropdown(key) }}
-                  className={`relative flex items-center gap-1 px-4 py-5 text-[13px] font-medium transition-colors duration-200 ${linkCls} ${activeDropdown === key ? (scrolled || !isHome ? 'text-[#0a1628]' : 'text-white') : ''}`}
+                  className={`relative flex items-center gap-1 px-4 py-5 text-[14px] font-medium transition-colors duration-200 ${linkCls} ${activeDropdown === key ? (scrolled || !isHome ? 'text-[#0a1628]' : 'text-white') : ''}`}
                 >
                   {label}
                   <FontAwesomeIcon icon={faChevronDown} className={`w-3 h-3 opacity-50 transition-transform duration-200 ${activeDropdown === key ? 'rotate-180' : ''}`} aria-hidden="true" />
@@ -202,7 +206,7 @@ export default function Navigation() {
               ))}
               <Link
                 to="/careers"
-                className={`px-4 py-5 text-[13px] font-medium transition-colors duration-200 ${linkCls}`}
+                className={`px-4 py-5 text-[14px] font-medium transition-colors duration-200 ${linkCls}`}
               >
                 Careers
               </Link>
@@ -212,13 +216,13 @@ export default function Navigation() {
             <div className="hidden lg:flex items-center gap-2">
               <Link
                 to="/contact"
-                className={`px-4 py-2 text-[13px] font-medium transition-colors duration-200 ${linkCls}`}
+                className={`px-4 py-2 text-[14px] font-medium transition-colors duration-200 ${linkCls}`}
               >
                 Contact
               </Link>
               <Link
                 to="/contact"
-                className={`px-5 py-2 text-[13px] font-medium border transition-all duration-200 ${
+                className={`px-5 py-2 text-[14px] font-medium border rounded-lg transition-all duration-200 ${
                   scrolled || activeDropdown || !isHome
                     ? 'border-[#228DC1] text-[#228DC1] hover:bg-[#228DC1] hover:text-white'
                     : 'border-white text-white hover:bg-white hover:text-[#0a1628]'
@@ -268,7 +272,7 @@ export default function Navigation() {
                         onClick={closeDropdownNow}
                       >
                         <div>
-                          <p className="text-[#0a1628] text-[13px] font-semibold group-hover:text-[#228DC1] transition-colors duration-150 mb-0.5 tracking-[-0.01em]">
+                          <p className="text-[#0a1628] text-[14px] font-semibold group-hover:text-[#228DC1] transition-colors duration-150 mb-0.5 tracking-[-0.01em]">
                             {item.label}
                           </p>
                           <p className="text-[#0a1628]/65 text-xs font-normal leading-relaxed">
@@ -285,7 +289,7 @@ export default function Navigation() {
                   <div className="grid grid-cols-2 gap-10">
                     {nav.groups.map((group) => (
                       <div key={group.heading}>
-                        <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#0a1628]/65 mb-3 px-4">
+                        <p className="text-[12px] font-semibold uppercase tracking-[0.2em] text-[#0a1628]/65 mb-3 px-4">
                           {group.heading}
                         </p>
                         <div className="space-y-0.5">
@@ -297,7 +301,7 @@ export default function Navigation() {
                               onClick={closeDropdownNow}
                             >
                               <div>
-                                <p className="text-[#0a1628] text-[13px] font-semibold group-hover:text-[#228DC1] transition-colors duration-150 mb-0.5 tracking-[-0.01em]">
+                                <p className="text-[#0a1628] text-[14px] font-semibold group-hover:text-[#228DC1] transition-colors duration-150 mb-0.5 tracking-[-0.01em]">
                                   {item.label}
                                 </p>
                                 <p className="text-[#0a1628]/65 text-xs font-normal leading-relaxed">
@@ -341,7 +345,7 @@ export default function Navigation() {
                     ))}
                     {nav.groups && nav.groups.map((group) => (
                       <div key={group.heading}>
-                        <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#0a1628]/65 mb-2 mt-3">{group.heading}</p>
+                        <p className="text-[12px] font-semibold uppercase tracking-[0.2em] text-[#0a1628]/65 mb-2 mt-3">{group.heading}</p>
                         {group.items.map((item) => (
                           <Link key={item.href} to={item.href} className="block py-1">
                             <p className="text-sm text-[#0a1628] font-normal">{item.label}</p>
@@ -356,7 +360,7 @@ export default function Navigation() {
             ))}
             <Link to="/careers" className="block py-3.5 text-[#0a1628] text-sm border-b border-gray-50">Careers</Link>
             <div className="pt-4 flex flex-col gap-2">
-              <Link to="/contact" className="w-full py-2.5 text-center text-sm border border-[#228DC1] text-[#228DC1] hover:bg-[#228DC1] hover:text-white transition-colors">
+              <Link to="/contact" className="w-full py-2.5 text-center text-sm border border-[#228DC1] text-[#228DC1] hover:bg-[#228DC1] hover:text-white transition-colors rounded-lg">
                 Request a Demo
               </Link>
             </div>

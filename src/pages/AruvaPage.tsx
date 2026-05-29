@@ -640,7 +640,7 @@ const MM_STEPS = [
 function MMImageDemo() {
   const [show, setShow] = React.useState(false)
   const [phase, setPhase] = React.useState(0)
-  const PROMPT = 'Illustrate: the water cycle'
+  const PROMPT = 'Illustrate: photosynthesis'
   const [typed, setTyped] = React.useState(0)
 
   React.useEffect(() => {
@@ -656,6 +656,34 @@ function MMImageDemo() {
     return () => clearInterval(typeId)
   }, [])
 
+  const op = (d: number): React.CSSProperties => ({
+    opacity: show ? 1 : 0,
+    transition: show ? `opacity 0.5s ease ${d}s` : 'none',
+  })
+
+  // Calvin cycle donut-arc segment path
+  const seg = (cx: number, cy: number, ro: number, ri: number, a0: number, a1: number) => {
+    const f = (n: number) => n.toFixed(1)
+    const x1=cx+ro*Math.cos(a0), y1=cy+ro*Math.sin(a0)
+    const x2=cx+ro*Math.cos(a1), y2=cy+ro*Math.sin(a1)
+    const x3=cx+ri*Math.cos(a1), y3=cy+ri*Math.sin(a1)
+    const x4=cx+ri*Math.cos(a0), y4=cy+ri*Math.sin(a0)
+    const lg = a1-a0 > Math.PI ? 1 : 0
+    return `M${f(x1)},${f(y1)} A${ro},${ro} 0 ${lg},1 ${f(x2)},${f(y2)} L${f(x3)},${f(y3)} A${ri},${ri} 0 ${lg},0 ${f(x4)},${f(y4)} Z`
+  }
+
+  const CCX=435, CCY=118, RO=50, RI=31, GAP=0.11, T3=2*Math.PI/3
+  const ccSegs=[
+    { col:'#0d9488', a0:-Math.PI/2+GAP/2,        a1:-Math.PI/2+T3-GAP/2       },
+    { col:'#f97316', a0:-Math.PI/2+T3+GAP/2,     a1:-Math.PI/2+2*T3-GAP/2     },
+    { col:'#0891b2', a0:-Math.PI/2+2*T3+GAP/2,   a1:-Math.PI/2+2*Math.PI-GAP/2 },
+  ]
+  const ccLabels=[
+    { ls:['Carbon','Fixation'], c:'#5eead4' },
+    { ls:['Reduction'],         c:'#fdba74'  },
+    { ls:['Regeneration'],      c:'#7dd3fc'  },
+  ]
+
   return (
     <div style={{ display:'flex', flexDirection:'column', flex:1 }}>
       {/* Prompt bar */}
@@ -670,82 +698,226 @@ function MMImageDemo() {
         )}
       </div>
 
-      {/* Illustration canvas */}
-      <div style={{ flex:1, display:'flex', alignItems:'center', justifyContent:'center', padding:'12px 16px' }}>
-        <svg viewBox="0 0 280 178" style={{ width:'100%', height:'auto', borderRadius:10, overflow:'hidden' }}>
+      {/* Photosynthesis illustration */}
+      <div style={{ flex:1, display:'flex', alignItems:'center', justifyContent:'center', padding:'10px 14px' }}>
+        <svg viewBox="0 0 560 270" style={{ width:'100%', height:'auto', borderRadius:10, overflow:'hidden' }}>
           <defs>
-            <linearGradient id="imgSky" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="#bfdbfe"/>
-              <stop offset="100%" stopColor="#dbeafe"/>
+            <linearGradient id="mmFG" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor="#0f3c1f"/>
+              <stop offset="100%" stopColor="#071a0b"/>
             </linearGradient>
-            <linearGradient id="imgSea" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="#60a5fa"/>
-              <stop offset="100%" stopColor="#3b82f6"/>
-            </linearGradient>
+            <radialGradient id="mmTG" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stopColor="#1e3d6e"/>
+              <stop offset="100%" stopColor="#0d2240"/>
+            </radialGradient>
+            <radialGradient id="mmLG" cx="50%" cy="30%" r="70%">
+              <stop offset="0%" stopColor="#16a34a"/>
+              <stop offset="100%" stopColor="#166534"/>
+            </radialGradient>
+            <marker id="mmAY" markerWidth="7" markerHeight="7" refX="4" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 Z" fill="#f59e0b"/></marker>
+            <marker id="mmAG" markerWidth="7" markerHeight="7" refX="4" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 Z" fill="#22c55e"/></marker>
+            <marker id="mmAB" markerWidth="7" markerHeight="7" refX="4" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 Z" fill="#60a5fa"/></marker>
+            <marker id="mmAP" markerWidth="7" markerHeight="7" refX="4" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 Z" fill="#a855f7"/></marker>
+            <marker id="mmAR" markerWidth="7" markerHeight="7" refX="4" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 Z" fill="#ef4444"/></marker>
+            <clipPath id="lcl"><circle cx="218" cy="85" r="44"/></clipPath>
           </defs>
 
-          {/* Sky */}
-          <rect x="0" y="0" width="280" height="178" fill="url(#imgSky)"
-            style={{ opacity: show?1:0, transition: show?'opacity 0.5s ease 0s':'none' }}/>
-          {/* Ocean */}
-          <path d="M0 128 Q70 122 140 128 Q210 134 280 128 L280 178 L0 178 Z" fill="url(#imgSea)"
-            style={{ opacity: show?1:0, transition: show?'opacity 0.5s ease 0.2s':'none' }}/>
-          {/* Mountains back-left */}
-          <path d="M-5 130 L55 62 L115 130 Z" fill="#a5b4fc"
-            style={{ opacity: show?1:0, transition: show?'opacity 0.4s ease 0.3s':'none' }}/>
-          {/* Mountains back-right */}
-          <path d="M162 130 L225 55 L290 130 Z" fill="#c4b5fd"
-            style={{ opacity: show?1:0, transition: show?'opacity 0.4s ease 0.35s':'none' }}/>
-          {/* Ground */}
-          <path d="M0 130 Q70 120 140 126 Q210 132 280 126 L280 155 L0 155 Z" fill="#86efac"
-            style={{ opacity: show?1:0, transition: show?'opacity 0.4s ease 0.4s':'none' }}/>
+          {/* Background */}
+          <rect width="560" height="270" fill="#0a1830"/>
 
+          {/* ── FOREST PANEL ── */}
+          <rect x="0" y="0" width="182" height="270" fill="url(#mmFG)" style={op(0)}/>
+          <path d="M0,222 Q90,212 182,222 L182,270 L0,270 Z" fill="#061509" style={op(0.05)}/>
+          {/* Back trees */}
+          <g style={op(0.12)}>
+            <path d="M15,222 L32,148 L49,222 Z" fill="#135e29" opacity="0.5"/>
+            <path d="M62,222 L83,120 L104,222 Z" fill="#166534" opacity="0.45"/>
+            <path d="M118,222 L138,133 L158,222 Z" fill="#135e29" opacity="0.5"/>
+          </g>
+          {/* Front trees */}
+          <g style={op(0.18)}>
+            <path d="M5,222 L28,142 L51,222 Z" fill="#16a34a"/>
+            <path d="M52,222 L80,105 L108,222 Z" fill="#15803d"/>
+            <path d="M108,222 L132,120 L156,222 Z" fill="#16a34a"/>
+            <path d="M152,222 L168,148 L184,222 Z" fill="#15803d"/>
+          </g>
+          {/* Shrubs */}
+          <g style={op(0.22)}>
+            <ellipse cx="36" cy="224" rx="22" ry="7" fill="#166534"/>
+            <ellipse cx="88" cy="226" rx="19" ry="7" fill="#15803d"/>
+            <ellipse cx="144" cy="224" rx="21" ry="7" fill="#166534"/>
+          </g>
           {/* Sun */}
-          <circle cx="232" cy="34" r="18" fill="#fbbf24"
-            style={{ opacity: show?1:0, transition: show?'opacity 0.4s ease 0.05s':'none' }}/>
-          {[0,45,90,135,180,225,270,315].map((angle,i) => {
-            const r = (angle * Math.PI) / 180
-            return <line key={angle} x1={232+Math.cos(r)*21} y1={34+Math.sin(r)*21} x2={232+Math.cos(r)*28} y2={34+Math.sin(r)*28}
-              stroke="#fbbf24" strokeWidth="2" strokeLinecap="round"
-              style={{ opacity: show?0.9:0, transition: show?`opacity 0.3s ease ${0.1+i*0.03}s`:'none' }}/>
+          <circle cx="150" cy="38" r="17" fill="#fbbf24" style={op(0.04)}/>
+          {[0,45,90,135,180,225,270,315].map((a,i) => {
+            const r=a*Math.PI/180
+            return <line key={a} x1={150+Math.cos(r)*20} y1={38+Math.sin(r)*20} x2={150+Math.cos(r)*27} y2={38+Math.sin(r)*27}
+              stroke="#fbbf24" strokeWidth="1.8" strokeLinecap="round"
+              style={{ opacity:show?0.85:0, transition:show?`opacity 0.3s ease ${0.08+i*0.03}s`:'none' }}/>
           })}
-
-          {/* Cloud 1 */}
-          <g style={{ opacity: show?1:0, transition: show?'opacity 0.5s ease 0.5s':'none' }}>
-            <ellipse cx="72" cy="42" rx="26" ry="14" fill="white"/>
-            <ellipse cx="55" cy="48" rx="17" ry="12" fill="white"/>
-            <ellipse cx="89" cy="48" rx="17" ry="11" fill="white"/>
+          {/* LIGHT ENERGY arrow */}
+          <line x1="152" y1="57" x2="208" y2="103" stroke="#f59e0b" strokeWidth="2" strokeDasharray="5 3" markerEnd="url(#mmAY)" style={op(0.28)}/>
+          <g style={op(0.3)}>
+            <text x="168" y="73" fontSize="7" fontWeight="800" fill="#fbbf24" letterSpacing="0.07em" transform="rotate(36,168,73)">LIGHT ENERGY</text>
           </g>
-          {/* Cloud 2 */}
-          <g style={{ opacity: show?1:0, transition: show?'opacity 0.5s ease 0.6s':'none' }}>
-            <ellipse cx="166" cy="28" rx="20" ry="11" fill="white" opacity="0.9"/>
-            <ellipse cx="151" cy="33" rx="13" ry="9"  fill="white" opacity="0.9"/>
-            <ellipse cx="181" cy="33" rx="13" ry="9"  fill="white" opacity="0.9"/>
+          {/* Panel separator */}
+          <path d="M170,0 Q188,135 170,270 L560,270 L560,0 Z" fill="#0a1830" style={op(0)}/>
+
+          {/* ── LEAF CROSS-SECTION ── */}
+          <circle cx="218" cy="85" r="44" fill="url(#mmLG)" style={op(0.32)}/>
+          <circle cx="218" cy="85" r="44" fill="none" stroke="#86efac" strokeWidth="2.5" strokeOpacity="0.5" style={op(0.35)}/>
+          <rect x="174" y="46" width="88" height="7" fill="#4ade80" opacity="0.3" clipPath="url(#lcl)" style={op(0.38)}/>
+          <rect x="174" y="53" width="88" height="6" fill="#16a34a" opacity="0.22" clipPath="url(#lcl)" style={op(0.38)}/>
+          <rect x="174" y="116" width="88" height="7" fill="#4ade80" opacity="0.3" clipPath="url(#lcl)" style={op(0.38)}/>
+          {/* Mesophyll cells */}
+          {[[196,70],[212,64],[228,67],[240,73],[248,82],
+            [194,84],[208,80],[222,82],[236,84],[247,90],
+            [198,96],[213,94],[226,97],[240,92],[248,99],
+            [201,108],[216,107],[230,110],[242,106]
+          ].map(([cx,cy],i) => (
+            <ellipse key={i} cx={cx} cy={cy} rx="5.5" ry="4" fill="#bbf7d0" clipPath="url(#lcl)"
+              style={{ opacity:show?0.32:0, transition:show?`opacity 0.3s ease ${0.44+i*0.012}s`:'none' }}/>
+          ))}
+          {/* Chloroplasts */}
+          {[[196,70],[214,66],[230,71],[243,78],
+            [200,84],[218,81],[235,86],
+            [205,97],[223,95],[240,93]
+          ].map(([cx,cy],i) => (
+            <ellipse key={i} cx={cx} cy={cy} rx="3.5" ry="2.5" fill="#22c55e"
+              style={{ opacity:show?0.68:0, transition:show?`opacity 0.4s ease ${0.5+i*0.018}s`:'none' }}/>
+          ))}
+          {/* Leaf labels */}
+          <text x="265" y="53" fontSize="6.5" fill="rgba(255,255,255,0.7)" fontWeight="600" style={op(0.64)}>Cuticle</text>
+          <line x1="261" y1="52" x2="252" y2="56" stroke="rgba(255,255,255,0.3)" strokeWidth="0.8" style={op(0.64)}/>
+          <text x="265" y="66" fontSize="6.5" fill="rgba(255,255,255,0.7)" fontWeight="600" style={op(0.66)}>Epidermis</text>
+          <line x1="261" y1="65" x2="252" y2="64" stroke="rgba(255,255,255,0.3)" strokeWidth="0.8" style={op(0.66)}/>
+          <text x="265" y="84" fontSize="6.5" fill="rgba(255,255,255,0.7)" fontWeight="600" style={op(0.7)}>Spongy</text>
+          <text x="265" y="93" fontSize="6.5" fill="rgba(255,255,255,0.7)" fontWeight="600" style={op(0.7)}>Mesophyll</text>
+          <line x1="261" y1="88" x2="253" y2="86" stroke="rgba(255,255,255,0.3)" strokeWidth="0.8" style={op(0.7)}/>
+
+          {/* ── CO₂ MOLECULES ── */}
+          {[[293,26],[318,18],[344,26]].map(([x,y],i) => (
+            <g key={i} style={{ opacity:show?1:0, transition:show?`opacity 0.5s ease ${0.46+i*0.1}s`:'none' }}>
+              <circle cx={x-9} cy={y} r="4.5" fill="#ef4444" opacity="0.9"/>
+              <circle cx={x}   cy={y} r="3.5" fill="#9ca3af"/>
+              <circle cx={x+9} cy={y} r="4.5" fill="#ef4444" opacity="0.9"/>
+              <text x={x} y={y+13} textAnchor="middle" fontSize="6.5" fill="rgba(255,255,255,0.5)" fontWeight="600">CO₂</text>
+            </g>
+          ))}
+          <line x1="318" y1="48" x2="318" y2="73" stroke="#ef4444" strokeWidth="1.5" strokeDasharray="3 2" markerEnd="url(#mmAR)" style={op(0.58)}/>
+
+          {/* ── THYLAKOID DISK ── */}
+          <text x="255" y="155" textAnchor="middle" fontSize="7" fill="rgba(255,255,255,0.36)" fontWeight="700" letterSpacing="0.07em" style={op(0.46)}>THYLAKOID REACTIONS</text>
+          <ellipse cx="255" cy="200" rx="72" ry="43" fill="url(#mmTG)" style={op(0.5)}/>
+          <ellipse cx="255" cy="200" rx="72" ry="43" fill="none" stroke="rgba(96,165,250,0.35)" strokeWidth="1.5" style={op(0.5)}/>
+          <ellipse cx="255" cy="200" rx="58" ry="31" fill="none" stroke="rgba(96,165,250,0.18)" strokeWidth="1" strokeDasharray="3 2" style={op(0.54)}/>
+          {/* Photosystem II */}
+          {[[220,191],[240,183],[260,187],[277,194]].map(([cx,cy],i) => (
+            <g key={i} style={{ opacity:show?1:0, transition:show?`opacity 0.4s ease ${0.66+i*0.06}s`:'none' }}>
+              <ellipse cx={cx} cy={cy} rx="9.5" ry="6" fill="#7c3aed" opacity="0.88"/>
+              <text x={cx} y={cy+1.5} textAnchor="middle" dominantBaseline="middle" fontSize="4.5" fill="white" fontWeight="700">PS II</text>
+            </g>
+          ))}
+          {/* Electron flow */}
+          <path d="M230,184 C240,172 254,168 268,176 C280,183 287,197 278,210"
+            fill="none" stroke="#a855f7" strokeWidth="1.5" strokeDasharray="4 2.5" markerEnd="url(#mmAP)" style={op(0.78)}/>
+          <text x="264" y="166" fontSize="6" fill="#d8b4fe" fontWeight="700" style={op(0.82)}>e⁻ flow</text>
+          {/* H⁺ ions */}
+          {[[245,208],[256,213],[267,208]].map(([cx,cy],i) => (
+            <text key={i} x={cx} y={cy} textAnchor="middle" fontSize="7" fill="#60a5fa" fontWeight="800"
+              style={{ opacity:show?0.85:0, transition:show?`opacity 0.4s ease ${0.88+i*0.06}s`:'none' }}>H⁺</text>
+          ))}
+          {/* ATP Synthase mushroom */}
+          <g style={op(0.84)}>
+            <ellipse cx="294" cy="188" rx="11" ry="5.5" fill="#fb923c"/>
+            <rect x="289" y="188" width="10" height="16" rx="3" fill="#f97316" opacity="0.92"/>
+            <text x="294" y="212" textAnchor="middle" fontSize="5.5" fill="rgba(255,255,255,0.62)" fontWeight="700">ATP syn</text>
           </g>
+          {/* H₂O input */}
+          <circle cx="183" cy="200" r="10" fill="rgba(96,165,250,0.14)" stroke="#60a5fa" strokeWidth="1.5" style={op(0.57)}/>
+          <text x="183" y="200" textAnchor="middle" dominantBaseline="middle" fontSize="7" fill="#93c5fd" fontWeight="800" style={op(0.61)}>H₂O</text>
+          <line x1="193" y1="200" x2="207" y2="200" stroke="#60a5fa" strokeWidth="1.5" markerEnd="url(#mmAB)" style={op(0.61)}/>
+          <text x="183" y="217" textAnchor="middle" fontSize="6" fill="#93c5fd" style={op(0.65)}>Water in</text>
+          {/* O₂ output */}
+          <circle cx="197" cy="170" r="9" fill="rgba(34,197,94,0.17)" stroke="#22c55e" strokeWidth="1.5" style={op(0.72)}/>
+          <text x="197" y="170" textAnchor="middle" dominantBaseline="middle" fontSize="7" fill="#86efac" fontWeight="800" style={op(0.76)}>O₂</text>
+          <line x1="197" y1="161" x2="197" y2="148" stroke="#22c55e" strokeWidth="1.5" markerEnd="url(#mmAG)" style={op(0.78)}/>
+          <text x="197" y="145" textAnchor="middle" fontSize="6" fill="#86efac" style={op(0.82)}>O₂ out</text>
+          {/* ATP / NADPH output badges */}
+          <g style={op(0.94)}>
+            <rect x="225" y="237" width="30" height="12" rx="5" fill="#f59e0b" opacity="0.92"/>
+            <text x="240" y="244.5" textAnchor="middle" fontSize="6" fill="#0a1830" fontWeight="800">ATP</text>
+          </g>
+          <g style={op(0.98)}>
+            <rect x="262" y="237" width="38" height="12" rx="5" fill="#7c3aed" opacity="0.85"/>
+            <text x="281" y="244.5" textAnchor="middle" fontSize="6" fill="white" fontWeight="800">NADPH</text>
+          </g>
+          {/* Thylakoid → Calvin connecting arc */}
+          <path d="M302,237 C336,237 372,190 400,148" fill="none" stroke="rgba(245,158,11,0.28)" strokeWidth="1.2" strokeDasharray="4 3" markerEnd="url(#mmAY)" style={op(1.02)}/>
 
-          {/* Rain drops from cloud 1 */}
-          {[[65,66],[74,72],[82,66],[58,72],[90,72]].map(([x,y],i) => (
-            <line key={i} x1={x} y1={y} x2={x-3} y2={y+11} stroke="#93c5fd" strokeWidth="1.8" strokeLinecap="round"
-              style={{ opacity: show?0.85:0, transition: show?`opacity 0.3s ease ${0.85+i*0.06}s`:'none' }}/>
+          {/* ── CALVIN CYCLE ── */}
+          <text x={CCX} y={CCY-64} textAnchor="middle" fontSize="8" fill="rgba(255,255,255,0.36)" fontWeight="700" letterSpacing="0.07em" style={op(0.56)}>CALVIN CYCLE</text>
+          {/* Donut segments */}
+          {ccSegs.map((s,i) => (
+            <g key={i} style={{ opacity:show?1:0, transition:show?`opacity 0.5s ease ${0.68+i*0.1}s`:'none' }}>
+              <path d={seg(CCX,CCY,RO,RI,s.a0,s.a1)} fill={s.col} opacity="0.88"/>
+              <path d={seg(CCX,CCY,RO,RI,s.a0,s.a1)} fill="none" stroke="rgba(0,0,0,0.22)" strokeWidth="0.8"/>
+            </g>
           ))}
+          {/* Inner circle */}
+          <circle cx={CCX} cy={CCY} r={RI-2} fill="#0d1f3a" style={op(0.64)}/>
+          <text x={CCX} y={CCY-4} textAnchor="middle" fontSize="6" fill="rgba(255,255,255,0.78)" fontWeight="700" style={op(0.84)}>Rubisco</text>
+          <text x={CCX} y={CCY+7} textAnchor="middle" fontSize="5.5" fill="rgba(255,255,255,0.46)" style={op(0.88)}>enzyme</text>
+          {/* Segment outer labels */}
+          {ccSegs.map((s,i) => {
+            const mid=(s.a0+s.a1)/2, lr=RO+17
+            const lx=CCX+lr*Math.cos(mid), ly=CCY+lr*Math.sin(mid)
+            return (
+              <g key={i} style={{ opacity:show?1:0, transition:show?`opacity 0.4s ease ${0.96+i*0.08}s`:'none' }}>
+                {ccLabels[i].ls.map((t,ti) => (
+                  <text key={ti} x={lx} y={ly+ti*10-(ccLabels[i].ls.length-1)*5}
+                    textAnchor="middle" fontSize="6.5" fill={ccLabels[i].c} fontWeight="700">{t}</text>
+                ))}
+              </g>
+            )
+          })}
+          {/* CO₂ → Calvin */}
+          <line x1={CCX-28} y1={CCY-62} x2={CCX-13} y2={CCY-50} stroke="#ef4444" strokeWidth="1.5" markerEnd="url(#mmAR)" style={op(0.88)}/>
+          <text x={CCX-36} y={CCY-66} textAnchor="middle" fontSize="7" fill="#ef4444" fontWeight="700" style={op(0.88)}>CO₂</text>
+          {/* ATP/NADPH input labels */}
+          <g style={op(1.04)}>
+            <rect x={CCX+54} y={CCY-16} width="30" height="11" rx="4" fill="#f59e0b" opacity="0.88"/>
+            <text x={CCX+69} y={CCY-8.5} textAnchor="middle" fontSize="5.5" fill="#0a1830" fontWeight="800">ATP</text>
+          </g>
+          <g style={op(1.08)}>
+            <rect x={CCX+54} y={CCY+2} width="38" height="11" rx="4" fill="#7c3aed" opacity="0.82"/>
+            <text x={CCX+73} y={CCY+9} textAnchor="middle" fontSize="5.5" fill="white" fontWeight="800">NADPH</text>
+          </g>
+          <line x1={CCX+54} y1={CCY-4} x2={CCX+RO+1} y2={CCY} stroke="rgba(255,255,255,0.16)" strokeWidth="1" style={op(1.0)}/>
+          {/* RuBP label */}
+          <text x={CCX+24} y={CCY-51} textAnchor="middle" fontSize="6" fill="#7dd3fc" fontWeight="600" style={op(1.1)}>RuBP</text>
+          {/* G3P output */}
+          <line x1={CCX} y1={CCY+RO+1} x2={CCX} y2={CCY+RO+14} stroke="#22c55e" strokeWidth="1.5" markerEnd="url(#mmAG)" style={op(1.0)}/>
+          <text x={CCX} y={CCY+RO+24} textAnchor="middle" fontSize="7" fill="#22c55e" fontWeight="700" style={op(1.05)}>G3P</text>
 
-          {/* Evaporation arrows */}
-          {[[108,122],[140,118],[172,122]].map(([x,y],i) => (
-            <path key={i} d={`M${x},${y} C${x-4},${y-9} ${x+4},${y-15} ${x},${y-23}`}
-              fill="none" stroke="rgba(147,197,253,0.75)" strokeWidth="1.8" strokeLinecap="round" strokeDasharray="3 2.5"
-              style={{ opacity: show?1:0, transition: show?`opacity 0.4s ease ${1.0+i*0.08}s`:'none' }}/>
-          ))}
-
-          {/* Labels */}
-          {[
-            { x:232, y:12,  t:'Sun',        c:'#92400e' },
-            { x:140, y:148, t:'Ocean',      c:'#1e40af' },
-            { x:72,  y:96,  t:'Rainfall',   c:'#1e40af' },
-            { x:140, y:108, t:'Evaporation',c:'#065f46' },
-          ].map(l => (
-            <text key={l.t} x={l.x} y={l.y} textAnchor="middle" fontSize="8" fontWeight="700" fill={l.c} fontFamily="Roboto,sans-serif"
-              style={{ opacity: show?1:0, transition: show?'opacity 0.4s ease 1.25s':'none' }}>{l.t}</text>
-          ))}
+          {/* ── OUTPUT STRIP ── */}
+          <g style={op(1.18)}>
+            <rect x="346" y="211" width="102" height="12" rx="3" fill="rgba(245,158,11,0.16)" stroke="rgba(245,158,11,0.38)" strokeWidth="1"/>
+            <text x="397" y="219" textAnchor="middle" fontSize="6.5" fill="#fbbf24" fontWeight="800" letterSpacing="0.05em">STARCH &amp; SUGAR</text>
+          </g>
+          <g style={op(1.12)}>
+            <rect x="350" y="225" width="62" height="24" rx="5" fill="rgba(245,158,11,0.13)" stroke="#f59e0b" strokeWidth="1.5"/>
+            <text x="381" y="234" textAnchor="middle" fontSize="6.5" fill="#fbbf24" fontWeight="800">Glucose</text>
+            <text x="381" y="244" textAnchor="middle" fontSize="6" fill="#fbbf24" opacity="0.7">C₆H₁₂O₆</text>
+          </g>
+          <g style={op(1.16)}>
+            <circle cx="428" cy="233" r="11" fill="rgba(251,191,36,0.14)" stroke="#f59e0b" strokeWidth="1.5"/>
+            <circle cx="428" cy="233" r="6.5" fill="rgba(251,191,36,0.36)"/>
+            <text x="428" y="250" textAnchor="middle" fontSize="6" fill="#fbbf24" fontWeight="600">Starch</text>
+          </g>
+          {/* G3P → Glucose dashed arc */}
+          <path d={`M${CCX},${CCY+RO+30} C${CCX+10},${CCY+RO+52} 365,214 381,225`}
+            fill="none" stroke="rgba(34,197,94,0.38)" strokeWidth="1.2" strokeDasharray="4 2" markerEnd="url(#mmAG)" style={op(1.14)}/>
         </svg>
       </div>
     </div>
@@ -1695,9 +1867,8 @@ export default function AruvaPage() {
             Aruva · AI for Education
           </p>
           <h1 className="font-serif-display text-[#0a1628] leading-[1.02] mb-6 max-w-4xl">
-            AI native learning.<br />
-            <span style={{ color: '#228DC1' }}>Professor guided.</span><br />
-            Built around every student.
+            AI that understands<br />
+            <span style={{ color: '#228DC1' }}>how your students learn.</span>
           </h1>
           <p className="text-[#0a1628]/65 text-[18px] font-normal leading-[1.7] max-w-2xl mb-10">
             An AI teaching and formative assessment platform for higher education. Personalised, governed and guided entirely by educator intent.
